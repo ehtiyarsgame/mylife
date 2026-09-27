@@ -5865,5 +5865,222 @@
     "result": "Hayat sadece işten ibaret değil."
    }
   ]
+ },
+ {
+  "id": "veli_cagri",
+  "rarity": "rare",
+  "icon": "🏫",
+  "title": "Öğretmen veliyi çağırdı",
+  "chainOnly": true,
+  "cond": {
+   "inSchool": true
+  },
+  "text": "İki yıldır derslere hiç çalışmadığın fark edildi. Öğretmenin {anne} ve {baba}'yı okula çağırdı. Eve dönüş yolu çok sessiz.",
+  "log": "Dersleri ihmal ettiği için veli toplantısına çağrıldı.",
+  "options": [
+   {
+    "text": "Hatanı kabul et, çalışma programı yap",
+    "effects": {
+     "stats": {
+      "disiplin": 4,
+      "mutluluk": -2
+     },
+     "flags": [
+      "ogretmen"
+     ]
+    },
+    "result": "Öğretmenin sana ek kaynak verdi. Bu yıl ders çalışırsan açığı kapatabilirsin."
+   },
+   {
+    "text": "\"Ders bana göre değil\" de",
+    "effects": {
+     "stats": {
+      "mutluluk": -3
+     },
+     "relation": "zor",
+     "unflags": [
+      "ogretmen"
+     ]
+    },
+    "result": "Ailenle aranda bir duvar örüldü. Karnen düşmeye devam ederse sınıfta kalabilirsin."
+   }
+  ]
+ },
+ {
+  "id": "sinifta_kaldin",
+  "rarity": "epic",
+  "icon": "🔁",
+  "title": "Sınıfta kaldın",
+  "chainOnly": true,
+  "text": "Arkadaşların bir üst sınıfa geçti; sen aynı sınıftasın. Yeni sınıf arkadaşların senden bir yaş küçük.",
+  "log": "Sınıf tekrarı yaptı.",
+  "options": [
+   {
+    "text": "Bu bir ders olsun: sıfırdan başla",
+    "effects": {
+     "stats": {
+      "disiplin": 5,
+      "mutluluk": -3
+     },
+     "skills": {
+      "matematik": 2,
+      "dil": 2
+     }
+    },
+    "result": "Aynı konuları ikinci kez görünce çoğu yerine oturdu. Kaybedilen bir yıl, kazanılan bir alışkanlık olabilir."
+   },
+   {
+    "text": "Utançtan içine kapan",
+    "effects": {
+     "stats": {
+      "mutluluk": -8,
+      "sosyal": -3
+     }
+    },
+    "result": "Bir süre kimseyle konuşmadın. Ama hayat uzun; toparlanmak mümkün."
+   }
+  ]
+ },
+ {
+  "id": "hareketsiz_yasam",
+  "rarity": "rare",
+  "icon": "🛋️",
+  "title": "Hareketsiz yaşam",
+  "chainOnly": true,
+  "text": "Üç yıldır neredeyse hiç hareket etmedin. Merdivenlerde nefesin kesiliyor; doktor kontrolde uyardı: \"Böyle giderse sağlığın ciddi risk altında.\"",
+  "log": "Hareketsiz yaşam nedeniyle doktordan uyarı aldı.",
+  "options": [
+   {
+    "text": "Her sabah yürüyüşe başla",
+    "effects": {
+     "stats": {
+      "fizik": 3,
+      "saglik": 3,
+      "disiplin": 2
+     }
+    },
+    "result": "İlk hafta zordu, sonra alışkanlığa dönüştü. Spor eylemlerini ihmal etme!"
+   },
+   {
+    "text": "\"Vaktim yok\"",
+    "effects": {
+     "stats": {
+      "saglik": -4
+     }
+    },
+    "result": "Vakit bulamayanlar, bir gün hastalığa vakit ayırmak zorunda kalır."
+   }
+  ]
+ },
+ {
+  "id": "yalnizlik",
+  "rarity": "rare",
+  "icon": "🌧️",
+  "title": "Yalnızlık",
+  "chainOnly": true,
+  "text": "Telefonun çalmıyor. Doğum gününü kimse hatırlamadı. Yıllardır arkadaşlarına vakit ayırmadığını fark ettin.",
+  "log": "Yalnız kaldığı bir dönem yaşadı.",
+  "options": [
+   {
+    "text": "Eski bir arkadaşını ara",
+    "effects": {
+     "friend": 1,
+     "stats": {
+      "mutluluk": 4,
+      "sosyal": 2
+     }
+    },
+    "result": "\"Nerelerdesin be!\" Sesi hiç değişmemiş. Dostluk, emek ister."
+   },
+   {
+    "text": "Bir kulübe/gruba katıl",
+    "effects": {
+     "friend": 1,
+     "stats": {
+      "sosyal": 3
+     },
+     "karizma": 1
+    },
+    "result": "Yeni yüzler, yeni hikâyeler."
+   },
+   {
+    "text": "Kabuğuna çekil",
+    "effects": {
+     "stats": {
+      "mutluluk": -5
+     }
+    },
+    "result": "Yalnızlık alışkanlık yapar; dikkat et."
+   }
+  ]
+ },
+ {
+  "id": "aile_kopukluk",
+  "rarity": "rare",
+  "icon": "🏚️",
+  "title": "Ailenle aran açıldı",
+  "chainOnly": true,
+  "text": "Uzun zamandır ailene vakit ayırmıyorsun. Sofrada kimse konuşmuyor; {anne} kırgın. Çocukların varsa, seni artık \"hep meşgul\" biri olarak görüyorlar.",
+  "log": "Ailesiyle arası açıldı.",
+  "options": [
+   {
+    "text": "Bir hafta sonunu tamamen ailene ayır",
+    "effects": {
+     "stats": {
+      "mutluluk": 4
+     },
+     "relation": "normal",
+     "partnerLove": 8,
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Piknikte uzun zamandır ilk kez herkes güldü. Aile vaktini düzenli yapmayı unutma."
+   },
+   {
+    "text": "İşlerim bitince",
+    "effects": {
+     "relation": "zor",
+     "partnerLove": -6,
+     "stats": {
+      "mutluluk": -3
+     }
+    },
+    "result": "\"İşler bitince\" hiç gelmeyen bir gündür."
+   }
+  ]
+ },
+ {
+  "id": "tukenmislik",
+  "rarity": "rare",
+  "icon": "🔥",
+  "title": "Tükenmişlik",
+  "chainOnly": true,
+  "text": "Yıllardır tatil yok, dinlenme yok. Sabah alarmı çaldığında göğsüne bir ağırlık çöküyor; en sevdiğin şeyler bile keyif vermiyor.",
+  "log": "Tükenmişlik yaşadı.",
+  "options": [
+   {
+    "text": "İzin al, dinlen, bir uzmana danış",
+    "effects": {
+     "stats": {
+      "mutluluk": 8,
+      "saglik": 3
+     },
+     "energy": 25,
+     "money": -6000
+    },
+    "result": "İlk kez kendini dinledin. Dinlenmek de bir iş, hem de önemli bir iş."
+   },
+   {
+    "text": "Dişini sık, devam et",
+    "effects": {
+     "stats": {
+      "mutluluk": -6,
+      "saglik": -5
+     }
+    },
+    "result": "Beden bir gün faturayı keser. Dinlenme eylemlerini ihmal etme."
+   }
+  ]
  }
 ]

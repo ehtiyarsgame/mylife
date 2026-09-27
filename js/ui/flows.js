@@ -43,6 +43,36 @@ export async function watchAd(kind) {
   return ok;
 }
 
+// Çok reklamlı ödüller: ilerleme kaydedilir, yarıda bırakılırsa kaldığı yerden devam eder.
+export function watchAdsSeries(kind, n, title, desc) {
+  const m = app.meta;
+  m.adTokens = m.adTokens || {};
+  if (m.settings.noAds) return Promise.resolve(true);
+  return new Promise(resolve => {
+    const render = close => h('div.center', {},
+      h('div', { style: { fontSize: '48px' } }, '📺'),
+      h('h2', {}, title),
+      h('p.small.muted', {}, desc),
+      h('div.row', { style: { justifyContent: 'center', gap: '8px', margin: '12px 0' } },
+        Array.from({ length: n }, (_, i) => h('span', { style: { width: '44px', height: '44px', borderRadius: '12px', display: 'grid', placeItems: 'center', fontSize: '22px', background: i < (m.adTokens[kind] || 0) ? 'linear-gradient(135deg,#ffcf4d,#ff9f3d)' : 'var(--card2)', border: '1px solid var(--line)' } }, i < (m.adTokens[kind] || 0) ? '✓' : i + 1))),
+      h('div.btns', {},
+        btn(`▶ Reklam izle (${(m.adTokens[kind] || 0) + 1}/${n})`, async () => {
+          if (await watchAd(kind)) {
+            m.adTokens[kind] = (m.adTokens[kind] || 0) + 1; save();
+            if (m.adTokens[kind] >= n) { m.adTokens[kind] = 0; save(); close(true); return; }
+            close('again');
+          }
+        }, 'gold block'),
+        btn('Vazgeç — kadere razıyım', () => close(false), 'ghost block')));
+    const loop = async () => {
+      const r = await sheet(c => render(c), { center: true, dismissable: false });
+      if (r === 'again') return loop();
+      resolve(!!r);
+    };
+    loop();
+  });
+}
+
 // ——— Değişim çipleri ———
 function deltaChips(d) {
   const out = [];

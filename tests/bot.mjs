@@ -98,6 +98,7 @@ export function botLife(seed, skill = 60, opts = {}) {
     assert.ok(c2.ok, `Yıl bitirilemedi (yaş ${s.age}): ${c2.reasons.join(', ')}`);
     const sum = Y.endYear(s);
     (s._moneyAt ||= {})[s.age] = Math.round(s.money);
+    (s._healthAt ||= {})[s.age] = Math.round(s.stats.saglik);
     if (s.age === 50) s._biz50 = s.career.biz?.step ?? -1;
     for (const k in s.stats) assert.ok(Number.isFinite(s.stats[k]) && s.stats[k] >= 0 && s.stats[k] <= 100, `stat ${k}=${s.stats[k]}`);
     for (const k in s.skills) assert.ok(Number.isFinite(s.skills[k]), `skill ${k}`);

@@ -13,6 +13,9 @@ export const AD_LIMITS = {
   double:   { perDay: 3,  label: 'Geliri 2 kat al' },
   heal:     { perDay: 99, label: 'İyileşme yarıya' },
   door:     { perDay: 99, label: 'Kapı puanına +10' },
+  reroll:   { perDay: 30, label: 'Başlangıç zarını yeniden at (3 reklam)' },
+  abandon:  { perDay: 30, label: 'Hayatı silip yeniden başla (3 reklam)' },
+  revive:   { perDay: 30, label: 'İkinci şans (3 reklam)' },
 };
 
 let provider = null; // async (kind) => boolean

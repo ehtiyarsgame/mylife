@@ -12,6 +12,7 @@ import { FRIEND_NAMES, NAMES } from './names.js';
 import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
 import { homeYear, livingHome, homeBudget, HOME } from './household.js';
 import { makeCandidates } from './partner.js';
+import { balanceYear, studyHabitBonus, sedentaryRisk } from './balance.js';
 
 export function withRng(s, fn) {
   const r = new RNG(s.rng);
@@ -50,12 +51,16 @@ export function startYear(s) {
   });
 }
 
+// Eğitim yaşı: sınıfta kalan öğrenci okulu bir yıl geriden takip eder
+export const eduAge = s => s.age - (s.edu.delay || 0);
+
 function yearTasks(s) {
   const t = [];
+  const ea = eduAge(s);
   const inSchool = ['ilkokul', 'orta', 'lise'].includes(s.edu.stage);
-  if (inSchool && s.age >= 7 && s.age <= 17 && !s.flags.okulBirakti) t.push({ id: 'karne', exam: 'karne', done: false });
-  if (s.edu.stage === 'orta' && s.age === 13) t.push({ id: 'lgs', exam: 'lgs', done: false });
-  if ((s.edu.stage === 'lise' && s.age === 17 && !s.flags.okulBirakti) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
+  if (inSchool && ea >= 7 && ea <= 17 && !s.flags.okulBirakti) t.push({ id: 'karne', exam: 'karne', done: false });
+  if (s.edu.stage === 'orta' && ea === 13) t.push({ id: 'lgs', exam: 'lgs', done: false });
+  if ((s.edu.stage === 'lise' && ea === 17 && !s.flags.okulBirakti) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
   return t;
 }
 
@@ -277,7 +282,7 @@ export function examPrep(s, examId) {
     case 'is': base = st.sosyal * 0.5 + st.zeka * 0.3 + (s.flags.staj ? 20 : 0); break;
     default: base = (sk.matematik + sk.fen + sk.dil) / 3 * 0.7 + st.zeka * 0.3;
   }
-  let mod = (s.traits?.mizac === 'kaygili' ? 6 : 0) - Math.max(0, (s.year?.worked || 0) - 1) * 5;
+  let mod = studyHabitBonus(s) + (s.traits?.mizac === 'kaygili' ? 6 : 0) - Math.max(0, (s.year?.worked || 0) - 1) * 5;
   if (s.home && livingHome(s) && s.home.stress >= 50) mod -= 5; // evde huzur yok
   return clamp(Math.round(base * 0.6 + recent * 4 + mod), 0, 100);
 }
@@ -304,6 +309,15 @@ export function applyExam(s, examId, res) {
       if (res.score >= 85) { s.flags.takdir = true; addStat(s, 'mutluluk', 3); out.lines.push('🏅 Takdir belgesi aldın!'); }
       else if (res.score >= 70) out.lines.push('📄 Teşekkür belgesi aldın.');
       else if (res.score < 45) { addStat(s, 'mutluluk', -3); out.lines.push('Karnen zayıf geldi. Seneye daha çok çalışmalısın.'); }
+      const g = s.edu.grades;
+      if (['orta', 'lise'].includes(s.edu.stage) && res.score < 40 && g.length >= 2 && g[g.length - 2] < 40) {
+        s.edu.delay = (s.edu.delay || 0) + 1;
+        s.counters.sinifTekrar = (s.counters.sinifTekrar || 0) + 1;
+        addStat(s, 'mutluluk', -8);
+        out.lines.push('🔁 İki yıl üst üste karnen çok zayıf: SINIFTA KALDIN. Aynı sınıfı bir yıl daha okuyacaksın.');
+        log(s, 'Sınıfta kaldı.', 'rare');
+        if (!s.chains.some(c => c.id === 'sinifta_kaldin')) s.chains.push({ id: 'sinifta_kaldin', at: s.age });
+      }
       break;
     }
     case 'lgs': {
@@ -626,7 +640,11 @@ export function endYear(s) {
   const y = s.year;
   const sum = { age: s.age, lines: [], income: [], expense: [], promos: [], stageFrom: stageOf(s.age), notes: [] };
 
-  for (const k of Object.keys(y.trained)) s.train[k] = (s.train[k] || 0) + 1;
+  for (const k of Object.keys(y.trained)) { s.train[k] = (s.train[k] || 0) + 1; (s.lastTrain ||= {})[k] = s.age; }
+  const bal = balanceYear(s);
+  sum.notes.push(...bal.notes);
+  sum.good = bal.good;
+  for (const id of bal.cards) if (!s.chains.some(c => c.id === id)) s.chains.push({ id, at: s.age + 1 });
   s.studyLog.push(y.study); if (s.studyLog.length > 4) s.studyLog.shift();
 
   withRng(s, r => {
@@ -794,7 +812,7 @@ export function endYear(s) {
     }
 
     // ——— Eğitim geçişleri ———
-    const nextAge = s.age + 1;
+    const nextAge = eduAge(s) + 1;
     if (s.edu.stage === 'uni') {
       s.edu.uniYears++;
       const D = deptById[s.edu.dept];
@@ -841,9 +859,10 @@ export function endYear(s) {
     // ——— Yaşlanma ———
     if (s.age >= 30) addStat(s, 'fizik', -0.6);
     if (s.age >= 32) s.skills.futbol = clamp(s.skills.futbol - 1, 0, 100);
-    if (s.age >= 45) addStat(s, 'saglik', -0.8);
-    if (s.age >= 60) addStat(s, 'saglik', -1.4);
-    if (s.age >= 70) addStat(s, 'saglik', -1.2);
+    if (s.age < 45 && s.stats.saglik < 65) addStat(s, 'saglik', 0.8); // genç beden toparlanır
+    if (s.age >= 45) addStat(s, 'saglik', -0.5);
+    if (s.age >= 60) addStat(s, 'saglik', -1);
+    if (s.age >= 70) addStat(s, 'saglik', -0.9);
     if (s.stats.fizik > 50) addStat(s, 'saglik', 0.5);
     // Mutluluk dengeye döner
     const P = s.rel.partner;
@@ -888,7 +907,7 @@ export function endYear(s) {
     }
 
     // ——— Ölüm ———
-    let dp = deathP(s.age, s.stats.saglik);
+    let dp = deathP(s.age, s.stats.saglik) * sedentaryRisk(s);
     if (y.kontrol) dp *= 0.7;
     if (r.chance(dp)) {
       s.alive = false;

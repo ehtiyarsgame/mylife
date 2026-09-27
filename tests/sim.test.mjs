@@ -134,3 +134,29 @@ test('çocuğun cebi gerçekçi kalır: 14 yaşında orta halli ailede ortalama 
   }
   assert.ok(sum / n < 20000, 'ortalama ' + sum / n);
 });
+
+// ——— Yaşam dengesi ———
+import { balanceYear } from '../js/sim/balance.js';
+
+test('ders ihmali öğrenileni unutturur, üst üste çok zayıf karne sınıfta bırakır', () => {
+  const s = newLife({ seed: 'bl', name: 'A', gender: 'e' });
+  s.age = 12; s.edu.stage = 'orta'; s.skills.matematik = 30;
+  Y.startYear(s);
+  balanceYear(s); // hiç ders çalışmadı
+  assert.ok(s.skills.matematik < 30);
+  s.edu.grades = [35];
+  Y.applyExam(s, 'karne', { score: 30, prep: 10, top: 90 });
+  assert.equal(s.edu.delay, 1);
+  assert.equal(Y.eduAge(s), 11);
+});
+
+test('spor alışkanlığı sağlığı korur, hareketsizlik düşürür', () => {
+  const mk = () => { const s = newLife({ seed: 'sp', name: 'A', gender: 'e' }); s.age = 30; s.stats.saglik = 70; return s; };
+  const active = mk(), lazy = mk();
+  for (let i = 0; i < 5; i++) {
+    for (const [s, act] of [[active, true], [lazy, false]]) {
+      Y.startYear(s); if (act) s.year.done.push('kosu'); balanceYear(s); s.age++;
+    }
+  }
+  assert.ok(active.stats.saglik > lazy.stats.saglik + 3, `${active.stats.saglik} vs ${lazy.stats.saglik}`);
+});

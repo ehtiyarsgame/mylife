@@ -15,6 +15,7 @@ import * as F from './flows.js';
 import { looks, charisma, MIZAC, traitLabel } from '../sim/traits.js';
 import { homeBudget, homeNeed, giveToFamily, livingHome, stressLabel, nextStep, HOME } from '../sim/household.js';
 import { SPOUSE_TRAITS } from '../sim/partner.js';
+import { DOMAINS, atRisk, domainsDone } from '../sim/balance.js';
 import { missionsCard, progress } from './missions.js';
 
 const S = () => app.life;
@@ -142,6 +143,10 @@ function yearCard(render) {
     const st = stressLabel(s.home.stress);
     card.append(h('div.task', { style: { borderColor: st.c, background: 'rgba(255,91,122,.08)' } }, h('span', { style: { fontSize: '22px' } }, st.e), h('div.grow', {}, h('b', {}, `Evde durum: ${st.t}`), h('div.tiny.muted', {}, 'Ailenin paraya ihtiyacı var. Çalışıp destek olabilirsin (Ev sekmesi).')), btn('Ev', () => { app.tab = 'ev'; render(); }, 'sm')));
   }
+  const risk = !infant ? atRisk(s) : [];
+  if (risk.length) card.append(h('div.task', { style: { borderColor: '#ff8a5b', background: 'rgba(255,138,91,.08)' } },
+    h('span', { style: { fontSize: '22px' } }, '⚖️'),
+    h('div.grow', {}, h('b', {}, 'İhmal etme: ' + risk.map(r => `${r.icon} ${r.name}`).join(', ')), h('div.tiny.muted', {}, risk.map(r => `${r.name}: ${r.neglect}. yıl olacak`).join(' · ') + '. Yıl sonunda bedeli var!'))));
   const pend = Y.pendingEventCount(s);
   if (pend > 0 && !infant) card.append(h('div.task', { style: { borderColor: '#b36bff', background: 'rgba(179,107,255,.1)' } }, h('span', { style: { fontSize: '22px' } }, '🃏'), h('b.grow', {}, `${pend} olay kartı seni bekliyor`), btn('Aç', () => guard(() => F.afterAction(render)), 'sm')));
   if (infant) {
@@ -248,6 +253,8 @@ async function summarySheet(sum) {
       ...sum.expense.map(([k, v]) => h('div.sum-line', {}, k, h('b.neg', {}, '−' + fmtTL(v)))),
       (sum.income.length || sum.expense.length) ? h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Net'), h('b', { class: sum.net >= 0 ? 'pos' : 'neg' }, (sum.net >= 0 ? '+' : '−') + fmtTL(Math.abs(sum.net)))) : null),
     sum.home && s.family.parents.some(p => p.alive) ? h('div.sum-line', {}, `🏠 ${livingHome(s) ? 'Evin' : 'Anne-babanın evi'}: ${stressLabel(sum.home.stress).t}`, h('b', { class: sum.home.delta > 0 ? 'neg' : 'pos' }, `stres ${Math.round(sum.home.stress)} (${sum.home.delta > 0 ? '+' : ''}${Math.round(sum.home.delta)})`)) : null,
+    sum.good?.length ? h('div.sec-title', {}, 'Alışkanlıklar') : null,
+    (sum.good || []).map(g => h('p.small', { style: { margin: '4px 0', color: '#8ff0c4' } }, g)),
     sum.notes.length ? h('div.sec-title', {}, 'Önemli') : null,
     sum.notes.map(n => h('p.small', { style: { margin: '5px 0' } }, n)),
     h('div.btns', {}, btn(sum.died ? 'Devam' : `▶ ${sum.age + 1} yaşına geç`, () => close(), 'primary block'))), { dismissable: false });
@@ -303,6 +310,18 @@ function meTab(render) {
     e.yksTop !== null ? h('div.sum-line', {}, 'YKS', h('b', {}, `ilk %${e.yksTop}`)) : null,
     e.dept ? h('div.sum-line', {}, 'Bölüm', h('b', {}, deptById[e.dept].name + (e.degree ? ' (mezun)' : ` · ${e.uniYears + 1}. sınıf`))) : null,
     h('div.sum-line', { style: { borderBottom: 0 } }, 'Sınav hazırlığı (genel)', h('b', {}, Y.examPrep(s, 'yks')))));
+  // Yaşam dengesi
+  if (s.bal && s.age >= 6) {
+    const done = domainsDone(s);
+    out.push(h('div.sec-title', {}, '⚖️ Yaşam dengesi'));
+    out.push(h('div.card', {},
+      Object.entries(DOMAINS).filter(([k, D]) => D.on(s)).map(([k, D]) => {
+        const b = s.bal[k];
+        const state = done.has(k) ? ['✅ Bu yıl yapıldı', '#3ddc97'] : b.neglect >= D.warn ? [`⚠️ ${b.neglect} yıldır ihmal`, '#ff5b7a'] : b.neglect > 0 ? [`${b.neglect} yıldır yok`, '#ffb547'] : ['—', 'var(--muted)'];
+        return h('div.sum-line', {}, h('span', {}, `${D.icon} ${D.name}`, b.streak >= 3 ? h('span.chip.green', { style: { marginLeft: '6px' } }, `🔥 ${b.streak} yıl seri`) : null), h('b', { style: { color: state[1] } }, state[0]));
+      }),
+      h('div.tiny.muted', { style: { marginTop: '8px' } }, 'Bir alanda 3 yıl üst üste emek verirsen alışkanlık ödülü alırsın. İhmal edersen: ders → unutma ve sınıfta kalma, spor → fizik ve sağlık kaybı, sosyal → yalnızlık, aile → kopukluk, dinlenme → tükenmişlik. Kullanmadığın beceriler 3 yıl sonra körelir.')));
+  }
   // Doğuştan gelenler
   out.push(h('div.sec-title', {}, '🎲 Doğuştan gelenler', h('span.tiny', { style: { textTransform: 'none', letterSpacing: 0 } }, '(seçilemez)')));
   const L = looks(s), K = charisma(s), M = MIZAC[s.traits.mizac];
@@ -386,7 +405,7 @@ async function menuSheet() {
     h('div.btns', {},
       btn('🏠 Ana menü', () => { close(); go('title'); }, 'block'),
       btn('⚙️ Ayarlar', () => { close(); go('settings', 'life'); }, 'block'),
-      btn('🏳️ Bu hayatı bitir', async () => { close(); if (await confirmBox('Hayatı bitir', 'Bu hayat sona erecek ve hayat albümün oluşturulacak. Emin misin?', 'Bitir', 'Vazgeç', 'danger')) { s.alive = false; s.deathCause = 'oyuncunun kararıyla'; save(); go('death'); } }, 'ghost block'),
+      btn('🗑️ Bu hayatı sil, yenisine başla (📺 3 reklam)', async () => { close(); const { abandonLife } = await import('./screens.js'); if (await abandonLife()) go('create'); }, 'ghost block'),
       btn('Kapat', () => close(), 'ghost block'))));
 }
 

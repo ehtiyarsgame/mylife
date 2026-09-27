@@ -15,6 +15,7 @@ import * as Y from '../sim/year.js';
 import { hintFor } from '../sim/stats.js';
 import { allGames, playMinigame } from '../minigames/index.js';
 import { lifeScreen, avatarOf } from './lifeScreen.js';
+import { watchAdsSeries } from './flows.js';
 import { clearLife } from '../core/store.js';
 
 // ——— BAŞLIK ———
@@ -28,9 +29,9 @@ route('title', root => {
     h('div.logo-sub', {}, 'Yaşamak istediğin hayatı, küçük de olsa gerçekten oynayarak yaşa.'),
     has ? h('div.card', { style: { marginBottom: '6px' } }, h('div.row', {}, h('div.avatar', {}, avatarOf(app.life)), h('div.grow', {}, h('b', {}, `${app.life.name} ${app.life.surname}`), h('div.small.muted', {}, `${app.life.age} yaş · ${app.life.gen}. nesil`)))) : null,
     has ? btn('▶  Devam et', () => go('life'), 'primary block') : null,
-    btn('✨  Yeni hayat', async () => { if (has && !(await confirmBox('Yeni hayat', 'Devam eden hayatın silinecek. Emin misin?', 'Yeni hayat başlat', 'Vazgeç', 'danger'))) return; go('create'); }, (has ? '' : 'primary ') + 'block'),
+    btn(has ? '✨  Yeni hayat (📺 3 reklam)' : '✨  Yeni hayat', async () => { if (has && !(await abandonLife())) return; go('create'); }, (has ? '' : 'primary ') + 'block'),
     h('div.menu-grid', { style: { marginTop: '6px' } },
-      btn([h('b', {}, '📅'), 'Günlük meydan okuma'], async () => { if (has && !(await confirmBox('Günlük meydan okuma', 'Herkes bugün aynı tohumla başlar. Devam eden hayatın silinecek.', 'Başla', 'Vazgeç'))) return; go('create', { daily: true }); }),
+      btn([h('b', {}, '📅'), 'Günlük meydan okuma'], async () => { if (has && !(await abandonLife())) return; go('create', { daily: true }); }),
       btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')),
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
       btn([h('b', {}, '⚙️'), 'Ayarlar'], () => go('settings', 'title'))),
@@ -38,11 +39,24 @@ route('title', root => {
   ));
 });
 
+// Devam eden hayatı silmek: kadere razı olmayanlar 3 reklam izler.
+export async function abandonLife() {
+  if (!(await confirmBox('Hayatını sil', 'Devam eden hayatın ve bütün emeklerin silinecek. Bu hayat, hayat albümüne girmeyecek.', 'Devam', 'Vazgeç', 'danger'))) return false;
+  if (!(await watchAdsSeries('abandon', 3, 'Yeni bir hayat mı?', 'Hayat zor olabilir ama kaçmak bedava değil: bu hayatı silip yenisine başlamak için 3 reklam izlemelisin. Ya da hayatına devam et — belki şansın döner.'))) return false;
+  endLifeSave();
+  return true;
+}
+
 // ——— YENİ HAYAT ———
 route('create', (root, opts = {}) => {
   const daily = !!opts.daily;
   let gender = Math.random() < 0.5 ? 'k' : 'e';
-  let seed = daily ? 'gunluk-' + todayKey() : String(Math.floor(Math.random() * 1e9));
+  // Zar bir kez atılır ve kaydedilir: ekrandan çıkıp girmek yeni zar atmaz. Yeniden atmak 3 reklam.
+  const m0 = app.meta;
+  if (daily) m0.pendingRoll = { seed: 'gunluk-' + todayKey(), daily: true };
+  else if (!m0.pendingRoll || m0.pendingRoll.daily) m0.pendingRoll = { seed: String(Math.floor(Math.random() * 1e9)) };
+  save();
+  let seed = m0.pendingRoll.seed;
   let rolled = null;
   const nameIn = h('input.input', { placeholder: 'İsim (boş bırakırsan zar seçer)', maxlength: 16 });
   const seg = h('div.seg');
@@ -80,12 +94,16 @@ route('create', (root, opts = {}) => {
     diceBox.append(h('p.small.muted', {}, '🎲 Anne-babanı, görünüşünü, karizmanı seçemezsin — bu senin zarın. 🧬 Ayrıca 12 alanda gizli yeteneklerin var; denedikçe ipuçları çıkacak.'));
     actions.replaceChildren(
       btn('🌱  Bu hayatı yaşa', start, 'primary block'),
-      daily ? null : btn('🎲  Zarı yeniden at', () => { seed = String(Math.floor(Math.random() * 1e9)); roll(); }, 'block'),
+      daily ? null : btn('🎲  Zarı yeniden at (📺 3 reklam)', async () => {
+        if (!(await watchAdsSeries('reroll', 3, 'Kaderini değiştir', 'Anne-babanı, doğduğun yeri ve doğuştan özelliklerini seçemezsin. Ya kadere razı olursun ya da 3 reklam izleyip zarı yeniden atarsın.'))) return;
+        seed = String(Math.floor(Math.random() * 1e9)); m0.pendingRoll = { seed }; save(); roll();
+      }, 'block'),
       btn('Geri', () => go('title'), 'ghost block'));
   };
   const start = () => {
     const name = nameIn.value.trim();
     const s = newLife({ seed, name: name || null, gender, daily });
+    delete app.meta.pendingRoll;
     if (!name) s.name = NAMES[gender][hashString(seed + gender) % NAMES[gender].length];
     // Kalıcı ilerleme: tamamlanan hayatlar başlangıç ipucu açar
     const ids = Object.keys(s.talents).sort((a, b) => s.talents[b] - s.talents[a]);
@@ -132,6 +150,23 @@ route('life', root => {
 route('death', root => {
   const s = app.life;
   if (!s) return go('title');
+  if (!s.albumSaved && !s.fateDone && !s.revived && s.deathCause !== 'oyuncunun kararıyla') {
+    root.append(h('div.screen.center', { style: { paddingTop: '60px' } },
+      h('div', { style: { fontSize: '72px' } }, '🕯️'),
+      h('h1', {}, 'Kader anı'),
+      h('p', {}, `${s.name} ${s.surname}, ${s.age} yaşında hayata gözlerini yumdu.`), h('p.small', {}, `Sebep: ${s.deathCause}`),
+      h('p.small.muted', {}, 'Kadere razı olabilir ya da bir kez, 3 reklam izleyerek ikinci bir şans alabilirsin.'),
+      h('div.col', { style: { marginTop: '18px' } },
+        btn('🕊️ Kadere razıyım', () => { s.fateDone = true; save(); go('death'); }, 'primary block'),
+        btn('📺 İkinci şans (3 reklam)', async () => {
+          if (!(await watchAdsSeries('revive', 3, 'İkinci şans', 'Hayat pamuk ipliğine bağlı. 3 reklamın sonunda gözlerini hastanede açacaksın — ama bu şans her hayatta yalnızca bir kez var.'))) return;
+          s.alive = true; s.revived = true; s.deathCause = null;
+          s.stats.saglik = Math.max(s.stats.saglik, 45); s.stats.mutluluk = Math.max(s.stats.mutluluk, 50);
+          Y.log(s, 'Ölümün eşiğinden döndü: ikinci bir şans.', 'legendary');
+          Y.startYear(s); save(); go('life');
+        }, 'gold block'))));
+    return;
+  }
   const score = Y.lifeScore(s);
   const m = app.meta;
   if (!s.albumSaved) {

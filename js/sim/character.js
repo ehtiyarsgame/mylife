@@ -8,6 +8,7 @@ import { PARENT_JOBS, JOBS } from './careers.js';
 import { NAMES, SURNAMES, CITIES } from './names.js';
 import { rollTraits } from './traits.js';
 import { initHome } from './household.js';
+import { initBalance } from './balance.js';
 
 export const WEALTH = {
   fakir:    { name: 'Fakir',    icon: '🏚️' },
@@ -92,6 +93,7 @@ export function newLife({ seed, name, gender, surname, daily = false, inherit = 
     talents: r.talents,
     traits: r.traits,
     home: null,
+    bal: initBalance(),
     hints: {},
     hintAds: 0,
     stats: {
@@ -186,6 +188,7 @@ export function migrate(s) {
   const rng = new RNG(s.rng);
   if (!s.traits) s.traits = rollTraits(rng);
   if (!s.home) s.home = initHome(s.family.wealth, s.family.siblings, rng);
+  if (!s.bal) s.bal = initBalance();
   s.energy.max = CONFIG_ENERGY_MAX;
   s.rng = rng.s;
   return s;
