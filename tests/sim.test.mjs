@@ -160,3 +160,10 @@ test('spor alışkanlığı sağlığı korur, hareketsizlik düşürür', () =>
   }
   assert.ok(active.stats.saglik > lazy.stats.saglik + 3, `${active.stats.saglik} vs ${lazy.stats.saglik}`);
 });
+
+test('kimse 18 yaşından sonra ortaokulda/lisede takılı kalmaz', () => {
+  for (let i = 0; i < 40; i++) {
+    const s = botLife('okul' + i, 20);
+    assert.ok(!(s.age >= 19 && ['orta', 'lise'].includes(s.edu.stage) && !s.flags.yksTekrar), `${s.age} yaşında ${s.edu.stage}`);
+  }
+});

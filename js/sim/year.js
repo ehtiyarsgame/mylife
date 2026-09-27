@@ -310,7 +310,7 @@ export function applyExam(s, examId, res) {
       else if (res.score >= 70) out.lines.push('📄 Teşekkür belgesi aldın.');
       else if (res.score < 45) { addStat(s, 'mutluluk', -3); out.lines.push('Karnen zayıf geldi. Seneye daha çok çalışmalısın.'); }
       const g = s.edu.grades;
-      if (['orta', 'lise'].includes(s.edu.stage) && res.score < 40 && g.length >= 2 && g[g.length - 2] < 40) {
+      if (['orta', 'lise'].includes(s.edu.stage) && res.score < 40 && g.length >= 2 && g[g.length - 2] < 40 && (s.edu.delay || 0) < 2 && s.age < 17) {
         s.edu.delay = (s.edu.delay || 0) + 1;
         s.counters.sinifTekrar = (s.counters.sinifTekrar || 0) + 1;
         addStat(s, 'mutluluk', -8);
@@ -824,6 +824,12 @@ export function endYear(s) {
         log(s, `${D.name} bölümünden mezun oldu.`, 'rare');
         addStat(s, 'itibar', 5);
       }
+    }
+    // 18 yaşına gelip hâlâ ortaokul/lisedeysen örgün eğitim biter: açık liseyle devam edebilirsin
+    if (s.age + 1 >= 18 && ['orta', 'lise'].includes(s.edu.stage) && eduAge(s) + 1 < 18) {
+      s.edu.stage = 'done'; s.flags.okulBirakti = true;
+      sum.notes.push('🏫 Yaşın örgün eğitim sınırını geçti; okul hayatın sona erdi. Açık liseyle diplomanı alabilirsin.');
+      log(s, 'Örgün eğitimi tamamlayamadı; açık lise yolu açıldı.');
     }
     if (nextAge === 6) s.edu.stage = 'ilkokul';
     if (nextAge === 10 && s.edu.stage === 'ilkokul') s.edu.stage = 'orta';
