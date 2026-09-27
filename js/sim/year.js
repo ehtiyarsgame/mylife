@@ -653,6 +653,7 @@ export function endYear(s) {
       const wr = ['fakir', 'orta', 'varlikli', 'zengin'].indexOf(s.family.wealth);
       if (s.age < 18) cost = 0;                    // aile karşılar
       else if (s.edu.stage === 'uni') cost *= [1, 0.5, 0.1, 0][wr] * (s.flags.burs ? 0.5 : 1);
+      else if (!s.career.job && !s.career.biz && !s.career.retired) cost *= 0.55; // işsizken asgari yaşam (aileyle / küçük ev)
       if (s.rel.married) {
         cost *= 1.5;
         const pInc = 26000 * 12 * pi; s.money += pInc; sum.income.push([`${s.rel.partner?.name ?? 'Eş'}in katkısı`, pInc]);
@@ -677,9 +678,12 @@ export function endYear(s) {
         log(s, 'İflas etti ve yeniden başladı.', 'rare');
         s.money = 0;
       } else if (s.money < 0) {
-        s.money *= 1.2; // borç faizi
+        s.money *= 1.1; // borç faizi
+        // Borç yapılandırma: borç en fazla 2 yıllık yaşam giderine kadar birikir
+        const cap = -2 * (CONFIG.livingCost.find(l => s.age >= l.age)?.cost ?? 12000) * 12 * pi;
+        if (s.money < cap) { s.money = cap; addStat(s, 'itibar', -2); sum.notes.push('🏦 Borcun yapılandırıldı; faiz durduruldu ama itibarın biraz zedelendi.'); }
         addStat(s, 'mutluluk', -5);
-        sum.notes.push('💳 Borçlusun. Borç her yıl %20 büyür; gelirini artırmalı ya da giderini azaltmalısın.');
+        sum.notes.push('💳 Borçlusun. Borç her yıl %10 büyür; bir iş bulmak ya da gideri azaltmak toparlanmanın yolu.');
       }
     }
 
