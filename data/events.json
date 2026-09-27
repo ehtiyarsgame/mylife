@@ -1,0 +1,4531 @@
+[
+ {
+  "id": "ilk_kelime",
+  "rarity": "common",
+  "icon": "👶",
+  "title": "İlk kelime",
+  "cond": {
+   "age": [
+    0,
+    1
+   ]
+  },
+  "once": true,
+  "text": "{ad} bugün ilk kelimesini söyledi! Herkes kendi adının söylendiğini iddia ediyor.",
+  "options": [
+   {
+    "text": "\"Anne!\"",
+    "effects": {
+     "stats": {
+      "mutluluk": 3,
+      "sosyal": 1
+     }
+    },
+    "result": "{anne} gözyaşlarını tutamadı."
+   },
+   {
+    "text": "\"Baba!\"",
+    "effects": {
+     "stats": {
+      "mutluluk": 3,
+      "sosyal": 1
+     }
+    },
+    "result": "{baba} bütün akrabaları aradı."
+   },
+   {
+    "text": "\"Top!\"",
+    "effects": {
+     "skills": {
+      "futbol": 2
+     }
+    },
+    "result": "Evde herkes güldü. Top hep elinde."
+   }
+  ]
+ },
+ {
+  "id": "ilk_adim",
+  "rarity": "common",
+  "icon": "🚶",
+  "title": "İlk adımlar",
+  "cond": {
+   "age": [
+    0,
+    2
+   ]
+  },
+  "once": true,
+  "text": "Sehpaya tutunup ilk adımlarını attın. Ailen seni nasıl cesaretlendirsin?",
+  "options": [
+   {
+    "text": "Bol bol yürüyüşe çıkarsınlar",
+    "effects": {
+     "stats": {
+      "fizik": 3,
+      "saglik": 2
+     }
+    },
+    "result": "Parklar senin oldu."
+   },
+   {
+    "text": "Güvenli bir oyun alanı kursunlar",
+    "effects": {
+     "stats": {
+      "disiplin": 1,
+      "mutluluk": 2
+     }
+    },
+    "result": "Kendi köşende keşiflere başladın."
+   }
+  ]
+ },
+ {
+  "id": "oyuncak",
+  "rarity": "common",
+  "icon": "🧸",
+  "title": "Doğum günü hediyesi",
+  "cond": {
+   "age": [
+    1,
+    5
+   ]
+  },
+  "weight": 2,
+  "text": "Ailen doğum günün için bir hediye seçiyor. Hangisine uzanacaksın?",
+  "options": [
+   {
+    "text": "⚽ Top",
+    "effects": {
+     "skills": {
+      "futbol": 3
+     },
+     "stats": {
+      "fizik": 1
+     }
+    },
+    "result": "Evde vazo kalmadı."
+   },
+   {
+    "text": "📚 Resimli kitap",
+    "effects": {
+     "skills": {
+      "dil": 3
+     },
+     "stats": {
+      "zeka": 1
+     }
+    },
+    "result": "Aynı kitabı yüz kez okuttun."
+   },
+   {
+    "text": "🧱 Yapı blokları",
+    "effects": {
+     "skills": {
+      "el": 2,
+      "matematik": 1
+     }
+    },
+    "result": "Kuleler, köprüler, kaleler…"
+   },
+   {
+    "text": "🖍️ Boya kalemleri",
+    "effects": {
+     "skills": {
+      "resim": 3
+     }
+    },
+    "result": "Duvarlar da nasibini aldı."
+   },
+   {
+    "text": "🎹 Oyuncak piyano",
+    "effects": {
+     "skills": {
+      "muzik": 3
+     }
+    },
+    "result": "Evde bir konser eksik olmadı."
+   }
+  ]
+ },
+ {
+  "id": "anaokulu",
+  "rarity": "common",
+  "icon": "🏫",
+  "title": "Anaokulu",
+  "cond": {
+   "age": [
+    3,
+    5
+   ]
+  },
+  "once": true,
+  "text": "Anaokulunun ilk günü. Kapıda ağlayan çocuklar var.",
+  "options": [
+   {
+    "text": "Ağlayan çocuğa oyuncağını ver",
+    "effects": {
+     "skills": {
+      "empati": 3
+     },
+     "stats": {
+      "sosyal": 2
+     }
+    },
+    "result": "İlk arkadaşını edindin.",
+    "honest": true
+   },
+   {
+    "text": "Doğrudan boyama masasına koş",
+    "effects": {
+     "skills": {
+      "resim": 2
+     },
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Öğretmenin çizimini panoya astı."
+   },
+   {
+    "text": "{anne}nin eteğine yapış",
+    "effects": {
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "İkinci gün daha kolay geçti."
+   }
+  ]
+ },
+ {
+  "id": "ates",
+  "rarity": "common",
+  "icon": "🤒",
+  "title": "Yüksek ateş",
+  "cond": {
+   "age": [
+    0,
+    6
+   ]
+  },
+  "text": "Bir gece ateşin 39 dereceye çıktı. Ailen seni hemen doktora götürdü.",
+  "options": [
+   {
+    "text": "İlaçlarını düzenli iç",
+    "effects": {
+     "stats": {
+      "saglik": -2,
+      "disiplin": 1
+     }
+    },
+    "result": "Birkaç günde toparlandın."
+   }
+  ]
+ },
+ {
+  "id": "kardes_dogdu",
+  "rarity": "rare",
+  "icon": "🍼",
+  "title": "Kardeşin oldu",
+  "cond": {
+   "age": [
+    2,
+    9
+   ]
+  },
+  "once": true,
+  "text": "Eve minik bir kardeş geldi. Artık ilgi paylaşılacak.",
+  "options": [
+   {
+    "text": "Abla/abi gibi davran, yardım et",
+    "effects": {
+     "skills": {
+      "empati": 3
+     },
+     "stats": {
+      "disiplin": 2,
+      "mutluluk": 2
+     }
+    },
+    "result": "Kardeşin ilk gülümsemesini sana yaptı."
+   },
+   {
+    "text": "Biraz kıskan",
+    "effects": {
+     "stats": {
+      "mutluluk": -3
+     }
+    },
+    "result": "Zamanla kardeşini sevmeyi öğrendin."
+   }
+  ]
+ },
+ {
+  "id": "dede_hikaye",
+  "rarity": "common",
+  "icon": "👴",
+  "title": "Dedenin hikâyeleri",
+  "cond": {
+   "age": [
+    2,
+    8
+   ]
+  },
+  "text": "Deden eski zamanları anlatıyor: tarlalar, pazarlar, zor yıllar.",
+  "options": [
+   {
+    "text": "Pazar hikâyelerini sor",
+    "effects": {
+     "skills": {
+      "ticaret": 2
+     }
+    },
+    "result": "\"Esnaf dediğin sözünün eri olur.\""
+   },
+   {
+    "text": "Tarla hikâyelerini sor",
+    "effects": {
+     "skills": {
+      "doga": 2
+     }
+    },
+    "result": "Toprağın dilini dinledin."
+   },
+   {
+    "text": "Masal iste",
+    "effects": {
+     "skills": {
+      "dil": 2
+     },
+     "stats": {
+      "mutluluk": 1
+     }
+    },
+    "result": "Uykuya dalana dek dinledin."
+   }
+  ]
+ },
+ {
+  "id": "bocek",
+  "rarity": "common",
+  "icon": "🐞",
+  "title": "Bahçede keşif",
+  "cond": {
+   "age": [
+    2,
+    7
+   ]
+  },
+  "text": "Bahçede bir uğur böceği buldun. Kanatlarını sayıyorsun.",
+  "options": [
+   {
+    "text": "Nasıl uçtuğunu merak et",
+    "effects": {
+     "skills": {
+      "fen": 2,
+      "doga": 1
+     }
+    },
+    "result": "İlk bilimsel gözlemin!"
+   },
+   {
+    "text": "Resmini çiz",
+    "effects": {
+     "skills": {
+      "resim": 2
+     }
+    },
+    "result": "Yedi noktayı tek tek boyadın."
+   }
+  ]
+ },
+ {
+  "id": "tablet",
+  "rarity": "common",
+  "icon": "📱",
+  "title": "Tablet mi, oyun parkı mı?",
+  "cond": {
+   "age": [
+    2,
+    6
+   ]
+  },
+  "text": "Misafirlikte seni tabletle oyalamak istiyorlar.",
+  "options": [
+   {
+    "text": "Eğitici bir uygulama aç",
+    "effects": {
+     "skills": {
+      "teknoloji": 2
+     }
+    },
+    "result": "Harfleri ve sayıları bir oyunla öğrendin."
+   },
+   {
+    "text": "Diğer çocuklarla dışarıda oyna",
+    "effects": {
+     "stats": {
+      "sosyal": 2,
+      "fizik": 1
+     }
+    },
+    "result": "Terli ama mutlu döndün."
+   }
+  ]
+ },
+ {
+  "id": "yetenek_parlama",
+  "rarity": "rare",
+  "icon": "✨",
+  "title": "Bir şey fark edildi",
+  "cond": {
+   "age": [
+    3,
+    6
+   ]
+  },
+  "once": true,
+  "text": "Bir akraban seni izlerken durdu: \"Bu çocukta bir şey var…\"",
+  "options": [
+   {
+    "text": "Merakla ne olduğunu sor",
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Yeteneklerin zamanla kendini gösterecek. Farklı şeyler dene!"
+   }
+  ]
+ },
+ {
+  "id": "okuma_yazma",
+  "rarity": "common",
+  "icon": "✏️",
+  "title": "Okuma yazma",
+  "cond": {
+   "age": [
+    6,
+    7
+   ]
+  },
+  "once": true,
+  "text": "Harfleri birleştirip ilk cümleni okudun: \"Ali topu at.\"",
+  "options": [
+   {
+    "text": "Tabelaları yüksek sesle oku",
+    "effects": {
+     "skills": {
+      "dil": 3
+     },
+     "stats": {
+      "zeka": 1
+     }
+    },
+    "result": "Artık yolculuklar daha eğlenceli."
+   },
+   {
+    "text": "Kendi hikâyeni yaz",
+    "effects": {
+     "skills": {
+      "dil": 2,
+      "resim": 1
+     }
+    },
+    "result": "İlk kitabın: 3 sayfa, bol resimli."
+   }
+  ]
+ },
+ {
+  "id": "kayip_cuzdan",
+  "rarity": "common",
+  "icon": "👛",
+  "title": "Yerde bir cüzdan",
+  "cond": {
+   "age": [
+    7,
+    70
+   ]
+  },
+  "text": "Yolda içi para dolu bir cüzdan buldun. İçinde bir kimlik de var.",
+  "options": [
+   {
+    "text": "Sahibini bul ve teslim et",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Sahibi çok duygulandı; mahallede adın dürüste çıktı."
+   },
+   {
+    "text": "Karakola götür",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "disiplin": 1
+     }
+    },
+    "result": "Polis memuru seni tebrik etti."
+   }
+  ]
+ },
+ {
+  "id": "zorbalik",
+  "rarity": "common",
+  "icon": "😠",
+  "title": "Okulda zorbalık",
+  "cond": {
+   "age": [
+    8,
+    15
+   ]
+  },
+  "text": "Sınıftan biri, daha küçük bir çocuğun beslenmesini zorla alıyor.",
+  "options": [
+   {
+    "text": "Öğretmene söyle",
+    "effects": {
+     "stats": {
+      "itibar": 2,
+      "disiplin": 1
+     }
+    },
+    "result": "Öğretmen durumu çözdü; küçük çocuk sana teşekkür etti."
+   },
+   {
+    "text": "Arkadaşını savun",
+    "effects": {
+     "skills": {
+      "liderlik": 3,
+      "empati": 2
+     },
+     "stats": {
+      "sosyal": 2
+     }
+    },
+    "result": "Sesini yükseltince diğerleri de yanına geldi. Zorba geri çekildi."
+   },
+   {
+    "text": "Görmezden gel",
+    "effects": {
+     "stats": {
+      "mutluluk": -3
+     }
+    },
+    "result": "O gece aklından çıkmadı. Bir dahakine susmayacaksın."
+   }
+  ]
+ },
+ {
+  "id": "zorbalik_hedef",
+  "rarity": "rare",
+  "icon": "🛡️",
+  "title": "Hedef sensin",
+  "cond": {
+   "age": [
+    9,
+    15
+   ],
+   "statsMax": {
+    "sosyal": 40
+   }
+  },
+  "text": "Birkaç çocuk seninle alay ediyor, eşyalarını saklıyor.",
+  "options": [
+   {
+    "text": "Ailene ve rehber öğretmene anlat",
+    "effects": {
+     "stats": {
+      "mutluluk": 2,
+      "disiplin": 1
+     }
+    },
+    "result": "Okul hemen önlem aldı. Yalnız olmadığını gördün."
+   },
+   {
+    "text": "Kendine yeni bir arkadaş grubu bul",
+    "effects": {
+     "stats": {
+      "sosyal": 3
+     },
+     "friend": 1
+    },
+    "result": "Satranç kulübünde seni seven insanlar buldun."
+   }
+  ]
+ },
+ {
+  "id": "ogretmen_ilgi",
+  "rarity": "rare",
+  "icon": "👩‍🏫",
+  "title": "Öğretmenin seni fark etti",
+  "cond": {
+   "age": [
+    7,
+    17
+   ],
+   "edu": [
+    "ilkokul",
+    "orta",
+    "lise"
+   ]
+  },
+  "text": "Öğretmenin, derste sorduğun soruyu çok beğendi. Teneffüste yanına çağırdı.",
+  "options": [
+   {
+    "text": "Ek okuma listesi iste",
+    "effects": {
+     "flags": [
+      "ogretmen"
+     ],
+     "skills": {
+      "dil": 2
+     },
+     "stats": {
+      "zeka": 1
+     }
+    },
+    "result": "Artık sınavlarda 'Öğretmene sor' jokerin var."
+   },
+   {
+    "text": "Proje ödevinde yardım iste",
+    "effects": {
+     "flags": [
+      "ogretmen"
+     ],
+     "skills": {
+      "fen": 2
+     }
+    },
+    "result": "Artık sınavlarda 'Öğretmene sor' jokerin var."
+   }
+  ]
+ },
+ {
+  "id": "kutuphane",
+  "rarity": "common",
+  "icon": "🏛️",
+  "title": "Kütüphane kartı",
+  "cond": {
+   "age": [
+    7,
+    16
+   ]
+  },
+  "text": "Mahalledeki kütüphane yaz okuma yarışması düzenliyor.",
+  "options": [
+   {
+    "text": "Katıl, 20 kitap hedefle",
+    "effects": {
+     "skills": {
+      "dil": 4
+     },
+     "stats": {
+      "disiplin": 2
+     }
+    },
+    "result": "Yaz sonunda madalyanı aldın."
+   },
+   {
+    "text": "Yazı dışarıda geçir",
+    "effects": {
+     "stats": {
+      "fizik": 2,
+      "mutluluk": 2
+     }
+    },
+    "result": "Bisikletle keşfedilmedik sokak kalmadı."
+   }
+  ]
+ },
+ {
+  "id": "sokak_kedisi",
+  "rarity": "common",
+  "icon": "🐈",
+  "title": "Yaralı kedi",
+  "cond": {
+   "age": [
+    6,
+    17
+   ]
+  },
+  "text": "Okul yolunda patisi yaralı bir kedi buldun.",
+  "options": [
+   {
+    "text": "Veterinere götürmek için ailenden yardım iste",
+    "effects": {
+     "skills": {
+      "empati": 3,
+      "doga": 2
+     },
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Kediye 'Pamuk' adını verdin; artık hep kapınızda."
+   },
+   {
+    "text": "Su ve mama bırak",
+    "effects": {
+     "skills": {
+      "empati": 1
+     }
+    },
+    "result": "Ertesi gün kedi seni bekliyordu."
+   }
+  ]
+ },
+ {
+  "id": "satranc",
+  "rarity": "common",
+  "icon": "♟️",
+  "title": "Satranç turnuvası",
+  "cond": {
+   "age": [
+    7,
+    16
+   ]
+  },
+  "text": "Okulda satranç turnuvası var. Katılacak mısın?",
+  "options": [
+   {
+    "text": "Katıl, strateji çalış",
+    "effects": {
+     "skills": {
+      "matematik": 3
+     },
+     "stats": {
+      "zeka": 2,
+      "disiplin": 1
+     }
+    },
+    "result": "Çeyrek finale kadar yükseldin."
+   },
+   {
+    "text": "Seyirci ol",
+    "effects": {
+     "stats": {
+      "sosyal": 1
+     }
+    },
+    "result": "Bir dahakine sen de oynayacaksın."
+   }
+  ]
+ },
+ {
+  "id": "arkadas_tasindi",
+  "rarity": "common",
+  "icon": "📦",
+  "title": "Arkadaşın taşınıyor",
+  "cond": {
+   "age": [
+    7,
+    16
+   ]
+  },
+  "text": "{arkadas} başka bir şehre taşınıyor.",
+  "options": [
+   {
+    "text": "Veda hediyesi hazırla",
+    "effects": {
+     "skills": {
+      "empati": 2,
+      "resim": 1
+     },
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Yıllarca mektuplaştınız."
+   },
+   {
+    "text": "Görüntülü konuşma sözü ver",
+    "effects": {
+     "stats": {
+      "mutluluk": -1
+     }
+    },
+    "result": "Mesafe dostluğu bitirmedi."
+   }
+  ]
+ },
+ {
+  "id": "bilim_senligi",
+  "rarity": "rare",
+  "icon": "🧪",
+  "title": "Bilim şenliği",
+  "cond": {
+   "age": [
+    8,
+    14
+   ],
+   "skills": {
+    "fen": 15
+   }
+  },
+  "text": "Okulun bilim şenliğine bir deney hazırlamalısın.",
+  "options": [
+   {
+    "text": "Limon pili yap",
+    "mg": "devre",
+    "mgSkill": "fen",
+    "stakes": 0.4,
+    "success": {
+     "min": 60,
+     "effects": {
+      "skills": {
+       "fen": 4
+      },
+      "stats": {
+       "itibar": 2,
+       "mutluluk": 3
+      }
+     },
+     "result": "Ampul yandı, salon alkışladı!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "fen": 2
+      }
+     },
+     "result": "Ampul yanmadı ama neden yanmadığını anlattın; jüri bunu da beğendi."
+    }
+   },
+   {
+    "text": "Volkan maketi yap",
+    "effects": {
+     "skills": {
+      "fen": 2,
+      "resim": 2
+     }
+    },
+    "result": "Köpüren lav herkesi güldürdü."
+   }
+  ]
+ },
+ {
+  "id": "mahalle_turnuva",
+  "rarity": "rare",
+  "icon": "🏆",
+  "title": "Mahalle turnuvası finali",
+  "cond": {
+   "age": [
+    8,
+    14
+   ],
+   "train": {
+    "futbol": 1
+   }
+  },
+  "text": "Mahalle turnuvasının finali! Skor berabere, son dakika. Top sende.",
+  "options": [
+   {
+    "text": "Kaleciyi çalımla",
+    "mg": "calim",
+    "mgSkill": "futbol",
+    "stakes": 0.5,
+    "success": {
+     "min": 60,
+     "effects": {
+      "skills": {
+       "futbol": 4
+      },
+      "stats": {
+       "mutluluk": 5,
+       "itibar": 2
+      }
+     },
+     "result": "Gol! Omuzlarda taşındın."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "futbol": 2
+      },
+      "stats": {
+       "mutluluk": -1
+      }
+     },
+     "result": "Top direkten döndü. Maç penaltılarda kaybedildi ama çok iyi oynadın."
+    }
+   },
+   {
+    "text": "Boştaki arkadaşına pas ver",
+    "effects": {
+     "skills": {
+      "futbol": 2,
+      "liderlik": 2
+     },
+     "stats": {
+      "sosyal": 2
+     }
+    },
+    "result": "Arkadaşın golü attı, ilk sarıldığı sen oldun."
+   }
+  ]
+ },
+ {
+  "id": "bakkal_amca",
+  "rarity": "common",
+  "icon": "🏪",
+  "title": "Bakkal Hüsnü Amca",
+  "cond": {
+   "age": [
+    7,
+    13
+   ]
+  },
+  "text": "Bakkal Hüsnü Amca sana fazladan para üstü verdi.",
+  "options": [
+   {
+    "text": "Geri dön ve fazlasını iade et",
+    "honest": true,
+    "effects": {
+     "skills": {
+      "ticaret": 1
+     }
+    },
+    "result": "\"Sen büyüyünce iyi esnaf olursun\" dedi, bir de çikolata verdi."
+   }
+  ]
+ },
+ {
+  "id": "karne_hediye",
+  "rarity": "common",
+  "icon": "🎁",
+  "title": "Karne hediyesi",
+  "cond": {
+   "age": [
+    7,
+    17
+   ],
+   "flags": [
+    "takdir"
+   ]
+  },
+  "text": "Takdir belgen için ailen sana hediye almak istiyor.",
+  "options": [
+   {
+    "text": "Bisiklet",
+    "effects": {
+     "stats": {
+      "fizik": 2,
+      "mutluluk": 3
+     },
+     "unflags": [
+      "takdir"
+     ]
+    },
+    "result": "Rüzgârı yüzünde hissettin."
+   },
+   {
+    "text": "Bilim seti",
+    "effects": {
+     "skills": {
+      "fen": 3
+     },
+     "unflags": [
+      "takdir"
+     ]
+    },
+    "result": "Mutfak laboratuvara döndü."
+   },
+   {
+    "text": "Parayı biriktir",
+    "effects": {
+     "money": 1500,
+     "stats": {
+      "disiplin": 2
+     },
+     "unflags": [
+      "takdir"
+     ]
+    },
+    "result": "Kumbaran ağırlaştı."
+   }
+  ]
+ },
+ {
+  "id": "koy_hasat",
+  "rarity": "common",
+  "icon": "🌾",
+  "title": "Hasat zamanı",
+  "cond": {
+   "age": [
+    7,
+    17
+   ],
+   "place": [
+    "koy",
+    "kasaba"
+   ]
+  },
+  "text": "Bütün köy hasatta. Herkes yardım ediyor.",
+  "options": [
+   {
+    "text": "Sen de tarlaya çık",
+    "mg": "hasat",
+    "mgSkill": "doga",
+    "stakes": 0.35,
+    "success": {
+     "min": 55,
+     "effects": {
+      "skills": {
+       "doga": 3
+      },
+      "money": 1200,
+      "stats": {
+       "fizik": 1
+      }
+     },
+     "result": "Ürün zamanında toplandı; dedeler seni övdü."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "doga": 1
+      }
+     },
+     "result": "Biraz ürün çürüdü ama çok şey öğrendin."
+    }
+   },
+   {
+    "text": "Sofra hazırlığına yardım et",
+    "effects": {
+     "skills": {
+      "empati": 2
+     },
+     "stats": {
+      "sosyal": 1
+     }
+    },
+    "result": "Tarladaki herkese ayran taşıdın."
+   }
+  ]
+ },
+ {
+  "id": "sehir_kurs",
+  "rarity": "common",
+  "icon": "🏙️",
+  "title": "Hafta sonu atölyesi",
+  "cond": {
+   "age": [
+    8,
+    16
+   ],
+   "place": [
+    "sehir"
+   ]
+  },
+  "text": "Belediye ücretsiz hafta sonu atölyeleri açıyor.",
+  "options": [
+   {
+    "text": "Robotik",
+    "effects": {
+     "skills": {
+      "teknoloji": 3,
+      "el": 1
+     }
+    },
+    "result": "Çizgi izleyen robotun parkuru bitirdi."
+   },
+   {
+    "text": "Tiyatro",
+    "effects": {
+     "skills": {
+      "dil": 2,
+      "liderlik": 1
+     },
+     "stats": {
+      "sosyal": 2
+     }
+    },
+    "result": "Sahne korkunu yendin."
+   },
+   {
+    "text": "Seramik",
+    "effects": {
+     "skills": {
+      "resim": 2,
+      "el": 2
+     }
+    },
+    "result": "Annene yamuk ama güzel bir vazo."
+   }
+  ]
+ },
+ {
+  "id": "izci",
+  "rarity": "legendary",
+  "icon": "🔭",
+  "title": "Mahalle maçında izci",
+  "cond": {
+   "age": [
+    10,
+    15
+   ],
+   "skills": {
+    "futbol": 38
+   },
+   "train": {
+    "futbol": 2
+   },
+   "notFlags": [
+    "altyapi"
+   ]
+  },
+  "once": true,
+  "text": "Tribünde not alan biri var. Büyük bir kulübün izcisi seni izliyor.",
+  "options": [
+   {
+    "text": "Maça odaklan",
+    "mg": "calim",
+    "mgSkill": "futbol",
+    "stakes": 0.45,
+    "success": {
+     "min": 55,
+     "effects": {
+      "door": "futbol_altyapi",
+      "flags": [
+       "altyapi"
+      ],
+      "stats": {
+       "mutluluk": 8,
+       "itibar": 3
+      },
+      "chain": {
+       "id": "izci_aile",
+       "delay": 0
+      }
+     },
+     "result": "İzci yanına geldi: \"Pazartesi kulübe gel.\" Altyapı kapısı açıldı!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "futbol": 2
+      },
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Heyecandan birkaç top kaçırdın. İzci kartvizit bıraktı: \"Çalışmaya devam et.\""
+    }
+   },
+   {
+    "text": "Heyecanlanıp gösteriş yap",
+    "mg": "calim",
+    "mgSkill": "futbol",
+    "stakes": 0.7,
+    "success": {
+     "min": 60,
+     "effects": {
+      "door": "futbol_altyapi",
+      "flags": [
+       "altyapi"
+      ],
+      "stats": {
+       "mutluluk": 8,
+       "itibar": 2
+      },
+      "chain": {
+       "id": "izci_aile",
+       "delay": 0
+      }
+     },
+     "result": "Riskli çalımlar tuttu! İzci etkilendi. Altyapıdasın!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "futbol": 1
+      },
+      "stats": {
+       "mutluluk": -3
+      }
+     },
+     "result": "Gösteriş tutmadı. İzci başını salladı ve gitti. Ders alındı."
+    }
+   }
+  ]
+ },
+ {
+  "id": "izci_aile",
+  "rarity": "epic",
+  "icon": "🏠",
+  "title": "Ailenin kararı",
+  "chainOnly": true,
+  "text": "Kulüp tesisleri uzakta. Ailen bir karar vermek zorunda.",
+  "options": [
+   {
+    "text": "Aile kulübe yakın bir yere taşınsın",
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     },
+     "skills": {
+      "futbol": 3
+     },
+     "chain": {
+      "id": "u17_cagri",
+      "delay": 3
+     }
+    },
+    "result": "Yeni ev, yeni okul, yeni hayat. Her gün antrenmandasın."
+   },
+   {
+    "text": "Her gün servisle git",
+    "effects": {
+     "stats": {
+      "disiplin": 3,
+      "saglik": -1
+     },
+     "chain": {
+      "id": "u17_cagri",
+      "delay": 3
+     }
+    },
+    "result": "Yollar yorucu ama kararlısın."
+   }
+  ]
+ },
+ {
+  "id": "u17_cagri",
+  "rarity": "legendary",
+  "icon": "🇹🇷",
+  "title": "U17 Milli Takım çağrısı",
+  "chainOnly": true,
+  "cond": {
+   "flags": [
+    "altyapi"
+   ],
+   "skills": {
+    "futbol": 50
+   }
+  },
+  "text": "Telefon çaldı: U17 Milli Takımı seni kampa çağırıyor!",
+  "options": [
+   {
+    "text": "Kampta her şeyini ver",
+    "mg": "penalti",
+    "mgSkill": "futbol",
+    "stakes": 0.65,
+    "success": {
+     "min": 60,
+     "effects": {
+      "skills": {
+       "futbol": 5
+      },
+      "stats": {
+       "itibar": 6,
+       "mutluluk": 8
+      },
+      "counters": {
+       "altyapiIyi": 1
+      },
+      "title": "Genç Milli"
+     },
+     "result": "Hazırlık maçında penaltıyı attın. Ay-yıldızlı formayı giydin!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "futbol": 3
+      },
+      "stats": {
+       "mutluluk": 2
+      }
+     },
+     "result": "Kadroya giremedin ama hocalar isminin üstüne yıldız koydu."
+    }
+   }
+  ]
+ },
+ {
+  "id": "okul_secme",
+  "rarity": "common",
+  "icon": "🥅",
+  "title": "Okul takımı seçmeleri",
+  "cond": {
+   "age": [
+    10,
+    15
+   ],
+   "notFlags": [
+    "okulTakimi",
+    "altyapi"
+   ]
+  },
+  "text": "Beden eğitimi öğretmeni okul takımı için seçme yapıyor.",
+  "options": [
+   {
+    "text": "Seçmelere katıl",
+    "mg": "penalti",
+    "mgSkill": "futbol",
+    "stakes": 0.3,
+    "success": {
+     "min": 50,
+     "effects": {
+      "flags": [
+       "okulTakimi"
+      ],
+      "skills": {
+       "futbol": 3
+      },
+      "stats": {
+       "mutluluk": 3
+      }
+     },
+     "result": "Takımdasın! Formanın numarası 10."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "futbol": 1
+      }
+     },
+     "result": "Bu sefer olmadı. Mahalle maçlarında çalışmaya devam."
+    }
+   },
+   {
+    "text": "Katılma",
+    "effects": {},
+    "result": "Başka alanlara odaklandın."
+   }
+  ]
+ },
+ {
+  "id": "sinif_baskani",
+  "rarity": "common",
+  "icon": "🗳️",
+  "title": "Sınıf başkanlığı seçimi",
+  "cond": {
+   "age": [
+    8,
+    17
+   ]
+  },
+  "text": "Sınıf başkanlığı seçimi var. Aday olacak mısın?",
+  "options": [
+   {
+    "text": "Aday ol, konuşma yap",
+    "mg": "konusma",
+    "mgSkill": "liderlik",
+    "stakes": 0.35,
+    "success": {
+     "min": 55,
+     "effects": {
+      "skills": {
+       "liderlik": 4
+      },
+      "stats": {
+       "itibar": 3,
+       "sosyal": 2
+      }
+     },
+     "result": "Seçildin! İlk icraatın: sınıf kütüphanesi."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "liderlik": 2
+      }
+     },
+     "result": "Az farkla kaybettin ama sınıf seni dinledi."
+    }
+   },
+   {
+    "text": "Arkadaşını destekle",
+    "effects": {
+     "skills": {
+      "empati": 2
+     },
+     "friend": 1
+    },
+    "result": "Arkadaşın kazandı, sen de yardımcısı oldun."
+   }
+  ]
+ },
+ {
+  "id": "kopya_rica",
+  "rarity": "common",
+  "icon": "📝",
+  "title": "Arkadaşın yardım istiyor",
+  "cond": {
+   "age": [
+    10,
+    18
+   ],
+   "edu": [
+    "orta",
+    "lise"
+   ]
+  },
+  "text": "Yarınki yazılıdan önce {arkadas} çok endişeli: \"Hiçbir şey anlamadım\" diyor.",
+  "options": [
+   {
+    "text": "Akşam birlikte ders çalışmayı teklif et",
+    "honest": true,
+    "effects": {
+     "skills": {
+      "matematik": 2,
+      "empati": 2
+     },
+     "flags": [
+      "calismaGrubu"
+     ]
+    },
+    "result": "Birlikte çalıştınız; ikiniz de iyi not aldınız. Artık bir çalışma grubunuz var."
+   },
+   {
+    "text": "Öğretmene ek ders iste",
+    "effects": {
+     "skills": {
+      "empati": 1
+     },
+     "flags": [
+      "ogretmen"
+     ]
+    },
+    "result": "Öğretmen ikinize de etüt verdi."
+   }
+  ]
+ },
+ {
+  "id": "calisma_grubu",
+  "rarity": "common",
+  "icon": "👥",
+  "title": "Ders çalışma grubu",
+  "cond": {
+   "age": [
+    10,
+    22
+   ],
+   "notFlags": [
+    "calismaGrubu"
+   ]
+  },
+  "text": "Sınıfta bir çalışma grubu kuruluyor. Haftada iki akşam.",
+  "options": [
+   {
+    "text": "Katıl",
+    "effects": {
+     "flags": [
+      "calismaGrubu"
+     ],
+     "stats": {
+      "sosyal": 1,
+      "disiplin": 1
+     }
+    },
+    "result": "Sınavlarda 'Çalışma grubu' jokerin açıldı."
+   },
+   {
+    "text": "Tek başına çalışmayı tercih et",
+    "effects": {
+     "stats": {
+      "disiplin": 2
+     }
+    },
+    "result": "Kendi temponu seviyorsun."
+   }
+  ]
+ },
+ {
+  "id": "dolandirici_mesaj",
+  "rarity": "common",
+  "icon": "📩",
+  "title": "\"Tebrikler, kazandınız!\"",
+  "cond": {
+   "age": [
+    11,
+    80
+   ]
+  },
+  "text": "Telefonuna bir mesaj geldi: \"Telefon kazandınız! Kart bilgilerinizi girin.\"",
+  "options": [
+   {
+    "text": "Sil ve ailene/çevrene haber ver",
+    "effects": {
+     "skills": {
+      "teknoloji": 2
+     },
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Bu bir oltalama saldırısıydı. Bir arkadaşını da uyardın."
+   },
+   {
+    "text": "Linke tıkla",
+    "effects": {
+     "moneyPct": -0.05,
+     "stats": {
+      "mutluluk": -4
+     },
+     "skills": {
+      "teknoloji": 1
+     }
+    },
+    "result": "Hesabından para çekildi. Bankayı aradın; bir dahaki sefere dikkat!"
+   }
+  ]
+ },
+ {
+  "id": "ekran_bagimliligi",
+  "rarity": "common",
+  "icon": "📵",
+  "title": "Ekrana gömüldün",
+  "cond": {
+   "age": [
+    11,
+    25
+   ]
+  },
+  "text": "Fark ettin ki gününün 6 saati telefonda geçiyor.",
+  "options": [
+   {
+    "text": "Ekran süresi sınırı koy",
+    "effects": {
+     "stats": {
+      "disiplin": 3,
+      "mutluluk": 1
+     },
+     "energy": 10
+    },
+    "result": "Uykun düzeldi, enerjin arttı."
+   },
+   {
+    "text": "Boş ver",
+    "effects": {
+     "stats": {
+      "disiplin": -2,
+      "saglik": -1
+     }
+    },
+    "result": "Gözlerin yorgun, aklın dağınık."
+   }
+  ]
+ },
+ {
+  "id": "bilim_olimpiyati",
+  "rarity": "epic",
+  "icon": "🥇",
+  "title": "Bilim olimpiyatı",
+  "cond": {
+   "age": [
+    12,
+    17
+   ],
+   "stats": {
+    "zeka": 45
+   }
+  },
+  "once": true,
+  "text": "Ulusal bilim olimpiyatlarına seçildin! Final sınavı çok zor.",
+  "options": [
+   {
+    "text": "Sınava gir",
+    "mg": "hizlimat",
+    "mgSkill": "matematik",
+    "stakes": 0.7,
+    "success": {
+     "min": 62,
+     "effects": {
+      "skills": {
+       "matematik": 4,
+       "fen": 4
+      },
+      "stats": {
+       "itibar": 6,
+       "mutluluk": 6
+      },
+      "money": 8000,
+      "flags": [
+       "burs"
+      ],
+      "title": "Olimpiyat Madalyalı"
+     },
+     "result": "Bronz madalya! Üniversite bursu cebinde."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "matematik": 2
+      },
+      "stats": {
+       "itibar": 2
+      }
+     },
+     "result": "Madalya çıkmadı ama finale kalmak bile büyük başarı."
+    }
+   }
+  ]
+ },
+ {
+  "id": "harclik_birikim",
+  "rarity": "common",
+  "icon": "🐷",
+  "title": "Kumbara",
+  "cond": {
+   "age": [
+    8,
+    16
+   ]
+  },
+  "text": "Harçlığından bir miktar kaldı.",
+  "options": [
+   {
+    "text": "Kumbaraya at",
+    "effects": {
+     "stats": {
+      "disiplin": 2
+     },
+     "money": 600
+    },
+    "result": "Biriktirmenin keyfi başka."
+   },
+   {
+    "text": "Arkadaşlarına dondurma ısmarla",
+    "effects": {
+     "stats": {
+      "sosyal": 2,
+      "mutluluk": 2
+     }
+    },
+    "result": "O yaz herkes seni hatırlayacak."
+   }
+  ]
+ },
+ {
+  "id": "bisiklet_tamir",
+  "rarity": "common",
+  "icon": "🚲",
+  "title": "Patlak lastik",
+  "cond": {
+   "age": [
+    8,
+    16
+   ]
+  },
+  "text": "Bisikletinin lastiği patladı.",
+  "options": [
+   {
+    "text": "Kendin tamir et",
+    "mg": "parca",
+    "mgSkill": "el",
+    "stakes": 0.25,
+    "success": {
+     "min": 50,
+     "effects": {
+      "skills": {
+       "el": 4
+      },
+      "stats": {
+       "mutluluk": 2
+      }
+     },
+     "result": "Yama tuttu. Artık mahallenin bisiklet ustasısın."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "el": 2
+      }
+     },
+     "result": "Bir parça artı. Tamirci abi eksik yeri gösterdi."
+    }
+   },
+   {
+    "text": "Tamirciye götür",
+    "effects": {
+     "money": -150
+    },
+    "result": "Tamirci nasıl yapıldığını gösterdi."
+   }
+  ]
+ },
+ {
+  "id": "sinav_kaygisi",
+  "rarity": "common",
+  "icon": "😰",
+  "title": "Sınav kaygısı",
+  "cond": {
+   "age": [
+    12,
+    18
+   ]
+  },
+  "text": "Büyük sınav yaklaştıkça uykuların kaçıyor.",
+  "options": [
+   {
+    "text": "Rehber öğretmenle konuş",
+    "effects": {
+     "stats": {
+      "mutluluk": 3,
+      "disiplin": 1
+     }
+    },
+    "result": "Nefes egzersizleri ve planlı çalışma işe yaradı."
+   },
+   {
+    "text": "Spor yaparak rahatla",
+    "effects": {
+     "stats": {
+      "fizik": 2,
+      "mutluluk": 2
+     }
+    },
+    "result": "Kafan boşaldı, odağın arttı."
+   },
+   {
+    "text": "Gece gündüz çalış",
+    "effects": {
+     "stats": {
+      "saglik": -3,
+      "zeka": 1
+     },
+     "counters": {
+      "ekCalisma": 1
+     }
+    },
+    "result": "Bilgin arttı ama yorgunsun."
+   }
+  ]
+ },
+ {
+  "id": "ilk_ask",
+  "rarity": "rare",
+  "icon": "💌",
+  "title": "İlk aşk",
+  "cond": {
+   "age": [
+    14,
+    18
+   ],
+   "partner": false
+  },
+  "once": true,
+  "text": "Sınıftan biri teneffüste sana bir not bıraktı. Kalbin güm güm.",
+  "options": [
+   {
+    "text": "Cevap yaz",
+    "effects": {
+     "partner": "new",
+     "stats": {
+      "mutluluk": 6
+     }
+    },
+    "result": "İlk aşk… Hiç unutulmayacak."
+   },
+   {
+    "text": "Utanıp arkadaş kal",
+    "effects": {
+     "stats": {
+      "sosyal": 1
+     }
+    },
+    "result": "Belki zamanı değil."
+   }
+  ]
+ },
+ {
+  "id": "rehberlik",
+  "rarity": "common",
+  "icon": "🧭",
+  "title": "Meslek rehberliği",
+  "cond": {
+   "age": [
+    14,
+    17
+   ]
+  },
+  "once": true,
+  "text": "Rehber öğretmen, yeteneklerini birlikte değerlendirmek istiyor.",
+  "options": [
+   {
+    "text": "Bir yetenek testi yap",
+    "effects": {
+     "counters": {
+      "rehberIpucu": 1
+     }
+    },
+    "result": "Sonuçlar, hangi alanlarda parlayabileceğine dair ipuçları verdi (Durum sekmesi)."
+   }
+  ]
+ },
+ {
+  "id": "proje_yarismasi",
+  "rarity": "legendary",
+  "icon": "🏆",
+  "title": "Proje yarışması birinciliği",
+  "cond": {
+   "age": [
+    15,
+    22
+   ],
+   "anyFlag": [
+    "staj",
+    "ogretmen",
+    "calismaGrubu"
+   ],
+   "skills": {
+    "teknoloji": 35
+   }
+  },
+  "once": true,
+  "text": "TÜBİTAK proje yarışmasında finale kaldın. Jüri önünde sistemini çalıştırmalısın.",
+  "options": [
+   {
+    "text": "Sistemi canlı çalıştır",
+    "mg": "devre",
+    "mgSkill": "teknoloji",
+    "stakes": 0.7,
+    "success": {
+     "min": 62,
+     "effects": {
+      "money": 60000,
+      "flags": [
+       "burs"
+      ],
+      "stats": {
+       "itibar": 10,
+       "mutluluk": 8
+      },
+      "skills": {
+       "teknoloji": 5
+      },
+      "title": "Genç Mucit"
+     },
+     "result": "Birincilik! Ödül, burs ve gazetelerde fotoğrafın."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "teknoloji": 3
+      },
+      "stats": {
+       "itibar": 3
+      }
+     },
+     "result": "Sistem son anda takıldı ama jüri fikrini mansiyonla ödüllendirdi."
+    }
+   }
+  ]
+ },
+ {
+  "id": "yurtdisi_burs",
+  "rarity": "epic",
+  "icon": "✈️",
+  "title": "Yurt dışı bursu",
+  "cond": {
+   "age": [
+    17,
+    18
+   ],
+   "stats": {
+    "zeka": 50
+   }
+  },
+  "once": true,
+  "text": "Not ortalaman sayesinde yurt dışında bir yaz okulu bursu kazandın.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "effects": {
+     "skills": {
+      "dil": 8,
+      "teknoloji": 2
+     },
+     "stats": {
+      "sosyal": 3,
+      "itibar": 4
+     },
+     "flags": [
+      "yurtdisi"
+     ]
+    },
+    "result": "Yeni bir dil, yeni bir dünya."
+   },
+   {
+    "text": "Reddet, ailenin yanında kal",
+    "effects": {
+     "stats": {
+      "mutluluk": 2
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Ailen bu kararına çok sevindi."
+   }
+  ]
+ },
+ {
+  "id": "mentor_ogretmen",
+  "rarity": "epic",
+  "icon": "🎓",
+  "title": "Bir mentor",
+  "cond": {
+   "age": [
+    12,
+    30
+   ],
+   "notFlags": [
+    "mentorVar"
+   ]
+  },
+  "once": true,
+  "text": "Alanında tanınmış biri seninle ilgilenmek istiyor. Hangi alanda rehberlik alacaksın?",
+  "options": [
+   {
+    "text": "⚽ Eski bir milli futbolcu",
+    "effects": {
+     "mentor": "futbol",
+     "mentorPath": "futbol",
+     "flags": [
+      "mentorVar"
+     ]
+    },
+    "result": "Futbol gelişimin %20 hızlandı."
+   },
+   {
+    "text": "🩺 Emekli bir cerrah",
+    "effects": {
+     "mentor": "fen",
+     "mentorPath": "doktor",
+     "flags": [
+      "mentorVar"
+     ]
+    },
+    "result": "Fen gelişimin %20 hızlandı."
+   },
+   {
+    "text": "💼 Başarılı bir tüccar",
+    "effects": {
+     "mentor": "ticaret",
+     "mentorPath": "tuccar",
+     "flags": [
+      "mentorVar"
+     ]
+    },
+    "result": "Ticaret gelişimin %20 hızlandı."
+   },
+   {
+    "text": "💻 Bir yazılım kurucusu",
+    "effects": {
+     "mentor": "teknoloji",
+     "mentorPath": "muhendis",
+     "flags": [
+      "mentorVar"
+     ]
+    },
+    "result": "Teknoloji gelişimin %20 hızlandı."
+   }
+  ]
+ },
+ {
+  "id": "sakatlik_genc",
+  "rarity": "rare",
+  "icon": "🩼",
+  "title": "Sakatlık",
+  "cond": {
+   "age": [
+    12,
+    34
+   ],
+   "train": {
+    "futbol": 2
+   }
+  },
+  "text": "Antrenmanda dizini burktun. Doktor dinlenmeni söylüyor.",
+  "options": [
+   {
+    "text": "Tedaviye sabırla uy",
+    "effects": {
+     "stats": {
+      "saglik": -4,
+      "disiplin": 2
+     },
+     "skills": {
+      "futbol": -1
+     }
+    },
+    "result": "Tam iyileştin; sabrın işe yaradı."
+   },
+   {
+    "text": "Erken sahalara dön",
+    "effects": {
+     "random": [
+      {
+       "w": 1,
+       "effects": {
+        "skills": {
+         "futbol": 1
+        }
+       },
+       "result": "Şansın yaver gitti."
+      },
+      {
+       "w": 2,
+       "effects": {
+        "stats": {
+         "saglik": -8
+        },
+        "skills": {
+         "futbol": -4
+        }
+       },
+       "result": "Sakatlık nüksetti. Bu kez daha uzun sürdü."
+      }
+     ]
+    },
+    "result": "Riskli bir karar…"
+   }
+  ]
+ },
+ {
+  "id": "fenomen",
+  "rarity": "rare",
+  "icon": "🎥",
+  "title": "Video viral oldu",
+  "cond": {
+   "age": [
+    13,
+    30
+   ]
+  },
+  "text": "Paylaştığın bir video bir gecede 1 milyon izlendi!",
+  "options": [
+   {
+    "text": "Faydalı içerik üretmeye devam et",
+    "effects": {
+     "stats": {
+      "itibar": 4,
+      "sosyal": 3
+     },
+     "skills": {
+      "teknoloji": 2
+     },
+     "money": 5000
+    },
+    "result": "Takipçilerin seni seviyor, küçük bir reklam geliri de başladı."
+   },
+   {
+    "text": "Ünlü olmaya odaklan",
+    "effects": {
+     "stats": {
+      "mutluluk": 2,
+      "disiplin": -3
+     }
+    },
+    "result": "İlgi çabuk geçti. Derslerin aksadı."
+   }
+  ]
+ },
+ {
+  "id": "deprem_tatbikati",
+  "rarity": "common",
+  "icon": "🦺",
+  "title": "Deprem tatbikatı",
+  "cond": {
+   "age": [
+    8,
+    60
+   ]
+  },
+  "text": "Okulda/iş yerinde deprem tatbikatı yapılıyor. Çoğu kişi ciddiye almıyor.",
+  "options": [
+   {
+    "text": "Ciddiye al, çıkış yollarını öğren",
+    "effects": {
+     "flags": [
+      "depremHazir"
+     ],
+     "stats": {
+      "disiplin": 1
+     }
+    },
+    "result": "Afet çantanı hazırladın. Gerçek bir depremde avantajlı olacaksın."
+   },
+   {
+    "text": "Geçiştir",
+    "effects": {},
+    "result": "Tatbikat bitti."
+   }
+  ]
+ },
+ {
+  "id": "kulup_kur",
+  "rarity": "common",
+  "icon": "🧩",
+  "title": "Kulüp kurma fikri",
+  "cond": {
+   "age": [
+    14,
+    22
+   ]
+  },
+  "text": "Okulda kodlama/müzik/doğa kulübü yok. Sen kursan?",
+  "options": [
+   {
+    "text": "Kur ve başkanı ol",
+    "effects": {
+     "skills": {
+      "liderlik": 4
+     },
+     "stats": {
+      "itibar": 2,
+      "sosyal": 2
+     }
+    },
+    "result": "İlk toplantıya 23 kişi geldi!"
+   },
+   {
+    "text": "Başkası kursun, sen katıl",
+    "effects": {
+     "stats": {
+      "sosyal": 2
+     }
+    },
+    "result": "Harika bir ekip oldunuz."
+   }
+  ]
+ },
+ {
+  "id": "yaz_isi",
+  "rarity": "common",
+  "icon": "🍦",
+  "title": "Yaz işi teklifi",
+  "cond": {
+   "age": [
+    15,
+    19
+   ],
+   "hasJob": false
+  },
+  "text": "Sahildeki dondurmacı yaz için eleman arıyor.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "mg": "paraustu",
+    "mgSkill": "ticaret",
+    "stakes": 0.3,
+    "success": {
+     "min": 50,
+     "effects": {
+      "money": 12000,
+      "skills": {
+       "ticaret": 3
+      },
+      "stats": {
+       "disiplin": 2
+      }
+     },
+     "result": "Yaz boyunca kasadaydın; patron seneye de çağırdı."
+    },
+    "fail": {
+     "effects": {
+      "money": 6000,
+      "skills": {
+       "ticaret": 1
+      }
+     },
+     "result": "Birkaç kez kasa açık verdi ama çok şey öğrendin."
+    }
+   },
+   {
+    "text": "Yazı dinlenerek geçir",
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     },
+     "energy": 10
+    },
+    "result": "Pil doldu."
+   }
+  ]
+ },
+ {
+  "id": "ilk_maas",
+  "rarity": "common",
+  "icon": "💵",
+  "title": "İlk maaş",
+  "cond": {
+   "age": [
+    16,
+    35
+   ],
+   "hasJob": true
+  },
+  "once": true,
+  "text": "İlk maaşın hesabına yattı!",
+  "options": [
+   {
+    "text": "Ailene hediye al",
+    "effects": {
+     "moneyPct": -0.05,
+     "stats": {
+      "mutluluk": 5
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "{anne}nin yüzündeki gülümseme her şeye değdi."
+   },
+   {
+    "text": "Birikime ayır",
+    "effects": {
+     "stats": {
+      "disiplin": 3
+     }
+    },
+    "result": "Geleceğe küçük bir tohum ektin."
+   }
+  ]
+ },
+ {
+  "id": "sahte_ilan",
+  "rarity": "rare",
+  "icon": "🏚️",
+  "title": "Kiralık ev ilanı",
+  "cond": {
+   "age": [
+    18,
+    40
+   ]
+  },
+  "text": "Çok ucuz bir kiralık ev ilanı buldun. Ev sahibi \"yurt dışındayım, kaporayı gönder anahtarı kargolarım\" diyor.",
+  "options": [
+   {
+    "text": "Evi görmeden para gönderme",
+    "effects": {
+     "skills": {
+      "teknoloji": 1
+     },
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Doğru karar! İlan bir dolandırıcılık tuzağıymış."
+   },
+   {
+    "text": "Kaporayı gönder",
+    "effects": {
+     "money": -15000,
+     "stats": {
+      "mutluluk": -5
+     }
+    },
+    "result": "Ne ev çıktı ne ev sahibi. Polise başvurdun. Acı bir ders."
+   }
+  ]
+ },
+ {
+  "id": "universite_kulup",
+  "rarity": "common",
+  "icon": "🎭",
+  "title": "Kampüs hayatı",
+  "cond": {
+   "edu": [
+    "uni"
+   ]
+  },
+  "text": "Kulüp tanıtım günü. Stantlar rengârenk.",
+  "options": [
+   {
+    "text": "Girişimcilik kulübü",
+    "effects": {
+     "skills": {
+      "ticaret": 3,
+      "liderlik": 2
+     }
+    },
+    "result": "İlk iş fikrini burada buldun."
+   },
+   {
+    "text": "Dağcılık kulübü",
+    "effects": {
+     "stats": {
+      "fizik": 3,
+      "saglik": 2
+     },
+     "skills": {
+      "doga": 2
+     }
+    },
+    "result": "İlk zirve tırmanışın!"
+   },
+   {
+    "text": "Sosyal sorumluluk kulübü",
+    "effects": {
+     "skills": {
+      "empati": 3
+     },
+     "stats": {
+      "itibar": 2
+     }
+    },
+    "result": "Köy okullarına kitap götürdünüz."
+   }
+  ]
+ },
+ {
+  "id": "burs_basvuru",
+  "rarity": "rare",
+  "icon": "📨",
+  "title": "Burs başvurusu",
+  "cond": {
+   "edu": [
+    "uni"
+   ],
+   "notFlags": [
+    "burs"
+   ]
+  },
+  "text": "Bir vakıf başarılı öğrencilere burs veriyor. Mülakata çağrıldın.",
+  "options": [
+   {
+    "text": "Mülakata gir",
+    "mg": "konusma",
+    "mgSkill": "sosyal",
+    "stakes": 0.4,
+    "success": {
+     "min": 55,
+     "effects": {
+      "flags": [
+       "burs"
+      ],
+      "stats": {
+       "mutluluk": 4
+      }
+     },
+     "result": "Bursu kazandın! Yaşam giderin yarıya indi."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -1
+      }
+     },
+     "result": "Bu dönem olmadı. Gelecek dönem tekrar başvurabilirsin."
+    }
+   }
+  ]
+ },
+ {
+  "id": "evlilik_teklifi",
+  "rarity": "epic",
+  "icon": "💍",
+  "title": "Evlilik",
+  "chainOnly": true,
+  "cond": {
+   "partner": true,
+   "married": false
+  },
+  "text": "{partner} ile yıllardır birliktesiniz. Artık hayatınızı birleştirme zamanı mı?",
+  "options": [
+   {
+    "text": "Evlenme teklif et",
+    "effects": {
+     "marry": true,
+     "stats": {
+      "mutluluk": 12
+     },
+     "moneyPct": -0.1,
+     "chain": {
+      "id": "cocuk_istegi",
+      "delay": 2
+     }
+    },
+    "result": "\"Evet!\" Sade, sıcak bir düğünle hayatınızı birleştirdiniz."
+   },
+   {
+    "text": "Biraz daha bekle",
+    "effects": {
+     "partnerLove": -10
+    },
+    "result": "{partner} biraz kırıldı ama anlayışla karşıladı."
+   }
+  ]
+ },
+ {
+  "id": "cocuk_istegi",
+  "rarity": "epic",
+  "icon": "👶",
+  "title": "Aile büyüyor mu?",
+  "chainOnly": true,
+  "cond": {
+   "married": true,
+   "age": [
+    20,
+    48
+   ]
+  },
+  "text": "{partner} ile çocuk sahibi olmayı konuşuyorsunuz.",
+  "options": [
+   {
+    "text": "Evet, hazırız",
+    "effects": {
+     "child": true,
+     "stats": {
+      "mutluluk": 10
+     },
+     "chain": {
+      "id": "cocuk_istegi2",
+      "delay": 3
+     }
+    },
+    "result": "Hayatınıza küçük bir mucize girdi."
+   },
+   {
+    "text": "Şimdilik değil",
+    "effects": {
+     "chain": {
+      "id": "cocuk_istegi",
+      "delay": 3
+     }
+    },
+    "result": "Önce kariyer ve ev."
+   }
+  ]
+ },
+ {
+  "id": "cocuk_istegi2",
+  "rarity": "rare",
+  "icon": "🍼",
+  "title": "Bir kardeş daha?",
+  "chainOnly": true,
+  "cond": {
+   "married": true,
+   "age": [
+    22,
+    48
+   ]
+  },
+  "text": "Çocuğunuz bir kardeş istiyor.",
+  "options": [
+   {
+    "text": "Aile büyüsün",
+    "effects": {
+     "child": true,
+     "stats": {
+      "mutluluk": 8
+     }
+    },
+    "result": "Ev şenlendi!"
+   },
+   {
+    "text": "Bir çocuk yeter",
+    "effects": {
+     "stats": {
+      "mutluluk": 1
+     }
+    },
+    "result": "Tüm sevginizi ona veriyorsunuz."
+   }
+  ]
+ },
+ {
+  "id": "kredi_karti",
+  "rarity": "common",
+  "icon": "💳",
+  "title": "Kredi kartı teklifi",
+  "cond": {
+   "age": [
+    18,
+    45
+   ]
+  },
+  "text": "Banka yüksek limitli bir kredi kartı öneriyor. Taksitli alışveriş kapıda.",
+  "options": [
+   {
+    "text": "Sadece ihtiyacın kadar kullan",
+    "effects": {
+     "stats": {
+      "disiplin": 2
+     }
+    },
+    "result": "Kart hayatını kolaylaştırdı, borç yapmadın."
+   },
+   {
+    "text": "Yeni telefon ve kıyafetler al",
+    "effects": {
+     "money": -40000,
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Taksitler aylarca sürdü…"
+   }
+  ]
+ },
+ {
+  "id": "ortaklik_teklifi",
+  "rarity": "rare",
+  "icon": "🤝",
+  "title": "Ortaklık teklifi",
+  "cond": {
+   "age": [
+    20,
+    50
+   ],
+   "money": 80000
+  },
+  "text": "Eski bir arkadaşın kafe açmak istiyor, senden ortaklık istiyor. İş planı yok ama hevesi çok.",
+  "options": [
+   {
+    "text": "Önce iş planı ve hesap iste",
+    "effects": {
+     "skills": {
+      "ticaret": 3
+     },
+     "stats": {
+      "itibar": 2
+     }
+    },
+    "result": "Plan hazırlanınca rakamların tutmadığını gördünüz; dostluk kaldı, para da."
+   },
+   {
+    "text": "Güven ve yatır",
+    "effects": {
+     "random": [
+      {
+       "w": 1,
+       "effects": {
+        "money": 60000
+       },
+       "result": "Kafe tuttu! İlk yıl kâr payı aldın."
+      },
+      {
+       "w": 2,
+       "effects": {
+        "money": -70000,
+        "stats": {
+         "mutluluk": -4
+        }
+       },
+       "result": "Kafe altı ayda kapandı. Paranı kaybettin."
+      }
+     ]
+    },
+    "result": "Zar atıldı…"
+   }
+  ]
+ },
+ {
+  "id": "startup",
+  "rarity": "epic",
+  "icon": "🚀",
+  "title": "Girişim fikri",
+  "cond": {
+   "age": [
+    20,
+    40
+   ],
+   "skills": {
+    "teknoloji": 50
+   }
+  },
+  "once": true,
+  "text": "Geliştirdiğin uygulama bir hızlandırma programının dikkatini çekti. Demo günü yarın!",
+  "options": [
+   {
+    "text": "Demoyu sun",
+    "mg": "bugavi",
+    "mgSkill": "teknoloji",
+    "stakes": 0.65,
+    "success": {
+     "min": 62,
+     "effects": {
+      "money": 400000,
+      "stats": {
+       "itibar": 6,
+       "mutluluk": 6
+      },
+      "skills": {
+       "teknoloji": 4,
+       "liderlik": 3
+      }
+     },
+     "result": "Yatırım aldın! Küçük bir ekip kurup ürünü büyüttün."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "teknoloji": 3
+      },
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Demo sırasında hata çıktı. Yatırımcılar 'bir yıl sonra tekrar gel' dedi."
+    }
+   }
+  ]
+ },
+ {
+  "id": "ilk_araba",
+  "rarity": "common",
+  "icon": "🚗",
+  "title": "İkinci el araba",
+  "cond": {
+   "age": [
+    20,
+    45
+   ],
+   "flags": [
+    "ehliyet"
+   ],
+   "money": 150000,
+   "notFlags": [
+    "araba"
+   ]
+  },
+  "text": "Uygun fiyatlı ikinci el bir araba buldun.",
+  "options": [
+   {
+    "text": "Ekspertiz yaptırıp al",
+    "effects": {
+     "money": -120000,
+     "flags": [
+      "araba"
+     ],
+     "stats": {
+      "mutluluk": 4
+     }
+    },
+    "result": "Temiz çıktı. Hafta sonları artık yollardasın."
+   },
+   {
+    "text": "Toplu taşımaya devam",
+    "effects": {
+     "stats": {
+      "disiplin": 1
+     }
+    },
+    "result": "Birikimin büyümeye devam ediyor."
+   }
+  ]
+ },
+ {
+  "id": "ev_alma",
+  "rarity": "rare",
+  "icon": "🏡",
+  "title": "Ev sahibi olmak",
+  "cond": {
+   "age": [
+    25,
+    60
+   ],
+   "money": 1500000,
+   "notFlags": [
+    "evSahibi"
+   ]
+  },
+  "text": "Birikimin bir ev için peşinata yetiyor.",
+  "options": [
+   {
+    "text": "Ev al",
+    "effects": {
+     "money": -1200000,
+     "flags": [
+      "evSahibi"
+     ],
+     "stats": {
+      "mutluluk": 8,
+      "itibar": 2
+     }
+    },
+    "result": "Artık kira yok, anahtar senin!"
+   },
+   {
+    "text": "Kirada kal, işine yatır",
+    "effects": {
+     "skills": {
+      "ticaret": 2
+     }
+    },
+    "result": "Nakit gücünü korudun."
+   }
+  ]
+ },
+ {
+  "id": "ekonomik_kriz",
+  "rarity": "epic",
+  "icon": "📉",
+  "title": "Ekonomik kriz",
+  "cond": {
+   "age": [
+    25,
+    80
+   ]
+  },
+  "text": "Kur fırladı, piyasalar durdu. Herkes nasıl davranacağını düşünüyor.",
+  "options": [
+   {
+    "text": "Tasarruf et, giderleri kıs",
+    "effects": {
+     "stats": {
+      "disiplin": 3,
+      "mutluluk": -2
+     },
+     "moneyPct": 0.05
+    },
+    "result": "Zor bir yıl oldu ama sağlam çıktın."
+   },
+   {
+    "text": "Ucuzlayan varlık al",
+    "req": {
+     "money": 200000
+    },
+    "effects": {
+     "random": [
+      {
+       "w": 2,
+       "effects": {
+        "moneyPct": 0.25,
+        "skills": {
+         "ticaret": 3
+        }
+       },
+       "result": "Kriz geçince aldığın varlıklar değerlendi."
+      },
+      {
+       "w": 1,
+       "effects": {
+        "moneyPct": -0.1
+       },
+       "result": "Kriz uzun sürdü; aldıkların bir süre değer kaybetti."
+      }
+     ]
+    },
+    "result": "Cesur bir hamle…"
+   },
+   {
+    "text": "İşini küçült",
+    "req": {
+     "biz": 1
+    },
+    "effects": {
+     "bizSkill": 70,
+     "stats": {
+      "mutluluk": -3
+     }
+    },
+    "result": "Personeli korudun, maliyetleri düşürdün."
+   }
+  ]
+ },
+ {
+  "id": "deprem",
+  "rarity": "legendary",
+  "icon": "🏚️",
+  "title": "Deprem",
+  "cond": {
+   "age": [
+    14,
+    70
+   ]
+  },
+  "once": true,
+  "text": "Gece 04.17. Yer sallandı. Sokak toz duman. Enkazdan sesler geliyor.",
+  "options": [
+   {
+    "text": "Arama kurtarmaya katıl",
+    "mg": "kurtarma",
+    "mgSkill": "empati",
+    "stakes": 0.7,
+    "success": {
+     "min": 58,
+     "effects": {
+      "stats": {
+       "itibar": 12,
+       "mutluluk": 4
+      },
+      "skills": {
+       "empati": 5,
+       "liderlik": 4
+      },
+      "title": "Halk Kahramanı",
+      "famRep": 10
+     },
+     "result": "Bir aileyi enkazdan çıkardın. Mahalle sana \"Halk Kahramanı\" diyor."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "itibar": 5,
+       "saglik": -5
+      },
+      "skills": {
+       "empati": 3
+      }
+     },
+     "result": "Elinden geleni yaptın. Ekipler geldiğinde yorgunluktan yığıldın."
+    }
+   },
+   {
+    "text": "Ailenle güvenli alana geç, yardım topla",
+    "effects": {
+     "stats": {
+      "itibar": 4
+     },
+     "skills": {
+      "empati": 3
+     }
+    },
+    "result": "Toplanma alanında battaniye ve su dağıttın."
+   }
+  ]
+ },
+ {
+  "id": "kayip_akraba",
+  "rarity": "epic",
+  "icon": "✉️",
+  "title": "Kayıp akraba",
+  "cond": {
+   "age": [
+    18,
+    70
+   ]
+  },
+  "once": true,
+  "text": "Bir mektup geldi: babanın hiç bahsetmediği bir amcan varmış ve seni görmek istiyor.",
+  "options": [
+   {
+    "text": "Buluş",
+    "effects": {
+     "chain": {
+      "id": "kayip_akraba2",
+      "delay": 1
+     },
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Yaşlı bir adam, gözleri seninkilere benziyor…"
+   },
+   {
+    "text": "Geçmişi kurcalama",
+    "effects": {},
+    "result": "Mektubu çekmeceye kaldırdın."
+   }
+  ]
+ },
+ {
+  "id": "kayip_akraba2",
+  "rarity": "epic",
+  "icon": "📜",
+  "title": "Aile sırrı",
+  "chainOnly": true,
+  "text": "Amcan yıllar önceki bir kavgayı anlatıyor. Barışmak için senden yardım istiyor.",
+  "options": [
+   {
+    "text": "İki kardeşi barıştır",
+    "mg": "konusma",
+    "mgSkill": "empati",
+    "stakes": 0.5,
+    "success": {
+     "min": 55,
+     "effects": {
+      "stats": {
+       "mutluluk": 8,
+       "itibar": 3
+      },
+      "skills": {
+       "empati": 4
+      },
+      "chain": {
+       "id": "kayip_akraba3",
+       "delay": 2
+      }
+     },
+     "result": "Yıllar sonra iki kardeş sarıldı."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Kırgınlık derindi. Ama bir kapı araladın."
+    }
+   }
+  ]
+ },
+ {
+  "id": "kayip_akraba3",
+  "rarity": "legendary",
+  "icon": "🗝️",
+  "title": "Amcanın vasiyeti",
+  "chainOnly": true,
+  "text": "Amcan vefat etti. Vasiyetinde sana eski bir zeytinlik ve bir mektup bıraktı: \"Aileyi birleştirdiğin için.\"",
+  "options": [
+   {
+    "text": "Zeytinliği işlet",
+    "effects": {
+     "money": 300000,
+     "flags": [
+      "arazi"
+     ],
+     "skills": {
+      "doga": 4
+     }
+    },
+    "result": "Zeytin ağaçları yeniden meyve verdi."
+   },
+   {
+    "text": "Köy okuluna bağışla",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "itibar": 10,
+      "mutluluk": 6
+     },
+     "title": "Hayırsever",
+     "famRep": 8
+    },
+    "result": "Okulun adı artık amcanın adını taşıyor."
+   }
+  ]
+ },
+ {
+  "id": "ebeveyn_vefat",
+  "rarity": "rare",
+  "icon": "🕊️",
+  "title": "Veda",
+  "chainOnly": true,
+  "cond": {
+   "parentsAlive": true
+  },
+  "text": "Uzun ve dolu bir hayatın ardından ebeveynlerinden biri aramızdan ayrıldı.",
+  "options": [
+   {
+    "text": "Yasını tut, ailenle kal",
+    "effects": {
+     "parentDies": true,
+     "stats": {
+      "mutluluk": -10
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Öğrettikleri hep seninle."
+   }
+  ]
+ },
+ {
+  "id": "hastalik",
+  "rarity": "rare",
+  "icon": "🏥",
+  "title": "Sağlık sorunu",
+  "cond": {
+   "age": [
+    30,
+    90
+   ]
+  },
+  "text": "Bir süredir yorgunsun. Doktor bazı tahliller istiyor.",
+  "options": [
+   {
+    "text": "Hemen tahlil yaptır ve tedaviye başla",
+    "effects": {
+     "money": -8000,
+     "stats": {
+      "saglik": -3,
+      "disiplin": 1
+     }
+    },
+    "result": "Erken teşhis sayesinde kolayca atlattın."
+   },
+   {
+    "text": "Geçer diye bekle",
+    "effects": {
+     "stats": {
+      "saglik": -12
+     }
+    },
+    "result": "Hastalık ilerledi, tedavi uzun sürdü."
+   }
+  ]
+ },
+ {
+  "id": "bel_agrisi",
+  "rarity": "common",
+  "icon": "🪑",
+  "title": "Bel ağrısı",
+  "cond": {
+   "age": [
+    28,
+    70
+   ],
+   "hasJob": true
+  },
+  "text": "Masa başında geçen saatler belini yordu.",
+  "options": [
+   {
+    "text": "Egzersiz programına başla",
+    "effects": {
+     "stats": {
+      "saglik": 2,
+      "fizik": 2,
+      "disiplin": 1
+     }
+    },
+    "result": "Ağrı azaldı, enerjin arttı."
+   },
+   {
+    "text": "Ağrı kesiciyle idare et",
+    "effects": {
+     "stats": {
+      "saglik": -3
+     }
+    },
+    "result": "Ağrı geçici olarak dindi."
+   }
+  ]
+ },
+ {
+  "id": "orta_yas",
+  "rarity": "common",
+  "icon": "🪞",
+  "title": "Aynadaki soru",
+  "cond": {
+   "age": [
+    38,
+    52
+   ]
+  },
+  "text": "Bir sabah aynaya bakıp düşündün: \"Hayalini kurduğum hayat bu mu?\"",
+  "options": [
+   {
+    "text": "Yeni bir hobiye başla",
+    "effects": {
+     "stats": {
+      "mutluluk": 5
+     },
+     "skills": {
+      "muzik": 2,
+      "resim": 2
+     }
+    },
+    "result": "Gitar dersleri başladı."
+   },
+   {
+    "text": "Ailene daha çok zaman ayır",
+    "effects": {
+     "stats": {
+      "mutluluk": 4
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Akşam yemekleri kutsal oldu."
+   },
+   {
+    "text": "Kariyerde yeni hedef koy",
+    "effects": {
+     "stats": {
+      "disiplin": 3
+     }
+    },
+    "result": "Yeni bir motivasyon."
+   }
+  ]
+ },
+ {
+  "id": "vergi_denetimi",
+  "rarity": "rare",
+  "icon": "🧾",
+  "title": "Vergi denetimi",
+  "cond": {
+   "biz": 1
+  },
+  "text": "Maliye müfettişi defterlerini incelemek istiyor.",
+  "options": [
+   {
+    "text": "Tüm belgeleri eksiksiz sun",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "mutluluk": 1
+     }
+    },
+    "result": "Defterlerin tertemiz çıktı. Güvenilir esnaf listesine girdin."
+   }
+  ]
+ },
+ {
+  "id": "fazla_odeme",
+  "rarity": "common",
+  "icon": "💸",
+  "title": "Müşterinin hatası",
+  "cond": {
+   "biz": 0
+  },
+  "text": "Bir müşteri yanlışlıkla iki kat ödeme yaptı. Fark etmemiş.",
+  "options": [
+   {
+    "text": "Arayıp iade et",
+    "honest": true,
+    "effects": {
+     "bizSkill": 65
+    },
+    "result": "Müşteri o kadar etkilendi ki arkadaşlarını da getirdi."
+   }
+  ]
+ },
+ {
+  "id": "sahte_tedarikci",
+  "rarity": "rare",
+  "icon": "🕵️",
+  "title": "Sahte tedarikçi",
+  "cond": {
+   "biz": 1
+  },
+  "text": "Piyasanın yarı fiyatına mal satan yeni bir tedarikçi çıktı. Peşin ödeme istiyor, fatura kesmiyor.",
+  "options": [
+   {
+    "text": "Uyarı işaretlerini fark et, uzak dur",
+    "effects": {
+     "skills": {
+      "ticaret": 3
+     },
+     "stats": {
+      "itibar": 2
+     }
+    },
+    "result": "Birkaç hafta sonra tedarikçinin dolandırıcı olduğu ortaya çıktı. Sen korundun."
+   },
+   {
+    "text": "Küçük bir sipariş dene",
+    "effects": {
+     "money": -30000,
+     "skills": {
+      "ticaret": 2
+     }
+    },
+    "result": "Mal hiç gelmedi. Kayıp küçük, ders büyük."
+   }
+  ]
+ },
+ {
+  "id": "rakip_karalama",
+  "rarity": "common",
+  "icon": "🗯️",
+  "title": "Rakibin karalaması",
+  "cond": {
+   "biz": 1
+  },
+  "text": "Rakip dükkân, sosyal medyada ürünlerin hakkında asılsız yorumlar yazdırıyor.",
+  "options": [
+   {
+    "text": "Kaliteyle cevap ver, şeffaf ol",
+    "effects": {
+     "stats": {
+      "itibar": 3
+     },
+     "bizSkill": 60
+    },
+    "result": "Müşterilerin seni savundu."
+   },
+   {
+    "text": "Hukuki yoldan şikâyet et",
+    "effects": {
+     "money": -10000,
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Yorumlar kaldırıldı."
+   }
+  ]
+ },
+ {
+  "id": "yatirimci",
+  "rarity": "legendary",
+  "icon": "💎",
+  "title": "Yatırımcı dükkânını fark etti",
+  "cond": {
+   "biz": 2,
+   "stats": {
+    "itibar": 60
+   }
+  },
+  "once": true,
+  "text": "Tanınmış bir yatırımcı, işletmenin %30'u karşılığında büyük bir sermaye teklif ediyor.",
+  "options": [
+   {
+    "text": "Pazarlık et ve hisse ver",
+    "mg": "pazarlik",
+    "mgSkill": "ticaret",
+    "stakes": 0.7,
+    "success": {
+     "min": 58,
+     "effects": {
+      "money": 3000000,
+      "stats": {
+       "itibar": 6
+      },
+      "skills": {
+       "ticaret": 4
+      }
+     },
+     "result": "İyi bir değerleme aldın. Büyümenin yakıtı hazır!"
+    },
+    "fail": {
+     "effects": {
+      "money": 1200000
+     },
+     "result": "Düşük değerlemeyle anlaştın ama yine de sermaye geldi."
+    }
+   },
+   {
+    "text": "Bağımsız kal",
+    "effects": {
+     "stats": {
+      "mutluluk": 4,
+      "disiplin": 2
+     }
+    },
+    "result": "Kendi hızında büyümeyi seçtin."
+   }
+  ]
+ },
+ {
+  "id": "unlu_urun",
+  "rarity": "legendary",
+  "icon": "🌟",
+  "title": "Ünlü ürününü kullandı",
+  "cond": {
+   "biz": 3
+  },
+  "once": true,
+  "text": "Ünlü bir oyuncu ürününü paylaştı. Siparişler patlıyor!",
+  "options": [
+   {
+    "text": "Stoku doğru planla",
+    "mg": "stok",
+    "mgSkill": "ticaret",
+    "stakes": 0.65,
+    "success": {
+     "min": 58,
+     "effects": {
+      "money": 1500000,
+      "stats": {
+       "itibar": 6
+      }
+     },
+     "result": "Üç ay boyunca her siparişi zamanında gönderdin. Marka oldun!"
+    },
+    "fail": {
+     "effects": {
+      "money": 300000,
+      "stats": {
+       "itibar": -2
+      }
+     },
+     "result": "Stok yetmedi, bazı siparişler gecikti. Yine de iyi kazandın."
+    }
+   }
+  ]
+ },
+ {
+  "id": "toptan_firsat",
+  "rarity": "common",
+  "icon": "📦",
+  "title": "Toplu sipariş",
+  "cond": {
+   "biz": 1
+  },
+  "text": "Bir otel zinciri toplu sipariş vermek istiyor ama fiyat kırmanı bekliyor.",
+  "options": [
+   {
+    "text": "Pazarlık et",
+    "mg": "pazarlik",
+    "mgSkill": "ticaret",
+    "stakes": 0.45,
+    "success": {
+     "min": 55,
+     "effects": {
+      "money": 60000,
+      "bizSkill": 75
+     },
+     "result": "Karlı bir anlaşma yaptın!"
+    },
+    "fail": {
+     "effects": {
+      "money": 15000,
+      "bizSkill": 45
+     },
+     "result": "Kâr marjın çok düştü ama müşteri kazandın."
+    }
+   },
+   {
+    "text": "Kibarca reddet",
+    "effects": {},
+    "result": "Mevcut müşterilerine odaklandın."
+   }
+  ]
+ },
+ {
+  "id": "tarla_eser",
+  "rarity": "epic",
+  "icon": "🏺",
+  "title": "Tarlada antik eser",
+  "cond": {
+   "place": [
+    "koy",
+    "kasaba"
+   ],
+   "age": [
+    16,
+    80
+   ]
+  },
+  "once": true,
+  "text": "Traktör sürerken toprağın altından eski bir amfora çıktı.",
+  "options": [
+   {
+    "text": "Devlete teslim et",
+    "honest": true,
+    "effects": {
+     "money": 50000,
+     "stats": {
+      "itibar": 5
+     }
+    },
+    "result": "Müze müdürlüğü ödül verdi; adın yerel gazetede çıktı."
+   },
+   {
+    "text": "Müzeye bağışla, kazıya yardım et",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "itibar": 8,
+      "mutluluk": 5
+     },
+     "skills": {
+      "fen": 3
+     },
+     "title": "Kültür Dostu"
+    },
+    "result": "Kazıda antik bir çiftlik evi bulundu. Hakkında belgesel çekildi."
+   }
+  ]
+ },
+ {
+  "id": "dolu",
+  "rarity": "rare",
+  "icon": "🌨️",
+  "title": "Dolu felaketi",
+  "cond": {
+   "job": [
+    "ciftci"
+   ]
+  },
+  "text": "Hasattan bir hafta önce dolu yağdı.",
+  "options": [
+   {
+    "text": "Tarım sigortanı kullan",
+    "req": {
+     "flags": [
+      "tarimSigortasi"
+     ]
+    },
+    "effects": {
+     "money": 40000
+    },
+    "result": "Sigorta zararı karşıladı."
+   },
+   {
+    "text": "Kalan ürünü kurtar",
+    "mg": "hasat",
+    "mgSkill": "doga",
+    "stakes": 0.6,
+    "success": {
+     "min": 55,
+     "effects": {
+      "money": 15000
+     },
+     "result": "Ürünün yarısını kurtardın."
+    },
+    "fail": {
+     "effects": {
+      "money": -20000
+     },
+     "result": "Zarar büyük. Seneye sigorta yaptırmalısın."
+    }
+   }
+  ]
+ },
+ {
+  "id": "tarim_sigortasi",
+  "rarity": "common",
+  "icon": "📋",
+  "title": "Tarım sigortası",
+  "cond": {
+   "job": [
+    "ciftci"
+   ],
+   "notFlags": [
+    "tarimSigortasi"
+   ]
+  },
+  "text": "Kooperatif, devlet destekli tarım sigortasını anlatıyor.",
+  "options": [
+   {
+    "text": "Sigorta yaptır",
+    "effects": {
+     "money": -5000,
+     "flags": [
+      "tarimSigortasi",
+      "sigorta"
+     ]
+    },
+    "result": "Artık doğal afetlere karşı güvencedesin."
+   },
+   {
+    "text": "Gerek yok",
+    "effects": {},
+    "result": "Umarım hava yüzüne güler."
+   }
+  ]
+ },
+ {
+  "id": "kooperatif",
+  "rarity": "epic",
+  "icon": "🤝",
+  "title": "Kooperatif kuralım mı?",
+  "cond": {
+   "job": [
+    "ciftci"
+   ],
+   "stats": {
+    "itibar": 40
+   }
+  },
+  "once": true,
+  "text": "Köyün çiftçileri ürünlerini tüccara çok ucuza veriyor. Birleşseniz?",
+  "options": [
+   {
+    "text": "Kooperatifi kur",
+    "mg": "konusma",
+    "mgSkill": "liderlik",
+    "stakes": 0.55,
+    "success": {
+     "min": 55,
+     "effects": {
+      "stats": {
+       "itibar": 8
+      },
+      "skills": {
+       "liderlik": 4
+      },
+      "money": 80000,
+      "title": "Kooperatif Kurucusu"
+     },
+     "result": "Köy birleşti; ürünler artık doğrudan markete gidiyor."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "liderlik": 2
+      }
+     },
+     "result": "Herkesi ikna edemedin. Seneye yeniden dene."
+    }
+   }
+  ]
+ },
+ {
+  "id": "zor_vaka",
+  "rarity": "rare",
+  "icon": "🩺",
+  "title": "Zor vaka",
+  "cond": {
+   "job": [
+    "doktor",
+    "eczaci",
+    "hemsire"
+   ]
+  },
+  "text": "Acile belirtileri karışık bir hasta geldi. Diğer doktorlar emin değil.",
+  "options": [
+   {
+    "text": "Vakayı üstlen",
+    "mg": "teshis",
+    "mgSkill": "fen",
+    "stakes": 0.6,
+    "success": {
+     "min": 60,
+     "effects": {
+      "stats": {
+       "itibar": 5,
+       "mutluluk": 4
+      },
+      "skills": {
+       "fen": 3
+      }
+     },
+     "result": "Doğru teşhis! Hasta iyileşti ve sana teşekkür mektubu yazdı."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "fen": 2
+      },
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Konsültasyonla doğru teşhise ulaşıldı. Bir şey daha öğrendin."
+    }
+   }
+  ]
+ },
+ {
+  "id": "nobet",
+  "rarity": "common",
+  "icon": "🌙",
+  "title": "Nöbet gecesi",
+  "cond": {
+   "job": [
+    "doktor",
+    "hemsire"
+   ]
+  },
+  "text": "Bayram gecesi nöbetçisin. Acil servis tıklım tıklım.",
+  "options": [
+   {
+    "text": "Triyajı sen yönet",
+    "mg": "triyaj",
+    "mgSkill": "empati",
+    "stakes": 0.5,
+    "success": {
+     "min": 55,
+     "effects": {
+      "stats": {
+       "itibar": 3
+      },
+      "skills": {
+       "empati": 2
+      }
+     },
+     "result": "Kritik hastalar önce müdahale gördü. Başhekim tebrik etti."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Zor bir geceydi, bazı hastalar uzun bekledi."
+    }
+   }
+  ]
+ },
+ {
+  "id": "koprü_proje",
+  "rarity": "rare",
+  "icon": "🌉",
+  "title": "Yeni proje",
+  "cond": {
+   "job": [
+    "muhendis",
+    "yazilimci"
+   ]
+  },
+  "text": "Şirket kritik bir müşterinin sistemini sana emanet etti.",
+  "options": [
+   {
+    "text": "Sistemi kur",
+    "mg": "devre",
+    "mgSkill": "matematik",
+    "stakes": 0.55,
+    "success": {
+     "min": 58,
+     "effects": {
+      "stats": {
+       "itibar": 4
+      },
+      "money": 25000
+     },
+     "result": "Proje zamanında teslim edildi; prim aldın!"
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Birkaç gün geciktin, ama sonunda çalıştı."
+    }
+   }
+  ]
+ },
+ {
+  "id": "usulsuz_teklif",
+  "rarity": "rare",
+  "icon": "✋",
+  "title": "Usulsüz teklif",
+  "cond": {
+   "hasJob": true,
+   "age": [
+    22,
+    65
+   ]
+  },
+  "text": "Bir firma, ihalede kendilerine öncelik vermen karşılığında \"hediye\" teklif ediyor.",
+  "options": [
+   {
+    "text": "Reddet ve yöneticine bildir",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Şirket etik kuruluna örnek vaka oldu. Güvenilirliğin tescillendi."
+   },
+   {
+    "text": "Kibarca reddet",
+    "honest": true,
+    "effects": {},
+    "result": "Sınırlarını net çizdin."
+   }
+  ]
+ },
+ {
+  "id": "gece_bug",
+  "rarity": "common",
+  "icon": "🐞",
+  "title": "Gece yarısı hatası",
+  "cond": {
+   "job": [
+    "yazilimci"
+   ]
+  },
+  "text": "Canlı sistem çöktü! Saat 02.00, telefonun çalıyor.",
+  "options": [
+   {
+    "text": "Hatayı bul",
+    "mg": "bugavi",
+    "mgSkill": "teknoloji",
+    "stakes": 0.55,
+    "success": {
+     "min": 55,
+     "effects": {
+      "stats": {
+       "itibar": 3
+      },
+      "skills": {
+       "teknoloji": 2
+      }
+     },
+     "result": "15 dakikada düzelttin. Ekip seni 'itfaiyeci' diye çağırıyor."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "saglik": -2
+      }
+     },
+     "result": "Sabaha kadar uğraştın ama çözdün."
+    }
+   }
+  ]
+ },
+ {
+  "id": "derbi",
+  "rarity": "epic",
+  "icon": "🔥",
+  "title": "Derbi günü",
+  "cond": {
+   "job": [
+    "futbolcu"
+   ]
+  },
+  "text": "Derbi! Stat tıklım tıklım. Son dakika penaltı kazandınız.",
+  "options": [
+   {
+    "text": "Topu al",
+    "mg": "penalti",
+    "mgSkill": "futbol",
+    "stakes": 0.8,
+    "success": {
+     "min": 60,
+     "effects": {
+      "stats": {
+       "itibar": 6,
+       "mutluluk": 8
+      },
+      "money": 80000
+     },
+     "result": "GOL! Tribünler adını haykırıyor."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -5
+      }
+     },
+     "result": "Kaleci kurtardı. Ertesi gün manşetlerdesin… ama takımın arkanda."
+    }
+   },
+   {
+    "text": "Takım kaptanına bırak",
+    "effects": {
+     "skills": {
+      "liderlik": 2
+     }
+    },
+    "result": "Kaptan attı, ilk sarıldığı sen oldun."
+   }
+  ]
+ },
+ {
+  "id": "transfer_teklifi",
+  "rarity": "rare",
+  "icon": "📝",
+  "title": "Transfer teklifi",
+  "cond": {
+   "job": [
+    "futbolcu"
+   ]
+  },
+  "text": "Başka bir kulüp daha yüksek maaş teklif ediyor. Menajerin pazarlık etmeni öneriyor.",
+  "options": [
+   {
+    "text": "Pazarlık et",
+    "mg": "pazarlik",
+    "mgSkill": "ticaret",
+    "stakes": 0.5,
+    "success": {
+     "min": 55,
+     "effects": {
+      "money": 150000,
+      "stats": {
+       "mutluluk": 3
+      }
+     },
+     "result": "İmza parası cebinde!"
+    },
+    "fail": {
+     "effects": {
+      "money": 40000
+     },
+     "result": "Beklediğin rakama ulaşamadın ama anlaştınız."
+    }
+   },
+   {
+    "text": "Kulübüne sadık kal",
+    "honest": true,
+    "effects": {
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Taraftar sadakatini unutmayacak."
+   }
+  ]
+ },
+ {
+  "id": "zor_ariza",
+  "rarity": "rare",
+  "icon": "⚙️",
+  "title": "Kimsenin çözemediği arıza",
+  "cond": {
+   "job": [
+    "cirak",
+    "isci"
+   ]
+  },
+  "text": "Sanayideki herkesin elinden kaçan bir motor dükkâna geldi.",
+  "options": [
+   {
+    "text": "Arızayı bul",
+    "mg": "ariza",
+    "mgSkill": "el",
+    "stakes": 0.6,
+    "success": {
+     "min": 58,
+     "effects": {
+      "stats": {
+       "itibar": 5
+      },
+      "skills": {
+       "el": 3
+      },
+      "money": 15000
+     },
+     "result": "Sorun bir contadaymış! Adın sanayide dilden dile."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "el": 2
+      }
+     },
+     "result": "Ustan gösterdi; bir daha asla unutmazsın."
+    }
+   }
+  ]
+ },
+ {
+  "id": "cirak_yetistir",
+  "rarity": "common",
+  "icon": "🧒",
+  "title": "Yeni çırak",
+  "cond": {
+   "flags": [
+    "ustalik"
+   ]
+  },
+  "text": "Dükkâna yeni bir çırak geldi; çok hevesli ama beceriksiz.",
+  "options": [
+   {
+    "text": "Sabırla öğret",
+    "effects": {
+     "skills": {
+      "empati": 3,
+      "liderlik": 2
+     },
+     "stats": {
+      "itibar": 2
+     }
+    },
+    "result": "Yıllar sonra o çırak, 'ustam' diye seni anlatacak."
+   },
+   {
+    "text": "İşleri kendin yap",
+    "effects": {
+     "stats": {
+      "disiplin": 1,
+      "mutluluk": -1
+     }
+    },
+    "result": "İşler hızlı ama yorucu."
+   }
+  ]
+ },
+ {
+  "id": "veli_toplantisi",
+  "rarity": "common",
+  "icon": "🏫",
+  "title": "Veli toplantısı",
+  "cond": {
+   "kids": true,
+   "age": [
+    28,
+    60
+   ]
+  },
+  "text": "Çocuğunun öğretmeni seninle konuşmak istiyor.",
+  "options": [
+   {
+    "text": "İlgilen, ödevlerine yardım et",
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     },
+     "counters": {
+      "cocukIlgi": 1
+     }
+    },
+    "result": "Çocuğunun notları yükseldi."
+   },
+   {
+    "text": "İş yoğunluğundan gidemedin",
+    "effects": {
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Bir dahakine mutlaka gideceksin."
+   }
+  ]
+ },
+ {
+  "id": "cocuk_hastalik",
+  "rarity": "rare",
+  "icon": "🤒",
+  "title": "Çocuğun hasta",
+  "cond": {
+   "kids": true
+  },
+  "text": "Çocuğunun ateşi düşmüyor.",
+  "options": [
+   {
+    "text": "İzin al, başında bekle",
+    "effects": {
+     "stats": {
+      "mutluluk": -2
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Birkaç günde iyileşti. Yanında olduğun için sana sarıldı."
+   }
+  ]
+ },
+ {
+  "id": "torun",
+  "rarity": "epic",
+  "icon": "👶",
+  "title": "Torun",
+  "cond": {
+   "age": [
+    48,
+    90
+   ],
+   "kids": true
+  },
+  "once": true,
+  "text": "Çocuğundan müjdeli haber: dede/nine oluyorsun!",
+  "options": [
+   {
+    "text": "Sevinçten havalara uç",
+    "effects": {
+     "stats": {
+      "mutluluk": 12
+     },
+     "flags": [
+      "torun"
+     ]
+    },
+    "result": "Hayatın en güzel unvanı."
+   }
+  ]
+ },
+ {
+  "id": "emeklilik_partisi",
+  "rarity": "common",
+  "icon": "🎉",
+  "title": "Veda partisi",
+  "cond": {
+   "retired": true
+  },
+  "once": true,
+  "text": "İş arkadaşların sana sürpriz bir veda partisi düzenledi.",
+  "options": [
+   {
+    "text": "Duygusal bir konuşma yap",
+    "effects": {
+     "stats": {
+      "mutluluk": 6,
+      "itibar": 2
+     }
+    },
+    "result": "Herkes gözyaşlarını sildi."
+   }
+  ]
+ },
+ {
+  "id": "ani_kitabi",
+  "rarity": "rare",
+  "icon": "📖",
+  "title": "Anılarını yaz",
+  "cond": {
+   "age": [
+    55,
+    95
+   ]
+  },
+  "once": true,
+  "text": "Torunların hikâyelerini yazmanı istiyor.",
+  "options": [
+   {
+    "text": "Anı kitabı yaz",
+    "effects": {
+     "skills": {
+      "dil": 4
+     },
+     "stats": {
+      "mutluluk": 6,
+      "itibar": 3
+     }
+    },
+    "result": "Kitabın yerel kitapçılarda satılıyor."
+   },
+   {
+    "text": "Sesli anlat, onlar kaydetsin",
+    "effects": {
+     "stats": {
+      "mutluluk": 5
+     }
+    },
+    "result": "Aile arşivine paha biçilmez bir kayıt."
+   }
+  ]
+ },
+ {
+  "id": "eski_dost",
+  "rarity": "common",
+  "icon": "☕",
+  "title": "Eski dost",
+  "cond": {
+   "age": [
+    35,
+    95
+   ]
+  },
+  "text": "Yıllardır görmediğin {arkadas} ile karşılaştın.",
+  "options": [
+   {
+    "text": "Bir kahve iç",
+    "effects": {
+     "stats": {
+      "mutluluk": 5,
+      "sosyal": 1
+     },
+     "friend": 1
+    },
+    "result": "Sanki hiç ayrılmamışsınız."
+   }
+  ]
+ },
+ {
+  "id": "miras_planı",
+  "rarity": "rare",
+  "icon": "📜",
+  "title": "Miras planı",
+  "cond": {
+   "age": [
+    60,
+    95
+   ],
+   "kids": true
+  },
+  "once": true,
+  "text": "Avukatın, mirasını nasıl paylaştırmak istediğini soruyor.",
+  "options": [
+   {
+    "text": "Çocukların arasında adil paylaştır",
+    "effects": {
+     "flags": [
+      "mirasPlani"
+     ],
+     "stats": {
+      "mutluluk": 3
+     },
+     "famRep": 5
+    },
+    "result": "Aile huzuru garanti altında."
+   },
+   {
+    "text": "Bir kısmını burs fonuna bağışla",
+    "honest": true,
+    "effects": {
+     "flags": [
+      "mirasPlani"
+     ],
+     "stats": {
+      "itibar": 6
+     },
+     "famRep": 8,
+     "title": "Hayırsever"
+    },
+    "result": "Adınla bir burs fonu kuruldu."
+   }
+  ]
+ },
+ {
+  "id": "dunya_turu",
+  "rarity": "epic",
+  "icon": "🌍",
+  "title": "Dünya turu",
+  "cond": {
+   "age": [
+    55,
+    85
+   ],
+   "money": 1000000
+  },
+  "once": true,
+  "text": "Hep hayalini kurduğun dünya turu için fırsat var.",
+  "options": [
+   {
+    "text": "Yola çık",
+    "effects": {
+     "money": -600000,
+     "stats": {
+      "mutluluk": 15,
+      "saglik": 2
+     }
+    },
+    "result": "Machu Picchu'dan Kapadokya'ya… Hayat albümüne sığmayacak anılar."
+   },
+   {
+    "text": "Parayı torunlara bırak",
+    "effects": {
+     "stats": {
+      "mutluluk": 3
+     },
+     "famRep": 3
+    },
+    "result": "Onların geleceği senin mutluluğun."
+   }
+  ]
+ },
+ {
+  "id": "genclere_mentor",
+  "rarity": "rare",
+  "icon": "🧑‍🏫",
+  "title": "Gençlere mentorluk",
+  "cond": {
+   "age": [
+    45,
+    90
+   ],
+   "stats": {
+    "itibar": 50
+   }
+  },
+  "text": "Bir üniversite, öğrencilere kariyer konuşması yapmanı istiyor.",
+  "options": [
+   {
+    "text": "Konuşma yap",
+    "mg": "konusma",
+    "mgSkill": "liderlik",
+    "stakes": 0.45,
+    "success": {
+     "min": 55,
+     "effects": {
+      "stats": {
+       "itibar": 4,
+       "mutluluk": 4
+      }
+     },
+     "result": "Salon ayağa kalktı. Üç öğrenci sonrasında e-posta yazdı."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": 1
+      }
+     },
+     "result": "Biraz heyecanlandın ama öğrenciler sorularla ilgilerini gösterdi."
+    }
+   }
+  ]
+ },
+ {
+  "id": "komsu_yardim",
+  "rarity": "common",
+  "icon": "🏘️",
+  "title": "Komşunun derdi",
+  "cond": {
+   "age": [
+    10,
+    90
+   ]
+  },
+  "text": "Yaşlı komşunun alışverişini taşıyacak kimsesi yok.",
+  "options": [
+   {
+    "text": "Her hafta yardım et",
+    "effects": {
+     "skills": {
+      "empati": 2
+     },
+     "stats": {
+      "itibar": 2,
+      "mutluluk": 2
+     }
+    },
+    "result": "Komşun seni torunu gibi seviyor."
+   },
+   {
+    "text": "Belediyenin yardım hattını ara",
+    "effects": {
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Artık düzenli destek alıyor."
+   }
+  ]
+ },
+ {
+  "id": "dogum_gunu",
+  "rarity": "common",
+  "icon": "🎂",
+  "title": "Sürpriz doğum günü",
+  "cond": {
+   "age": [
+    6,
+    90
+   ]
+  },
+  "weight": 0.7,
+  "text": "Arkadaşların sana sürpriz bir doğum günü hazırladı!",
+  "options": [
+   {
+    "text": "Keyfini çıkar",
+    "effects": {
+     "stats": {
+      "mutluluk": 5,
+      "sosyal": 1
+     }
+    },
+    "result": "Mumları üfledin, bir dilek tuttun."
+   }
+  ]
+ },
+ {
+  "id": "evcil_hayvan",
+  "rarity": "common",
+  "icon": "🐕",
+  "title": "Sahipsiz köpek",
+  "cond": {
+   "age": [
+    8,
+    80
+   ],
+   "notFlags": [
+    "evcil"
+   ]
+  },
+  "text": "Barınakta sana bakan bir köpek var.",
+  "options": [
+   {
+    "text": "Sahiplen",
+    "effects": {
+     "flags": [
+      "evcil"
+     ],
+     "stats": {
+      "mutluluk": 6,
+      "fizik": 1
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Artık her sabah yürüyüşe çıkıyorsunuz."
+   },
+   {
+    "text": "Barınağa bağış yap",
+    "effects": {
+     "money": -500,
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Mama ve ilaç alındı."
+   }
+  ]
+ },
+ {
+  "id": "burnout",
+  "rarity": "rare",
+  "icon": "🥀",
+  "title": "Tükenmişlik",
+  "cond": {
+   "age": [
+    18,
+    70
+   ],
+   "statsMax": {
+    "mutluluk": 30
+   }
+  },
+  "text": "Sabahları yataktan kalkmak zorlaştı. Hiçbir şey keyif vermiyor.",
+  "options": [
+   {
+    "text": "Bir uzmandan destek al",
+    "effects": {
+     "stats": {
+      "mutluluk": 10
+     },
+     "money": -6000
+    },
+    "result": "Konuşmak iyi geldi. Yavaş yavaş toparlanıyorsun."
+   },
+   {
+    "text": "İzin al, doğaya çık",
+    "effects": {
+     "stats": {
+      "mutluluk": 7,
+      "saglik": 2
+     },
+     "energy": 20
+    },
+    "result": "Dağ havası kafanı boşalttı."
+   }
+  ]
+ },
+ {
+  "id": "yangin",
+  "rarity": "rare",
+  "icon": "🔥",
+  "title": "Mutfakta yangın",
+  "cond": {
+   "age": [
+    10,
+    90
+   ]
+  },
+  "text": "Yağ tavası alev aldı!",
+  "options": [
+   {
+    "text": "Kapağı kapat, ocağı kapat",
+    "effects": {
+     "stats": {
+      "disiplin": 1
+     }
+    },
+    "result": "Doğru hamle! Yangın söndü."
+   },
+   {
+    "text": "Su dök",
+    "effects": {
+     "money": -20000,
+     "stats": {
+      "saglik": -4
+     }
+    },
+    "result": "Alevler büyüdü; itfaiye geldi. Yağ yangınına asla su dökülmez."
+   }
+  ]
+ },
+ {
+  "id": "gonullu_ogretmen",
+  "rarity": "common",
+  "icon": "📚",
+  "title": "Köy okulu",
+  "cond": {
+   "age": [
+    18,
+    70
+   ]
+  },
+  "text": "Bir dernek, köy okullarına hafta sonu gönüllü eğitmen arıyor.",
+  "options": [
+   {
+    "text": "Gönüllü ol",
+    "effects": {
+     "skills": {
+      "empati": 3
+     },
+     "stats": {
+      "itibar": 3,
+      "mutluluk": 3
+     }
+    },
+    "result": "Çocukların merakı sana da ilham verdi."
+   },
+   {
+    "text": "Kitap bağışla",
+    "effects": {
+     "money": -2000,
+     "stats": {
+      "itibar": 1
+     }
+    },
+    "result": "Okulun kütüphanesi büyüdü."
+   }
+  ]
+ },
+ {
+  "id": "yarışma_tv",
+  "rarity": "epic",
+  "icon": "📺",
+  "title": "Bilgi yarışması",
+  "cond": {
+   "age": [
+    16,
+    70
+   ],
+   "stats": {
+    "zeka": 55
+   }
+  },
+  "once": true,
+  "text": "Televizyondaki bilgi yarışmasına seçildin! Son soruya geldin.",
+  "options": [
+   {
+    "text": "Soruları yanıtla",
+    "mg": "sinav",
+    "mgSkill": "zeka",
+    "stakes": 0.6,
+    "success": {
+     "min": 60,
+     "effects": {
+      "money": 250000,
+      "stats": {
+       "itibar": 5,
+       "mutluluk": 6
+      },
+      "title": "Bilgi Küpü"
+     },
+     "result": "Büyük ödül senin! Bilgi emekle kazanılır."
+    },
+    "fail": {
+     "effects": {
+      "money": 25000
+     },
+     "result": "Son soruda takıldın ama güzel bir ödülle döndün."
+    }
+   },
+   {
+    "text": "Kazandığınla çekil",
+    "effects": {
+     "money": 60000
+    },
+    "result": "Akıllıca bir karar."
+   }
+  ]
+ },
+ {
+  "id": "hayir_kermesi",
+  "rarity": "common",
+  "icon": "🧁",
+  "title": "Okul kermesi",
+  "cond": {
+   "age": [
+    8,
+    17
+   ]
+  },
+  "text": "Okulda ihtiyaç sahibi öğrenciler için kermes var.",
+  "options": [
+   {
+    "text": "Stant aç, kurabiye sat",
+    "mg": "paraustu",
+    "mgSkill": "ticaret",
+    "stakes": 0.3,
+    "success": {
+     "min": 50,
+     "effects": {
+      "skills": {
+       "ticaret": 3
+      },
+      "stats": {
+       "itibar": 2
+      }
+     },
+     "result": "Standın en çok bağış toplayan oldu!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "ticaret": 1
+      }
+     },
+     "result": "Hesaplar biraz karıştı ama bağış hedefe ulaştı."
+    }
+   },
+   {
+    "text": "Afiş tasarla",
+    "effects": {
+     "skills": {
+      "resim": 3
+     }
+    },
+    "result": "Afişin tüm okulda konuşuldu."
+   }
+  ]
+ },
+ {
+  "id": "muzik_yarismasi",
+  "rarity": "rare",
+  "icon": "🎤",
+  "title": "Müzik yarışması",
+  "cond": {
+   "age": [
+    10,
+    35
+   ],
+   "skills": {
+    "muzik": 35
+   }
+  },
+  "text": "Şehrin müzik yarışmasına katılma şansın var.",
+  "options": [
+   {
+    "text": "Sahneye çık",
+    "mg": "ritim",
+    "mgSkill": "muzik",
+    "stakes": 0.55,
+    "success": {
+     "min": 60,
+     "effects": {
+      "skills": {
+       "muzik": 4
+      },
+      "stats": {
+       "itibar": 4,
+       "mutluluk": 6
+      },
+      "money": 10000
+     },
+     "result": "Birinci oldun! Bir stüdyo seninle iletişime geçti."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "muzik": 2
+      }
+     },
+     "result": "Bir nota kaçtı ama jüri potansiyelini gördü."
+    }
+   }
+  ]
+ },
+ {
+  "id": "resim_sergisi",
+  "rarity": "rare",
+  "icon": "🖼️",
+  "title": "İlk sergi",
+  "cond": {
+   "age": [
+    12,
+    70
+   ],
+   "skills": {
+    "resim": 40
+   }
+  },
+  "text": "Bir galeri eserlerini sergilemek istiyor.",
+  "options": [
+   {
+    "text": "Yeni bir eser hazırla",
+    "mg": "desen",
+    "mgSkill": "resim",
+    "stakes": 0.5,
+    "success": {
+     "min": 58,
+     "effects": {
+      "skills": {
+       "resim": 4
+      },
+      "stats": {
+       "itibar": 4
+      },
+      "money": 20000
+     },
+     "result": "Tablon satıldı!"
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "resim": 2
+      }
+     },
+     "result": "Serginin ilgisi az oldu ama ilk adım atıldı."
+    }
+   }
+  ]
+ }
+]

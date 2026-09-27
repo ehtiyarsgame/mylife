@@ -1,0 +1,110 @@
+# 🌱 Hayat Yolu
+
+Doğumdan yaşlılığa, her meslek yolunun kendi mini oyunlarıyla oynandığı mobil hayat simülasyonu.
+Bu depo, tasarım dokümanındaki **"oynanabilir HTML prototipi"** adımının eksiksiz hâlidir: telefonda
+tarayıcıdan oynanır, ana ekrana eklenebilir (PWA), Capacitor ile App Store / Google Play'e paketlenebilir.
+
+## Hızlı başlangıç
+
+```bash
+python3 -m http.server 8080      # ya da: npx serve .
+# Tarayıcıda: http://localhost:8080
+```
+
+Telefonda denemek için bilgisayarla aynı Wi‑Fi'ye bağlanıp `http://<bilgisayar-ip>:8080` adresini açın.
+Derleme adımı yoktur; saf HTML + CSS + JavaScript (ES modülleri).
+
+Testler (Node 20+):
+
+```bash
+npm test                 # 200 hayatı otomatik oynatır, dengeyi ve veri dosyalarını doğrular
+node tests/diag.mjs      # denge raporu: beceri seviyesine göre meslek/servet/ticaret basamakları
+```
+
+## Oyun döngüsü
+
+| Katman | Nasıl çalışır |
+|---|---|
+| **Enerji** | Gerçek zamanlı dolar (1 enerji / 72 sn, dolu bar ≈ 2 saat). Oyun kapalıyken de dolar. Yıl bitince +15 hediye, reklamla +30 (günde 3). |
+| **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
+| **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (28 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
+| **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
+| **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer; puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
+| **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
+| **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). |
+| **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
+
+### Mini oyun kataloğu (28)
+
+Spor: **Penaltı, Çalım, Taktik Kartı, Kondisyon** · Zihin: **Sınav, Zihinden İşlem, Kelime Avı, Hafıza Kartları, Desen Hafızası** ·
+Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
+Ticaret: **Para Üstü, Pazarlık, Fiyat Belirle, Stok Planı, Ürün Sayfası, Teslimat Rotası** ·
+Hayat: **Konuşma (6 senaryo), Çelişkiyi Bul, Enkazdan Kurtarma, Ritim, Hasat, Ekim Planı**
+
+Her mini oyun `skill` (karakter becerisi) ve `stakes` (önem) ile ölçeklenir; değiştiriciler
+(yağmur, gece, kalabalık, yorgun, stresli, motivasyon, kritik, efsanevi…) oynanışı değiştirir.
+Tümü "Mini oyun salonu"nda serbestçe denenebilir.
+
+## Proje yapısı
+
+```
+index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışır)
+css/style.css                              tasarım sistemi (mobil öncelikli)
+data/events.json                           olay destesi (108 kart) — kod bilmeden genişletilir
+data/questions.json                        soru bankası (+ yaşa göre üretilen matematik soruları)
+js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
+js/core/        rng (tohumlu), energy, store, audio, ads
+js/sim/         saf simülasyon: character, stats, actions, careers, business, events, year, questions
+js/minigames/   engine + 28 mini oyun (sports, mind, tech, health, trade, life)
+js/ui/          app, dom, flows (eylem/olay/sınav/kapı akışları), lifeScreen, screens
+tests/          başsız simülasyon testleri ve denge botu
+```
+
+`js/sim/` DOM'a dokunmaz; Node'da test edilir ve Unity'ye (C#) birebir taşınabilecek şekilde yazıldı.
+
+## İçerik ekleme
+
+**Olay kartı** (`data/events.json`):
+
+```json
+{
+  "id": "izci_mahalle_maci", "rarity": "legendary", "icon": "🔭", "title": "Mahalle maçında izci",
+  "cond": { "age": [10, 15], "skills": { "futbol": 38 }, "train": { "futbol": 2 } }, "once": true,
+  "text": "Tribünde not alan biri var…",
+  "options": [
+    { "text": "Maça odaklan", "mg": "calim", "mgSkill": "futbol", "stakes": 0.45,
+      "success": { "min": 55, "effects": { "door": "futbol_altyapi", "chain": { "id": "izci_aile", "delay": 0 } }, "result": "…" },
+      "fail":    { "effects": { "skills": { "futbol": 2 } }, "result": "…" } }
+  ]
+}
+```
+
+Koşullar: `age, stage, stats, statsMax, skills, train, place, wealth, flags, anyFlag, notFlags, counters, job, hasJob, path, biz, edu, partner, married, kids, money, retired`.
+Etkiler: `stats, skills, money, moneyPct, flags, unflags, counters, energy, honest, famRep, door, legend, title, friend, mentor, chain, job, loseJob, biz, bizSkill, partner, partnerLove, marry, child, parentDies, random`.
+Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabilir. `npm test` tüm kartları ve zincir referanslarını doğrular.
+
+**Soru** (`data/questions.json`): `{"l": "lise", "s": "Fizik", "q": "…", "a": ["doğru", "yanlış", "yanlış", "yanlış"], "c": 0, "h": "ipucu"}` — şıklar oyunda karıştırılır.
+
+## Mobil mağazalara paketleme (Capacitor)
+
+```bash
+npm i -D @capacitor/cli && npm i @capacitor/core @capacitor/android @capacitor/ios
+npx cap init "Hayat Yolu" com.hayatyolu.app --web-dir .
+npx cap add android && npx cap add ios
+npx cap copy && npx cap open android   # Android Studio'da çalıştır / imzala
+```
+
+Reklam için `@capacitor-community/admob` eklenip `js/main.js` içinde `setAdProvider(kind => AdMob.showRewardVideoAd()…)`
+verilmesi yeterlidir; tüm ödül noktaları ve günlük sınırlar `js/core/ads.js` içinde hazır. 13 yaş altı için
+kişiselleştirilmemiş, aile uyumlu reklam isteği yapılmalıdır (Families / çocuk kategorisi kuralları).
+
+## Test modu
+
+Ayarlar → **Test modu: hızlı enerji** (enerji 2 sn'de dolar) ve **Reklamsız paket (simülasyon)**.
+10–15 kişilik oyun testleri için idealdir; hangi mini oyunun sevildiği "Mini oyun salonu" rekorlarından ve hayat albümlerinden izlenebilir.
+
+## İçerik ilkeleri
+
+Kumar, şans oyunu, ücretli sandık, içki/sigara ve "kolay para" seçenekleri yoktur. Dürüst kararlar itibar (+4)
+kazandırır; itibar ticaretin üst basamaklarının asıl kilididir. Kötü olaylar (dolandırıcılık, zorbalık, hastalık)
+korunmayı ve toparlanmayı öğretir; her zaman bir toparlanma yolu vardır.

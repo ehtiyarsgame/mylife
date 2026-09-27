@@ -1,0 +1,15 @@
+{
+  "name": "Hayat Yolu",
+  "short_name": "Hayat Yolu",
+  "description": "Doğumdan yaşlılığa, mini oyunlarla oynanan hayat simülasyonu.",
+  "lang": "tr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1020",
+  "theme_color": "#0d1020",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
