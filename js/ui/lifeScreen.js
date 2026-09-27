@@ -47,7 +47,10 @@ export function lifeScreen(root) {
   render();
   ticker = setInterval(() => {
     if (app.screen !== 'life') { clearInterval(ticker); return; }
+    const before = s.energy.value;
     const changed = tickEnergy(s.energy, app.meta);
+    // Enerji bir eylem maliyetini geçtiyse kilitler açılsın diye ekranı yeniden çiz
+    if (changed && [CONFIG.restEnergy, ...Object.values(CONFIG.actionEnergy)].some(c => before < c && s.energy.value >= c) && !document.querySelector('.overlay, .mg')) { save(); render(); return; }
     const el = document.getElementById('en-val');
     if (!el) return;
     el.textContent = Math.floor(s.energy.value);
