@@ -19,6 +19,7 @@ setBank(JSON.parse(readFileSync(new URL('../data/questions.json', import.meta.ur
 // Bir hayatı otomatik oynatan bot. skill: 0–100 arası "oyuncu becerisi"
 export function botLife(seed, skill = 60, opts = {}) {
   const s = newLife({ seed, name: 'Test', gender: 'e' });
+  if (opts.forceWealth) s.family.wealth = opts.forceWealth;
   const r = new RNG('bot' + seed);
   const mg = () => Math.max(0, Math.min(100, Math.round(r.normal(skill, 15))));
   Y.startYear(s);
@@ -96,6 +97,7 @@ export function botLife(seed, skill = 60, opts = {}) {
     const c2 = Y.canEndYear(s);
     assert.ok(c2.ok, `Yıl bitirilemedi (yaş ${s.age}): ${c2.reasons.join(', ')}`);
     const sum = Y.endYear(s);
+    (s._moneyAt ||= {})[s.age] = Math.round(s.money);
     if (s.age === 50) s._biz50 = s.career.biz?.step ?? -1;
     for (const k in s.stats) assert.ok(Number.isFinite(s.stats[k]) && s.stats[k] >= 0 && s.stats[k] <= 100, `stat ${k}=${s.stats[k]}`);
     for (const k in s.skills) assert.ok(Number.isFinite(s.skills[k]), `skill ${k}`);

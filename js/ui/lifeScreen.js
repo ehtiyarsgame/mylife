@@ -83,8 +83,10 @@ function buildScreen(render) {
       h('div.bar', { style: { marginTop: '6px' } }, h('i', { id: 'en-bar', style: { width: clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%' } })),
       h('div.tiny.muted', { id: 'en-next', style: { marginTop: '5px' } }, s.energy.value >= s.energy.max ? 'Dolu' : '…')),
     h('div.card.money', {},
-      h('div.row', {}, h('span', {}, '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
-      h('div.tiny.muted', { style: { marginTop: '4px' } }, s.savings > 0 ? `🏦 Birikim: ${fmtTL(s.savings)}` : `Fiyat endeksi ×${s.priceIndex.toFixed(2)}`),
+      h('div.row', {}, h('span', {}, s.age < 18 ? '🪙' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
+      h('div.tiny.muted', { style: { marginTop: '4px' } }, s.age < 18
+        ? (s.age >= 6 ? `Cebindeki · harçlık haftada ${fmtTL(Y.allowanceWeekly(s))}` : 'Henüz harçlık yok')
+        : s.savings > 0 ? `🏦 Birikim: ${fmtTL(s.savings)}` : `Fiyat endeksi ×${s.priceIndex.toFixed(2)}`),
       h('div.row', { style: { marginTop: '6px', gap: '5px' } },
         h('span.chip', { title: 'İtibar' }, '⭐ ', Math.round(s.stats.itibar)),
         h('span.chip', { title: 'Mutluluk' }, '😊 ', Math.round(s.stats.mutluluk)),
@@ -368,7 +370,7 @@ function careerTab(render) {
       nb.step >= 2 && s.career.job ? h('div.tiny', { style: { color: '#ffb547' } }, '⚠️ Dükkândan itibaren işletme tam zamanlıdır: mevcut işinden ayrılırsın.') : null,
       !nb.miss.length && b ? btn(`${nb.info.icon} Basamak atla`, async () => { if (await confirmBox(nb.info.name, `${fmtTL(nb.info.capital * s.priceIndex)} sermaye yatırılacak. Kalan nakit işletme sermayesi olarak kalır.`, 'Yatır ve büyü')) { advanceBiz(s); Y.log(s, `${nb.info.name} basamağına geçti!`, 'epic'); save(); sfx.level(); render(); } }, 'gold block') : null) : h('p.small', {}, '🌍 Zirvedesin: ihracatçısın!')));
   // Birikim
-  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Birikim: ${fmtTL(s.savings)}`), btn('Tümünü çek', () => { Y.withdrawSavings(s, s.savings); save(); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
+  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Birikim: ${fmtTL(s.savings)}`), s.age < 18 ? h('span.chip', {}, '18 yaşında') : btn('Tümünü çek', () => { Y.withdrawSavings(s, s.savings); save(); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
   return out;
 }
 
@@ -408,8 +410,8 @@ function homeTab(render) {
       h('div.bar', { style: { marginTop: '8px' } }, h('i', { style: { width: h0.stress + '%', background: st.c } })),
       h('div.sp'),
       h('div.sum-line', {}, 'Aile kasası', h('b', { class: h0.cash >= 0 ? 'pos' : 'neg' }, fmtTL(h0.cash))),
-      h('div.sum-line', {}, 'Yıllık gelir', h('b', {}, fmtTL(b.inc))),
-      h('div.sum-line', {}, 'Yıllık gider', h('b', {}, fmtTL(b.exp))),
+      h('div.sum-line', {}, 'Evin geliri (anne-baba maaşı)', h('b', {}, `${fmtTL(b.inc / 12)}/ay · ${fmtTL(b.inc)}/yıl`)),
+      h('div.sum-line', {}, 'Evin gideri (kira, fatura, mutfak, okul)', h('b', {}, `${fmtTL(b.exp / 12)}/ay · ${fmtTL(b.exp)}/yıl`)),
       h('div.sum-line', {}, 'Tahmini yıl sonu', h('b', { class: b.net >= 0 ? 'pos' : 'neg' }, (b.net >= 0 ? '+' : '−') + fmtTL(Math.abs(b.net)))),
       h0.crises.length ? h('div.sum-line', {}, 'Zor dönem', h('b', { style: { color: '#ffb547' } }, h0.crises.map(c => `${c.name} (${c.years} yıl)`).join(', '))) : null,
       need > 0 ? h('div.tile', { style: { borderColor: '#ffb547', marginTop: '10px' } }, h('b', {}, `🙏 Ailenin ihtiyacı: ${fmtTL(need)}`), h('div.tiny.muted', {}, 'Bu yıl bu açık kapanmazsa aile borçlanır ve stres artar.')) : null,
@@ -422,6 +424,21 @@ function homeTab(render) {
         btn('%50', () => give(0.5), 'sm' + (s.money > 0 ? '' : ' disabled')),
         btn('Tümü', () => give(1), 'gold sm' + (s.money > 0 ? '' : ' disabled'))),
       h0.helpTotal > 0 ? h('div.tiny', { style: { color: '#8ff0c4', marginTop: '6px' } }, `💚 Şimdiye kadar ailene ${fmtTL(h0.helpTotal)} destek oldun.`) : null));
+  }
+  if (s.age >= 6 && s.age < 18) {
+    const w = Y.allowanceWeekly(s);
+    const rate = Y.pocketSaveRate(s);
+    const setP = k => { s.pocket = k; save(); render(); };
+    out.push(h('div.sec-title', {}, '🪙 Senin cep bütçen'));
+    out.push(h('div.card', {},
+      h('div.sum-line', {}, 'Haftalık harçlık', h('b', {}, w > 0 ? fmtTL(w) : 'Bu yıl yok')),
+      h('div.sum-line', {}, 'Yıllık toplam', h('b', {}, fmtTL(w * 52))),
+      h('div.sum-line', {}, 'Cebindeki birikim', h('b', {}, fmtTL(s.money))),
+      s.savings > 0 ? h('div.sum-line', {}, '🏦 Adına açılan hesap (18\'de senin)', h('b', {}, fmtTL(s.savings))) : null,
+      h('div.tiny.muted', { style: { margin: '8px 0 6px' } }, 'Harçlık ailenin kasasından çıkar; aile zordaysa azalır ya da kesilir. Çoğu kantin, yol ve arkadaşlarla harcanır. Ne kadarını biriktireceğine sen karar ver:'),
+      h('div.seg', {}, [['harca', '🍫 Harca (%10)'], ['yarisi', '⚖️ Yarısı (%50)'], ['biriktir', '🐷 Biriktir (%80)']].map(([k, t]) =>
+        h('button' + ((s.pocket || 'harca') === k ? '.on' : ''), { style: { fontSize: '12px', padding: '8px 4px' }, onclick: () => setP(k) }, t))),
+      h('div.tiny.muted', { style: { marginTop: '6px' } }, rate >= 0.8 ? 'Biriktirmek disiplin kazandırır ama arkadaşlarınla daha az şey yaparsın (mutluluk −).' : rate <= 0.1 ? 'Harçlığının tadını çıkarıyorsun (mutluluk +), ama cebinde pek bir şey kalmıyor.' : 'Dengeli bir alışkanlık.')));
   }
   out.push(h('div.card', { style: { marginTop: '12px' } },
     ...f.parents.map(p => h('div.sum-line', {}, `${p.role === 'Anne' ? '👩' : '👨'} ${p.role}: ${p.name}`, h('b', {}, p.alive ? `${p.job}, ${p.age} yaş${p.age >= 62 ? ' (emekli)' : ''}` : '🕊️'))),

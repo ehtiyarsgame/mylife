@@ -43,7 +43,16 @@ export const CONFIG = {
     { age: 18, cost: 12000 },
     { age: 15, cost: 3000 },
   ],
-  allowance: { fakir: 1500, orta: 5000, varlikli: 15000, zengin: 45000 }, // yıllık harçlık
+  // Haftalık cep harçlığı (2026 TL), yaş bandına göre: [0–5, 6–9, 10–13, 14–17]
+  allowanceWeekly: {
+    fakir:    [0, 40, 100, 200],
+    orta:     [0, 120, 300, 500],
+    varlikli: [0, 300, 700, 1200],
+    zengin:   [0, 800, 1800, 3000],
+  },
+  // Harçlığın ne kadarı biriktirilir (kalanı kantin, yol, arkadaşlar)
+  pocketSave: { harca: 0.1, yarisi: 0.5, biriktir: 0.8 },
+  bigPrizeToAccount: 10000, // 18 yaş altı: bu tutarın üstündeki ödüller aile tarafından hesaba yatırılır
   startGift: { fakir: 0, orta: 5000, varlikli: 40000, zengin: 250000 },   // 18 yaşında aile desteği
 
   skipPenalty: 10,           // Mini oyun atlanırsa puan cezası

@@ -124,3 +124,13 @@ test('eş adayları farklı karakterlerde gelir; seçilen eş hayatı etkiler', 
   const sum = Y.endYear(s);
   assert.ok(sum.income.some(x => x[0].includes(c[1].name)));
 });
+
+test('çocuğun cebi gerçekçi kalır: 14 yaşında orta halli ailede ortalama < 20 bin TL', () => {
+  let sum = 0, n = 0;
+  for (let i = 0; i < 30; i++) {
+    const s = botLife('cep' + i, 60, { forceWealth: 'orta' });
+    if (s._moneyAt?.[14] !== undefined) { sum += s._moneyAt[14]; n++; }
+    assert.ok(Object.entries(s._moneyAt || {}).every(([a, m]) => a >= 18 || m >= 0), 'çocuk borçlu olamaz');
+  }
+  assert.ok(sum / n < 20000, 'ortalama ' + sum / n);
+});

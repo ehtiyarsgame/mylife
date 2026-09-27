@@ -61,6 +61,20 @@ function yearTasks(s) {
 
 export const epLeft = s => s.year.ep - s.year.used;
 
+// Cep harçlığı: ailenin durumuna ve yaşa göre haftalık; aile zordaysa azalır ya da kesilir.
+export function allowanceWeekly(s) {
+  if (s.age < 6 || s.age >= 18) return 0;
+  const band = s.age <= 9 ? 1 : s.age <= 13 ? 2 : 3;
+  let w = CONFIG.allowanceWeekly[s.family.wealth][band] * s.priceIndex;
+  if (!s.home) return w;
+  if (s.home.stress >= 50) return 0;
+  if (s.home.cash < 0) w *= 0.4;
+  else if (s.home.stress >= 30) w *= 0.6;
+  return w;
+}
+export const allowanceYear = s => allowanceWeekly(s) * 52;
+export const pocketSaveRate = s => CONFIG.pocketSave[s.pocket || 'harca'] ?? 0.1;
+
 // Mesai zorunluluğu: maaş, işe gidip enerji harcadıkça gelir.
 export function workNeed(s) {
   const j = s.career.job;
@@ -149,7 +163,7 @@ export function performAction(s, id, perf = 60) {
       log(s, 'Açık liseden diploma aldı.', 'rare');
     } else out.lines.push('📘 Açık lisede bir yılı tamamladın. Bir yıl daha!');
   }
-  if (a.earn) { const e = a.earn * s.priceIndex * (0.5 + perf / 100); s.money += e; out.lines.push(`+${fmt(e)} kazandın`); out.earned = e; if (s.age < 18) y.worked++; }
+  if (a.earn) { const e = a.earn * s.priceIndex * (0.5 + perf / 100) * (s.age < 18 && a.id === 'yari_zaman' ? 0.6 : 1); s.money += e; out.lines.push(`+${fmt(e)} kazandın`); out.earned = e; if (s.age < 18) y.worked++; }
   if (a.work) y.workDone += a.ep;
   if (['sosyal', 'spor'].includes(a.cat) || a.friend || a.date) y.social++;
   if (a.train === 'liderlik' || (a.stats && a.stats.sosyal)) growCharisma(s, 0.35 * (0.6 + perf / 125));
@@ -498,7 +512,12 @@ export function applyEffects(s, e, card) {
   const pi = s.priceIndex;
   for (const [k, v] of Object.entries(e.stats || {})) { const d = addStat(s, k, v); if (Math.abs(d) >= 0.5) lines.push({ k, v: d }); }
   for (const [k, v] of Object.entries(e.skills || {})) { s.skills[k] = clamp(s.skills[k] + v, 0, 100); lines.push({ k, v }); }
-  if (e.money) { s.money += e.money * pi; lines.push({ k: 'money', v: e.money * pi }); }
+  if (e.money) {
+    const v = e.money * pi;
+    if (s.age < 18 && v > CONFIG.bigPrizeToAccount * pi) {
+      s.savings += v; lines.push({ text: `🏦 ${fmt(v)} ailen tarafından senin adına bankaya yatırıldı.` });
+    } else { s.money += v; lines.push({ k: 'money', v }); }
+  }
   if (e.moneyPct) { const v = Math.max(0, s.money) * e.moneyPct; s.money += v; lines.push({ k: 'money', v }); }
   for (const f of e.flags || []) s.flags[f] = true;
   for (const f of e.unflags || []) delete s.flags[f];
@@ -617,12 +636,22 @@ export function endYear(s) {
     sum.inflation = infl;
     const pi = s.priceIndex;
 
-    if (s.age < 18) {
-      let al = CONFIG.allowance[s.family.wealth] * pi * (s.age < 6 ? 0.2 : 1);
-      if (s.home.cash < 0) al *= 0.3;
-      if (s.home.stress >= 50) al = 0;
-      if (al > 0) { s.money += al; s.home.cash -= al; sum.income.push(['Harçlık', al]); }
-      else if (s.age >= 6) sum.notes.push('🪙 Ailen bu yıl harçlık veremedi.');
+    if (s.age < 18 && s.age >= 6) {
+      const al = allowanceYear(s);
+      if (al > 0) {
+        const keep = al * pocketSaveRate(s);
+        s.money += keep; s.home.cash -= al;
+        sum.income.push([`Harçlık (haftada ${fmt(al / 52)})`, al]);
+        sum.expense.push(['Harcadığın (kantin, yol, arkadaşlar)', al - keep]);
+        if (s.pocket === 'biriktir') { addStat(s, 'disiplin', 1); addStat(s, 'mutluluk', -1.5); }
+        if (s.pocket === 'harca') addStat(s, 'mutluluk', 1);
+      } else sum.notes.push('🪙 Ailen bu yıl harçlık veremedi; evde para yok.');
+    }
+    // Gençler cebindeki parayı da harcar: telefon, kıyafet, arkadaşlar
+    if (s.age >= 6 && s.age < 18 && s.money > 0) {
+      const rate = { harca: 0.6, yarisi: 0.35, biriktir: 0.12 }[s.pocket || 'harca'];
+      const sp = s.money * rate;
+      if (sp > 1) { s.money -= sp; sum.expense.push(['Kişisel harcamalar (telefon, kıyafet, gezme)', sp]); }
     }
     if (s.age === 17) {
       const g = CONFIG.startGift[s.family.wealth] * pi;
@@ -702,7 +731,15 @@ export function endYear(s) {
       let cost = lc * 12 * pi;
       const wr = ['fakir', 'orta', 'varlikli', 'zengin'].indexOf(s.family.wealth);
       if (s.age < 18) cost = 0;                    // aile karşılar
-      else if (s.edu.stage === 'uni') cost *= [1, 0.5, 0.1, 0][wr] * (s.flags.burs ? 0.5 : 1);
+      else if (s.edu.stage === 'uni') {
+        // Öğrencinin gideri: aile payını kendi kasasından öder (kasası elverdiği ölçüde)
+        const famShare = [0, 0.5, 0.9, 1][wr];
+        const full = cost * (s.flags.burs ? 0.5 : 1);
+        const fam = s.home && s.family.parents.some(p => p.alive) ? Math.min(full * famShare, Math.max(0, s.home.cash + homeBudget(s).net)) : 0;
+        y.familyPaid += fam;
+        if (fam > 0) sum.notes.push(`🎓 Ailen okul masraflarının ${fmt(fam)} kadarını karşıladı.`);
+        cost = full - fam;
+      }
       else if (!s.career.job && !s.career.biz && !s.career.retired) cost *= 0.55; // işsizken asgari yaşam (aileyle / küçük ev)
       if (s.rel.married && s.rel.partner) {
         const P = s.rel.partner;
@@ -735,6 +772,8 @@ export function endYear(s) {
       const g = s.savings * (infl + 0.03);
       s.savings += g; sum.income.push(['Birikim getirisi', g]);
     }
+    // Çocuk borçlanamaz: cepteki açığı ailesi kapatır
+    if (s.age < 18 && s.money < 0 && s.home) { s.home.cash += s.money; sum.notes.push(`🏠 Cebindeki açığı (${fmt(-s.money)}) ailen kapattı.`); s.money = 0; }
     // Borç
     if (s.money < 0) {
       if (s.savings > 0) { const t = Math.min(s.savings, -s.money); s.savings -= t; s.money += t; sum.notes.push('🏦 Açığı birikiminden kapattın.'); }
