@@ -1,6 +1,6 @@
 # 🌱 Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.1.0-test.apk`](apk/HayatYolu-0.1.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.2.0-test.apk`](apk/HayatYolu-0.2.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -35,6 +35,8 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Hane ekonomisi** | Ailenin kasası, geliri, gideri, krizleri (işten çıkarılma, hastalık, kira zammı, kardeş masrafı, dede bakımı) ve **stresi** var. Harçlık ve kurs parası bu kasadan çıkar. Aile zordaysa çocuk pazar/ayak işi, yarı zamanlı iş ya da çıraklıkla kazanıp **Ev** sekmesinden destek olur. Olmazsa sorunlar kademe kademe açılır: faturalar → kira ihtarı → icra (okulu bırakma kararı) → aile dağılma noktası. Aile kemer sıkar, sosyal yardım alır; sınıf atlayabilir ya da düşebilir. Yetişkinlikte emekli anne-babaya destek gerekir. Çalışan çocuğun okul hazırlığı düşer; okulu bırakan açık liseyle geri dönebilir. |
 | **Yaşam dengesi** | 6 alan takip edilir: ders, spor, sosyal, aile, dinlenme, hobi. 3 yıl üst üste emek → alışkanlık ödülü (sağlık, mutluluk, sınav hazırlığı +4, aile bağı). İhmal → kademeli bedel: ders çalışmayan unutur, veli çağrılır, iki yıl üst üste çok zayıf karne **sınıfta bırakır**; spor yapmayanın fiziği ve sağlığı düşer; sosyal hayatı olmayan yalnızlaşır, arkadaş kaybeder; aileyi ihmal eden kopar; dinlenmeyen tükenir. Kullanılmayan beceri 3 yıl sonra körelir. Dengeli yaşayan ~75, özensiz ~65 yıl yaşar. |
 | **Kader** | Başlangıç zarı bir kez atılır ve kaydedilir. Zarı yeniden atmak, devam eden hayatı silip yenisine başlamak ya da ölümde (hayat başına bir kez) ikinci şans almak **3 ödüllü reklam** ister; aksi hâlde kadere razı olunur. İzlenen reklam ilerlemesi kaydedilir. |
+| **Alan seçimi** | Lise 2'de Sayısal / Eşit Ağırlık / Sözel / Dil. Yeteneklerine göre öneri gelir; alanın YKS'de girebileceğin bölümleri, alan derslerini ve sınav hazırlığını belirler. Meslek lisesi öğrencisinin alanı meslektir. |
+| **Kart dengesi** | Kartlar yaşa, aile durumuna (fakirin, orta hallinin, zenginin dertleri ayrı), köy/kasaba/şehre göre gelir. Bir kart nadirliğine göre 6–14 yıl tekrar etmez, aynı kart asla üst üste gelmez; seçenekler yaşa göre gizlenir. |
 | **İş = emek** | Maaş, yıl içinde **mesaiye gittiğin oranda** yatar (tam zamanlı iş 2 EP). Hiç gitmezsen maaşın kesilir, üst üste olursa kovulursun. |
 | **Eş seçimi** | Her başarılı tanışmada 3 aday: *çok çekici*, *çok uyumlu*, *varlıklı çevreden*. Görünüş, uyum, karakter (destekleyici, tutumlu, savurgan, hırslı, kıskanç, sakin, aile odaklı, maceracı), iş, ailesi ve çocuk isteği farklıdır. Eşin geliri, gider alışkanlığı, mutluluğun ve tartışmalar buna göre şekillenir; sevgi bakımsız kalırsa boşanma ve mal paylaşımı olur. |
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
@@ -45,9 +47,9 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). |
 | **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
 
-### Mini oyun kataloğu (28)
+### Mini oyun kataloğu (36)
 
-Spor: **Penaltı, Çalım, Taktik Kartı, Kondisyon** · Zihin: **Sınav, Zihinden İşlem, Kelime Avı, Hafıza Kartları, Desen Hafızası** ·
+Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
 Ticaret: **Para Üstü, Pazarlık, Fiyat Belirle, Stok Planı, Ürün Sayfası, Teslimat Rotası** ·
 Hayat: **Konuşma (6 senaryo), Çelişkiyi Bul, Enkazdan Kurtarma, Ritim, Hasat, Ekim Planı**
@@ -61,7 +63,7 @@ Tümü "Mini oyun salonu"nda serbestçe denenebilir.
 ```
 index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışır)
 css/style.css                              tasarım sistemi (mobil öncelikli)
-data/events.json                           olay destesi (145 kart) — kod bilmeden genişletilir
+data/events.json                           olay destesi (206 kart) — kod bilmeden genişletilir
 data/questions.json                        soru bankası (+ yaşa göre üretilen matematik soruları)
 js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
 js/core/        rng (tohumlu), energy, store, audio, ads

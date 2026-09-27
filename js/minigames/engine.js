@@ -45,7 +45,8 @@ export function autoMods(state, base = [], outdoor = false) {
 
 function difficulty(skill, stakes, mods) {
   const modHard = mods.reduce((a, k) => a + (MODIFIERS[k]?.hard || 0), 0);
-  return clamp(0.22 + stakes * 0.55 + modHard - (skill / 100) * 0.42, 0.05, 1);
+  // Becerisi düşük olan için oyun gerçekten zor, ustası için rahat (üstel eğri)
+  return clamp(0.12 + stakes * 0.5 + modHard + Math.pow(1 - skill / 100, 1.3) * 0.62, 0.05, 1);
 }
 
 // ctx: { skill 0–100, stakes 0–1, mods [], title, allowSkip, skipScore, onRetryAd(): Promise<bool>, extra }
@@ -80,7 +81,8 @@ export async function playMinigame(id, ctx = {}) {
       mods.length ? h('div.row', { style: { justifyContent: 'center', flexWrap: 'wrap', marginTop: '10px', gap: '6px' } },
         mods.map(k => h('span.chip' + ((MODIFIERS[k]?.hard || 0) > 0 ? '.warn' : '.green'), {}, MODIFIERS[k]?.icon, ' ', MODIFIERS[k]?.name))) : null,
       h('div.how', {}, h('ul', {}, game.how.map(t => h('li', {}, t)))),
-      skill >= 60 ? h('p.small.center', { style: { color: '#8ff0c4', margin: '0 0 10px' } }, '✨ Yüksek becerin oyunu kolaylaştırıyor.') : null,
+      skill >= 60 ? h('p.small.center', { style: { color: '#8ff0c4', margin: '0 0 10px' } }, '✨ Yüksek becerin oyunu kolaylaştırıyor.')
+        : skill < 30 ? h('p.small.center', { style: { color: '#ff9db0', margin: '0 0 10px' } }, '⚠️ Bu alanda deneyimin yok denecek kadar az: oyun zor olacak. Emek verdikçe kolaylaşır.') : null,
       h('div.col', {},
         btn('▶  Oyna', () => res('play'), 'primary block'),
         ctx.allowSkip !== false ? btn(`⏭  Hızlı geç (tahmini ${ctx.skipScore ?? 40} puan)`, () => res('skip'), 'ghost block') : null,

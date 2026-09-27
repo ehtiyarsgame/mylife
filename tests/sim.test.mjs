@@ -167,3 +167,25 @@ test('kimse 18 yaşından sonra ortaokulda/lisede takılı kalmaz', () => {
     assert.ok(!(s.age >= 19 && ['orta', 'lise'].includes(s.edu.stage) && !s.flags.yksTekrar), `${s.age} yaşında ${s.edu.stage}`);
   }
 });
+
+// ——— Kart kalitesi ———
+import { optionVisible } from '../js/sim/events.js';
+test('her kartın her uygun yaşta en az bir görünür seçeneği vardır', () => {
+  for (const c of events) {
+    const [a0, a1] = c.cond?.age || [0, 90];
+    for (let age = a0; age <= Math.min(a1, 90); age += 1) {
+      const s = newLife({ seed: 'kv', name: 'A', gender: 'e' }); s.age = age;
+      assert.ok(c.options.some(o => optionVisible(s, o)), `${c.id} ${age} yaşında seçeneksiz`);
+    }
+  }
+});
+
+test('aynı kart üst üste iki yıl gelmez ve bir hayatta çok çeşitli kart görülür', () => {
+  for (let i = 0; i < 20; i++) {
+    const s = botLife('tekrar' + i, 60);
+    const seq = s._cardSeq || [];
+    for (let k = 1; k < seq.length; k++) assert.ok(!(seq[k][0] === seq[k - 1][0] && seq[k][1] - seq[k - 1][1] <= 1 && !events.find(e => e.id === seq[k][0])?.chainOnly), `${seq[k][0]} tekrarlandı`);
+    const uniq = new Set(seq.map(x => x[0])).size;
+    assert.ok(uniq >= seq.length * 0.4, `çeşitlilik düşük: ${uniq}/${seq.length}`);
+  }
+});

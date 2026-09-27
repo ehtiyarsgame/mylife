@@ -4,14 +4,15 @@ import { app, save } from './app.js';
 import { sfx, vibrate } from '../core/audio.js';
 import { fmtTL, signed, sleep, clamp } from '../core/util.js';
 import { showRewarded, adsLeft } from '../core/ads.js';
+import { fx } from '../core/rng.js';
 import { addEnergy } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { playMinigame, autoMods } from '../minigames/index.js';
 import { mgSkillLevel } from '../sim/stats.js';
 import { actionById, resolve as res } from '../sim/actions.js';
-import { JOBS, DOORS, EXAMS, jobTitle } from '../sim/careers.js';
+import { JOBS, DOORS, EXAMS, ALANLAR, DEPTS, jobTitle } from '../sim/careers.js';
 import { pickQuestions, levelFor } from '../sim/questions.js';
-import { render as renderText } from '../sim/events.js';
+import { render as renderText, optionVisible } from '../sim/events.js';
 import * as Y from '../sim/year.js';
 import { progress } from './missions.js';
 import { choosePartner, SPOUSE_TRAITS, arcLabel } from '../sim/partner.js';
@@ -121,7 +122,8 @@ export async function doAction(id, rerender) {
   if (a.exam) return runExam(a.exam, { actionId: id, rerender });
 
   let perf = 60, skipped = false;
-  const mg = res(a.mg, s);
+  const mgv = res(a.mg, s);
+  const mg = Array.isArray(mgv) ? fx.pick(mgv) : mgv; // her seferinde farklı bir mini oyun
   if (mg) {
     const r = await runMg(mg, res(a.mgSkill, s), { stakes: 0.22 + (s.age > 17 ? 0.1 : 0), title: a.name, outdoor: a.cat === 'spor', extra: { scene: sceneFor(a, s) } });
     perf = r.score; skipped = r.skipped;
@@ -208,6 +210,7 @@ export async function showEvent(card) {
       h('p', {}, renderText(s, card.text))),
     h('div.sp'),
     card.options.map((o, i) => {
+      if (!optionVisible(s, o)) return null;
       const ok = Y.optionAvailable(s, o);
       return h('button.opt' + (ok ? '' : '.disabled'), { onclick: () => { sfx.tap(); close(i); } },
         renderText(s, o.text),
@@ -253,10 +256,10 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
   }
   const level = E.level === 'auto' ? levelFor(s.age) : E.level;
   s.qRecent = s.qRecent || [];
-  const questions = pickQuestions(level, E.q, s.qRecent);
+  const prep = Y.examPrep(s, examId);
+  const questions = pickQuestions(level, E.q, s.qRecent, prep);
   s.qRecent.push(...questions.map(q => q.id).filter(id => id !== 'gen'));
   s.qRecent = s.qRecent.slice(-200);
-  const prep = Y.examPrep(s, examId);
   const jokers = {
     ogretmen: !!s.flags.ogretmen,
     ezber: s.year.study >= 2 || (s.studyLog.slice(-1)[0] || 0) >= 3,
@@ -264,7 +267,7 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     sure: s.stats.disiplin >= 60,
   };
   const r = await playMinigame('sinav', {
-    skill: prep, stakes: examId === 'karne' ? 0.2 : 0.6, title: `${E.name} · ${E.q} soru · soru başı ${E.t} sn`,
+    skill: prep, stakes: examId === 'karne' ? 0.2 : 0.6, title: `${E.name} · ${E.q} soru · soru başı ${E.t} sn` + (prep < 40 ? ' · ⚠️ Az çalıştın: sorular zor, süre kısa!' : prep >= 70 ? ' · ✨ İyi hazırlandın' : ''),
     mods: autoMods(s, examId === 'karne' ? [] : ['kritik']),
     skipScore: clamp(prep - 10, 5, 80),
     extra: { questions, perQ: E.t, prep, jokers, examName: E.name, adJoker: () => watchAd('joker') },
@@ -303,6 +306,26 @@ async function choiceSheet(ch) {
   ), { dismissable: false });
   if (ch.kind === 'school') Y.chooseSchool(s, id); else Y.chooseDept(s, id);
   save();
+}
+
+// ——— Alan seçimi ———
+export async function alanSheet() {
+  const s = S();
+  const scores = Object.keys(ALANLAR).map(id => [id, Y.alanStrength(s, id)]).sort((a, b) => b[1] - a[1]);
+  const best = scores[0][0];
+  const id = await sheet(close => h('div', {},
+    h('h2', {}, '🧭 Alanını seç'),
+    h('p.small.muted', {}, 'Lise 2\'desin. Seçtiğin alan, YKS\'de girebileceğin bölümleri ve derslerini belirler. Yeteneklerine göre önerimiz işaretli — ama karar senin.'),
+    scores.map(([k, v]) => {
+      const A = ALANLAR[k];
+      const depts = DEPTS.filter(d => Array.isArray(d.alan) && d.alan.includes(k)).map(d => d.name).slice(0, 4).join(', ');
+      return h('button.opt', { style: { flexDirection: 'column', alignItems: 'stretch', gap: '4px' }, onclick: () => close(k) },
+        h('div.row', {}, h('span', { style: { fontSize: '26px' } }, A.icon), h('b.grow', {}, A.name), k === best ? h('span.chip.green', {}, '⭐ Önerilen') : null, h('span.chip', {}, `Uyum ${v}`)),
+        h('div.tiny.muted', {}, A.desc), depts ? h('div.tiny', {}, '🎓 ' + depts) : null);
+    })), { dismissable: false });
+  Y.chooseAlan(s, id);
+  save();
+  toast(`${ALANLAR[id].icon} ${ALANLAR[id].name} alanındasın. Alan derslerin eylemlerde açıldı.`);
 }
 
 // ——— Kapılar ———

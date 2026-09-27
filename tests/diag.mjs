@@ -2,7 +2,7 @@ import { botLife } from './bot.mjs';
 import * as Y from '../js/sim/year.js';
 const prof = [
   ['futbol', { prefer: ['mahalle_maci','okul_takimi','altyapi','kosu'] }],
-  ['doktor', { prefer: ['mat','fen','dershane','kitap','uni_ders'], dept: 'tip' }],
+  ['doktor', { prefer: ['mat','fen','dershane','kitap','uni_ders','alan_sayisal'], dept: 'tip', alan: 'sayisal' }],
   ['tuccar', { prefer: ['isletme','bakkal'], biz: true, honest: true }],
   ['tuccarNH', { prefer: ['isletme','bakkal'], biz: true }],
   ['random', {}],

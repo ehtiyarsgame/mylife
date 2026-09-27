@@ -81,13 +81,25 @@ export function drawCard(s, rng) {
   const order = ['legendary', 'epic', 'rare', 'common'];
   let rar = rng.weighted(order.map(k => [k, P[k]]));
   for (let i = order.indexOf(rar); i < order.length; i++) {
-    const pool = DECK.filter(c => c.rarity === order[i] && !c.chainOnly && checkCond(c.cond, s) && !(c.once && s.seen[c.id]) && !s.year?.seenIds?.includes(c.id));
-    if (pool.length) {
-      return rng.weighted(pool.map(c => [c, (c.weight ?? 1) * (s.seen[c.id] ? 0.35 : 1)]));
+    // Tekrar önleme: kart, nadirliğine göre yıllarca geri gelmez; aynı kart üst üste iki yıl asla çıkmaz
+    for (const strict of [1, 0.5]) {
+      const pool = DECK.filter(c => c.rarity === order[i] && !c.chainOnly && checkCond(c.cond, s) && !(c.once && s.seen[c.id])
+        && !s.year?.seenIds?.includes(c.id) && cooledDown(s, c, strict));
+      if (pool.length) return rng.weighted(pool.map(c => [c, (c.weight ?? 1) * (s.seen[c.id] ? 0.4 : 1)]));
     }
   }
   return null;
 }
+
+const COOLDOWN = { common: 6, rare: 9, epic: 14, legendary: 30 };
+function cooledDown(s, c, strict) {
+  const at = s.seenAt?.[c.id];
+  if (at === undefined) return true;
+  const gap = s.age - at;
+  return gap >= 2 && gap >= (c.cooldown ?? COOLDOWN[c.rarity]) * strict;
+}
+// Seçenek yaşa/duruma uygun mu (uygunsuzsa hiç gösterilmez)
+export const optionVisible = (s, o) => !o.show || checkCond(o.show, s);
 
 export function textVars(s) {
   const alive = s.family.parents;

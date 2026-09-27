@@ -28,6 +28,7 @@ export function botLife(seed, skill = 60, opts = {}) {
     // Sınav görevleri
     for (const t of s.year.tasks) {
       if (t.done) continue;
+      if (t.choice === 'alan') { Y.chooseAlan(s, opts.alan || ['sayisal', 'ea', 'sozel', 'dil'][r.int(0, 3)]); continue; }
       const res = Y.examScore(s, t.exam, mg());
       const out = Y.applyExam(s, t.exam, res);
       if (out.choices?.kind === 'school') Y.chooseSchool(s, out.choices.list[0].id);
@@ -79,6 +80,7 @@ export function botLife(seed, skill = 60, opts = {}) {
       let ev;
       while ((ev = Y.nextEvent(s))) {
         const okOpts = ev.options.map((o, i) => [o, i]).filter(([o]) => Y.optionAvailable(s, o));
+        (s._cardSeq ||= []).push([ev.id, s.age]);
         const honest = okOpts.find(([o]) => o.honest);
         const [o, i] = (opts.honest && honest) ? honest : r.pick(okOpts);
         Y.resolveOption(s, ev, i, o.mg ? mg() : null);

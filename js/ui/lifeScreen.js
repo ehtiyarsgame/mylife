@@ -6,7 +6,7 @@ import { fmtTL, fmtTime, signed, clamp } from '../core/util.js';
 import { tickEnergy, secondsToNext, secondsToFull } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { availableActions, CATEGORIES, actionCost, stageId, resolve as res } from '../sim/actions.js';
-import { JOBS, DOORS, DEPTS, EXAMS, PATHS, jobTitle, deptById } from '../sim/careers.js';
+import { JOBS, DOORS, DEPTS, EXAMS, PATHS, ALANLAR, jobTitle, deptById } from '../sim/careers.js';
 import { BIZ_STEPS, nextStepReqs, advanceBiz } from '../sim/business.js';
 import { hintFor, stageOf, ceilingOf } from '../sim/stats.js';
 import { WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
@@ -60,7 +60,7 @@ export function lifeScreen(root) {
     el.textContent = Math.floor(s.energy.value);
     document.getElementById('en-bar').style.width = clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%';
     const nx = secondsToNext(s.energy, app.meta);
-    document.getElementById('en-next').textContent = s.energy.value >= s.energy.max ? 'Dolu' : `+1: ${fmtTime(nx)} · dolu: ${fmtTime(secondsToFull(s.energy, app.meta))}`;
+    document.getElementById('en-next').textContent = s.energy.value >= s.energy.max ? 'Dolu' : `+1 ${fmtTime(nx)} · dolu ${fmtTime(secondsToFull(s.energy, app.meta))}`;
     if (changed) save();
   }, 1000);
 }
@@ -77,21 +77,22 @@ function buildScreen(render) {
       h('div.muted', {}, `${s.age} yaş · ${st.name} · ${s.calendarYear}`),
       s.career.job ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `${JOBS[s.career.job.id].icon} ${jobTitle(s.career.job)}`) : s.edu.stage === 'uni' ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `🎓 ${deptById[s.edu.dept].name} ${s.edu.uniYears + 1}. sınıf`) : null),
     h('button.icon-btn', { onclick: () => menuSheet() }, '☰')));
-  // HUD
+  // HUD: iki eşit kutu + tam genişlik stat şeridi (içerik ne olursa olsun yükseklik sabit)
+  const full = s.energy.value >= s.energy.max;
   wrap.append(h('div.hud', {},
     h('div.card.energy', { onclick: () => F.energySheet(render) },
-      h('div.row', {}, h('span', {}, '⚡'), h('span.val', { id: 'en-val' }, Math.floor(s.energy.value)), h('span.muted.small', {}, `/ ${s.energy.max}`), h('span.grow'), h('span.plus-btn', {}, '+')),
-      h('div.bar', { style: { marginTop: '6px' } }, h('i', { id: 'en-bar', style: { width: clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%' } })),
-      h('div.tiny.muted', { id: 'en-next', style: { marginTop: '5px' } }, s.energy.value >= s.energy.max ? 'Dolu' : '…')),
-    h('div.card.money', {},
-      h('div.row', {}, h('span', {}, s.age < 18 ? '🪙' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
-      h('div.tiny.muted', { style: { marginTop: '4px' } }, s.age < 18
-        ? (s.age >= 6 ? `Cebindeki · harçlık haftada ${fmtTL(Y.allowanceWeekly(s))}` : 'Henüz harçlık yok')
-        : s.savings > 0 ? `🏦 Birikim: ${fmtTL(s.savings)}` : `Fiyat endeksi ×${s.priceIndex.toFixed(2)}`),
-      h('div.row', { style: { marginTop: '6px', gap: '5px' } },
-        h('span.chip', { title: 'İtibar' }, '⭐ ', Math.round(s.stats.itibar)),
-        h('span.chip', { title: 'Mutluluk' }, '😊 ', Math.round(s.stats.mutluluk)),
-        h('span.chip', { title: 'Sağlık' }, '❤️ ', Math.round(s.stats.saglik))))));
+      h('div.hud-top', {}, h('span.hud-ic', {}, '⚡'), h('span.val', { id: 'en-val' }, Math.floor(s.energy.value)), h('span.muted.small', {}, `/${s.energy.max}`), h('span.grow'), h('span.plus-btn', {}, '+')),
+      h('div.bar', {}, h('i', { id: 'en-bar', style: { width: clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%' } })),
+      h('div.hud-sub', { id: 'en-next' }, full ? 'Dolu' : '…')),
+    h('div.card.money', { onclick: () => { app.tab = 'ev'; render(); } },
+      h('div.hud-top', {}, h('span.hud-ic', {}, s.age < 18 ? '🪙' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
+      h('div.hud-sub', {}, s.age < 18
+        ? (s.age >= 6 ? `Harçlık ${fmtTL(Y.allowanceWeekly(s))}/hafta` : 'Harçlık yok')
+        : s.savings > 0 ? `🏦 ${fmtTL(s.savings)}` : 'Cebindeki'),
+      h('div.hud-sub', {}, s.age < 18 ? 'Cebindeki para' : `Endeks ×${s.priceIndex.toFixed(2)}`))));
+  wrap.append(h('div.stat-strip', {},
+    [['⭐', 'İtibar', s.stats.itibar], ['😊', 'Mutluluk', s.stats.mutluluk], ['❤️', 'Sağlık', s.stats.saglik], ['🧠', 'Zekâ', s.stats.zeka]].map(([e, n, v]) =>
+      h('div', { title: n }, h('span', {}, e), h('b', {}, Math.round(v)), h('span.tiny.muted', {}, n)))));
   wrap.append(yearCard(render));
   // Sekme içeriği
   const tab = app.tab;
@@ -125,6 +126,13 @@ function yearCard(render) {
     if (s.stats.mutluluk < 30 || s.stats.saglik < 25) card.append(h('div.tiny', { style: { color: '#ffb547', marginTop: '6px' } }, s.stats.saglik < 25 ? '⚠️ Sağlığın çok düşük: bu yıl −2 EP' : '⚠️ Mutsuzsun: bu yıl −1 EP'));
   }
   for (const t of y.tasks) {
+    if (t.choice === 'alan') {
+      card.append(h('div.task' + (t.done ? '.done' : ''), {},
+        h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '🧭'),
+        h('div.grow', {}, h('b', {}, 'Alan seçimi'), h('div.tiny.muted', {}, t.done ? (ALANLAR[s.edu.alan]?.name ?? '') : 'Lise 2: Sayısal, Eşit Ağırlık, Sözel ya da Dil. Geleceğini belirler!')),
+        t.done ? null : btn('Seç', () => guard(async () => { await F.alanSheet(); render(); }), 'gold sm')));
+      continue;
+    }
     const E = EXAMS[t.exam];
     card.append(h('div.task' + (t.done ? '.done' : ''), {},
       h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '📝'),
@@ -305,6 +313,7 @@ function meTab(render) {
   out.push(h('div.card', {},
     h('div.sum-line', {}, 'Durum', h('b', {}, eduName)),
     schoolName ? h('div.sum-line', {}, 'Lise', h('b', {}, schoolName)) : null,
+    s.edu.alan && ALANLAR[s.edu.alan] ? h('div.sum-line', {}, 'Alan', h('b', {}, `${ALANLAR[s.edu.alan].icon} ${ALANLAR[s.edu.alan].name}`)) : null,
     e.gpa !== null ? h('div.sum-line', {}, 'Karne ortalaması', h('b', {}, e.gpa)) : null,
     e.lgsTop !== null ? h('div.sum-line', {}, 'LGS', h('b', {}, `ilk %${e.lgsTop}`)) : null,
     e.yksTop !== null ? h('div.sum-line', {}, 'YKS', h('b', {}, `ilk %${e.yksTop}`)) : null,
@@ -369,10 +378,17 @@ function careerTab(render) {
       return h('div.sum-line', {}, `${DOORS[id].icon} ${DOORS[id].name}`, h('b', {}, d?.open ? '✅ Açık' : d?.tries ? `❌ ${d.tries} deneme` : '⏳'));
     })));
   }
-  // Ticaret
-  out.push(h('div.sec-title', {}, '📈 Ticaret yolu'));
+  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Birikim: ${fmtTL(s.savings)}`), s.age < 18 ? h('span.chip', {}, '18 yaşında') : btn('Tümünü çek', () => { Y.withdrawSavings(s, s.savings); save(); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
+  // Kendi işin (girişimcilik): yalnızca ilgi gösterene ya da işi kurmuş olana görünür
   const b = s.career.biz;
   const nb = nextStepReqs(s);
+  const bizInterest = b || s.skills.ticaret >= 15 || (s.train.ticaret || 0) >= 1 || s.edu.alan === 'ea';
+  if (!bizInterest) {
+    out.push(h('div.sec-title', {}, '🏪 Kendi işin'));
+    out.push(h('div.card', {}, h('p.small.muted', { style: { margin: 0 } }, 'Ticarete ilgi gösterirsen (bakkala yardım, pazarda çalışma, ticaret dersleri) kendi işini kurma yolu açılır.')));
+    return out;
+  }
+  out.push(h('div.sec-title', {}, '🏪 Kendi işin'));
   out.push(h('div.card', {},
     h('div.row', { style: { gap: '4px', flexWrap: 'wrap' } }, BIZ_STEPS.map((st, i) => h('span.chip' + (b && i === b.step ? '.gold' : b && i < b.step ? '.green' : ''), {}, st.icon, ' ', st.name))),
     h('div.sp'),
@@ -381,7 +397,7 @@ function careerTab(render) {
       h('div.sum-line', {}, 'Ortalama aylık net (beceri 60)', h('b', {}, fmtTL(BIZ_STEPS[b.step].monthly * s.priceIndex * (0.2 + 1.2 * 0.6)))),
       b.lastNet !== undefined ? h('div.sum-line', {}, 'Geçen yıl', h('b', { class: b.lastNet >= 0 ? 'pos' : 'neg' }, fmtTL(b.lastNet))) : null,
       h('div.sum-line', {}, 'Bu yılki ticaret becerisi', h('b', {}, b.skillN ? Math.round(b.skillSum / b.skillN) : '— (işletmeni yönet!)')),
-      h('div.sum-line', { style: { borderBottom: 0 } }, 'Kötü yıl riski', h('b', {}, `%${Math.round(BIZ_STEPS[b.step].risk * 100)} × beceri etkisi`))) : h('p.small.muted', {}, 'Henüz ticarete başlamadın. 10 yaşından itibaren "Okulda satış başlat" ile başla.'),
+      h('div.sum-line', { style: { borderBottom: 0 } }, 'Kötü yıl riski', h('b', {}, `%${Math.round(BIZ_STEPS[b.step].risk * 100)} × beceri etkisi`))) : h('p.small.muted', {}, 'Ticarete ilgin var. "Kendi küçük işini kur" eylemiyle (12+ yaş) girişimcilik yoluna başlayabilirsin.'),
     nb ? h('div.tile', { style: { marginTop: '10px' } },
       h('b', {}, `Sonraki: ${nb.info.icon} ${nb.info.name}`),
       h('div.small.muted', {}, `Sermaye ${fmtTL(nb.info.capital * s.priceIndex)} (nakit ×1,2 gerekir) · İtibar ${nb.info.rep}+ · ${nb.info.age}+ yaş`),
@@ -389,7 +405,6 @@ function careerTab(render) {
       nb.step >= 2 && s.career.job ? h('div.tiny', { style: { color: '#ffb547' } }, '⚠️ Dükkândan itibaren işletme tam zamanlıdır: mevcut işinden ayrılırsın.') : null,
       !nb.miss.length && b ? btn(`${nb.info.icon} Basamak atla`, async () => { if (await confirmBox(nb.info.name, `${fmtTL(nb.info.capital * s.priceIndex)} sermaye yatırılacak. Kalan nakit işletme sermayesi olarak kalır.`, 'Yatır ve büyü')) { advanceBiz(s); Y.log(s, `${nb.info.name} basamağına geçti!`, 'epic'); save(); sfx.level(); render(); } }, 'gold block') : null) : h('p.small', {}, '🌍 Zirvedesin: ihracatçısın!')));
   // Birikim
-  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Birikim: ${fmtTL(s.savings)}`), s.age < 18 ? h('span.chip', {}, '18 yaşında') : btn('Tümünü çek', () => { Y.withdrawSavings(s, s.savings); save(); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
   return out;
 }
 

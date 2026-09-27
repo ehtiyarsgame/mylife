@@ -48,8 +48,12 @@ function genMath(level) {
 }
 
 // Sınav soruları: şıklar karıştırılmış olarak döner ({q, opts, correct, s, h})
-export function pickQuestions(levelKey, n, recent = []) {
-  const levels = LEVEL_MIX[levelKey] || [levelKey];
+// Hazırlık düşükse sorular bir üst seviyeden ve daha zor gelir; yüksekse bildik konulardan.
+const HARDER = { ilkokul: ['ilkokul', 'ortaokul'], ortaokul: ['ortaokul', 'lise'], lise: ['lise'], genel: ['genel', 'lise'] };
+const EASIER = { ilkokul: ['ilkokul'], ortaokul: ['ortaokul', 'ilkokul'], lise: ['lise', 'ortaokul'], genel: ['genel', 'ortaokul'] };
+export function pickQuestions(levelKey, n, recent = [], prep = 50) {
+  const levels = (prep < 40 ? HARDER[levelKey] : prep >= 70 ? EASIER[levelKey] : null) || LEVEL_MIX[levelKey] || [levelKey];
+  const genLevel = prep < 40 ? ({ ilkokul: 'ortaokul', ortaokul: 'lise', lise: 'lise', genel: 'lise' }[levelKey]) : null;
   const recentSet = new Set(recent);
   let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
   if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l));
@@ -58,7 +62,7 @@ export function pickQuestions(levelKey, n, recent = []) {
   const out = [];
   for (let i = 0; i < n; i++) {
     const useGen = (fx.chance(genShare) || !pool.length) && genShare > 0;
-    const raw = useGen ? genMath(levelKey === 'genel' ? 'lise' : levelKey) : pool.pop() || genMath('ortaokul');
+    const raw = useGen ? genMath(genLevel || (levelKey === 'genel' ? 'lise' : levelKey)) : pool.pop() || genMath('ortaokul');
     const order = fx.shuffle([0, 1, 2, 3]);
     out.push({ id: raw.id, s: raw.s, q: raw.q, h: raw.h, opts: order.map(i => raw.a[i]), correct: order.indexOf(raw.c) });
   }

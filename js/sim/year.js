@@ -5,9 +5,9 @@ import { clamp, normCdf, round } from '../core/util.js';
 import { spendEnergy, addEnergy } from '../core/energy.js';
 import { stageOf, addSkill, addStat, hintFor } from './stats.js';
 import { actionById, actionCost, actionLock, resolve, stageId, deptSkill } from './actions.js';
-import { JOBS, DOORS, DEPTS, EXAMS, deptById, jobTitle } from './careers.js';
+import { JOBS, DOORS, DEPTS, EXAMS, ALANLAR, deptById, jobTitle } from './careers.js';
 import { BIZ_STEPS, bizYear, bankrupt } from './business.js';
-import { drawCard, checkCond, render, cardById } from './events.js';
+import { drawCard, checkCond, render, cardById, optionVisible } from './events.js';
 import { FRIEND_NAMES, NAMES } from './names.js';
 import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
 import { homeYear, livingHome, homeBudget, HOME } from './household.js';
@@ -60,6 +60,10 @@ function yearTasks(s) {
   const inSchool = ['ilkokul', 'orta', 'lise'].includes(s.edu.stage);
   if (inSchool && ea >= 7 && ea <= 17 && !s.flags.okulBirakti) t.push({ id: 'karne', exam: 'karne', done: false });
   if (s.edu.stage === 'orta' && ea === 13) t.push({ id: 'lgs', exam: 'lgs', done: false });
+  if (s.edu.stage === 'lise' && ea >= 15 && !s.edu.alan && !s.flags.okulBirakti) {
+    if (s.edu.school === 'meslek') s.edu.alan = 'meslek';
+    else t.push({ id: 'alan', choice: 'alan', done: false });
+  }
   if ((s.edu.stage === 'lise' && ea === 17 && !s.flags.okulBirakti) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
   return t;
 }
@@ -93,7 +97,7 @@ export function canEndYear(s) {
   const reasons = [];
   if (y.used < y.ep) reasons.push(`${y.ep - y.used} eylem puanı kaldı`);
   const t = y.tasks.filter(t => !t.done);
-  if (t.length) reasons.push(`Önemli: ${t.map(x => EXAMS[x.exam].name).join(', ')}`);
+  if (t.length) reasons.push(`Önemli: ${t.map(x => x.choice ? 'Alan seçimi' : EXAMS[x.exam].name).join(', ')}`);
   if (pendingEventCount(s) > 0) reasons.push('Açılmamış olay kartı var');
   return { ok: reasons.length === 0, reasons };
 }
@@ -110,6 +114,7 @@ export function nextEvent(s) {
   s.year.shown++;
   if (!card) return null;
   s.seen[card.id] = (s.seen[card.id] || 0) + 1;
+  (s.seenAt ||= {})[card.id] = s.age;
   s.year.seenIds.push(card.id);
   const rank = { common: 0, rare: 1, epic: 2, legendary: 3 };
   if (!s.year.bestRarity || rank[card.rarity] > rank[s.year.bestRarity]) s.year.bestRarity = card.rarity;
@@ -280,7 +285,11 @@ export function examPrep(s, examId) {
     case 'usta': base = sk.el * 0.7 + st.disiplin * 0.3; break;
     case 'ehliyet': base = st.zeka * 0.5 + st.disiplin * 0.5; break;
     case 'is': base = st.sosyal * 0.5 + st.zeka * 0.3 + (s.flags.staj ? 20 : 0); break;
-    default: base = (sk.matematik + sk.fen + sk.dil) / 3 * 0.7 + st.zeka * 0.3;
+    default: {
+      const al = ALANLAR[s.edu.alan];
+      const ks = examId === 'yks' && al ? al.skills : ['matematik', 'fen', 'dil'];
+      base = ks.reduce((a, k) => a + sk[k], 0) / ks.length * 0.7 + st.zeka * 0.3;
+    }
   }
   let mod = studyHabitBonus(s) + (s.traits?.mizac === 'kaygili' ? 6 : 0) - Math.max(0, (s.year?.worked || 0) - 1) * 5;
   if (s.home && livingHome(s) && s.home.stress >= 50) mod -= 5; // evde huzur yok
@@ -335,7 +344,11 @@ export function applyExam(s, examId, res) {
       s.edu.yksTop = res.top;
       s.edu.yksTries++;
       delete s.flags.yksTekrar;
-      const list = DEPTS.filter(d => res.top <= d.top).map(d => ({ id: d.id, name: d.name, icon: d.icon, desc: `${d.years} yıl · taban: ilk %${d.top}` }));
+      const al = s.edu.alan;
+      const fits = d => !al || d.alan === 'hepsi' || (Array.isArray(d.alan) && d.alan.includes(al));
+      const list = DEPTS.filter(d => res.top <= d.top && fits(d)).map(d => ({ id: d.id, name: d.name, icon: d.icon, desc: `${d.years} yıl · taban: ilk %${d.top}` }));
+      const locked = DEPTS.filter(d => res.top <= d.top && !fits(d));
+      if (locked.length) out.lines.push(`🔒 Puanın yetse de alanın (${ALANLAR[al]?.name ?? 'Meslek'}) nedeniyle giremediğin bölümler: ${locked.map(d => d.name).join(', ')}`);
       list.push({ id: 'none', name: 'Üniversiteye gitme', icon: '🛠️', desc: 'Doğrudan iş hayatına ya da çıraklığa başla.' });
       if (s.edu.yksTries < 3) list.push({ id: 'retake', name: 'Seneye tekrar gir', icon: '🔁', desc: 'Bir yıl hazırlan, yeniden dene. Kaybetmek son değil.' });
       out.choices = { kind: 'dept', list };
@@ -356,6 +369,13 @@ export function applyExam(s, examId, res) {
   }
   return out;
 }
+
+export function chooseAlan(s, id) {
+  s.edu.alan = id;
+  const t = s.year.tasks.find(x => x.choice === 'alan'); if (t) t.done = true;
+  log(s, `Lisede ${ALANLAR[id].name} alanını seçti.`, 'rare');
+}
+export function alanStrength(s, id) { const ks = ALANLAR[id].skills; return Math.round(ks.reduce((a, k) => a + s.skills[k], 0) / ks.length); }
 
 export function chooseSchool(s, id) {
   s.edu.school = id;
@@ -516,6 +536,7 @@ export function addLegend(s, id, title) {
 
 // ——————————————————— OLAY SEÇENEKLERİ ———————————————————
 export function optionAvailable(s, opt) {
+  if (!optionVisible(s, opt)) return false;
   if (!opt.req) return true;
   return checkCond(opt.req, s);
 }
@@ -660,7 +681,7 @@ export function endYear(s) {
   const bal = balanceYear(s);
   sum.notes.push(...bal.notes);
   sum.good = bal.good;
-  for (const id of bal.cards) if (!s.chains.some(c => c.id === id)) s.chains.push({ id, at: s.age + 1 });
+  for (const id of bal.cards) if (!s.chains.some(c => c.id === id) && !(s.seenAt?.[id] !== undefined && s.age - s.seenAt[id] < 10)) s.chains.push({ id, at: s.age + 1 });
   s.studyLog.push(y.study); if (s.studyLog.length > 4) s.studyLog.shift();
 
   withRng(s, r => {

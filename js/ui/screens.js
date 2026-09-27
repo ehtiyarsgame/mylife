@@ -51,7 +51,7 @@ export async function abandonLife() {
 // ——— YENİ HAYAT ———
 route('create', (root, opts = {}) => {
   const daily = !!opts.daily;
-  let gender = Math.random() < 0.5 ? 'k' : 'e';
+  let gender = null; // oyuncu seçmeli (isimle uyumsuz avatar olmasın)
   // Zar bir kez atılır ve kaydedilir: ekrandan çıkıp girmek yeni zar atmaz. Yeniden atmak 3 reklam.
   const m0 = app.meta;
   if (daily) m0.pendingRoll = { seed: 'gunluk-' + todayKey(), daily: true };
@@ -61,9 +61,10 @@ route('create', (root, opts = {}) => {
   let rolled = null;
   const nameIn = h('input.input', { placeholder: 'İsim (boş bırakırsan zar seçer)', maxlength: 16 });
   const seg = h('div.seg');
-  const drawSeg = () => seg.replaceChildren(
+  const drawSeg = () => { seg.replaceChildren(
     h('button' + (gender === 'k' ? '.on' : ''), { onclick: () => { gender = 'k'; drawSeg(); } }, '👧 Kız'),
     h('button' + (gender === 'e' ? '.on' : ''), { onclick: () => { gender = 'e'; drawSeg(); } }, '👦 Erkek'));
+    seg.style.borderColor = gender ? '' : '#ffb547'; };
   drawSeg();
   const diceBox = h('div');
   const actions = h('div.col', { style: { marginTop: '14px' } });
@@ -102,6 +103,7 @@ route('create', (root, opts = {}) => {
       btn('Geri', () => go('title'), 'ghost block'));
   };
   const start = () => {
+    if (!gender) { toast('👆 Önce cinsiyetini seç'); seg.animate([{ transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'none' }], 300); return; }
     const name = nameIn.value.trim();
     const s = newLife({ seed, name: name || null, gender, daily });
     delete app.meta.pendingRoll;
