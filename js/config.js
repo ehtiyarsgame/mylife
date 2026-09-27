@@ -1,5 +1,7 @@
 // Oyunun tüm ayarlanabilir sayıları burada durur.
 // Canlıda bu değerler uzaktan yapılandırmadan (Remote Config) ezilebilir.
+export const APP_VERSION = '0.1.0';
+
 export const CONFIG = {
   energy: {
     // Tempo: bir ömür ≈ 1 hafta. Dolu bar (150) ≈ 3,75 saat; günde 3–4 girişle ~9–10 oyun yılı.

@@ -47,10 +47,13 @@ export function homeBudget(s) {
   const pi = s.priceIndex;
   const alive = s.family.parents.filter(p => p.alive).length;
   let inc = H.inc * h.incPct * (alive === 2 ? 1 : alive === 1 ? 0.62 : 0);
+  if (alive === 1 && s.age < 18) inc += H.inc * 0.22;              // yetim aylığı
+  const relatives = alive === 0 && s.age < 18;                      // akrabaların yanında
+  if (relatives) inc = H.inc * 0.6;
   if (parentsRetired(s)) inc *= 0.55;               // emekli aylığı
   const kids = s.family.siblings + (livingHome(s) ? 1 : 0);
-  let exp = (H.exp * (alive ? 1 : 0) + H.perKid * kids) * h.expPct;
-  if (!alive) exp = 0;
+  let exp = (H.exp * (alive || relatives ? 1 : 0) + H.perKid * kids) * h.expPct;
+  if (!alive && !relatives) exp = 0;
   // Sosyal yardım / çocuk parası: fakir ve kalabalık ailelere
   if (s.family.wealth === 'fakir' && alive) inc += Math.max(0, kids - 1) * 2500;
   const crisisInc = h.crises.reduce((m, c) => m * (c.inc ?? 1), 1);
@@ -79,7 +82,7 @@ export function giveToFamily(s, amount) {
 export function homeYear(s, rng, familyPaid = 0) {
   const h = s.home;
   const out = { notes: [], cards: [], net: 0 };
-  if (!s.family.parents.some(p => p.alive)) { h.stress = 0; return out; }
+  if (!s.family.parents.some(p => p.alive) && s.age >= 18) { h.stress = 0; return out; }
   const b = homeBudget(s);
   const noise = rng.float(0.92, 1.08);
   const net = b.inc * noise - b.exp - familyPaid;

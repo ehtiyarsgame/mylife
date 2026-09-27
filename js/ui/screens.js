@@ -6,7 +6,7 @@ import { fmtTL, todayKey, sleep, grade } from '../core/util.js';
 import { hashString } from '../core/rng.js';
 import { migrate, rollStart, newLife, newChildLife, lifeScoreTitle, WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
 import { MIZAC, traitLabel } from '../sim/traits.js';
-import { CONFIG } from '../config.js';
+import { CONFIG, APP_VERSION } from '../config.js';
 import { NAMES } from '../sim/names.js';
 import { JOBS, PATHS, jobTitle, DOORS } from '../sim/careers.js';
 import { BIZ_STEPS } from '../sim/business.js';
@@ -24,7 +24,7 @@ route('title', root => {
   const has = app.life && app.life.alive;
   const dKey = todayKey();
   root.append(h('div.title-screen', {},
-    h('div.title-emoji', {}, '🌱'),
+    h('img.title-logo', { src: 'icons/icon.svg', alt: 'Hayat Yolu' }),
     h('div.logo', {}, 'Hayat Yolu'),
     h('div.logo-sub', {}, 'Yaşamak istediğin hayatı, küçük de olsa gerçekten oynayarak yaşa.'),
     has ? h('div.card', { style: { marginBottom: '6px' } }, h('div.row', {}, h('div.avatar', {}, avatarOf(app.life)), h('div.grow', {}, h('b', {}, `${app.life.name} ${app.life.surname}`), h('div.small.muted', {}, `${app.life.age} yaş · ${app.life.gen}. nesil`)))) : null,
@@ -35,7 +35,8 @@ route('title', root => {
       btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')),
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
       btn([h('b', {}, '⚙️'), 'Ayarlar'], () => go('settings', 'title'))),
-    h('p.center.tiny.muted', { style: { marginTop: '16px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
+    h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), 'EHTIYARS GAME'),
+    h('p.center.tiny.muted', { style: { marginTop: '6px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
   ));
 });
 
@@ -147,15 +148,17 @@ route('life', root => {
 });
 
 // ——— ÖLÜM & HAYAT ALBÜMÜ ———
+const EARLY_DEATH = 50;
 route('death', root => {
   const s = app.life;
   if (!s) return go('title');
-  if (!s.albumSaved && !s.fateDone && !s.revived && s.deathCause !== 'oyuncunun kararıyla') {
+  // İkinci şans yalnızca erken (vakitsiz) ölümde: yaşlılıkta ölen için yapılacak bir şey yok.
+  if (!s.albumSaved && !s.fateDone && !s.revived && s.age < EARLY_DEATH && s.deathCause !== 'oyuncunun kararıyla') {
     root.append(h('div.screen.center', { style: { paddingTop: '60px' } },
       h('div', { style: { fontSize: '72px' } }, '🕯️'),
       h('h1', {}, 'Kader anı'),
       h('p', {}, `${s.name} ${s.surname}, ${s.age} yaşında hayata gözlerini yumdu.`), h('p.small', {}, `Sebep: ${s.deathCause}`),
-      h('p.small.muted', {}, 'Kadere razı olabilir ya da bir kez, 3 reklam izleyerek ikinci bir şans alabilirsin.'),
+      h('p.small.muted', {}, 'Vakitsiz bir ölüm… Kadere razı olabilir ya da bir kez, 3 reklam izleyerek ikinci bir şans alabilirsin. (Yaşlılıkta ölümün ikinci şansı yoktur.)'),
       h('div.col', { style: { marginTop: '18px' } },
         btn('🕊️ Kadere razıyım', () => { s.fateDone = true; save(); go('death'); }, 'primary block'),
         btn('📺 İkinci şans (3 reklam)', async () => {
@@ -271,7 +274,11 @@ route('settings', (root, back = 'title') => {
     h('div.sec-title', {}, 'Tempo'),
     h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Günde 3–4 kez uğrayan bir oyuncu günde ~9–10 oyun yılı yaşar: bir ömür ≈ 1 hafta. Bebeklik yılları enerji harcamaz.`)),
     h('div.sec-title', {}, 'Hakkında'),
-    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — oynanabilir prototip. ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
+    h('div.card', { style: { marginBottom: '10px' } },
+      h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Hayat Yolu · sürüm ' + APP_VERSION))),
+      h('p.small', { style: { margin: '10px 0 4px' } }, '📧 İletişim ve geri bildirim: ', h('a', { href: 'mailto:ehtiyarsgame@gmail.com', style: { color: '#b9b0ff' } }, 'ehtiyarsgame@gmail.com')),
+      h('p.tiny.muted', { style: { margin: 0 } }, 'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; kişisel veri toplanmaz ve sunucuya gönderilmez. Reklamlar 13 yaş altı için kişiselleştirilmez.')),
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — test sürümü. ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
     h('div.sp'),
     btn('🗑️ Tüm ilerlemeyi sıfırla', async () => {
       if (await confirmBox('Her şeyi sıfırla', 'Tüm hayatlar, albüm ve koleksiyon silinecek.', 'Sıfırla', 'Vazgeç', 'danger')) {

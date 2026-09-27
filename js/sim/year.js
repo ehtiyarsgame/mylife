@@ -586,15 +586,31 @@ export function applyEffects(s, e, card) {
     }
     if (e.parentDies) {
       const alive = s.family.parents.filter(p => p.alive);
-      if (alive.length) {
-        const p = alive.sort((a, b) => b.age - a.age)[0];
+      const p = typeof e.parentDies === 'string' ? alive.find(x => x.role === e.parentDies) : alive.sort((a, b) => b.age - a.age)[0];
+      if (p) {
         p.alive = false;
         const share = inheritanceShare(s) / Math.max(1, alive.length);
-        s.money += share;
-        log(s, `${p.role === 'Anne' ? 'Annesi' : 'Babası'} ${p.name} vefat etti.`, 'rare');
+        log(s, `${p.role === 'Anne' ? 'Annesi' : 'Babası'} ${p.name} ${p.age} yaşında vefat etti.`, 'epic');
         lines.push({ text: `🕊️ ${p.name} aramızdan ayrıldı.` });
-        if (share > 0) lines.push({ k: 'money', v: share, text: 'Miras' });
+        if (share > 0) {
+          if (s.age < 18) { s.savings += share; lines.push({ text: `🏦 Payına düşen miras (${fmt(share)}) 18 yaşına kadar senin adına bankada.` }); }
+          else { s.money += share; lines.push({ k: 'money', v: share, text: 'Miras' }); }
+        }
+        if (s.age < 18) {
+          if (!s.family.parents.some(x => x.alive)) { s.flags.akrabaYaninda = true; lines.push({ text: '🏠 Artık akrabalarının yanında büyüyeceksin.' }); }
+          else lines.push({ text: '🏠 Evin geliri düştü; yetim aylığı bağlandı.' });
+        }
       }
+    }
+    if (e.siblingDies && s.family.siblings > 0) {
+      s.family.siblings--;
+      log(s, 'Kardeşini kaybetti.', 'epic');
+    }
+    if (e.partnerDies && s.rel.partner) {
+      const P = s.rel.partner;
+      log(s, `Eşi ${P.name} vefat etti.`, 'epic');
+      lines.push({ text: `🕊️ ${P.name} aramızdan ayrıldı.` });
+      s.rel.partner = null; s.rel.married = false; s.flags.dul = true;
     }
     if (e.random) {
       const opt = r.weighted(e.random.map(x => [x, x.w ?? 1]));
@@ -905,12 +921,14 @@ export function endYear(s) {
     }
     // Emeklilik: ebeveynlerin geliri düşer
     for (const p of s.family.parents) if (p.alive && p.age === 62) sum.notes.push(`🪑 ${p.role === 'Anne' ? 'Annen' : 'Baban'} emekli oldu; ailenin geliri azaldı.`);
-    // Ebeveyn vefatı yaşa bağlı
+    // Aile üyelerinin vefatı: yaşa bağlı risk; genç yaşta ani kayıplar nadir ama mümkün
+    const due = id => s.chains.some(c => c.id === id);
     for (const p of s.family.parents) {
-      if (p.alive && p.age > 62 && r.chance(deathP(p.age, 60) * 0.9) && !s.chains.some(c => c.id === 'ebeveyn_vefat')) {
-        s.chains.push({ id: 'ebeveyn_vefat', at: s.age + 1 });
-      }
+      const id = p.role === 'Anne' ? 'anne_vefat' : 'baba_vefat';
+      if (p.alive && !due(id) && r.chance(deathP(p.age, 62) * (p.role === 'Baba' ? 1.15 : 0.95))) s.chains.push({ id, at: s.age + 1 });
     }
+    if (s.family.siblings > 0 && !due('kardes_vefat') && r.chance(0.0012 * s.family.siblings)) s.chains.push({ id: 'kardes_vefat', at: s.age + 1 });
+    if (P && s.rel.married && (P.age ?? s.age) >= 45 && !due('es_vefat') && r.chance(deathP(P.age ?? s.age, 62))) s.chains.push({ id: 'es_vefat', at: s.age + 1 });
 
     // ——— Ölüm ———
     let dp = deathP(s.age, s.stats.saglik) * sedentaryRisk(s);

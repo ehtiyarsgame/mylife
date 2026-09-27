@@ -6082,5 +6082,207 @@
     "result": "Beden bir gün faturayı keser. Dinlenme eylemlerini ihmal etme."
    }
   ]
+ },
+ {
+  "id": "anne_vefat",
+  "rarity": "epic",
+  "icon": "🕊️",
+  "title": "Anneni kaybettin",
+  "chainOnly": true,
+  "cond": {
+   "parentAlive": "Anne"
+  },
+  "text": "Telefon gece çaldı. {anne} aramızdan ayrıldı. Evin en sıcak köşesi artık boş.",
+  "options": [
+   {
+    "text": "Yasını tut, ailene güç ol",
+    "effects": {
+     "parentDies": "Anne",
+     "stats": {
+      "mutluluk": -12
+     },
+     "skills": {
+      "empati": 3
+     },
+     "relation": "sicak",
+     "homeStress": 8
+    },
+    "result": "Onun öğrettikleri, en zor günlerde yolunu aydınlatacak."
+   },
+   {
+    "text": "Acını derslerine/işine gömerek yaşa",
+    "effects": {
+     "parentDies": "Anne",
+     "stats": {
+      "mutluluk": -9,
+      "disiplin": 3
+     },
+     "homeStress": 8
+    },
+    "result": "Çok çalıştın ama bazı geceler gözyaşların sessizce aktı."
+   }
+  ]
+ },
+ {
+  "id": "baba_vefat",
+  "rarity": "epic",
+  "icon": "🕊️",
+  "title": "Babanı kaybettin",
+  "chainOnly": true,
+  "cond": {
+   "parentAlive": "Baba"
+  },
+  "text": "{baba} aramızdan ayrıldı. Kapıdan her girişinde onun sesini arıyorsun.",
+  "options": [
+   {
+    "text": "Yasını tut, ailene güç ol",
+    "effects": {
+     "parentDies": "Baba",
+     "stats": {
+      "mutluluk": -12
+     },
+     "skills": {
+      "empati": 3
+     },
+     "relation": "sicak",
+     "homeStress": 10
+    },
+    "result": "Babanın emanetini taşımaya söz verdin."
+   },
+   {
+    "text": "Evin yükünü omuzlamaya karar ver",
+    "effects": {
+     "parentDies": "Baba",
+     "stats": {
+      "mutluluk": -9,
+      "disiplin": 4,
+      "itibar": 2
+     },
+     "homeStress": 6,
+     "flags": [
+      "calismaSozu"
+     ]
+    },
+    "result": "Erken büyüdün. Kazandığını ailene vermeyi unutma (Ev sekmesi)."
+   }
+  ]
+ },
+ {
+  "id": "kardes_vefat",
+  "rarity": "epic",
+  "icon": "🕯️",
+  "title": "Kardeşini kaybettin",
+  "chainOnly": true,
+  "cond": {
+   "siblings": 1
+  },
+  "text": "Bir kaza, bir hastalık… Kardeşin aramızdan ayrıldı. Ailen derin bir yasın içinde.",
+  "options": [
+   {
+    "text": "Anne-babana destek ol",
+    "effects": {
+     "siblingDies": true,
+     "stats": {
+      "mutluluk": -15
+     },
+     "skills": {
+      "empati": 4
+     },
+     "relation": "sicak",
+     "homeStress": 12
+    },
+    "result": "Birbirinize tutundunuz. Onun hatırası hep sizinle."
+   },
+   {
+    "text": "Kabuğuna çekil",
+    "effects": {
+     "siblingDies": true,
+     "stats": {
+      "mutluluk": -18,
+      "sosyal": -3
+     },
+     "homeStress": 12
+    },
+    "result": "Yas uzun sürdü. Arkadaşların ve ailen seni bekliyor."
+   }
+  ]
+ },
+ {
+  "id": "es_vefat",
+  "rarity": "epic",
+  "icon": "💐",
+  "title": "Eşini kaybettin",
+  "chainOnly": true,
+  "cond": {
+   "married": true
+  },
+  "text": "Yıllarca aynı yastığa baş koyduğun {partner} aramızdan ayrıldı. Ev çok sessiz.",
+  "options": [
+   {
+    "text": "Çocuklarınla ve dostlarınla birbirinize tutunun",
+    "effects": {
+     "partnerDies": true,
+     "stats": {
+      "mutluluk": -15
+     },
+     "skills": {
+      "empati": 3
+     },
+     "friend": 1
+    },
+    "result": "Anıları, torunlarının hikâyelerinde yaşamaya devam ediyor."
+   },
+   {
+    "text": "Yalnızlığa çekil",
+    "effects": {
+     "partnerDies": true,
+     "stats": {
+      "mutluluk": -20,
+      "saglik": -4
+     }
+    },
+    "result": "Yalnızlık bedeni de yorar. Dostlarını ara, yalnız değilsin."
+   }
+  ]
+ },
+ {
+  "id": "dede_vefat",
+  "rarity": "common",
+  "icon": "🌿",
+  "title": "Dedeni/nineni kaybettin",
+  "cond": {
+   "age": [
+    5,
+    40
+   ]
+  },
+  "once": true,
+  "weight": 0.6,
+  "text": "Dedenin/ninenin cenazesinde bütün aile bir araya geldi. Masallarını, dualarını hatırladın.",
+  "options": [
+   {
+    "text": "Anılarını yaz, torunlarına anlat",
+    "effects": {
+     "stats": {
+      "mutluluk": -4
+     },
+     "skills": {
+      "dil": 2,
+      "empati": 2
+     }
+    },
+    "result": "Yazdıkların, ailenin hafızası oldu."
+   },
+   {
+    "text": "Aileyle bir araya gel",
+    "effects": {
+     "stats": {
+      "mutluluk": -3
+     },
+     "relation": "sicak"
+    },
+    "result": "Kavgalı akrabalar bile o gün barıştı."
+   }
+  ]
  }
 ]

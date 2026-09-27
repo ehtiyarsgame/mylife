@@ -1,4 +1,8 @@
-# 🌱 Hayat Yolu
+# 🌱 Hayat Yolu — Ehtiyars Game
+
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.1.0-test.apk`](apk/HayatYolu-0.1.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+>
+> İletişim: ehtiyarsgame@gmail.com
 
 Doğumdan yaşlılığa, her meslek yolunun kendi mini oyunlarıyla oynandığı mobil hayat simülasyonu.
 Bu depo, tasarım dokümanındaki **"oynanabilir HTML prototipi"** adımının eksiksiz hâlidir: telefonda
@@ -91,6 +95,19 @@ Etkiler: `stats, homeCash, homeStress, homeCrisis, homeIncPct, homeExpPct, giveM
 Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabilir. `npm test` tüm kartları ve zincir referanslarını doğrular.
 
 **Soru** (`data/questions.json`): `{"l": "lise", "s": "Fizik", "q": "…", "a": ["doğru", "yanlış", "yanlış", "yanlış"], "c": 0, "h": "ipucu"}` — şıklar oyunda karıştırılır.
+
+## Android APK derleme
+
+Proje Capacitor 8 ile paketlenir (`com.ehtiyarsgame.hayatyolu`). Gerekenler: Node 22, JDK 21, Android SDK (platform 36).
+
+```bash
+npm ci
+npm run android:apk            # www/ oluşturur, Android'e senkronlar, debug APK derler
+# çıktı: android/app/build/outputs/apk/debug/app-debug.apk
+node scripts/make-android-assets.cjs   # icons/*.svg'den ikon ve açılış görsellerini yeniden üretir
+```
+
+Play Store için imzalı sürüm: Android Studio → Build → Generate Signed Bundle (AAB). Mağaza görselleri `store/` klasöründe.
 
 ## Mobil mağazalara paketleme (Capacitor)
 

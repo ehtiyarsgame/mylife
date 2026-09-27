@@ -287,3 +287,21 @@ h3 { font-size: 16px; font-weight: 800; }
 @media (min-width: 560px) {
   body { font-size: 15.5px; }
 }
+
+/* ——— Açılış (stüdyo + oyun logosu) ——— */
+#splash { position: fixed; inset: 0; z-index: 300; background: radial-gradient(800px 500px at 50% 40%, #2a2470, #0b0e1d 70%); display: grid; place-items: center; transition: opacity .5s; }
+#splash.out { opacity: 0; pointer-events: none; }
+#splash > div { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; }
+#splash img { width: 150px; height: 150px; filter: drop-shadow(0 10px 30px rgba(0,0,0,.5)); }
+.intro-studio { animation: introIn 1.7s ease forwards; }
+.intro-game { animation: introIn2 1.6s ease 1.6s forwards; }
+.studio-name { font: 900 26px 'Nunito', system-ui, sans-serif; letter-spacing: 6px; background: linear-gradient(90deg, #ffcf4d, #ff7b54, #b36bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.studio-sub { color: #98a1c8; font-weight: 700; letter-spacing: 4px; font-size: 13px; }
+.game-name { font: 900 44px 'Nunito', system-ui, sans-serif; letter-spacing: -1px; background: linear-gradient(135deg, #fff, #b9b0ff 40%, #6fe3c3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.game-sub { color: #98a1c8; font-weight: 700; }
+#splash .intro-game img { border-radius: 32px; }
+@keyframes introIn { 0% { opacity: 0; transform: scale(.85); } 25% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(1.05); } }
+@keyframes introIn2 { 0% { opacity: 0; transform: translateY(12px) scale(.9); } 40% { opacity: 1; transform: none; } 100% { opacity: 1; } }
+.title-logo { width: 96px; height: 96px; border-radius: 26px; box-shadow: 0 12px 40px rgba(106,79,216,.5); animation: pulse 3s ease-in-out infinite; }
+.studio-foot { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; color: #98a1c8; font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+.studio-foot img { width: 22px; height: 22px; }

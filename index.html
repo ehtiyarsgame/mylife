@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#0d1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Hayat Yolu — doğumdan yaşlılığa, mini oyunlarla oynanan bir hayat simülasyonu.">
+  <meta name="description" content="Hayat Yolu — doğumdan yaşlılığa, mini oyunlarla oynanan bir hayat simülasyonu. Ehtiyars Game.">
+  <meta name="author" content="Ehtiyars Game">
   <title>Hayat Yolu</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
@@ -17,7 +18,10 @@
 </head>
 <body>
   <div id="app"></div>
-  <div id="splash" style="position:fixed;inset:0;display:grid;place-items:center;font:900 28px system-ui;color:#b9b0ff">🌱 Hayat Yolu</div>
+  <div id="splash">
+    <div class="intro-studio"><img src="icons/studio.svg" alt=""><div class="studio-name">EHTIYARS GAME</div><div class="studio-sub">sunar</div></div>
+    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Hayat Yolu</div><div class="game-sub">Bir ömür, binlerce karar</div></div>
+  </div>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

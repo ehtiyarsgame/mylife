@@ -43,6 +43,7 @@ export function checkCond(c, s) {
   if (c.kids !== undefined && (s.rel.children.length > 0) !== c.kids) return false;
   if (c.money !== undefined && s.money < c.money * s.priceIndex) return false;
   if (c.parentsAlive && !s.family.parents.some(p => p.alive)) return false;
+  if (c.parentAlive && !s.family.parents.some(p => p.alive && p.role === c.parentAlive)) return false;
   if (c.siblings && s.family.siblings < c.siblings) return false;
   if (c.retired !== undefined && s.career.retired !== c.retired) return false;
   if (c.rare && s.family.rare !== c.rare) return false;
