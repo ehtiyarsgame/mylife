@@ -9,6 +9,9 @@ import { JOBS, DOORS, DEPTS, EXAMS, deptById, jobTitle } from './careers.js';
 import { BIZ_STEPS, bizYear, bankrupt } from './business.js';
 import { drawCard, checkCond, render, cardById } from './events.js';
 import { FRIEND_NAMES, NAMES } from './names.js';
+import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
+import { homeYear, livingHome, homeBudget, HOME } from './household.js';
+import { makeCandidates } from './partner.js';
 
 export function withRng(s, fn) {
   const r = new RNG(s.rng);
@@ -42,6 +45,7 @@ export function startYear(s) {
       age: s.age, ep, used: 0, done: [], slots, shown: 0, seenIds: [],
       tasks: yearTasks(s), start: snapshot(s), notes: [], trained: {}, study: 0,
       adEP: false, bestRarity: null, altyapiCounted: false, doorsTried: [],
+      workDone: 0, worked: 0, familyPaid: 0, social: 0,
     };
   });
 }
@@ -49,13 +53,21 @@ export function startYear(s) {
 function yearTasks(s) {
   const t = [];
   const inSchool = ['ilkokul', 'orta', 'lise'].includes(s.edu.stage);
-  if (inSchool && s.age >= 7 && s.age <= 17) t.push({ id: 'karne', exam: 'karne', done: false });
+  if (inSchool && s.age >= 7 && s.age <= 17 && !s.flags.okulBirakti) t.push({ id: 'karne', exam: 'karne', done: false });
   if (s.edu.stage === 'orta' && s.age === 13) t.push({ id: 'lgs', exam: 'lgs', done: false });
-  if ((s.edu.stage === 'lise' && s.age === 17) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
+  if ((s.edu.stage === 'lise' && s.age === 17 && !s.flags.okulBirakti) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
   return t;
 }
 
 export const epLeft = s => s.year.ep - s.year.used;
+
+// Mesai zorunluluğu: maaş, işe gidip enerji harcadıkça gelir.
+export function workNeed(s) {
+  const j = s.career.job;
+  if (!j) return 0;
+  if (j.id === 'cirak' || s.age < 18 || s.edu.stage === 'uni') return 1;
+  return 2;
+}
 
 export function canEndYear(s) {
   const y = s.year;
@@ -109,8 +121,9 @@ export function performAction(s, id, perf = 60) {
   const y = s.year;
   const out = { lines: [], deltas: {}, id };
   spendEnergy(s.energy, energyCost(a));
-  const { money } = actionCost(a, s);
+  const { money, family } = actionCost(a, s);
   if (money) { s.money -= money; out.lines.push(`−${fmt(money)} ücret`); }
+  if (family) { y.familyPaid += family; out.lines.push(`Ücreti (${fmt(family)}) ailen ödedi.`); }
   y.used += a.ep;
   y.done.push(id);
   const pm = 0.6 + perf / 125; // performans çarpanı 0,6–1,4
@@ -126,7 +139,20 @@ export function performAction(s, id, perf = 60) {
   if (a.study) y.study += a.study;
   if (a.flag) s.flags[a.flag] = true;
   if (a.flagYear) y[a.flagYear] = true;
-  if (a.earn) { const e = a.earn * s.priceIndex * (0.5 + perf / 100); s.money += e; out.lines.push(`+${fmt(e)} kazandın`); out.earned = e; }
+  if (a.id === 'bakim') s.flags.bakim = s.age;
+  if (a.acikLise) {
+    s.counters.acikLise = (s.counters.acikLise || 0) + 1;
+    if (s.counters.acikLise >= 2) {
+      s.flags.liseDiploma = true; s.flags.yksTekrar = true; s.flags.acikLiseYks = true;
+      if (s.edu.gpa === null) s.edu.gpa = Math.round(40 + perf / 3);
+      out.lines.push('🎓 Açık liseyi bitirdin! Lise diploman var; seneye YKS\'ye girebilirsin.');
+      log(s, 'Açık liseden diploma aldı.', 'rare');
+    } else out.lines.push('📘 Açık lisede bir yılı tamamladın. Bir yıl daha!');
+  }
+  if (a.earn) { const e = a.earn * s.priceIndex * (0.5 + perf / 100); s.money += e; out.lines.push(`+${fmt(e)} kazandın`); out.earned = e; if (s.age < 18) y.worked++; }
+  if (a.work) y.workDone += a.ep;
+  if (['sosyal', 'spor'].includes(a.cat) || a.friend || a.date) y.social++;
+  if (a.train === 'liderlik' || (a.stats && a.stats.sosyal)) growCharisma(s, 0.35 * (0.6 + perf / 125));
   if (a.work && s.career.job) {
     const j = s.career.job; j.perfSum += perf; j.perfN++;
     if (a.bonusSalary) { const e = JOBS[j.id].salary * levelMult(j) * 12 * a.bonusSalary * s.priceIndex; s.money += e; out.lines.push(`+${fmt(e)} fazla mesai`); }
@@ -145,16 +171,14 @@ export function performAction(s, id, perf = 60) {
     }
     if (a.family) s.flags.aileBag = (s.flags.aileBag || 0) + 1;
     if (a.date) {
-      const p = 0.18 + perf / 220 + s.stats.sosyal / 400;
+      const p = 0.2 + perf / 220 + s.stats.sosyal / 500 + (looks(s) - 50) / 300 + (charisma(s) - 50) / 350;
       if (r.chance(p)) {
-        const g = s.gender === 'k' ? 'e' : 'k';
-        s.rel.partner = { name: r.pick(NAMES[g]), love: 35 + Math.round(perf / 4), since: s.age };
-        out.lines.push(`💞 ${s.rel.partner.name} ile tanıştın. Aranızda bir şey var!`);
-        log(s, `${s.rel.partner.name} ile tanıştı.`, 'rare');
+        out.candidates = makeCandidates(s, r, perf);
+        out.lines.push('💞 Yeni insanlarla tanıştın. Aralarından biriyle yakınlaştın — kimi seçeceksin?');
       } else out.lines.push('Keyifli sohbetler oldu ama kıvılcım çakmadı.');
     }
     if (a.love && s.rel.partner) {
-      s.rel.partner.love = clamp(s.rel.partner.love + 12, 0, 100);
+      s.rel.partner.love = clamp(s.rel.partner.love + 12 * (0.7 + (s.rel.partner.compat ?? 50) / 100) + (s.traits.mizac === 'duygusal' ? 4 : 0), 0, 100);
       if (!s.rel.married && s.rel.partner.love >= 70 && s.age >= 21 && !s.chains.some(c => c.id === 'evlilik_teklifi')) {
         s.chains.push({ id: 'evlilik_teklifi', at: s.age });
         if (!y.slots.some((v, i) => i >= y.shown && v <= y.used)) y.slots.push(y.used);
@@ -239,7 +263,9 @@ export function examPrep(s, examId) {
     case 'is': base = st.sosyal * 0.5 + st.zeka * 0.3 + (s.flags.staj ? 20 : 0); break;
     default: base = (sk.matematik + sk.fen + sk.dil) / 3 * 0.7 + st.zeka * 0.3;
   }
-  return clamp(Math.round(base * 0.6 + recent * 4 + (s.flags.dershaneBurs ? 5 : 0)), 0, 100);
+  let mod = (s.traits?.mizac === 'kaygili' ? 6 : 0) - Math.max(0, (s.year?.worked || 0) - 1) * 5;
+  if (s.home && livingHome(s) && s.home.stress >= 50) mod -= 5; // evde huzur yok
+  return clamp(Math.round(base * 0.6 + recent * 4 + mod), 0, 100);
 }
 
 // Sınav puanı = 0,65 × oyuncu + 0,30 × hazırlık + şans(0–5)
@@ -491,6 +517,22 @@ export function applyEffects(s, e, card) {
   if (e.biz === 'start' && !s.career.biz) s.career.biz = { step: 0, years: 0, skillSum: 0, skillN: 0, bankrupt: 0 };
   if (e.biz === 'down' && s.career.biz) bankrupt(s);
   if (e.bizSkill && s.career.biz) { s.career.biz.skillSum += e.bizSkill; s.career.biz.skillN++; }
+  if (e.giveMoneyPct && s.home) { const amt = Math.max(0, s.money) * e.giveMoneyPct; s.money -= amt; s.home.cash += amt; s.home.helpYear += amt; s.home.helpTotal += amt; if (amt > 0) lines.push({ k: 'money', v: -amt, text: `🏠 Ailene ${fmt(amt)} verdin.` }); }
+  if (e.homeCash && s.home) { s.home.cash += e.homeCash * pi; lines.push({ text: `🏠 Aile kasası ${e.homeCash > 0 ? '+' : '−'}${fmt(Math.abs(e.homeCash * pi))}` }); }
+  if (e.homeStress && s.home) { s.home.stress = clamp(s.home.stress + e.homeStress, 0, 100); lines.push({ text: `🏠 Aile stresi ${e.homeStress > 0 ? '+' : ''}${e.homeStress}` }); }
+  if (e.homeCrisis && s.home) { s.home.crises.push({ ...e.homeCrisis }); }
+  if (e.homeIncPct && s.home) s.home.incPct *= e.homeIncPct;
+  if (e.homeExpPct && s.home) s.home.expPct *= e.homeExpPct;
+  if (e.relation) s.family.relation = e.relation;
+  if (e.karizma && s.traits) growCharisma(s, e.karizma);
+  if (e.partnerSalaryPct && s.rel.partner) s.rel.partner.salary = Math.round((s.rel.partner.salary || 0) * e.partnerSalaryPct);
+  if (e.partnerJobless && s.rel.partner) s.rel.partner.jobless = e.partnerJobless;
+  if (e.eduDrop) {
+    s.edu.stage = 'done'; s.flags.okulBirakti = true;
+    for (const t of s.year.tasks) t.done = true;
+    log(s, 'Ailesi için okulu bırakıp çalışmaya başladı.', 'epic');
+  }
+  if (e.parentHealth) { const p = s.family.parents.find(x => x.alive); if (p) p.age += e.parentHealth; }
   if (e.partnerLove && s.rel.partner) s.rel.partner.love = clamp(s.rel.partner.love + e.partnerLove, 0, 100);
   withRng(s, r => {
     if (e.partner === 'new' && !s.rel.partner) {
@@ -576,8 +618,11 @@ export function endYear(s) {
     const pi = s.priceIndex;
 
     if (s.age < 18) {
-      const al = CONFIG.allowance[s.family.wealth] * pi * (s.age < 6 ? 0.2 : 1);
-      s.money += al; sum.income.push(['Harçlık', al]);
+      let al = CONFIG.allowance[s.family.wealth] * pi * (s.age < 6 ? 0.2 : 1);
+      if (s.home.cash < 0) al *= 0.3;
+      if (s.home.stress >= 50) al = 0;
+      if (al > 0) { s.money += al; s.home.cash -= al; sum.income.push(['Harçlık', al]); }
+      else if (s.age >= 6) sum.notes.push('🪙 Ailen bu yıl harçlık veremedi.');
     }
     if (s.age === 17) {
       const g = CONFIG.startGift[s.family.wealth] * pi;
@@ -593,8 +638,13 @@ export function endYear(s) {
     const j = s.career.job;
     if (j) {
       const J = JOBS[j.id];
-      const perf = j.perfN ? j.perfSum / j.perfN : 45;
-      let sal = J.salary * levelMult(j) * 12 * pi * (0.85 + perf / 333);
+      const perf = j.perfN ? j.perfSum / j.perfN : 25;
+      const need = workNeed(s);
+      const wf = need ? Math.min(1, y.workDone / need) : 1;
+      let sal = J.salary * levelMult(j) * 12 * pi * (0.85 + perf / 333) * (0.35 + 0.65 * wf);
+      if (s.traits.mizac === 'hirsli') sal *= 1.05;
+      if (wf < 1) sum.notes.push(wf === 0 ? '⚠️ Bu yıl işe hiç gitmedin! Maaşının çoğu kesildi; üst üste olursa kovulursun.' : `⚠️ Mesailerin eksikti (${y.workDone}/${need}); maaşın kesintili yattı.`);
+      if (wf === 0) j.absent = (j.absent || 0) + 1; else j.absent = 0;
       if (J.farm) {
         const farmPerf = j.farmSum ? j.farmSum / Math.max(1, j.perfN) : 45;
         sal = J.salary * levelMult(j) * 12 * pi * (0.5 + farmPerf / 100) * r.float(0.85, 1.2);
@@ -616,7 +666,7 @@ export function endYear(s) {
       } else if (lv[3] && j.years >= lv[2]) {
         sum.notes.push(`🚪 "${DOORS[lv[3]].name}" kapısı seni bekliyor (Kariyer sekmesi).`);
       }
-      if (perf < 30 && j.years > 1 && r.chance(0.35)) {
+      if ((j.absent >= 2) || (perf < 30 && j.years > 1 && r.chance(0.35))) {
         sum.notes.push('⚠️ Performansın çok düşüktü; işten çıkarıldın.');
         log(s, `${jobTitle(j)} işinden çıkarıldı.`);
         quitJob(s);
@@ -654,14 +704,31 @@ export function endYear(s) {
       if (s.age < 18) cost = 0;                    // aile karşılar
       else if (s.edu.stage === 'uni') cost *= [1, 0.5, 0.1, 0][wr] * (s.flags.burs ? 0.5 : 1);
       else if (!s.career.job && !s.career.biz && !s.career.retired) cost *= 0.55; // işsizken asgari yaşam (aileyle / küçük ev)
-      if (s.rel.married) {
+      if (s.rel.married && s.rel.partner) {
+        const P = s.rel.partner;
         cost *= 1.5;
-        const pInc = 26000 * 12 * pi; s.money += pInc; sum.income.push([`${s.rel.partner?.name ?? 'Eş'}in katkısı`, pInc]);
+        if (P.trait === 'tutumlu') cost *= 0.88;
+        if (P.trait === 'savurgan') cost *= 1.2;
+        const pSal = (P.salary ?? 26000) * (P.trait === 'hirsli' ? 1.25 : 1) * (P.jobless ? 0 : 1);
+        const pInc = pSal * 12 * pi;
+        if (pInc > 0) { s.money += pInc; sum.income.push([`${P.name}'in geliri (${P.job ?? 'çalışıyor'})`, pInc]); }
+        if (P.jobless) { P.jobless--; if (!P.jobless) sum.notes.push(`💼 ${P.name} yeniden iş buldu.`); }
       }
+      if (s.flags.evSahibi) cost *= 0.8;
       const kids = s.rel.children.filter(c => c.age < 18).length;
       cost += kids * 7000 * 12 * pi;
       if (cost > 0) { s.money -= cost; sum.expense.push(['Yaşam gideri (kira, fatura, mutfak)', cost]); }
     }
+
+    // ——— Hane (ailen) ———
+    const ho = homeYear(s, r, y.familyPaid);
+    sum.home = { net: ho.net, stress: s.home.stress, delta: ho.stressDelta, cash: s.home.cash };
+    sum.notes.push(...ho.notes);
+    for (const card of ho.cards) {
+      const id = livingHome(s) ? card : (card === 'aile_fatura' ? null : 'ebeveyn_zor');
+      if (id && !s.chains.some(c => c.id === id)) s.chains.push({ id, at: s.age + 1 });
+    }
+    if (livingHome(s) && s.home.stress >= 30) addStat(s, 'mutluluk', -s.home.stress / 12);
 
     // Birikim getirisi (enflasyon + %3)
     if (s.savings > 0) {
@@ -714,6 +781,10 @@ export function endYear(s) {
         sum.notes.push('🎓 Liseden mezun oldun.');
       }
     }
+    if (s.edu.stage === 'done' && !s.edu.degree && s.edu.pendingDept && s.edu.pendingDept !== 'none' && !s.flags.yksTekrar && s.flags.acikLiseYks) {
+      s.edu.stage = 'uni'; s.edu.dept = s.edu.pendingDept; s.edu.uniYears = 0; s.edu.uniGrades = []; delete s.flags.acikLiseYks;
+      sum.notes.push(`🎓 Geç de olsa üniversiteli oldun: ${deptById[s.edu.pendingDept].name}!`);
+    }
     if (s.edu.school === 'fen' && s.edu.stage === 'lise') { s.skills.fen = clamp(s.skills.fen + 1.5, 0, 100); s.skills.matematik = clamp(s.skills.matematik + 1.5, 0, 100); }
     if (s.edu.school === 'meslek' && s.edu.stage === 'lise') { s.skills.el = clamp(s.skills.el + 2, 0, 100); }
     if (s.edu.school === 'anadolu' && s.edu.stage === 'lise') { s.skills.dil = clamp(s.skills.dil + 1.5, 0, 100); }
@@ -736,21 +807,40 @@ export function endYear(s) {
     if (s.age >= 70) addStat(s, 'saglik', -1.2);
     if (s.stats.fizik > 50) addStat(s, 'saglik', 0.5);
     // Mutluluk dengeye döner
-    const base = 55 + (s.rel.married ? 8 : 0) + (s.rel.friends >= 3 ? 4 : 0) + (s.money < 0 ? -10 : 0);
+    const P = s.rel.partner;
+    const pBonus = P && s.rel.married ? ({ destekleyici: 4, sakin: 2, kiskanc: -2, maceraci: 1 }[P.trait] || 0) + (P.love - 50) / 10 : 0;
+    const base = 55 + (s.rel.married ? 6 : 0) + pBonus + mizacHappy(s) + (s.rel.friends >= 3 ? 4 : 0) + (s.money < 0 ? -10 : 0);
+    if (P && s.rel.married && P.trait === 'destekleyici') addStat(s, 'disiplin', 0.5);
     s.stats.mutluluk = clamp(s.stats.mutluluk + (base - s.stats.mutluluk) * 0.12, 0, 100);
     s.stats.disiplin = clamp(s.stats.disiplin + (s.age < 25 ? 0.6 : 0.2), 0, 100);
 
     // ——— Aile ———
     for (const p of s.family.parents) if (p.alive) p.age++;
     for (const c of s.rel.children) c.age++;
-    if (s.rel.partner && !s.rel.married) s.rel.partner.love -= 6;
-    if (s.rel.partner && s.rel.married) s.rel.partner.love -= 3;
-    if (s.rel.partner && s.rel.partner.love < 12) {
-      sum.notes.push(`💔 ${s.rel.partner.name} ile aranız soğudu ve ayrıldınız.`);
-      log(s, `${s.rel.partner.name} ile ayrıldı.`);
-      s.rel.partner = null; s.rel.married = false; s.rel.exes++;
-      addStat(s, 'mutluluk', -8);
+    if (P) {
+      let decay = (s.rel.married ? 3 : 6) * (1.5 - (P.compat ?? 50) / 100);
+      if (P.trait === 'hirsli') decay += 1.5;
+      if (P.trait === 'kiskanc' && y.social >= 3) { decay += 4; sum.notes.push(`😒 ${P.name}, sosyal hayatına çok vakit ayırmandan rahatsız.`); }
+      if (P.trait === 'sakin') decay -= 1;
+      P.love = clamp(P.love - decay, 0, 100);
+      if (P.age !== undefined) P.age++;
     }
+    if (P && P.love < 12) {
+      if (s.rel.married) {
+        const split = Math.max(0, s.money) * 0.5 + s.savings * 0.5;
+        s.money -= Math.max(0, s.money) * 0.5; s.savings *= 0.5;
+        sum.notes.push(`💔 ${P.name} ile boşandınız. Mal paylaşımında ${fmt(split)} ${P.name}'e geçti.`);
+        log(s, `${P.name} ile boşandı.`, 'rare');
+        addStat(s, 'mutluluk', -15);
+      } else {
+        sum.notes.push(`💔 ${P.name} ile aranız soğudu ve ayrıldınız.`);
+        log(s, `${P.name} ile ayrıldı.`);
+        addStat(s, 'mutluluk', -8);
+      }
+      s.rel.partner = null; s.rel.married = false; s.rel.exes++;
+    }
+    // Emeklilik: ebeveynlerin geliri düşer
+    for (const p of s.family.parents) if (p.alive && p.age === 62) sum.notes.push(`🪑 ${p.role === 'Anne' ? 'Annen' : 'Baban'} emekli oldu; ailenin geliri azaldı.`);
     // Ebeveyn vefatı yaşa bağlı
     for (const p of s.family.parents) {
       if (p.alive && p.age > 62 && r.chance(deathP(p.age, 60) * 0.9) && !s.chains.some(c => c.id === 'ebeveyn_vefat')) {

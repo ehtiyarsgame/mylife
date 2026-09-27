@@ -9,6 +9,8 @@ import { JOBS } from '../js/sim/careers.js';
 import { availableActions } from '../js/sim/actions.js';
 import * as Y from '../js/sim/year.js';
 import { nextStepReqs, advanceBiz } from '../js/sim/business.js';
+import { choosePartner } from '../js/sim/partner.js';
+import { giveToFamily, livingHome } from '../js/sim/household.js';
 
 export const events = JSON.parse(readFileSync(new URL('../data/events.json', import.meta.url)));
 setDeck(events); setJobsRef(JOBS);
@@ -30,6 +32,10 @@ export function botLife(seed, skill = 60, opts = {}) {
       if (out.choices?.kind === 'school') Y.chooseSchool(s, out.choices.list[0].id);
       if (out.choices?.kind === 'dept') Y.chooseDept(s, opts.dept && out.choices.list.find(c => c.id === opts.dept) ? opts.dept : out.choices.list[0].id);
     }
+    // Aileye destek
+    if (opts.helpFamily && livingHome(s) && s.home.stress >= 20 && s.money > 0) giveToFamily(s, s.money * 0.8);
+    s._maxStress = Math.max(s._maxStress || 0, s.home.stress);
+    if (s.age < 18) { s._childStress = Math.max(s._childStress || 0, s.home.stress); s._childCards = (s._childCards || 0) + ['aile_fatura','aile_kira','aile_icra','aile_dagilma'].filter(k => s.year.seenIds.includes(k)).length; }
     // Kapılar
     for (const id of Y.visibleDoors(s)) {
       const st = Y.doorStatus(s, id);
@@ -58,14 +64,17 @@ export function botLife(seed, skill = 60, opts = {}) {
     while (Y.epLeft(s) > 0 && loops++ < 20) {
       s.energy.value = 100; // bot için enerji sınırsız
       const list = availableActions(s).filter(a => !a.special && !Y.canDo(s, a));
-      const pref = list.filter(a => opts.prefer?.includes(a.id));
+      const pref = list.filter(a => opts.prefer?.includes(a.id) || (a.work && Y.workNeed(s) > s.year.workDone));
       const a = (pref.length && r.chance(0.7)) ? r.pick(pref) : r.pick(list);
       if (!a) break;
       if (a.exam) {
         const res = Y.examScore(s, a.exam, mg());
         Y.spendActionOnly(s, a.id);
         Y.applyExam(s, a.exam, res);
-      } else Y.performAction(s, a.id, mg());
+      } else {
+        const out = Y.performAction(s, a.id, mg());
+        if (out.candidates) choosePartner(s, out.candidates.slice().sort((x, y) => (opts.looksFirst ? y.gorunus - x.gorunus : y.compat - x.compat))[0]);
+      }
       let ev;
       while ((ev = Y.nextEvent(s))) {
         const okOpts = ev.options.map((o, i) => [o, i]).filter(([o]) => Y.optionAvailable(s, o));

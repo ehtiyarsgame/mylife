@@ -1,6 +1,7 @@
 // Stat ve yetenek gelişimi (Tasarım Dokümanı §3).
 import { CONFIG, SKILLS } from '../config.js';
 import { clamp } from '../core/util.js';
+import { traitGainMul, charisma } from './traits.js';
 
 export function stageOf(age) {
   return CONFIG.stages.find(s => age >= s.from && age <= s.to) || CONFIG.stages[CONFIG.stages.length - 1];
@@ -19,6 +20,7 @@ export function skillGain(state, skill, t = 4, perf = 60) {
   let g = t * (0.4 + P / 100) * (0.7 + D / 150) * (0.6 + perf / 125) * (1 - S / T);
   if (state.stats.mutluluk < 30) g *= 0.8;
   if (state.flags.mentor === skill) g *= 1.2;
+  if (state.traits) g *= traitGainMul(state, skill);
   return Math.max(0.1, g);
 }
 
@@ -41,10 +43,12 @@ export function addStat(state, stat, amount) {
 // Mini oyunun kolaylığı için kullanılan "beceri" (0–100): yetenek + bağlı stat.
 export function mgSkillLevel(state, skill) {
   if (!skill) return 50;
+  if (skill === 'sosyal' && state.traits) return clamp(state.stats.sosyal * 0.7 + charisma(state) * 0.3, 0, 100);
   if (state.stats[skill] !== undefined) return state.stats[skill];
   const def = SKILLS.find(s => s.id === skill);
   const base = state.skills[skill] ?? 50;
   const st = def ? state.stats[def.stat] : 50;
+  if (skill === 'liderlik' && state.traits) return clamp(base * 0.6 + charisma(state) * 0.4, 0, 100);
   return clamp(base * 0.75 + st * 0.25, 0, 100);
 }
 

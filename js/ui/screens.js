@@ -4,7 +4,9 @@ import { app, save, go, route, endLifeSave } from './app.js';
 import { sfx, setAudio, vibrate } from '../core/audio.js';
 import { fmtTL, todayKey, sleep, grade } from '../core/util.js';
 import { hashString } from '../core/rng.js';
-import { rollStart, newLife, newChildLife, lifeScoreTitle, WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
+import { migrate, rollStart, newLife, newChildLife, lifeScoreTitle, WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
+import { MIZAC, traitLabel } from '../sim/traits.js';
+import { CONFIG } from '../config.js';
 import { NAMES } from '../sim/names.js';
 import { JOBS, PATHS, jobTitle, DOORS } from '../sim/careers.js';
 import { BIZ_STEPS } from '../sim/business.js';
@@ -61,6 +63,9 @@ route('create', (root, opts = {}) => {
       ['Kardeş', r.siblings === 0 ? 'Tek çocuk' : `${r.siblings} kardeş`, '👫'],
       ['Aile ilişkisi', RELATION[r.relation].name, RELATION[r.relation].icon],
       ['Sağlık tabanı', r.health, '❤️'],
+      ['Görünüş', `${r.traits.gorunus} · ${traitLabel(r.traits.gorunus)}`, '✨'],
+      ['Karizma', `${r.traits.karizma} · ${traitLabel(r.traits.karizma)}`, '🌟'],
+      ['Mizaç', MIZAC[r.traits.mizac].name, MIZAC[r.traits.mizac].icon],
       r.rare ? ['Nadir başlangıç!', RARE[r.rare].name, RARE[r.rare].icon] : ['Soyadı', r.surname, '🏷️'],
     ];
     diceBox.replaceChildren(h('div.sec-title', {}, '🎲 Başlangıç zarı', daily ? h('span.chip.gold', {}, 'Günlük tohum') : h('span.tiny', { style: { textTransform: 'none' } }, `tohum ${seed}`)), h('div.dice-grid'));
@@ -71,7 +76,8 @@ route('create', (root, opts = {}) => {
       sfx.tick(); await sleep(110);
     }
     if (r.rare) { sfx.legend(); vibrate([40, 30, 80]); diceBox.append(h('p.small', { style: { color: '#ffe08a' } }, '✨ ' + RARE[r.rare].text)); }
-    diceBox.append(h('p.small.muted', {}, '🧬 12 alanda gizli yeteneklerin var. Farklı şeyler denedikçe ipuçları çıkacak.'));
+    diceBox.append(h('p.small.muted', {}, `${MIZAC[r.traits.mizac].icon} ${MIZAC[r.traits.mizac].desc}`));
+    diceBox.append(h('p.small.muted', {}, '🎲 Anne-babanı, görünüşünü, karizmanı seçemezsin — bu senin zarın. 🧬 Ayrıca 12 alanda gizli yeteneklerin var; denedikçe ipuçları çıkacak.'));
     actions.replaceChildren(
       btn('🌱  Bu hayatı yaşa', start, 'primary block'),
       daily ? null : btn('🎲  Zarı yeniden at', () => { seed = String(Math.floor(Math.random() * 1e9)); roll(); }, 'block'),
@@ -105,6 +111,8 @@ async function tutorial() {
     ['🎮', 'Mini oyunlar', 'Çoğu eylem bir mini oyunla oynanır. Karakterinin becerisi oyunu kolaylaştırır ama senin becerin de önemli! İstersen hızlıca geçebilirsin.'],
     ['🃏', 'Olay kartları', 'Yıl içinde olay kartları açılır: sıradan, nadir, epik ve EFSANEVİ. Efsanevi fırsatlar ancak emek verdiğin alanlarda çıkar.'],
     ['🚪', 'Kapılar', 'Meslekler sırayla açılan kapılardan oluşur. Kapı kapanırsa yol bitmez: tekrar dene ya da yan yola geç.'],
+    ['🏠', 'Ailen ve evin', 'Ailenin bir kasası, geliri ve gideri var. Aile zordaysa çalışıp destek ol; yoksa faturalar, kira, icra… sorunlar kademe kademe açılır. İş hayatında maaş, mesaiye gittiğin kadar yatar.'],
+    ['⏳', 'Bir ömür, bir hafta', 'Bir hayat gerçek zamanda yaklaşık bir hafta sürer. Günde birkaç kez uğra: enerjin dolmuş, hayatın seni bekliyor olacak.'],
   ];
   for (let i = 0; i < pages.length; i++) {
     const [e, t, d] = pages[i];
@@ -115,6 +123,7 @@ async function tutorial() {
 
 route('life', root => {
   if (!app.life) return go('title');
+  migrate(app.life);
   if (!app.life.alive) return go('death');
   lifeScreen(root);
 });
@@ -224,6 +233,8 @@ route('settings', (root, back = 'title') => {
     toggle('haptics', '📳 Titreşim', 'Destekleyen cihazlarda'),
     toggle('testEnergy', '🧪 Test modu: hızlı enerji', 'Prototip testleri için: enerji her 2 saniyede dolar'),
     toggle('noAds', '🚫 Reklamsız paket (simülasyon)', 'Ödüllü reklam ödülleri doğrudan verilir, sınır yok'),
+    h('div.sec-title', {}, 'Tempo'),
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Günde 3–4 kez uğrayan bir oyuncu günde ~9–10 oyun yılı yaşar: bir ömür ≈ 1 hafta. Bebeklik yılları enerji harcamaz.`)),
     h('div.sec-title', {}, 'Hakkında'),
     h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — oynanabilir prototip. ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
     h('div.sp'),

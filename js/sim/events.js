@@ -3,6 +3,8 @@
 import { CONFIG } from '../config.js';
 import { tpl } from '../core/util.js';
 import { stageId } from './actions.js';
+import { looks, charisma } from './traits.js';
+import { livingHome } from './household.js';
 
 let DECK = [];
 let BY_ID = {};
@@ -44,6 +46,16 @@ export function checkCond(c, s) {
   if (c.siblings && s.family.siblings < c.siblings) return false;
   if (c.retired !== undefined && s.career.retired !== c.retired) return false;
   if (c.rare && s.family.rare !== c.rare) return false;
+  if (c.looks !== undefined && looks(s) < c.looks) return false;
+  if (c.charisma !== undefined && charisma(s) < c.charisma) return false;
+  if (c.mizac && !c.mizac.includes(s.traits?.mizac)) return false;
+  if (c.livingHome !== undefined && livingHome(s) !== c.livingHome) return false;
+  if (c.homeStress !== undefined && (s.home?.stress ?? 0) < c.homeStress) return false;
+  if (c.homeStressMax !== undefined && (s.home?.stress ?? 0) > c.homeStressMax) return false;
+  if (c.homeBroke && !(s.home && s.home.cash < 0)) return false;
+  if (c.partnerTrait && !(s.rel.partner && c.partnerTrait.includes(s.rel.partner.trait))) return false;
+  if (c.partnerWealth && !(s.rel.partner && c.partnerWealth.includes(s.rel.partner.wealth))) return false;
+  if (c.inSchool !== undefined && ['ilkokul', 'orta', 'lise'].includes(s.edu.stage) !== c.inSchool) return false;
   return true;
 }
 
@@ -60,6 +72,7 @@ export function drawCard(s, rng) {
     if (card && checkCond(card.cond, s)) return card;
   }
   const P = { ...Object.fromEntries(Object.entries(CONFIG.rarity).map(([k, v]) => [k, v.p])) };
+  if (s.traits?.mizac === 'maceraci') { P.rare *= 1.25; P.epic *= 1.35; P.legendary *= 1.2; }
   if (s.pity >= CONFIG.pityAfterYears) {
     const bonus = (s.pity - CONFIG.pityAfterYears + 1) * 0.01;
     P.epic += bonus * 0.7; P.legendary += bonus * 0.3; P.common -= bonus;
@@ -81,6 +94,7 @@ export function textVars(s) {
     ad: s.name, soyad: s.surname, yas: s.age, sehir: s.family.city,
     anne: alive[0].name, baba: alive[1].name,
     partner: s.rel.partner?.name ?? 'partnerin',
+    kardes: s.family.siblings > 0 ? 'kardeşin' : 'kuzenin',
     arkadas: s.rel.bestFriend ?? 'en yakın arkadaşın',
     yil: s.calendarYear,
   };

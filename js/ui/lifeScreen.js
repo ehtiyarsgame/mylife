@@ -12,6 +12,9 @@ import { hintFor, stageOf, ceilingOf } from '../sim/stats.js';
 import { WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
 import * as Y from '../sim/year.js';
 import * as F from './flows.js';
+import { looks, charisma, MIZAC, traitLabel } from '../sim/traits.js';
+import { homeBudget, homeNeed, giveToFamily, livingHome, stressLabel, nextStep, HOME } from '../sim/household.js';
+import { SPOUSE_TRAITS } from '../sim/partner.js';
 import { missionsCard, progress } from './missions.js';
 
 const S = () => app.life;
@@ -93,8 +96,9 @@ function buildScreen(render) {
   if (tab === 'ben') wrap.append(...meTab(render));
   if (tab === 'kariyer') wrap.append(...careerTab(render));
   if (tab === 'gunluk') wrap.append(...logTab());
+  if (tab === 'ev') wrap.append(...homeTab(render));
   // Sekme çubuğu
-  const tabs = [['yil', '🗓️', 'Bu yıl'], ['ben', '🧬', 'Ben'], ['kariyer', '💼', 'Kariyer'], ['gunluk', '📖', 'Günlük']];
+  const tabs = [['yil', '🗓️', 'Bu yıl'], ['ev', '🏠', 'Ev'], ['ben', '🧬', 'Ben'], ['kariyer', '💼', 'Kariyer'], ['gunluk', '📖', 'Günlük']];
   wrap.append(h('div.tabs', {}, tabs.map(([id, e, n]) => h('button' + (tab === id ? '.on' : ''), { onclick: () => { app.tab = id; sfx.tap(); window.scrollTo(0, 0); render(); } }, h('b', {}, e), n))));
   return wrap;
 }
@@ -123,6 +127,18 @@ function yearCard(render) {
       h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '📝'),
       h('div.grow', {}, h('b', {}, E.name), h('div.tiny.muted', {}, t.done ? `Puan: ${t.score}` : `${E.q} soru · zorunlu · hazırlığın ${Y.examPrep(s, t.exam)}`)),
       t.done ? null : btn('Sınava gir', () => guard(() => F.runExam(t.exam, { rerender: render })), 'gold sm')));
+  }
+  const need = Y.workNeed(s);
+  if (need && !infant) {
+    const ok = y.workDone >= need;
+    card.append(h('div.task' + (ok ? '.done' : ''), {},
+      h('span', { style: { fontSize: '22px' } }, ok ? '✅' : '💼'),
+      h('div.grow', {}, h('b', {}, `Mesai ${Math.min(y.workDone, need)}/${need}`), h('div.tiny.muted', {}, ok ? 'Maaşın tam yatacak' : 'Maaş, işe gittiğin kadar yatar. Hiç gitmezsen kovulursun.')),
+      ok ? null : btn('İşe git', () => guard(() => F.doAction('mesai', render)), 'gold sm')));
+  }
+  if (livingHome(s) && s.home.stress >= 30 && !infant) {
+    const st = stressLabel(s.home.stress);
+    card.append(h('div.task', { style: { borderColor: st.c, background: 'rgba(255,91,122,.08)' } }, h('span', { style: { fontSize: '22px' } }, st.e), h('div.grow', {}, h('b', {}, `Evde durum: ${st.t}`), h('div.tiny.muted', {}, 'Ailenin paraya ihtiyacı var. Çalışıp destek olabilirsin (Ev sekmesi).')), btn('Ev', () => { app.tab = 'ev'; render(); }, 'sm')));
   }
   const pend = Y.pendingEventCount(s);
   if (pend > 0 && !infant) card.append(h('div.task', { style: { borderColor: '#b36bff', background: 'rgba(179,107,255,.1)' } }, h('span', { style: { fontSize: '22px' } }, '🃏'), h('b.grow', {}, `${pend} olay kartı seni bekliyor`), btn('Aç', () => guard(() => F.afterAction(render)), 'sm')));
@@ -229,6 +245,7 @@ async function summarySheet(sum) {
       ...sum.income.map(([k, v]) => h('div.sum-line', {}, k, h('b.pos', {}, '+' + fmtTL(v)))),
       ...sum.expense.map(([k, v]) => h('div.sum-line', {}, k, h('b.neg', {}, '−' + fmtTL(v)))),
       (sum.income.length || sum.expense.length) ? h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Net'), h('b', { class: sum.net >= 0 ? 'pos' : 'neg' }, (sum.net >= 0 ? '+' : '−') + fmtTL(Math.abs(sum.net)))) : null),
+    sum.home && s.family.parents.some(p => p.alive) ? h('div.sum-line', {}, `🏠 ${livingHome(s) ? 'Evin' : 'Anne-babanın evi'}: ${stressLabel(sum.home.stress).t}`, h('b', { class: sum.home.delta > 0 ? 'neg' : 'pos' }, `stres ${Math.round(sum.home.stress)} (${sum.home.delta > 0 ? '+' : ''}${Math.round(sum.home.delta)})`)) : null,
     sum.notes.length ? h('div.sec-title', {}, 'Önemli') : null,
     sum.notes.map(n => h('p.small', { style: { margin: '5px 0' } }, n)),
     h('div.btns', {}, btn(sum.died ? 'Devam' : `▶ ${sum.age + 1} yaşına geç`, () => close(), 'primary block'))), { dismissable: false });
@@ -284,19 +301,15 @@ function meTab(render) {
     e.yksTop !== null ? h('div.sum-line', {}, 'YKS', h('b', {}, `ilk %${e.yksTop}`)) : null,
     e.dept ? h('div.sum-line', {}, 'Bölüm', h('b', {}, deptById[e.dept].name + (e.degree ? ' (mezun)' : ` · ${e.uniYears + 1}. sınıf`))) : null,
     h('div.sum-line', { style: { borderBottom: 0 } }, 'Sınav hazırlığı (genel)', h('b', {}, Y.examPrep(s, 'yks')))));
-  // Aile
-  const f = s.family;
-  out.push(h('div.sec-title', {}, '👨‍👩‍👧 Aile & ilişkiler'));
+  // Doğuştan gelenler
+  out.push(h('div.sec-title', {}, '🎲 Doğuştan gelenler', h('span.tiny', { style: { textTransform: 'none', letterSpacing: 0 } }, '(seçilemez)')));
+  const L = looks(s), K = charisma(s), M = MIZAC[s.traits.mizac];
   out.push(h('div.card', {},
-    h('div.sum-line', {}, 'Doğduğun yer', h('b', {}, `${PLACE[f.place].icon} ${f.city}`)),
-    h('div.sum-line', {}, 'Aile durumu', h('b', {}, `${WEALTH[f.wealth].icon} ${WEALTH[f.wealth].name}`)),
-    ...f.parents.map(p => h('div.sum-line', {}, `${p.role}: ${p.name}`, h('b', {}, p.alive ? `${p.job}, ${p.age} yaş` : '🕊️'))),
-    h('div.sum-line', {}, 'Kardeş', h('b', {}, f.siblings)),
-    h('div.sum-line', {}, 'Aile ilişkisi', h('b', {}, `${RELATION[f.relation].icon} ${RELATION[f.relation].name}`)),
-    f.rare ? h('div.sum-line', {}, 'Nadir başlangıç', h('b', { style: { color: '#ffc53d' } }, `${RARE[f.rare].icon} ${RARE[f.rare].name}`)) : null,
-    h('div.sum-line', {}, 'Arkadaş', h('b', {}, `${s.rel.friends}${s.rel.bestFriend ? ' · en yakını ' + s.rel.bestFriend : ''}`)),
-    s.rel.partner ? h('div.sum-line', {}, s.rel.married ? 'Eşin' : 'Partnerin', h('b', {}, `❤️ ${s.rel.partner.name} (${Math.round(s.rel.partner.love)})`)) : null,
-    s.rel.children.length ? h('div.sum-line', { style: { borderBottom: 0 } }, 'Çocuklar', h('b', {}, s.rel.children.map(c => `${c.name} (${c.age})`).join(', '))) : null));
+    h('div.stat-row', {}, h('span.lbl', {}, '✨ Görünüş'), bar(L, '#ff8ad8'), h('span.num', {}, L)),
+    h('div.tiny.muted', {}, `${traitLabel(L)} · İlk izlenimi, flört şansını ve eş adaylarını etkiler. Yaşla azalır; spor ve bakım korur.`),
+    h('div.stat-row', {}, h('span.lbl', {}, '🌟 Karizma'), bar(K, '#ffc53d'), h('span.num', {}, K)),
+    h('div.tiny.muted', {}, `${traitLabel(K)} · Liderlik gelişimini, konuşma ve mülakatları kolaylaştırır. Liderlik ve sosyal eylemlerle ${Math.round(20 - s.traits.karizmaGain)} puan daha gelişebilir.`),
+    h('div.row', { style: { marginTop: '10px' } }, h('span', { style: { fontSize: '26px' } }, M.icon), h('div.grow', {}, h('b', {}, `Mizaç: ${M.name}`), h('div.tiny.muted', {}, M.desc)))));
   if (s.titles.length || s.legends.length) {
     out.push(h('div.sec-title', {}, '🌟 Bu hayatın efsaneleri'));
     out.push(h('div.card', {},
@@ -373,4 +386,84 @@ async function menuSheet() {
       btn('⚙️ Ayarlar', () => { close(); go('settings', 'life'); }, 'block'),
       btn('🏳️ Bu hayatı bitir', async () => { close(); if (await confirmBox('Hayatı bitir', 'Bu hayat sona erecek ve hayat albümün oluşturulacak. Emin misin?', 'Bitir', 'Vazgeç', 'danger')) { s.alive = false; s.deathCause = 'oyuncunun kararıyla'; save(); go('death'); } }, 'ghost block'),
       btn('Kapat', () => close(), 'ghost block'))));
+}
+
+// ——— EV ———
+function homeTab(render) {
+  const s = S();
+  const out = [];
+  const f = s.family;
+  const h0 = s.home;
+  const parentsAlive = f.parents.some(p => p.alive);
+  const inHome = livingHome(s);
+  out.push(h('div.sec-title', {}, inHome ? '🏠 Ailenin evi' : '👵 Anne-babanın evi'));
+  if (parentsAlive) {
+    const b = homeBudget(s);
+    const st = stressLabel(h0.stress);
+    const need = homeNeed(s);
+    const nx = nextStep(s);
+    const give = pct => { const amt = giveToFamily(s, Math.max(0, s.money) * pct); if (amt > 0) { sfx.coin(); toast(`🏠 Ailene ${fmtTL(amt)} verdin. Stres yıl sonunda azalacak.`); save(); render(); } };
+    out.push(h('div.card', {},
+      h('div.row', {}, h('span', { style: { fontSize: '30px' } }, st.e), h('div.grow', {}, h('b', {}, st.t), h('div.tiny.muted', {}, `${WEALTH[f.wealth].icon} ${WEALTH[f.wealth].name} aile · ${PLACE[f.place].icon} ${f.city}`)), h('span.chip', { style: { color: st.c, borderColor: st.c } }, `Stres ${Math.round(h0.stress)}`)),
+      h('div.bar', { style: { marginTop: '8px' } }, h('i', { style: { width: h0.stress + '%', background: st.c } })),
+      h('div.sp'),
+      h('div.sum-line', {}, 'Aile kasası', h('b', { class: h0.cash >= 0 ? 'pos' : 'neg' }, fmtTL(h0.cash))),
+      h('div.sum-line', {}, 'Yıllık gelir', h('b', {}, fmtTL(b.inc))),
+      h('div.sum-line', {}, 'Yıllık gider', h('b', {}, fmtTL(b.exp))),
+      h('div.sum-line', {}, 'Tahmini yıl sonu', h('b', { class: b.net >= 0 ? 'pos' : 'neg' }, (b.net >= 0 ? '+' : '−') + fmtTL(Math.abs(b.net)))),
+      h0.crises.length ? h('div.sum-line', {}, 'Zor dönem', h('b', { style: { color: '#ffb547' } }, h0.crises.map(c => `${c.name} (${c.years} yıl)`).join(', '))) : null,
+      need > 0 ? h('div.tile', { style: { borderColor: '#ffb547', marginTop: '10px' } }, h('b', {}, `🙏 Ailenin ihtiyacı: ${fmtTL(need)}`), h('div.tiny.muted', {}, 'Bu yıl bu açık kapanmazsa aile borçlanır ve stres artar.')) : null,
+      nx && h0.stress >= 15 ? h('div.tiny', { style: { color: '#ff9db0', marginTop: '8px' } }, h0.stress >= nx.at ? `⚠️ Yakında: ${nx.label}. Ailene destek olursan önlenebilir.` : `⚠️ Stres ${nx.at}'u geçerse: ${nx.label}.`) : null,
+      h('div.tiny.muted', { style: { marginTop: '8px' } }, inHome
+        ? 'Ailenle yaşadığın sürece evin derdi senin de derdin. Harçlık, kurs ve dershane parası bu kasadan çıkar. Pazar işi, ayak işi, yarı zamanlı iş ya da çıraklıkla kazanıp destek olabilirsin.'
+        : 'Yaşlanan anne-baban emekli olunca gelirleri düşer. Desteğin onların sağlığını ve huzurunu korur.'),
+      h('div.row', { style: { marginTop: '10px', gap: '6px' } },
+        btn('Aileye %25 ver', () => give(0.25), 'sm grow' + (s.money > 0 ? '' : ' disabled')),
+        btn('%50', () => give(0.5), 'sm' + (s.money > 0 ? '' : ' disabled')),
+        btn('Tümü', () => give(1), 'gold sm' + (s.money > 0 ? '' : ' disabled'))),
+      h0.helpTotal > 0 ? h('div.tiny', { style: { color: '#8ff0c4', marginTop: '6px' } }, `💚 Şimdiye kadar ailene ${fmtTL(h0.helpTotal)} destek oldun.`) : null));
+  }
+  out.push(h('div.card', { style: { marginTop: '12px' } },
+    ...f.parents.map(p => h('div.sum-line', {}, `${p.role === 'Anne' ? '👩' : '👨'} ${p.role}: ${p.name}`, h('b', {}, p.alive ? `${p.job}, ${p.age} yaş${p.age >= 62 ? ' (emekli)' : ''}` : '🕊️'))),
+    h('div.sum-line', {}, '👫 Kardeş', h('b', {}, f.siblings || 'Yok')),
+    h('div.sum-line', {}, 'Aile ilişkisi', h('b', {}, `${RELATION[f.relation].icon} ${RELATION[f.relation].name}`)),
+    f.rare ? h('div.sum-line', {}, 'Nadir başlangıç', h('b', { style: { color: '#ffc53d' } }, `${RARE[f.rare].icon} ${RARE[f.rare].name}`)) : null,
+    h('div.sum-line', { style: { borderBottom: 0 } }, 'Arkadaş', h('b', {}, `${s.rel.friends}${s.rel.bestFriend ? ' · en yakını ' + s.rel.bestFriend : ''}`))));
+  // Eş / partner
+  const P = s.rel.partner;
+  out.push(h('div.sec-title', {}, s.rel.married ? '💍 Eşin' : '💞 İlişki'));
+  if (P) {
+    const T = SPOUSE_TRAITS[P.trait];
+    out.push(h('div.card', {},
+      h('div.row', {}, h('span', { style: { fontSize: '36px' } }, P.gender === 'k' ? '👩' : '👨'), h('div.grow', {}, h('h3', {}, P.name), h('div.small.muted', {}, `${P.age ? P.age + ' yaş · ' : ''}${P.job ?? ''}${P.jobless ? ' (şu an işsiz)' : ''}`))),
+      h('div.meter', { style: { marginTop: '8px' } }, '❤️ Sevgi', bar(P.love, P.love > 50 ? '#ff5b7a' : '#ffb547'), h('b', {}, Math.round(P.love))),
+      T ? h('div.row', { style: { marginTop: '8px' } }, h('span', { style: { fontSize: '22px' } }, T.icon), h('div.grow', {}, h('b', {}, T.name), h('div.tiny.muted', {}, T.desc))) : null,
+      P.compat !== undefined ? h('div.sum-line', {}, 'Uyum', h('b', {}, `%${P.compat}`)) : null,
+      P.salary ? h('div.sum-line', {}, 'Geliri', h('b', {}, `${fmtTL(P.salary * s.priceIndex * (P.trait === 'hirsli' ? 1.25 : 1))}/ay`)) : null,
+      P.wealth ? h('div.sum-line', {}, 'Ailesi', h('b', {}, `${WEALTH[P.wealth].icon} ${WEALTH[P.wealth].name}`)) : null,
+      P.wantsKids !== undefined ? h('div.sum-line', { style: { borderBottom: 0 } }, 'Çocuk', h('b', {}, P.wantsKids ? 'İstiyor' : 'İstemiyor')) : null,
+      h('div.tiny.muted', { style: { marginTop: '6px' } }, s.rel.married ? 'Sevgi her yıl biraz azalır; "Partnerinle vakit" eylemiyle besle. 12\'nin altına düşerse boşanırsınız ve birikim paylaşılır.' : 'Sevgi 70\'e ulaşınca evlilik teklifi gündeme gelir.')));
+  } else {
+    out.push(h('div.card', {}, h('p.small', { style: { margin: 0 } }, s.age >= 17 ? '"Yeni insanlarla tanış" eylemiyle eş adayları çıkar. Görünüşün, karizman, sosyal çevren ve itibarın aday havuzunu belirler; kiminle hayatını birleştireceğine sen karar verirsin.' : 'Henüz çok gençsin.')));
+  }
+  if (s.rel.children.length) {
+    out.push(h('div.sec-title', {}, '👶 Çocukların'));
+    out.push(h('div.card', {}, s.rel.children.map(c => h('div.sum-line', {}, `${c.gender === 'k' ? '👧' : '👦'} ${c.name}`, h('b', {}, `${c.age} yaş`)))));
+  }
+  // Kendi hanenin bütçesi
+  if (!inHome) {
+    const pi = s.priceIndex;
+    const j = s.career.job;
+    const lc = (CONFIG.livingCost.find(l => s.age >= l.age)?.cost ?? 12000) * (s.rel.married ? 1.5 : 1) * (P && s.rel.married ? (P.trait === 'tutumlu' ? 0.88 : P.trait === 'savurgan' ? 1.2 : 1) : 1) * (s.flags.evSahibi ? 0.8 : 1);
+    const kids = s.rel.children.filter(c => c.age < 18).length * 7000;
+    const inc = (j ? JOBS[j.id].salary * Y.levelMult(j) : 0) + (P && s.rel.married && !P.jobless ? (P.salary || 0) * (P.trait === 'hirsli' ? 1.25 : 1) : 0) + (s.career.retired ? s.career.pension : 0);
+    out.push(h('div.sec-title', {}, '💳 Senin hanen (aylık, tahmini)'));
+    out.push(h('div.card', {},
+      h('div.sum-line', {}, 'Maaş(lar)', h('b.pos', {}, fmtTL(inc * pi))),
+      h('div.sum-line', {}, `Kira, fatura, mutfak${s.flags.evSahibi ? ' (ev sahibi)' : ''}`, h('b.neg', {}, '−' + fmtTL(lc * pi))),
+      kids ? h('div.sum-line', {}, 'Çocuk masrafları', h('b.neg', {}, '−' + fmtTL(kids * pi))) : null,
+      h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Kalan'), h('b', { class: inc - lc - kids >= 0 ? 'pos' : 'neg' }, fmtTL((inc - lc - kids) * pi))),
+      h('div.tiny.muted', {}, 'İşletme kârı ve prim hariçtir. Maaş, mesaiye gittiğin oranda yatar.')));
+  }
+  return out;
 }

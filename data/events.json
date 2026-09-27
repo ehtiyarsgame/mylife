@@ -4527,5 +4527,1343 @@
     }
    }
   ]
+ },
+ {
+  "id": "aile_fatura",
+  "rarity": "rare",
+  "icon": "🧾",
+  "title": "Faturalar birikti",
+  "chainOnly": true,
+  "cond": {
+   "livingHome": true
+  },
+  "text": "Elektrik ve doğalgaz faturaları ödenmedi; kesinti ihtarı geldi. {anne} gece geç saatlere kadar hesap yapıyor. Evdeki hava ağır.",
+  "log": "Ailesi faturaları ödeyemez hâle geldi.",
+  "options": [
+   {
+    "text": "Birikimimin hepsini aileme veririm",
+    "req": {
+     "money": 1000
+    },
+    "effects": {
+     "giveMoneyPct": 1,
+     "stats": {
+      "mutluluk": 2
+     },
+     "skills": {
+      "empati": 2
+     },
+     "relation": "sicak"
+    },
+    "result": "{anne} sana sarıldı: \"Sen bizim gururumuzsun.\""
+   },
+   {
+    "text": "Hafta sonları çalışıp destek olacağım",
+    "effects": {
+     "homeStress": -6,
+     "stats": {
+      "disiplin": 2
+     },
+     "flags": [
+      "calismaSozu"
+     ]
+    },
+    "result": "Söz verdin. Pazarda ya da mahallede iş bulup kazancını aileye vermelisin — yoksa sorunlar büyür."
+   },
+   {
+    "text": "Bu benim sorunum değil",
+    "effects": {
+     "homeStress": 8,
+     "stats": {
+      "mutluluk": -3
+     },
+     "relation": "zor"
+    },
+    "result": "Kapını kapattın ama duvarların arkasındaki sessizlik her gece daha ağır."
+   }
+  ]
+ },
+ {
+  "id": "aile_kira",
+  "rarity": "epic",
+  "icon": "🏚️",
+  "title": "Kira ihtarnamesi",
+  "chainOnly": true,
+  "cond": {
+   "livingHome": true
+  },
+  "text": "Ev sahibi, kira ödenmediği için ihtarname gönderdi. Ya borç kapanacak ya da daha küçük ve uzak bir eve taşınacaksınız.",
+  "log": "Ailesi kira ihtarnamesi aldı.",
+  "options": [
+   {
+    "text": "Tüm birikimimi veririm, evimiz gitmesin",
+    "req": {
+     "money": 5000
+    },
+    "effects": {
+     "giveMoneyPct": 1,
+     "homeStress": -8,
+     "stats": {
+      "mutluluk": 1,
+      "itibar": 2
+     },
+     "relation": "sicak"
+    },
+    "result": "Kira ödendi. Ailen bu fedakârlığı hiç unutmayacak."
+   },
+   {
+    "text": "Daha küçük bir eve taşınalım",
+    "effects": {
+     "homeExpPct": 0.82,
+     "homeStress": -12,
+     "stats": {
+      "mutluluk": -6
+     },
+     "friend": -1,
+     "famRep": -2
+    },
+    "result": "Yeni ev daha dar, okulun daha uzak. Eski arkadaşlarını daha az görüyorsun ama aile nefes aldı."
+   },
+   {
+    "text": "Akrabalardan borç isteyelim",
+    "effects": {
+     "homeCash": 45000,
+     "homeStress": -8,
+     "famRep": -3,
+     "chain": {
+      "id": "akraba_borc",
+      "delay": 3
+     }
+    },
+    "result": "Amcan borç verdi. Ama bu borç bir gün geri ödenecek."
+   }
+  ]
+ },
+ {
+  "id": "akraba_borc",
+  "rarity": "common",
+  "icon": "🤝",
+  "title": "Borcun vakti geldi",
+  "chainOnly": true,
+  "text": "Yıllar önce ailene borç veren amcan, şimdi kendisi zorda. Borcun geri ödenmesini rica ediyor.",
+  "options": [
+   {
+    "text": "Borcu ailem adına ben öderim",
+    "req": {
+     "money": 45000
+    },
+    "honest": true,
+    "effects": {
+     "money": -45000,
+     "famRep": 4
+    },
+    "result": "Amcan gözleri dolu teşekkür etti. Söz, senet gibidir."
+   },
+   {
+    "text": "Ailemle birlikte taksitle ödeyelim",
+    "honest": true,
+    "effects": {
+     "homeCash": -45000,
+     "homeStress": 6
+    },
+    "result": "Taksitler zorlayacak ama söz tutuldu."
+   },
+   {
+    "text": "\"Şu an imkânımız yok\" de",
+    "effects": {
+     "famRep": -5,
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Amcanla aranıza bir soğukluk girdi."
+   }
+  ]
+ },
+ {
+  "id": "aile_icra",
+  "rarity": "epic",
+  "icon": "⚖️",
+  "title": "İcra kapıda",
+  "chainOnly": true,
+  "cond": {
+   "livingHome": true
+  },
+  "text": "{baba}'nın borçları icraya düştü; evdeki eşyalara haciz geldi. {kardes} okulu bırakıp çalışmayı düşünüyor. Herkes sana bakıyor.",
+  "log": "Ailesi icra ve haciz günleri yaşadı.",
+  "options": [
+   {
+    "text": "Okulu bırakırım, tam gün çalışırım",
+    "req": {
+     "inSchool": true,
+     "age": [
+      14,
+      17
+     ]
+    },
+    "effects": {
+     "eduDrop": true,
+     "job": "cirak",
+     "homeStress": -30,
+     "homeIncPct": 1.15,
+     "stats": {
+      "mutluluk": -8,
+      "itibar": 3,
+      "disiplin": 4
+     },
+     "title": "Aile Direği"
+    },
+    "result": "Hayat seni erken büyüttü. Ama yol bitmedi: ileride açık liseye devam edebilirsin."
+   },
+   {
+    "text": "Okula devam, geceleri çalışırım",
+    "effects": {
+     "homeStress": -15,
+     "homeCash": 20000,
+     "stats": {
+      "saglik": -6,
+      "disiplin": 3,
+      "mutluluk": -3
+     }
+    },
+    "result": "Gündüz okul, gece depo. Yorgunsun ama iki yükü de taşıyorsun."
+   },
+   {
+    "text": "Kardeşimin okulu bırakmasına izin veririm",
+    "effects": {
+     "homeStress": -20,
+     "homeIncPct": 1.1,
+     "stats": {
+      "mutluluk": -6
+     },
+     "flags": [
+      "kardesBirakti"
+     ]
+    },
+    "result": "Kardeşin fabrikada çalışmaya başladı. İçinde hiç dinmeyecek bir sızı kaldı."
+   }
+  ]
+ },
+ {
+  "id": "aile_dagilma",
+  "rarity": "epic",
+  "icon": "💔",
+  "title": "Aile dağılma noktasında",
+  "chainOnly": true,
+  "cond": {
+   "livingHome": true
+  },
+  "text": "Borçlar, kavgalar, kapanmayan kapılar… {anne} ile {baba} ayrılmayı konuşuyor.",
+  "log": "Ailesi dağılma noktasına geldi.",
+  "options": [
+   {
+    "text": "İkisini oturtup konuşturmaya çalış",
+    "mg": "konusma",
+    "mgSkill": "empati",
+    "stakes": 0.7,
+    "success": {
+     "min": 55,
+     "effects": {
+      "homeStress": -30,
+      "relation": "normal",
+      "skills": {
+       "empati": 4
+      },
+      "stats": {
+       "itibar": 3
+      }
+     },
+     "result": "O gece ilk kez herkes birbirini dinledi. Bir plan yaptınız; aile ayakta kaldı."
+    },
+    "fail": {
+     "effects": {
+      "homeStress": -10,
+      "relation": "zor",
+      "stats": {
+       "mutluluk": -10
+      }
+     },
+     "result": "Ayrı evlerde yaşamaya başladılar. Hayat devam ediyor, ama artık iki evin var."
+    }
+   },
+   {
+    "text": "Bir aile danışmanına gidelim",
+    "effects": {
+     "homeCash": -8000,
+     "homeStress": -20,
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Danışman, sorunun para değil konuşmamak olduğunu gösterdi."
+   }
+  ]
+ },
+ {
+  "id": "ebeveyn_zor",
+  "rarity": "rare",
+  "icon": "👵",
+  "title": "Annen ve baban zorda",
+  "chainOnly": true,
+  "cond": {
+   "parentsAlive": true
+  },
+  "text": "Annenle baban geçinmekte zorlanıyor. Kira, ilaç, fatura… Utandıkları için sana söylemiyorlardı.",
+  "log": "Yaşlı anne-babasının geçim sıkıntısını öğrendi.",
+  "options": [
+   {
+    "text": "Her ay düzenli destek göndereceğim",
+    "req": {
+     "money": 20000
+    },
+    "effects": {
+     "giveMoneyPct": 0.35,
+     "homeStress": -25,
+     "famRep": 3,
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Vefa. Babanın telefondaki sesi yıllar sonra ilk kez rahattı."
+   },
+   {
+    "text": "Yanıma alırım, birlikte yaşarız",
+    "effects": {
+     "homeExpPct": 0.55,
+     "homeStress": -30,
+     "partnerLove": -8,
+     "stats": {
+      "mutluluk": -1
+     },
+     "skills": {
+      "empati": 3
+     }
+    },
+    "result": "Ev kalabalıklaştı; bazen zor, ama sofrada torunlarla aynı masadalar."
+   },
+   {
+    "text": "Şu an gücüm yetmiyor",
+    "effects": {
+     "homeStress": 5,
+     "stats": {
+      "mutluluk": -5
+     },
+     "parentHealth": 3
+    },
+    "result": "Kapattığın telefon, içini kemirmeye devam etti."
+   }
+  ]
+ },
+ {
+  "id": "baba_isten_cikti",
+  "rarity": "rare",
+  "icon": "📦",
+  "title": "Baban işsiz kaldı",
+  "cond": {
+   "livingHome": true,
+   "age": [
+    4,
+    22
+   ],
+   "wealth": [
+    "fakir",
+    "orta",
+    "varlikli"
+   ],
+   "parentsAlive": true
+  },
+  "text": "{baba}'nın çalıştığı yer küçüldü ve baban işten çıkarıldı. Evin geliri bir anda düştü.",
+  "log": "Babası işsiz kaldı; ailenin geliri düştü.",
+  "options": [
+   {
+    "text": "Babana moral ver, ilanlara birlikte bak",
+    "effects": {
+     "homeCrisis": {
+      "name": "işsizlik",
+      "years": 2,
+      "inc": 0.55
+     },
+     "skills": {
+      "empati": 2
+     },
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Baban utanarak gülümsedi: \"İyi ki varsın.\""
+   },
+   {
+    "text": "Harçlık istemediğini söyle",
+    "effects": {
+     "homeCrisis": {
+      "name": "işsizlik",
+      "years": 2,
+      "inc": 0.55
+     },
+     "homeCash": 3000,
+     "stats": {
+      "disiplin": 2,
+      "mutluluk": -1
+     }
+    },
+    "result": "Küçük bir fedakârlık ama aile bunu fark etti."
+   },
+   {
+    "text": "Ben de çalışmaya başlarım",
+    "req": {
+     "age": [
+      11,
+      22
+     ]
+    },
+    "effects": {
+     "homeCrisis": {
+      "name": "işsizlik",
+      "years": 2,
+      "inc": 0.55
+     },
+     "flags": [
+      "calismaSozu"
+     ],
+     "stats": {
+      "disiplin": 3
+     }
+    },
+    "result": "İş eylemleriyle kazandığını aileye vermeyi unutma (Ev sekmesi)."
+   }
+  ]
+ },
+ {
+  "id": "anne_hastalik",
+  "rarity": "rare",
+  "icon": "🏥",
+  "title": "Annen hastalandı",
+  "cond": {
+   "livingHome": true,
+   "age": [
+    5,
+    24
+   ],
+   "parentsAlive": true
+  },
+  "text": "{anne} hastalandı. Tedavi masrafları var ve bir süre çalışamayacak ya da ev işlerini yapamayacak.",
+  "log": "Annesi uzun bir hastalık geçirdi.",
+  "options": [
+   {
+    "text": "Ev işlerini üstlen, kardeşlerine bak",
+    "effects": {
+     "homeCrisis": {
+      "name": "annenin hastalığı",
+      "years": 1,
+      "inc": 0.85,
+      "cost": 6000
+     },
+     "stats": {
+      "disiplin": 3,
+      "mutluluk": -2
+     },
+     "skills": {
+      "empati": 3
+     }
+    },
+    "result": "Bir yıl boyunca evin direği sendin. Annen iyileşince ilk sana teşekkür etti."
+   },
+   {
+    "text": "Hastanede refakatçi ol",
+    "effects": {
+     "homeCrisis": {
+      "name": "annenin hastalığı",
+      "years": 1,
+      "inc": 0.85,
+      "cost": 6000
+     },
+     "stats": {
+      "saglik": -2
+     },
+     "skills": {
+      "empati": 4,
+      "fen": 1
+     }
+    },
+    "result": "Hastane koridorlarında doktorları izledin. Belki bir gün sen de…"
+   }
+  ]
+ },
+ {
+  "id": "kira_zammi",
+  "rarity": "common",
+  "icon": "📈",
+  "title": "Kiraya büyük zam",
+  "cond": {
+   "livingHome": true,
+   "wealth": [
+    "fakir",
+    "orta"
+   ],
+   "age": [
+    3,
+    24
+   ]
+  },
+  "text": "Ev sahibi kiraya %60 zam yapmak istiyor. {baba} pazarlık etmeyi düşünüyor.",
+  "options": [
+   {
+    "text": "Babana pazarlıkta yardım et",
+    "req": {
+     "age": [
+      12,
+      24
+     ]
+    },
+    "mg": "pazarlik",
+    "mgSkill": "ticaret",
+    "stakes": 0.4,
+    "success": {
+     "min": 55,
+     "effects": {
+      "homeExpPct": 1.03,
+      "skills": {
+       "ticaret": 3
+      }
+     },
+     "result": "Zammı makul bir seviyeye indirdiniz!"
+    },
+    "fail": {
+     "effects": {
+      "homeExpPct": 1.1
+     },
+     "result": "Ev sahibi geri adım atmadı. Bütçe daha da sıkıştı."
+    }
+   },
+   {
+    "text": "Kabul edelim, taşınmak daha zor",
+    "effects": {
+     "homeExpPct": 1.1
+    },
+    "result": "Her ay biraz daha az kalacak."
+   }
+  ]
+ },
+ {
+  "id": "baba_terfi",
+  "rarity": "rare",
+  "icon": "🎉",
+  "title": "Evde güzel haber",
+  "cond": {
+   "livingHome": true,
+   "parentsAlive": true,
+   "age": [
+    3,
+    24
+   ]
+  },
+  "text": "{baba} ve {anne} işlerinde ilerledi; evin geliri arttı.",
+  "options": [
+   {
+    "text": "Kutlama yemeği!",
+    "effects": {
+     "homeIncPct": 1.18,
+     "homeStress": -8,
+     "stats": {
+      "mutluluk": 4
+     }
+    },
+    "result": "Sofrada gülüşmeler, uzun zamandır ilk kez rahat bir yıl."
+   }
+  ]
+ },
+ {
+  "id": "kardes_masraf",
+  "rarity": "common",
+  "icon": "🎓",
+  "title": "Kardeşin üniversiteyi kazandı",
+  "cond": {
+   "siblings": 1,
+   "age": [
+    10,
+    30
+   ],
+   "parentsAlive": true
+  },
+  "text": "{kardes} başka şehirde üniversiteyi kazandı. Yurt, yol, kitap… Aileye yeni bir masraf.",
+  "options": [
+   {
+    "text": "Kendi birikiminden destek ol",
+    "req": {
+     "money": 10000
+    },
+    "effects": {
+     "homeCrisis": {
+      "name": "kardeşin okul masrafı",
+      "years": 4,
+      "cost": 5000
+     },
+     "giveMoneyPct": 0.2,
+     "skills": {
+      "empati": 3
+     },
+     "famRep": 2
+    },
+    "result": "Kardeşin ilk harçlığını senden aldı."
+   },
+   {
+    "text": "Tebrik et, dualarını gönder",
+    "effects": {
+     "homeCrisis": {
+      "name": "kardeşin okul masrafı",
+      "years": 4,
+      "cost": 5000
+     }
+    },
+    "result": "Aile gururlu ama bütçe dört yıl boyunca daha sıkı."
+   }
+  ]
+ },
+ {
+  "id": "dede_bakimi",
+  "rarity": "common",
+  "icon": "👴",
+  "title": "Dedenin bakımı",
+  "cond": {
+   "livingHome": true,
+   "age": [
+    5,
+    22
+   ]
+  },
+  "text": "Deden artık yalnız yaşayamıyor; sizin yanınıza taşınıyor. Hem sevinç hem sorumluluk.",
+  "options": [
+   {
+    "text": "Dedenle vakit geçir, ona göz kulak ol",
+    "effects": {
+     "homeCrisis": {
+      "name": "dedenin bakımı",
+      "years": 3,
+      "cost": 3500
+     },
+     "skills": {
+      "empati": 3,
+      "dil": 1
+     },
+     "stats": {
+      "mutluluk": 2
+     }
+    },
+    "result": "Dedenin hikâyeleri, hayatının en değerli dersleri oldu."
+   },
+   {
+    "text": "Odanı dedene ver",
+    "effects": {
+     "homeCrisis": {
+      "name": "dedenin bakımı",
+      "years": 3,
+      "cost": 3500
+     },
+     "stats": {
+      "mutluluk": -1
+     },
+     "famRep": 2
+    },
+    "result": "Salonda yatıyorsun ama içinde bir huzur var."
+   }
+  ]
+ },
+ {
+  "id": "akraba_yardim",
+  "rarity": "rare",
+  "icon": "💌",
+  "title": "Akrabadan yardım teklifi",
+  "cond": {
+   "livingHome": true,
+   "homeStress": 30
+  },
+  "text": "Durumu iyi olan bir akraban, ailene yardım etmek istiyor. {baba} gururundan çekiniyor.",
+  "options": [
+   {
+    "text": "Kabul etmeleri için ikna et",
+    "effects": {
+     "homeCash": 60000,
+     "homeStress": -15,
+     "famRep": -1
+    },
+    "result": "Yardım tam zamanında geldi."
+   },
+   {
+    "text": "Kendi gücümüzle çıkacağız",
+    "effects": {
+     "stats": {
+      "disiplin": 2,
+      "mutluluk": -1
+     }
+    },
+    "result": "Onurlu ama zor bir yol seçtiniz."
+   }
+  ]
+ },
+ {
+  "id": "okul_gezisi",
+  "rarity": "common",
+  "icon": "🚌",
+  "title": "Okul gezisi",
+  "cond": {
+   "livingHome": true,
+   "homeBroke": true,
+   "age": [
+    8,
+    17
+   ],
+   "inSchool": true
+  },
+  "text": "Sınıfça müze gezisi var ama ailenin gezi ücretini verecek parası yok.",
+  "options": [
+   {
+    "text": "Kendi paranla git",
+    "req": {
+     "money": 1500
+    },
+    "effects": {
+     "money": -1500,
+     "stats": {
+      "mutluluk": 3
+     },
+     "skills": {
+      "dil": 1
+     }
+    },
+    "result": "Kendi emeğinle gittiğin gezi daha anlamlıydı."
+   },
+   {
+    "text": "Gitme, ailene yük olma",
+    "effects": {
+     "stats": {
+      "mutluluk": -3
+     },
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Arkadaşların fotoğrafları gösterirken gülümsedin. İçinden bir söz verdin."
+   },
+   {
+    "text": "Öğretmenine durumu anlat",
+    "effects": {
+     "stats": {
+      "mutluluk": 2
+     },
+     "flags": [
+      "ogretmen"
+     ]
+    },
+    "result": "Öğretmenin, okul aile birliğinden ücretini karşıladı. Utanılacak bir şey yokmuş."
+   }
+  ]
+ },
+ {
+  "id": "calisan_cocuk",
+  "rarity": "common",
+  "icon": "🧺",
+  "title": "Pazar sabahı",
+  "cond": {
+   "age": [
+    11,
+    17
+   ],
+   "homeStress": 25,
+   "livingHome": true
+  },
+  "text": "Sınıf arkadaşların kafede buluşurken sen pazarda kasa sayıyordun. Biri seni gördü.",
+  "options": [
+   {
+    "text": "Başını dik tut: \"Aileme yardım ediyorum.\"",
+    "effects": {
+     "stats": {
+      "itibar": 3,
+      "disiplin": 2
+     },
+     "karizma": 2
+    },
+    "result": "Ertesi gün sınıfta sana saygıyla bakıyorlardı."
+   },
+   {
+    "text": "Utanıp saklan",
+    "effects": {
+     "stats": {
+      "mutluluk": -4
+     }
+    },
+    "result": "Emek utanılacak bir şey değil. Bunu zamanla öğreneceksin."
+   }
+  ]
+ },
+ {
+  "id": "zengin_baski",
+  "rarity": "common",
+  "icon": "🏢",
+  "title": "Aile şirketi baskısı",
+  "cond": {
+   "wealth": [
+    "zengin",
+    "varlikli"
+   ],
+   "age": [
+    15,
+    24
+   ],
+   "livingHome": true
+  },
+  "text": "Ailen, geleceğini aile şirketinde görüyor. Oysa senin başka hayallerin var.",
+  "options": [
+   {
+    "text": "Kendi yolunu çiz",
+    "effects": {
+     "stats": {
+      "mutluluk": 3,
+      "disiplin": 2
+     },
+     "relation": "normal"
+    },
+    "result": "Ailen bozuldu ama saygı duydu."
+   },
+   {
+    "text": "Aile şirketinde staj yap",
+    "effects": {
+     "skills": {
+      "ticaret": 4,
+      "liderlik": 2
+     },
+     "flags": [
+      "staj"
+     ]
+    },
+    "result": "İşin mutfağını öğrendin."
+   }
+  ]
+ },
+ {
+  "id": "modellik",
+  "rarity": "rare",
+  "icon": "📸",
+  "title": "Reklam çekimi teklifi",
+  "cond": {
+   "looks": 75,
+   "age": [
+    15,
+    32
+   ]
+  },
+  "text": "Bir ajans seni sokakta görüp bir reklam çekimine çağırdı.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "effects": {
+     "money": 25000,
+     "stats": {
+      "mutluluk": 3,
+      "itibar": 1
+     },
+     "karizma": 1
+    },
+    "result": "Yüzün otobüs duraklarında! Güzel bir ek gelir."
+   },
+   {
+    "text": "Önce okulum/işim",
+    "effects": {
+     "stats": {
+      "disiplin": 2
+     }
+    },
+    "result": "Önceliklerini biliyorsun."
+   }
+  ]
+ },
+ {
+  "id": "ilk_izlenim",
+  "rarity": "common",
+  "icon": "🎙️",
+  "title": "Salon sustu",
+  "cond": {
+   "charisma": 62,
+   "age": [
+    14,
+    70
+   ]
+  },
+  "text": "Bir toplantıda söz aldın; herkes konuşmayı bırakıp seni dinledi.",
+  "options": [
+   {
+    "text": "Fikrini net anlat",
+    "effects": {
+     "stats": {
+      "itibar": 2
+     },
+     "skills": {
+      "liderlik": 2
+     },
+     "karizma": 1
+    },
+    "result": "Önerin kabul edildi. Karizma doğuştan gelir ama emekle parlar."
+   }
+  ]
+ },
+ {
+  "id": "dedikodu",
+  "rarity": "common",
+  "icon": "🗣️",
+  "title": "Dedikodu",
+  "cond": {
+   "looks": 70,
+   "age": [
+    13,
+    30
+   ]
+  },
+  "text": "Bazıları başarılarının görünüşün sayesinde olduğunu söylüyor.",
+  "options": [
+   {
+    "text": "Emeğini göster, sonuçlar konuşsun",
+    "effects": {
+     "stats": {
+      "disiplin": 3,
+      "itibar": 1
+     }
+    },
+    "result": "Dedikodu sustu; karnen ve işin konuştu."
+   },
+   {
+    "text": "Kafana takıp üzül",
+    "effects": {
+     "stats": {
+      "mutluluk": -4
+     }
+    },
+    "result": "İnsanların söyledikleri seni tanımlamaz."
+   }
+  ]
+ },
+ {
+  "id": "ozguven",
+  "rarity": "common",
+  "icon": "🪞",
+  "title": "Aynadaki sen",
+  "cond": {
+   "age": [
+    12,
+    25
+   ]
+  },
+  "text": "Aynaya bakıp kendini beğenmedin. Sosyal medyadaki herkes kusursuz görünüyor.",
+  "options": [
+   {
+    "text": "Spora ve bakıma başla",
+    "effects": {
+     "stats": {
+      "fizik": 2,
+      "saglik": 1,
+      "disiplin": 1
+     }
+    },
+    "result": "Kendine iyi bakmak, kendini sevmenin bir yolu."
+   },
+   {
+    "text": "Karakterinle öne çık",
+    "effects": {
+     "karizma": 2,
+     "skills": {
+      "empati": 2
+     }
+    },
+    "result": "Görünüş ilk izlenimi etkiler; ama insanları yanında tutan karakterdir."
+   }
+  ]
+ },
+ {
+  "id": "dogal_lider",
+  "rarity": "rare",
+  "icon": "🧭",
+  "title": "Seni lider seçtiler",
+  "cond": {
+   "charisma": 68,
+   "age": [
+    14,
+    50
+   ]
+  },
+  "text": "Arkadaşların yeni bir proje/girişim için seni ekibin başına geçirmek istiyor.",
+  "options": [
+   {
+    "text": "Ekibi toplayıp hedefi anlat",
+    "mg": "konusma",
+    "mgSkill": "liderlik",
+    "stakes": 0.45,
+    "success": {
+     "min": 55,
+     "effects": {
+      "skills": {
+       "liderlik": 4
+      },
+      "stats": {
+       "itibar": 4
+      },
+      "karizma": 2,
+      "money": 15000
+     },
+     "result": "Proje başarıyla bitti; herkes bir sonrakinde de seninle çalışmak istiyor."
+    },
+    "fail": {
+     "effects": {
+      "skills": {
+       "liderlik": 2
+      }
+     },
+     "result": "Ekip dağıldı ama liderliğin ilk dersini aldın: dinlemek."
+    }
+   },
+   {
+    "text": "Başkasına bırak",
+    "effects": {},
+    "result": "Belki bir dahaki sefere."
+   }
+  ]
+ },
+ {
+  "id": "sahne_korkusu",
+  "rarity": "common",
+  "icon": "😶",
+  "title": "Sahne korkusu",
+  "cond": {
+   "age": [
+    10,
+    35
+   ]
+  },
+  "text": "Kalabalık önünde konuşman gerekince dilin tutuluyor.",
+  "options": [
+   {
+    "text": "Tiyatro/münazara kursuna yazıl",
+    "req": {
+     "money": 2000
+    },
+    "effects": {
+     "money": -2000,
+     "karizma": 3,
+     "skills": {
+      "dil": 1
+     }
+    },
+    "result": "Karizma da bir kas gibi: çalıştıkça güçleniyor."
+   },
+   {
+    "text": "Kaçın, hep arka sırada kal",
+    "effects": {
+     "stats": {
+      "mutluluk": -1
+     }
+    },
+    "result": "Rahat ama küçük bir dünya."
+   }
+  ]
+ },
+ {
+  "id": "es_terfi",
+  "rarity": "rare",
+  "icon": "🎉",
+  "title": "{partner} terfi aldı!",
+  "cond": {
+   "married": true
+  },
+  "text": "{partner} işinde büyük bir terfi aldı. Evin geliri artıyor.",
+  "options": [
+   {
+    "text": "Onunla gurur duy, kutla",
+    "effects": {
+     "partnerSalaryPct": 1.25,
+     "partnerLove": 6,
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Birbirinizin başarısı, ikinizin başarısı."
+   }
+  ]
+ },
+ {
+  "id": "es_issiz",
+  "rarity": "rare",
+  "icon": "📦",
+  "title": "{partner} işini kaybetti",
+  "cond": {
+   "married": true
+  },
+  "text": "{partner}'in şirketi küçüldü; bir süre işsiz kalacak. Hane bütçesi sarsılıyor.",
+  "options": [
+   {
+    "text": "Moral ver, birlikte plan yapın",
+    "effects": {
+     "partnerJobless": 1,
+     "partnerLove": 10,
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Zor günlerde el ele. Bir yıl içinde yeni bir iş buldu."
+   },
+   {
+    "text": "Suçlayıcı konuş",
+    "effects": {
+     "partnerJobless": 2,
+     "partnerLove": -15
+    },
+    "result": "Evdeki soğukluk işsizlikten daha uzun sürdü."
+   }
+  ]
+ },
+ {
+  "id": "es_tartisma",
+  "rarity": "common",
+  "icon": "⚡",
+  "title": "Ev bütçesi tartışması",
+  "cond": {
+   "married": true,
+   "partnerTrait": [
+    "kiskanc",
+    "hirsli",
+    "savurgan"
+   ]
+  },
+  "text": "{partner} ile para ve zaman yüzünden tartıştınız. Sesler yükseldi.",
+  "options": [
+   {
+    "text": "Sakin konuş, ortak bir plan yap",
+    "mg": "konusma",
+    "mgSkill": "empati",
+    "stakes": 0.4,
+    "success": {
+     "min": 55,
+     "effects": {
+      "partnerLove": 10,
+      "skills": {
+       "empati": 2
+      }
+     },
+     "result": "Tartışma bir plana dönüştü; ilişkiniz güçlendi."
+    },
+    "fail": {
+     "effects": {
+      "partnerLove": -6
+     },
+     "result": "Konuşurken yine kırıcı cümleler çıktı. Zaman lazım."
+    }
+   },
+   {
+    "text": "Haklı olduğunu kanıtla",
+    "effects": {
+     "partnerLove": -12,
+     "stats": {
+      "mutluluk": -2
+     }
+    },
+    "result": "Tartışmayı kazandın, ama ilişkiden kaybettin."
+   }
+  ]
+ },
+ {
+  "id": "kayin_yardim",
+  "rarity": "rare",
+  "icon": "🏡",
+  "title": "Eşinin ailesinden teklif",
+  "cond": {
+   "married": true,
+   "partnerWealth": [
+    "varlikli",
+    "zengin"
+   ],
+   "notFlags": [
+    "evSahibi"
+   ]
+  },
+  "text": "{partner}'in ailesi ev almanız için büyük bir destek teklif ediyor.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "effects": {
+     "money": 800000,
+     "partnerLove": 4
+    },
+    "result": "Kendi evinizin anahtarı elinizde. Birikimin ve yardımla artık ev sahibi olabilirsin."
+   },
+   {
+    "text": "Kendi yolumuzu çizelim",
+    "effects": {
+     "stats": {
+      "disiplin": 2,
+      "mutluluk": 2
+     },
+     "partnerLove": -2
+    },
+    "result": "Onurlu bir karar; eşin biraz bozuldu ama saygı duydu."
+   }
+  ]
+ },
+ {
+  "id": "yildonumu",
+  "rarity": "common",
+  "icon": "💐",
+  "title": "Yıl dönümü",
+  "cond": {
+   "married": true
+  },
+  "text": "Bugün evlilik yıl dönümünüz.",
+  "options": [
+   {
+    "text": "Sürpriz bir akşam yemeği hazırla",
+    "effects": {
+     "money": -5000,
+     "partnerLove": 10,
+     "stats": {
+      "mutluluk": 3
+     }
+    },
+    "result": "Mum ışığında, ilk tanıştığınız günü konuştunuz."
+   },
+   {
+    "text": "İş yoğunluğundan unuttun",
+    "effects": {
+     "partnerLove": -10
+    },
+    "result": "Akşam eve geldiğinde masada yalnız bir pasta vardı…"
+   }
+  ]
+ },
+ {
+  "id": "es_savurgan",
+  "rarity": "common",
+  "icon": "🛍️",
+  "title": "Kredi kartı ekstresi",
+  "cond": {
+   "married": true,
+   "partnerTrait": [
+    "savurgan"
+   ]
+  },
+  "text": "{partner} kredi kartıyla büyük bir alışveriş yapmış. Ekstre kabarık.",
+  "options": [
+   {
+    "text": "Birlikte aylık bütçe çıkarın",
+    "effects": {
+     "partnerLove": 2,
+     "stats": {
+      "disiplin": 2
+     },
+     "money": -15000
+    },
+    "result": "Bütçe tablosu buzdolabının kapağında."
+   },
+   {
+    "text": "Sessizce öde",
+    "effects": {
+     "money": -30000
+    },
+    "result": "Bu sessizlik bir alışkanlığa dönüşebilir."
+   }
+  ]
+ },
+ {
+  "id": "es_destek",
+  "rarity": "common",
+  "icon": "🤝",
+  "title": "Yanında biri var",
+  "cond": {
+   "married": true,
+   "partnerTrait": [
+    "destekleyici",
+    "sakin",
+    "aile_odakli"
+   ]
+  },
+  "text": "Zor bir haftanın sonunda {partner} sıcak bir çorba ve dinleyen bir kulakla seni bekliyordu.",
+  "options": [
+   {
+    "text": "Teşekkür et",
+    "effects": {
+     "stats": {
+      "mutluluk": 5,
+      "saglik": 1
+     },
+     "partnerLove": 4
+    },
+    "result": "Doğru insanla evlenmek, hayatın en iyi kararlarından biri."
+   }
+  ]
+ },
+ {
+  "id": "es_macera",
+  "rarity": "common",
+  "icon": "🏕️",
+  "title": "Hafta sonu macerası",
+  "cond": {
+   "married": true,
+   "partnerTrait": [
+    "maceraci"
+   ]
+  },
+  "text": "{partner} hafta sonu için bir kamp planı yapmış!",
+  "options": [
+   {
+    "text": "Hemen yola çık",
+    "effects": {
+     "money": -4000,
+     "stats": {
+      "mutluluk": 6,
+      "fizik": 1
+     },
+     "partnerLove": 6
+    },
+    "result": "Yıldızların altında, telefonsuz iki gün."
+   },
+   {
+    "text": "İş var, erteleyelim",
+    "effects": {
+     "partnerLove": -5
+    },
+    "result": "Kamp çantası bir sonraki bahara kaldı."
+   }
+  ]
+ },
+ {
+  "id": "fazla_mesai_istegi",
+  "rarity": "common",
+  "icon": "⏰",
+  "title": "Patronun ricası",
+  "cond": {
+   "hasJob": true,
+   "age": [
+    20,
+    60
+   ]
+  },
+  "text": "Patronun hafta sonu fazla mesai istiyor. Oysa ailenle plan yapmıştın.",
+  "options": [
+   {
+    "text": "İşe git",
+    "effects": {
+     "money": 8000,
+     "stats": {
+      "mutluluk": -2
+     },
+     "partnerLove": -4
+    },
+    "result": "Prim cebinde, ama sofrada bir sandalye boş kaldı."
+   },
+   {
+    "text": "Kibarca reddet",
+    "effects": {
+     "stats": {
+      "mutluluk": 2
+     },
+     "partnerLove": 3
+    },
+    "result": "Hayat sadece işten ibaret değil."
+   }
+  ]
  }
 ]

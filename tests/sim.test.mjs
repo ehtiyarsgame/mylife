@@ -72,3 +72,55 @@ test('ticaret yolu: usta oyuncu üst basamaklara çıkar', () => {
   }
   assert.ok(maxStep >= 3, 'en yüksek basamak ' + maxStep);
 });
+
+// ——— Doğuştan özellikler, hane, mesai, eş ———
+import { RNG as R2 } from '../js/core/rng.js';
+import { makeCandidates, choosePartner } from '../js/sim/partner.js';
+import { homeYear, giveToFamily } from '../js/sim/household.js';
+import { looks } from '../js/sim/traits.js';
+
+test('doğuştan özellikler tohumla belirlenir ve yaşla görünüş azalır', () => {
+  const a = rollStart('tr1'), b = rollStart('tr1');
+  assert.deepEqual(a.traits, b.traits);
+  const s = newLife({ seed: 'tr2', name: 'A', gender: 'k' });
+  s.age = 25; const young = looks(s);
+  s.age = 70; assert.ok(looks(s) < young);
+});
+
+test('aileye destek olmak hane stresini düşürür', () => {
+  let withHelp = 0, without = 0;
+  for (let i = 0; i < 40; i++) {
+    for (const help of [true, false]) {
+      const s = newLife({ seed: 'hh' + i, name: 'A', gender: 'e' });
+      s.family.wealth = 'fakir'; s.family.siblings = 3; s.home.cash = -40000; s.home.stress = 40; s.age = 14;
+      if (help) { s.money = 80000; giveToFamily(s, 80000); }
+      homeYear(s, new R2(i));
+      help ? (withHelp += s.home.stress) : (without += s.home.stress);
+    }
+  }
+  assert.ok(withHelp < without * 0.85, `yardımla ${withHelp} yardımsız ${without}`);
+});
+
+test('mesaiye gitmeyen daha az maaş alır', () => {
+  const pay = shifts => {
+    const s = newLife({ seed: 'ms', name: 'A', gender: 'e' });
+    s.age = 30; s.edu.stage = 'done'; s.edu.degree = 'muhendislik';
+    Y.startYear(s); Y.hireJob(s, 'muhendis');
+    for (let i = 0; i < shifts; i++) Y.performAction(s, 'mesai', 60);
+    const sum = Y.endYear(s);
+    return sum.income.find(x => x[0].startsWith('Maaş'))[1];
+  };
+  assert.ok(pay(0) < pay(2) * 0.5);
+});
+
+test('eş adayları farklı karakterlerde gelir; seçilen eş hayatı etkiler', () => {
+  const s = newLife({ seed: 'es', name: 'A', gender: 'e' });
+  s.age = 25;
+  const c = makeCandidates(s, new R2(7), 70);
+  assert.equal(c.length, 3);
+  assert.deepEqual(c.map(x => x.arc), ['cekici', 'uyumlu', 'varlikli']);
+  choosePartner(s, c[1]); s.rel.married = true; s.rel.partner.salary = 50000; s.rel.partner.love = 80;
+  Y.startYear(s);
+  const sum = Y.endYear(s);
+  assert.ok(sum.income.some(x => x[0].includes(c[1].name)));
+});

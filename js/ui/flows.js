@@ -14,6 +14,9 @@ import { pickQuestions, levelFor } from '../sim/questions.js';
 import { render as renderText } from '../sim/events.js';
 import * as Y from '../sim/year.js';
 import { progress } from './missions.js';
+import { choosePartner, SPOUSE_TRAITS, arcLabel } from '../sim/partner.js';
+import { WEALTH } from '../sim/character.js';
+import { looks, charisma } from '../sim/traits.js';
 
 const S = () => app.life;
 
@@ -98,7 +101,33 @@ export async function doAction(id, rerender) {
   save();
   rerender();
   await actionResult(a, out, perf, skipped);
+  if (out.candidates) { await partnerChoice(out.candidates); save(); rerender(); }
   await afterAction(rerender);
+}
+
+// ——— Eş adayı seçimi ———
+async function partnerChoice(cands) {
+  const s = S();
+  const pick = await sheet(close => h('div', {},
+    h('h2', {}, '💞 Kiminle yakınlaşacaksın?'),
+    h('p.small.muted', {}, 'Anne-babanı seçemezsin ama hayat arkadaşını seçebilirsin. Görünüş ilk göze çarpan şeydir; uzun vadede uyum ve karakter belirleyicidir.'),
+    cands.map((c, i) => {
+      const T = SPOUSE_TRAITS[c.trait];
+      return h('button.opt', { style: { flexDirection: 'column', alignItems: 'stretch', gap: '4px' }, onclick: () => close(i) },
+        h('div.row', {}, h('span', { style: { fontSize: '28px' } }, c.gender === 'k' ? '👩' : '👨'), h('div.grow', {}, h('b', {}, `${c.name}, ${c.age}`), h('div.tiny.muted', {}, `${c.job} · ${WEALTH[c.wealth].icon} ${WEALTH[c.wealth].name} aile`)), h('span.chip.accent', {}, arcLabel[c.arc])),
+        h('div.row', { style: { gap: '6px', flexWrap: 'wrap' } },
+          h('span.chip', {}, `✨ Görünüş ${c.gorunus}`),
+          h('span.chip' + (c.compat >= 65 ? '.green' : c.compat < 40 ? '.bad' : ''), {}, `💞 Uyum %${c.compat}`),
+          h('span.chip', {}, `${T.icon} ${T.name}`),
+          h('span.chip', {}, c.wantsKids ? '👶 Çocuk istiyor' : '🚫 Çocuk istemiyor')),
+        h('div.tiny.muted', {}, T.desc));
+    }),
+    h('div.btns', {}, btn('Hiçbiri, acele etmeyeyim', () => close(-1), 'ghost block'))), { dismissable: false });
+  if (pick >= 0) {
+    choosePartner(s, cands[pick]);
+    Y.log(s, `${cands[pick].name} ile ilişkiye başladı.`, 'rare');
+    toast(`❤️ ${cands[pick].name} ile birliktesiniz. "Partnerinle vakit" ile ilişkini besle.`);
+  }
 }
 
 function sceneFor(a, s) {
@@ -328,7 +357,9 @@ export async function jobSearch(rerender) {
   if (J.salary >= 30000) {
     const r = await runMg('konusma', 'sosyal', { stakes: 0.35, title: `${J.name} mülakatı`, extra: { scene: 'mulakat' } });
     score = r.score;
-    const need = Y.interviewNeed(pick) - (s.flags.staj ? 8 : 0) - (s.edu.uniGpa >= 80 ? 5 : 0);
+    // İlk izlenim: karizma ve görünüş mülakatta biraz etkili; ama asıl belirleyici performans
+    const firstImp = Math.round((charisma(s) - 50) / 8 + (looks(s) - 50) / 20);
+    const need = Y.interviewNeed(pick) - (s.flags.staj ? 8 : 0) - (s.edu.uniGpa >= 80 ? 5 : 0) - firstImp;
     hired = score >= need;
   }
   if (hired) { Y.hireJob(s, pick); collectJob(pick); sfx.level(); }

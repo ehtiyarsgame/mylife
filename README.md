@@ -17,15 +17,20 @@ Derleme adımı yoktur; saf HTML + CSS + JavaScript (ES modülleri).
 Testler (Node 20+):
 
 ```bash
-npm test                 # 200 hayatı otomatik oynatır, dengeyi ve veri dosyalarını doğrular
+npm test                 # 200+ hayatı otomatik oynatır, dengeyi ve veri dosyalarını doğrular
 node tests/diag.mjs      # denge raporu: beceri seviyesine göre meslek/servet/ticaret basamakları
+node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk karşılaştırması
 ```
 
 ## Oyun döngüsü
 
 | Katman | Nasıl çalışır |
 |---|---|
-| **Enerji** | Gerçek zamanlı dolar (1 enerji / 72 sn, dolu bar ≈ 2 saat). Oyun kapalıyken de dolar. Yıl bitince +15 hediye, reklamla +30 (günde 3). |
+| **Tempo** | **Bir ömür ≈ 1 hafta.** Enerji 90 sn'de 1 dolar, bar 150 (≈ 3,75 saat). Günde 3–4 girişle ~9–10 oyun yılı. Yıl bitince +15, reklamla +40 (günde 3), günlük görevler. |
+| **Doğuştan şans** | Anne-baba gibi seçilemez: **görünüş**, **karizma** ve **mizaç** (sakin, neşeli, hırslı, kaygılı, maceracı, duygusal). Görünüş flörtü, eş adaylarını ve ilk izlenimi; karizma liderliği, konuşmayı ve mülakatları etkiler. Görünüş yaşla azalır; karizma emekle +20'ye kadar gelişir. |
+| **Hane ekonomisi** | Ailenin kasası, geliri, gideri, krizleri (işten çıkarılma, hastalık, kira zammı, kardeş masrafı, dede bakımı) ve **stresi** var. Harçlık ve kurs parası bu kasadan çıkar. Aile zordaysa çocuk pazar/ayak işi, yarı zamanlı iş ya da çıraklıkla kazanıp **Ev** sekmesinden destek olur. Olmazsa sorunlar kademe kademe açılır: faturalar → kira ihtarı → icra (okulu bırakma kararı) → aile dağılma noktası. Aile kemer sıkar, sosyal yardım alır; sınıf atlayabilir ya da düşebilir. Yetişkinlikte emekli anne-babaya destek gerekir. Çalışan çocuğun okul hazırlığı düşer; okulu bırakan açık liseyle geri dönebilir. |
+| **İş = emek** | Maaş, yıl içinde **mesaiye gittiğin oranda** yatar (tam zamanlı iş 2 EP). Hiç gitmezsen maaşın kesilir, üst üste olursa kovulursun. |
+| **Eş seçimi** | Her başarılı tanışmada 3 aday: *çok çekici*, *çok uyumlu*, *varlıklı çevreden*. Görünüş, uyum, karakter (destekleyici, tutumlu, savurgan, hırslı, kıskanç, sakin, aile odaklı, maceracı), iş, ailesi ve çocuk isteği farklıdır. Eşin geliri, gider alışkanlığı, mutluluğun ve tartışmalar buna göre şekillenir; sevgi bakımsız kalırsa boşanma ve mal paylaşımı olur. |
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
 | **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (28 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
 | **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
@@ -50,11 +55,11 @@ Tümü "Mini oyun salonu"nda serbestçe denenebilir.
 ```
 index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışır)
 css/style.css                              tasarım sistemi (mobil öncelikli)
-data/events.json                           olay destesi (108 kart) — kod bilmeden genişletilir
+data/events.json                           olay destesi (139 kart) — kod bilmeden genişletilir
 data/questions.json                        soru bankası (+ yaşa göre üretilen matematik soruları)
 js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
 js/core/        rng (tohumlu), energy, store, audio, ads
-js/sim/         saf simülasyon: character, stats, actions, careers, business, events, year, questions
+js/sim/         saf simülasyon: character, traits, household, partner, stats, actions, careers, business, events, year, questions
 js/minigames/   engine + 28 mini oyun (sports, mind, tech, health, trade, life)
 js/ui/          app, dom, flows (eylem/olay/sınav/kapı akışları), lifeScreen, screens
 tests/          başsız simülasyon testleri ve denge botu
@@ -79,8 +84,8 @@ tests/          başsız simülasyon testleri ve denge botu
 }
 ```
 
-Koşullar: `age, stage, stats, statsMax, skills, train, place, wealth, flags, anyFlag, notFlags, counters, job, hasJob, path, biz, edu, partner, married, kids, money, retired`.
-Etkiler: `stats, skills, money, moneyPct, flags, unflags, counters, energy, honest, famRep, door, legend, title, friend, mentor, chain, job, loseJob, biz, bizSkill, partner, partnerLove, marry, child, parentDies, random`.
+Koşullar: `age, stage, looks, charisma, mizac, livingHome, homeStress, homeBroke, partnerTrait, partnerWealth, inSchool, stats, statsMax, skills, train, place, wealth, flags, anyFlag, notFlags, counters, job, hasJob, path, biz, edu, partner, married, kids, money, retired`.
+Etkiler: `stats, homeCash, homeStress, homeCrisis, homeIncPct, homeExpPct, giveMoneyPct, eduDrop, relation, karizma, partnerSalaryPct, partnerJobless, skills, money, moneyPct, flags, unflags, counters, energy, honest, famRep, door, legend, title, friend, mentor, chain, job, loseJob, biz, bizSkill, partner, partnerLove, marry, child, parentDies, random`.
 Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabilir. `npm test` tüm kartları ve zincir referanslarını doğrular.
 
 **Soru** (`data/questions.json`): `{"l": "lise", "s": "Fizik", "q": "…", "a": ["doğru", "yanlış", "yanlış", "yanlış"], "c": 0, "h": "ipucu"}` — şıklar oyunda karıştırılır.

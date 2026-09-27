@@ -30,7 +30,9 @@ export const MODIFIERS = {
 export function autoMods(state, base = [], outdoor = false) {
   const m = new Set(base);
   if (state) {
-    if (state.stats.mutluluk < 35) m.add('stresli');
+    const z = state.traits?.mizac;
+    const stressAt = z === 'sakin' ? 22 : z === 'kaygili' ? 48 : 35;
+    if (state.stats.mutluluk < stressAt) m.add('stresli');
     else if (state.stats.mutluluk > 78) m.add('motive');
     if (state.stats.saglik < 40 || state.energy.value < 20) m.add('yorgun');
   }

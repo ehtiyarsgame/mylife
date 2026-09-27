@@ -2,11 +2,12 @@
 // Canlıda bu değerler uzaktan yapılandırmadan (Remote Config) ezilebilir.
 export const CONFIG = {
   energy: {
-    max: 100,
-    regenSeconds: 72,        // 1 enerji / 72 sn → boş bardan dolu bara ~2 saat
+    // Tempo: bir ömür ≈ 1 hafta. Dolu bar (150) ≈ 3,75 saat; günde 3–4 girişle ~9–10 oyun yılı.
+    max: 150,
+    regenSeconds: 90,
     testRegenSeconds: 2,     // Ayarlar > Test modu açıkken
     newYearBonus: 15,        // Yıl tamamlandığında hediye enerji
-    adAmount: 30,            // Ödüllü reklam başına enerji
+    adAmount: 40,            // Ödüllü reklam başına enerji
     adPerDay: 3,
   },
   // Eylem puanı başına enerji maliyeti

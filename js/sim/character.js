@@ -1,10 +1,13 @@
 // Başlangıç zarı (Tasarım Dokümanı §3): aynı tohum → aynı başlangıç.
 import { RNG } from '../core/rng.js';
 import { clamp } from '../core/util.js';
-import { SKILLS } from '../config.js';
+import { SKILLS, CONFIG } from '../config.js';
+const CONFIG_ENERGY_MAX = CONFIG.energy.max;
 import { initEnergy } from '../core/energy.js';
 import { PARENT_JOBS, JOBS } from './careers.js';
 import { NAMES, SURNAMES, CITIES } from './names.js';
+import { rollTraits } from './traits.js';
+import { initHome } from './household.js';
 
 export const WEALTH = {
   fakir:    { name: 'Fakir',    icon: '🏚️' },
@@ -59,7 +62,10 @@ export function rollStart(seed) {
   if (rare === 'gocmen') talents.dil = clamp(talents.dil + 18, 1, 100);
   if (place === 'koy') talents.doga = clamp(talents.doga + 8, 1, 100);
 
-  return { wealth, place, city, parents, siblings, relation, health, rare, talents, surname: rng.pick(SURNAMES), rngState: rng.s };
+  const surname = rng.pick(SURNAMES);
+  const traits = rollTraits(rng);
+  if (rare === 'sporcu') traits.gorunus = Math.min(99, traits.gorunus + 5);
+  return { wealth, place, city, parents, siblings, relation, health, rare, talents, surname, traits, rngState: rng.s };
 }
 
 export function newLife({ seed, name, gender, surname, daily = false, inherit = null }) {
@@ -84,6 +90,8 @@ export function newLife({ seed, name, gender, surname, daily = false, inherit = 
       relation: r.relation, rare: r.rare, famRep: inherit ? inherit.famRep : 0,
     },
     talents: r.talents,
+    traits: r.traits,
+    home: null,
     hints: {},
     hintAds: 0,
     stats: {
@@ -112,6 +120,8 @@ export function newLife({ seed, name, gender, surname, daily = false, inherit = 
     titles: [],
     life: { honest: 0, peakMoney: 0, examResults: [], jobs: [], mgPlayed: 0, mgBest: {}, bankrupt: 0 },
   };
+  state.home = initHome(r.wealth, state.family.siblings, rngCont);
+  state.rng = rngCont.s;
   if (r.rare === 'mirasci') state.flags.mirasFonu = true;
   if (inherit) {
     state.money = 0;
@@ -142,6 +152,7 @@ export function newChildLife(parent, childIdx, seed) {
   s.family.city = parent.family.city;
   s.family.siblings = parent.rel.children.length - 1;
   s.family.relation = (parent.flags.cocukBag || 0) >= 4 ? 'sicak' : 'normal';
+  s.home = initHome(wealth, s.family.siblings, rng);
   const pRole = parent.gender === 'k' ? 'Anne' : 'Baba';
   const other = { role: pRole === 'Anne' ? 'Baba' : 'Anne', name: parent.rel.partner?.name || rng.pick(NAMES[parent.gender === 'k' ? 'e' : 'k']), job: 'Emekli', path: 'genel', alive: !!parent.rel.partner, age: parent.age - 2 };
   const self = { role: pRole, name: parent.name, job: parent.career.job ? JOBS[parent.career.job.id].name : parent.life.jobs.length ? JOBS[parent.life.jobs[parent.life.jobs.length - 1]].name : 'Ev hayatı', path: 'genel', alive: false, age: parent.age };
@@ -168,4 +179,14 @@ export function lifeScoreTitle(score) {
   if (score >= 500) return 'Dolu Dolu Hayat';
   if (score >= 350) return 'Güzel Hayat';
   return 'Sade Hayat';
+}
+
+// Eski kayıtları yeni sistemlere taşı
+export function migrate(s) {
+  const rng = new RNG(s.rng);
+  if (!s.traits) s.traits = rollTraits(rng);
+  if (!s.home) s.home = initHome(s.family.wealth, s.family.siblings, rng);
+  s.energy.max = CONFIG_ENERGY_MAX;
+  s.rng = rng.s;
+  return s;
 }

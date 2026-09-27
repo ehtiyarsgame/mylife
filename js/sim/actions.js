@@ -75,13 +75,26 @@ export const ACTIONS = [
     skills: {}, jobSkill: 3, stats: { disiplin: 0.8 }, work: true },
   { id: 'fazla_mesai', name: 'Fazla mesai', icon: '🌙', cat: 'is', ep: 2, when: s => !!s.career.job && JOBS[s.career.job.id].path !== 'futbol',
     desc: 'Daha çok kazan ama yorul.', mg: s => JOBS[s.career.job.id].mg, mgSkill: s => JOBS[s.career.job.id].skill,
-    skills: {}, jobSkill: 2, stats: { mutluluk: -3, saglik: -2 }, work: true, bonusSalary: 0.12 },
+    skills: {}, jobSkill: 2, stats: { mutluluk: -3, saglik: -1.5 }, work: true, bonusSalary: 0.12 },
   { id: 'yari_zaman', name: 'Yarı zamanlı iş', icon: '🧾', cat: 'is', ep: 1, when: s => s.age >= 15 && !s.career.job && s.age <= 26,
     desc: 'Kafede kasaya geç. Para üstünü doğru ver.', mg: 'paraustu', mgSkill: 'ticaret',
     skills: { ticaret: 2, empati: 1 }, stats: { disiplin: 1 }, earn: 30000 },
   { id: 'danisman', name: 'Danışmanlık yap', icon: '🧓', cat: 'is', ep: 1, when: s => s.age >= 50 && s.life.jobs.length > 0,
     desc: 'Tecrübeni gençlere aktar. Konuşman ikna edici olmalı.', mg: 'konusma', mgSkill: 'liderlik',
     skills: { liderlik: 2 }, stats: { itibar: 2 }, earn: 180000 },
+
+  // ——— ÇOCUK / GENÇ İŞLERİ ———
+  { id: 'ayak_isi', name: 'Mahallede ayak işi', icon: '🛍️', cat: 'is', ep: 1, when: s => s.age >= 9 && s.age <= 14,
+    desc: 'Komşuların alışverişini taşı, çöplerini at. Küçük ama dürüst bir kazanç.', mg: 'rota', mgSkill: 'disiplin',
+    stats: { disiplin: 1.2, fizik: 0.5 }, skills: { empati: 1 }, earn: 7000, childWork: true },
+  { id: 'pazar_isi', name: 'Pazarda çalış', icon: '🧺', cat: 'is', ep: 1, when: s => s.age >= 12 && s.age <= 17 && !s.career.job,
+    desc: 'Hafta sonu pazarda tezgâh yardımcılığı. Para üstü, pazarlık, yorgunluk.', mg: 'paraustu', mgSkill: 'ticaret',
+    skills: { ticaret: 3 }, stats: { disiplin: 1, mutluluk: -1 }, earn: 22000, childWork: true, train: 'ticaret' },
+  { id: 'acik_lise', name: 'Açık liseye çalış', icon: '📘', cat: 'egitim', ep: 1, when: s => !!s.flags.okulBirakti && !s.flags.liseDiploma && s.age >= 15,
+    desc: 'Okulu bıraktın ama yol bitmedi. 2 yıl çalışırsan lise diploması ve YKS hakkı.', mg: 'sinav', mgSkill: 'zeka',
+    stats: { zeka: 1.5, disiplin: 1.5 }, skills: { matematik: 2, dil: 2 }, study: 1, acikLise: true },
+  { id: 'bakim', name: 'Kendine bak', icon: '🪞', cat: 'saglik', ep: 1, when: s => s.age >= 14, cost: 3000,
+    desc: 'Berber/kuaför, düzenli uyku, cilt bakımı. Görünüşünü ve özgüvenini artırır.', stats: { mutluluk: 2, saglik: 1 }, flagYear: 'bakim' },
 
   // ——— TİCARET ———
   { id: 'bakkal', name: 'Bakkala yardım et', icon: '🏪', cat: 'ticaret', ep: 1, when: s => s.age >= 6 && s.age <= 13,
@@ -186,11 +199,12 @@ export function resolve(v, s) { return typeof v === 'function' ? v(s) : v; }
 // Eylemin kilidi / maliyeti
 export function actionCost(a, s) {
   let money = (a.cost || 0) * s.priceIndex;
-  if (a.id === 'dershane' || a.id === 'kodlama') {
-    // Çocukken aile öder; fakir ailede çocuk kendi harçlığından öder
-    if (s.age < 18 && wealthRank(s) >= 1) money = 0;
+  let family = 0;
+  if (['dershane', 'kodlama', 'tarim_kursu'].includes(a.id)) {
+    // Çocukken aile öder (kasası elveriyorsa); fakir ya da sıkışık ailede çocuk kendi cebinden öder
+    if (s.age < 18 && wealthRank(s) >= 1 && (!s.home || s.home.cash > money)) { family = money; money = 0; }
   }
-  return { money };
+  return { money, family };
 }
 
 export function actionLock(a, s) {

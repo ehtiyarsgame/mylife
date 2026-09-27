@@ -39,6 +39,6 @@ export function spendEnergy(energy, amount, now = Date.now()) {
 }
 
 export function addEnergy(energy, amount, allowOver = true) {
-  const cap = allowOver ? energy.max * 1.5 : energy.max;
+  const cap = allowOver ? energy.max * 1.4 : energy.max;
   energy.value = Math.min(cap, energy.value + amount);
 }
