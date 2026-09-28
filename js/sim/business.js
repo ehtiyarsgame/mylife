@@ -1,12 +1,12 @@
 // Ticaret yolu ekonomik modeli (Tasarım Dokümanı §9).
 export const BIZ_STEPS = [
-  { name: 'Okulda satış',       icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, risk: 0.05, mgs: ['paraustu', 'pazarlik'] },
-  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 22000,   rep: 0,  prevYears: 2, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu'] },
-  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 55000,   rep: 30, prevYears: 3, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik'] },
-  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 120000,  rep: 40, prevYears: 2, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat'] },
-  { name: 'Toptancılık',        icon: '🚛', age: 27, capital: 2500000,    monthly: 200000,  rep: 60, prevYears: 3, risk: 0.15, mgs: ['pazarlik', 'stok', 'rota'] },
-  { name: 'Kendi markası',      icon: '🏷️', age: 31, capital: 12000000,   monthly: 450000,  rep: 75, prevYears: 4, risk: 0.18, mgs: ['urunsayfa', 'fiyat', 'konusma'] },
-  { name: 'İhracat',            icon: '🌍', age: 36, capital: 60000000,   monthly: 1500000, rep: 90, prevYears: 5, risk: 0.20, mgs: ['pazarlik', 'stok', 'konusma'] },
+  { name: 'Okulda satış',       icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, risk: 0.05, mgs: ['paraustu', 'pazarlik', 'para_say'] },
+  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 22000,   rep: 0,  prevYears: 2, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu', 'terazi', 'musteri_sikayeti'] },
+  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 55000,   rep: 30, prevYears: 3, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik', 'stok_sayimi', 'sahte_para'] },
+  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 120000,  rep: 40, prevYears: 2, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat', 'kargo_istif', 'musteri_sikayeti'] },
+  { name: 'Toptancılık',        icon: '🚛', age: 27, capital: 2500000,    monthly: 200000,  rep: 60, prevYears: 3, risk: 0.15, mgs: ['pazarlik', 'stok', 'rota', 'kargo_istif', 'yuzde_hesap'] },
+  { name: 'Kendi markası',      icon: '🏷️', age: 31, capital: 12000000,   monthly: 450000,  rep: 75, prevYears: 4, risk: 0.18, mgs: ['urunsayfa', 'fiyat', 'konusma', 'basin_toplantisi', 'kriz_yonetimi'] },
+  { name: 'İhracat',            icon: '🌍', age: 36, capital: 60000000,   monthly: 1500000, rep: 90, prevYears: 5, risk: 0.20, mgs: ['pazarlik', 'stok', 'konusma', 'yuzde_hesap', 'kriz_yonetimi'] },
 ];
 
 // Bir sonraki basamağa geçiş koşulları; eksikleri liste olarak döner.

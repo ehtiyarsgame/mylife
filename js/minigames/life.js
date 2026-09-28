@@ -4,7 +4,7 @@ import { clamp, sleep } from '../core/util.js';
 
 // ————————————————— KONUŞMA —————————————————
 // Her turda dinleyicinin ruh hâlini oku ve en uygun cevabı seç. g: iyi, o: idare eder, b: kötü
-const SCENES = {
+export const SCENES = {
   sinif: { t: 'Sınıf başkanlığı konuşması', who: '🧑‍🎓', rounds: [
     ['Sınıf seni dinliyor. Nasıl başlarsın?', ['Sınıfa sorarak başla: "Bu yıl neyi değiştirmek istersiniz?"', 'Hazırladığın listeyi okumaya başla', 'Kendini överek başla']],
     ['Arka sıralar sıkılmaya başladı, fısıldaşıyorlar.', ['Onlara doğrudan soru yönelt, fikirlerini iste', 'Konuyu kısa kes', 'Sesini yükselt ve devam et']],
@@ -40,6 +40,36 @@ const SCENES = {
     ['Bir öğrenci konuyu anlamadı.', ['Farklı bir örnekle yeniden anlat', 'Aynı anlatımı tekrarla', '"Sonra bakarız" de']],
     ['İki öğrenci tartışıyor.', ['İkisini de dinle, sınıf kuralını hatırlat', 'Görmezden gel', 'İkisini de dışarı çıkar']],
     ['Ders bitiyor.', ['Kısa bir özet yap, merak uyandıran bir ödev ver', 'Ödevi hızlıca söyle', 'Zil çalınca hiçbir şey demeden çık']],
+  ] },
+  musteri: { t: 'Öfkeli müşteri', who: '😠', rounds: [
+    ['Müşteri bozuk çıkan ürünle geldi, sesi yüksek.', ['Sakince dinle, yaşadığı sıkıntı için özür dile', 'Fişini sor', '"Bizim suçumuz değil" de']],
+    ['"Üç gündür uğraşıyorum!" diye bağırıyor.', ['Zaman kaybını kabul et, hemen çözüm sunacağını söyle', 'Sıranın arkasında başka müşteri olduğunu hatırlat', 'Sen de sesini yükselt']],
+    ['Değişim mi iade mi istediğini soruyorsun.', ['İki seçeneği net anlat, kararı ona bırak', 'Sadece değişim yapabileceğini söyle', 'Yöneticinin gelmesini beklemesini söyle']],
+    ['Müşteri biraz yumuşadı.', ['Küçük bir jest (indirim kuponu) sunup teşekkür et', 'İşlemi bitirip sıradakine geç', '"Bir dahakine dikkat edin" de']],
+  ] },
+  hasta: { t: 'Hastaya kötü haber', who: '🤒', rounds: [
+    ['Tahlil sonuçları geldi, hasta endişeli.', ['Oturup göz teması kurarak sakin bir girişle başla', 'Ayakta hızla sonuçları oku', 'Tıbbi terimlerle konuya gir']],
+    ['"Ciddi bir şey mi doktor?" diye soruyor.', ['Durumu dürüst ama anlaşılır bir dille açıkla', '"Merak etmeyin, bir şey yok" de', 'Soruyu geçiştir']],
+    ['Hasta ağlamaya başladı.', ['Bekle, duygusuna alan tanı, peçete uzat', 'Tedaviyi anlatmaya devam et', '"Ağlamanın faydası yok" de']],
+    ['Tedavi planını konuşma vakti.', ['Adımları sırala, sorularını sor, yazılı bilgi ver', 'Reçeteyi verip kontrole çağır', '"İnternetten okursunuz" de']],
+  ] },
+  veli: { t: 'Veli görüşmesi', who: '👪', rounds: [
+    ['Veli çocuğunun notlarından şikâyetçi.', ['Önce çocuğun güçlü yanlarından bahset', 'Not çizelgesini gösterip bekle', '"Çocuğunuz tembel" de']],
+    ['"Öğretmen bizim çocuğa haksızlık ediyor" diyor.', ['Endişesini anladığını söyle, somut örnekleri birlikte incele', 'Konuyu değiştir', 'Savunmaya geçip tartış']],
+    ['Evde ne yapabileceklerini soruyor.', ['Günlük 30 dakikalık düzenli çalışma planı öner', '"Daha çok çalışsın" de', '"Özel ders aldırın" de']],
+    ['Görüşme bitiyor.', ['Bir ay sonra tekrar görüşmek için tarih ver', 'Teşekkür edip uğurla', 'Saatine bakıp kalk']],
+  ] },
+  basin: { t: 'Basın toplantısı', who: '🎙️', rounds: [
+    ['Kameralar açık, ilk soru sert geliyor.', ['Soruyu kısa ve net cevapla', 'Hazırladığın metni okumaya başla', '"Bu soruya cevap vermeyeceğim" de']],
+    ['Bir muhabir yanlış bir bilgiyi tekrarlıyor.', ['Kibarca düzelt, doğru veriyi paylaş', 'Görmezden gel', 'Muhabiri azarla']],
+    ['Hata yapıp yapmadığınız soruluyor.', ['Hatayı kabul et ve alınan önlemleri anlat', 'Suçu başka birime at', '"Hata yok" diye ısrar et']],
+    ['Son soru.', ['Ana mesajını tek cümleyle tekrarla', '"Teşekkürler" deyip çık', 'Soruyu duymamış gibi yap']],
+  ] },
+  kriz: { t: 'Kriz toplantısı', who: '🚨', rounds: [
+    ['Büyük bir sipariş iptal oldu, ekip panikte.', ['Sakin kal, önce durumu netleştir', 'Hemen suçluyu sor', 'Toplantıyı erteleyip düşün']],
+    ['Herkes aynı anda konuşuyor.', ['Söz sırası ver, herkesi kısaca dinle', 'En kıdemliyi dinle', 'Masaya vurup sustur']],
+    ['İki çözüm önerisi var, ikisi de riskli.', ['Artı-eksileri yaz, verilerle karar ver', 'Yazı tura at', 'Hiçbirini seçme, bekle']],
+    ['Karar verildi.', ['Görev dağılımı yap, takip tarihi koy', 'Herkese "halledin" de', 'Toplantıyı bitir, e-postayla bildiririm de']],
   ] },
 };
 register({

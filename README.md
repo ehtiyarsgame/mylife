@@ -1,6 +1,6 @@
 # 🌱 Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.2.0-test.apk`](apk/HayatYolu-0.2.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.0-test.apk`](apk/HayatYolu-0.3.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -40,19 +40,32 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **İş = emek** | Maaş, yıl içinde **mesaiye gittiğin oranda** yatar (tam zamanlı iş 2 EP). Hiç gitmezsen maaşın kesilir, üst üste olursa kovulursun. |
 | **Eş seçimi** | Her başarılı tanışmada 3 aday: *çok çekici*, *çok uyumlu*, *varlıklı çevreden*. Görünüş, uyum, karakter (destekleyici, tutumlu, savurgan, hırslı, kıskanç, sakin, aile odaklı, maceracı), iş, ailesi ve çocuk isteği farklıdır. Eşin geliri, gider alışkanlığı, mutluluğun ve tartışmalar buna göre şekillenir; sevgi bakımsız kalırsa boşanma ve mal paylaşımı olur. |
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
-| **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (28 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
+| **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (112 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
 | **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
-| **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer; puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
+| **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
 | **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
 | **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). |
 | **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
 
-### Mini oyun kataloğu (36)
+### Mini oyun kataloğu (112)
 
 Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
 Ticaret: **Para Üstü, Pazarlık, Fiyat Belirle, Stok Planı, Ürün Sayfası, Teslimat Rotası** ·
-Hayat: **Konuşma (6 senaryo), Çelişkiyi Bul, Enkazdan Kurtarma, Ritim, Hasat, Ekim Planı**
+Hayat: **Konuşma (11 senaryo), Çelişkiyi Bul, Enkazdan Kurtarma, Ritim, Hasat, Ekim Planı**
+
+Temalı oyunlar (`js/minigames/engines.js` motorları + `themes.js` temaları, 76 oyun):
+- Zamanlama: Serbest Atış, Voleybol Servisi, Okçuluk (rüzgârlı), Dart, Golf, Bowling, Halter, Uzun Atlama
+- Yakalama: Kiraz, Kargo Bandı, Yumurta, Yağmur Suyu, Çevre Temizliği
+- Ayıklama: Geri Dönüşüm, Kütüphane, Postane, Hayvan Sınıfları, Kelime Türleri, Sayı Avcısı, Besin Grupları, Kıtalar, Çamaşır, Eczane Rafı
+- Eşleştirme: Başkentler, Eş Anlam, İngilizce, Alet-Meslek, Elementler, Yazar-Eser, Hayvan Yavruları, Formüller
+- Farklıyı bul: Kalite Kontrol, Sahte Para, Hastalıklı Bitki, Dikkat Testi, Kayıp Eşya, Kamuflaj
+- Sayma: Stok Sayımı, Kalabalık, Kasa Sayımı, Sürü Sayımı · İstifleme: Vinç, Kat Pasta, Palet, Blok Kule, Duvar Örme
+- Parkur: Bisiklet, Kurye, Slalom, Güvenli Sürüş, Engelli Koşu, Açık Su Yüzme · Vurma: Balon, Sinek, Bağ Zararlıları, Köstebek, Yıldız
+- Hassas ayar: Terazi, İlaç Dozu, Fırın, Tarif Ölçüsü, Ses Mikseri, Basınç · Hızlı soru: Zihinden İşlem, Kesir, Fatura, Birim, Faiz, Vardiya Saati
+- Konuşma sahneleri: Müşteri Şikâyeti, Hasta Bilgilendirme, Veli Görüşmesi, Basın Toplantısı, Kriz Toplantısı · Davul, Dans
+
+Her eylem ve meslek birkaç oyundan birini rastgele seçer (ör. Spor salonu: kondisyon, halter, serbest atış, voleybol, okçuluk…); köyde tarla işleri, şehirde ev işleri gibi bağlama uygun oyunlar gelir.
 
 Her mini oyun `skill` (karakter becerisi) ve `stakes` (önem) ile ölçeklenir; değiştiriciler
 (yağmur, gece, kalabalık, yorgun, stresli, motivasyon, kritik, efsanevi…) oynanışı değiştirir.
@@ -64,11 +77,12 @@ Tümü "Mini oyun salonu"nda serbestçe denenebilir.
 index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışır)
 css/style.css                              tasarım sistemi (mobil öncelikli)
 data/events.json                           olay destesi (206 kart) — kod bilmeden genişletilir
-data/questions.json                        soru bankası (+ yaşa göre üretilen matematik soruları)
+data/questions.json                        elle yazılmış soru bankası (tıp, ehliyet, ustalık, KPSS…)
+js/sim/qgen.js, qdata.js                   veri tablolarından soru üretici (seviye başına 1.300+ farklı soru)
 js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
 js/core/        rng (tohumlu), energy, store, audio, ads
 js/sim/         saf simülasyon: character, traits, household, partner, balance, stats, actions, careers, business, events, year, questions
-js/minigames/   engine + 28 mini oyun (sports, mind, tech, health, trade, life)
+js/minigames/   engine + 112 mini oyun (sports, mind, tech, health, trade, life, extra, engines+themes)
 js/ui/          app, dom, flows (eylem/olay/sınav/kapı akışları), lifeScreen, screens
 tests/          başsız simülasyon testleri ve denge botu
 ```

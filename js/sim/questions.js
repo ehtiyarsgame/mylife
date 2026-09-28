@@ -1,5 +1,10 @@
-// Soru bankası + yaşa göre üretilen matematik soruları. Son 200 soru tekrar gelmez.
+// Soru bankası + veri tablolarından üretilen sorular. Son sorulanlar tekrar gelmez.
 import { fx } from '../core/rng.js';
+import { genQuestion } from './qgen.js';
+
+// Oturum boyunca son sorulan soruları hatırla (mini oyun + sınav)
+const SEEN = [];
+const remember = ids => { SEEN.push(...ids); if (SEEN.length > 400) SEEN.splice(0, SEEN.length - 400); };
 
 let BANK = [];
 export function setBank(qs) { BANK = qs.map((q, i) => ({ ...q, id: q.id ?? `q${i}` })); }
@@ -21,32 +26,6 @@ const LEVEL_MIX = {
   usta: ['usta'],
 };
 
-function genMath(level) {
-  const r = fx;
-  let q, ans;
-  if (level === 'ilkokul') {
-    const a = r.int(4, 30), b = r.int(2, 20);
-    if (r.chance(0.5)) { q = `${a} + ${b} = ?`; ans = a + b; } else { const x = Math.max(a, b), y = Math.min(a, b); q = `${x} − ${y} = ?`; ans = x - y; }
-  } else if (level === 'ortaokul') {
-    const t = r.int(0, 2);
-    if (t === 0) { const a = r.int(6, 15), b = r.int(3, 12); q = `${a} × ${b} = ?`; ans = a * b; }
-    else if (t === 1) { const b = r.int(3, 12), ansv = r.int(3, 15); q = `${b * ansv} ÷ ${b} = ?`; ans = ansv; }
-    else { const p = r.pick([10, 20, 25, 50]), n = r.pick([40, 80, 120, 200, 240]); q = `${n} sayısının %${p}'i kaçtır?`; ans = n * p / 100; }
-  } else {
-    const t = r.int(0, 2);
-    if (t === 0) { const x = r.int(2, 12), a = r.int(2, 7), b = r.int(1, 20); q = `${a}x + ${b} = ${a * x + b} ise x = ?`; ans = x; }
-    else if (t === 1) { const n = r.int(11, 25); q = `${n}² = ?`; ans = n * n; }
-    else { const a = r.int(2, 9), b = r.int(2, 4); q = `${a}^${b} = ?`; ans = a ** b; }
-  }
-  const wrong = new Set();
-  while (wrong.size < 3) {
-    const d = r.pick([-10, -2, -1, 1, 2, 10, 5, -5]);
-    const w = ans + d * (Math.abs(ans) > 50 ? r.int(1, 3) : 1);
-    if (w !== ans && w >= 0) wrong.add(w);
-  }
-  return { id: 'gen', s: 'Matematik', q, a: [String(ans), ...[...wrong].map(String)], c: 0, h: 'Adım adım işlem yap.' };
-}
-
 // Sınav soruları: şıklar karıştırılmış olarak döner ({q, opts, correct, s, h})
 // Hazırlık düşükse sorular bir üst seviyeden ve daha zor gelir; yüksekse bildik konulardan.
 const HARDER = { ilkokul: ['ilkokul', 'ortaokul'], ortaokul: ['ortaokul', 'lise'], lise: ['lise'], genel: ['genel', 'lise'] };
@@ -54,17 +33,22 @@ const EASIER = { ilkokul: ['ilkokul'], ortaokul: ['ortaokul', 'ilkokul'], lise: 
 export function pickQuestions(levelKey, n, recent = [], prep = 50) {
   const levels = (prep < 40 ? HARDER[levelKey] : prep >= 70 ? EASIER[levelKey] : null) || LEVEL_MIX[levelKey] || [levelKey];
   const genLevel = prep < 40 ? ({ ilkokul: 'ortaokul', ortaokul: 'lise', lise: 'lise', genel: 'lise' }[levelKey]) : null;
-  const recentSet = new Set(recent);
+  const recentSet = new Set([...recent, ...SEEN]);
   let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
-  if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l));
+  if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l) && !SEEN.slice(-40).includes(q.id));
   pool = fx.shuffle(pool);
-  const genShare = ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.3 : 0;
+  // Okul/genel sınavlarında soruların çoğu üretilir (binlerce farklı soru); meslek sınavları elle yazılmış bankadan gelir.
+  const genShare = ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : 0;
   const out = [];
   for (let i = 0; i < n; i++) {
-    const useGen = (fx.chance(genShare) || !pool.length) && genShare > 0;
-    const raw = useGen ? genMath(genLevel || (levelKey === 'genel' ? 'lise' : levelKey)) : pool.pop() || genMath('ortaokul');
+    const useGen = genShare > 0 && (fx.chance(genShare) || !pool.length);
+    const gl = genLevel || fx.pick(levels.filter(l => ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(l))) || 'ortaokul';
+    let raw = useGen ? genQuestion(fx, gl, recentSet) : pool.pop();
+    if (!raw) raw = genQuestion(fx, 'ortaokul', recentSet);
+    recentSet.add(raw.id);
     const order = fx.shuffle([0, 1, 2, 3]);
     out.push({ id: raw.id, s: raw.s, q: raw.q, h: raw.h, opts: order.map(i => raw.a[i]), correct: order.indexOf(raw.c) });
   }
+  remember(out.map(q => q.id));
   return out;
 }

@@ -258,8 +258,8 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
   s.qRecent = s.qRecent || [];
   const prep = Y.examPrep(s, examId);
   const questions = pickQuestions(level, E.q, s.qRecent, prep);
-  s.qRecent.push(...questions.map(q => q.id).filter(id => id !== 'gen'));
-  s.qRecent = s.qRecent.slice(-200);
+  s.qRecent.push(...questions.map(q => q.id));
+  s.qRecent = s.qRecent.slice(-400);
   const jokers = {
     ogretmen: !!s.flags.ogretmen,
     ezber: s.year.study >= 2 || (s.studyLog.slice(-1)[0] || 0) >= 3,

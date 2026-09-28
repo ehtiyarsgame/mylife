@@ -189,3 +189,39 @@ test('aynı kart üst üste iki yıl gelmez ve bir hayatta çok çeşitli kart g
     assert.ok(uniq >= seq.length * 0.4, `çeşitlilik düşük: ${uniq}/${seq.length}`);
   }
 });
+
+test('üretilen sorular geçerli ve çok çeşitli; sınavda tekrar gelmez', async () => {
+  const { genQuestion, genLevels } = await import('../js/sim/qgen.js');
+  const { pickQuestions } = await import('../js/sim/questions.js');
+  const r = new RNG('soru');
+  for (const l of genLevels) {
+    const ids = new Set();
+    for (let i = 0; i < 1500; i++) {
+      const q = genQuestion(r, l);
+      ids.add(q.id);
+      assert.equal(q.a.length, 4, q.q);
+      assert.equal(new Set(q.a).size, 4, `${q.q} → ${q.a}`);
+      assert.ok(!q.a.some(x => /undefined|NaN/.test(x)), q.q);
+    }
+    assert.ok(ids.size > 600, `${l}: yalnız ${ids.size} farklı soru`);
+  }
+  let recent = [];
+  for (let k = 0; k < 8; k++) {
+    const qs = pickQuestions('lise', 10, recent, 50);
+    for (const q of qs) assert.ok(!recent.includes(q.id), `tekrar: ${q.q}`);
+    recent = recent.concat(qs.map(q => q.id));
+  }
+});
+
+test('eylem ve işlerdeki tüm mini oyunlar kayıtlı ve 100+ oyun var', async () => {
+  globalThis.document ??= { createElement: () => ({ style: {}, classList: { add() {}, remove() {}, toggle() {} }, append() {}, setAttribute() {}, addEventListener() {} }), createTextNode: () => ({}) };
+  const { allGames } = await import('../js/minigames/index.js');
+  const { BIZ_STEPS } = await import('../js/sim/business.js');
+  const ids = new Set(allGames().map(g => g.id));
+  assert.ok(ids.size >= 100, `${ids.size} oyun`);
+  const used = [];
+  for (const a of Object.values(actionById)) if (a.mg && typeof a.mg !== 'function') used.push(...[].concat(a.mg));
+  for (const j of Object.values(JOBS)) used.push(...[].concat(j.mg));
+  for (const s of BIZ_STEPS) used.push(...s.mgs);
+  for (const id of used) assert.ok(ids.has(id), `kayıtsız mini oyun: ${id}`);
+});
