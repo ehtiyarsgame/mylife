@@ -257,7 +257,7 @@ export function spendActionOnly(s, id) {
 export function startBiz(s) {
   spendActionOnly(s, 'isletme_ac');
   s.career.biz = { step: 0, years: 0, skillSum: 0, skillN: 0, bankrupt: 0 };
-  log(s, 'İlk ticaretine başladı: okulda kurabiye satışı.', 'rare');
+  log(s, 'İlk ticaretine başladı: küçük satışlar.', 'rare');
 }
 
 export function depositSavings(s, amt = Math.floor(s.money / 2)) {
@@ -811,7 +811,10 @@ export function endYear(s) {
         if (br.bad) sum.expense.push([`${label} · ${br.step.name}`, -br.net]);
         else sum.income.push([`${label} · ${br.step.name} (beceri ${Math.round(br.skill)})`, br.net]);
         s.money += br.net;
-        if (br.net > 0) earned += br.net;
+        // İşletme kârı da gelir vergisine tabidir
+        const btax = br.net > 0 ? incomeTax(br.net, pi) : 0;
+        if (btax > 0) { s.money -= btax; sum.expense.push(['Gelir vergisi (işletme)', btax]); }
+        if (br.net > 0) earned += br.net - btax;
         if (br.kind === 'boom') { sum.notes.push(`🚀 ${br.reason} Kâr normalin kat kat üstünde!`); log(s, `Ticarette rekor yıl: ${br.reason}`, 'epic'); }
         else if (br.kind === 'crash') { sum.notes.push(`💥 ${br.reason} Birikimin açığı kapatamazsa iflas kapıda.`); log(s, `Ticarette büyük darbe: ${br.reason}`, 'rare'); }
         else if (br.kind === 'bad') sum.notes.push(`📉 Kötü yıl: ${br.reason} Beceri yükseldikçe bu risk azalır.`);

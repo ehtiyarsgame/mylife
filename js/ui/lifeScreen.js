@@ -78,7 +78,9 @@ function buildScreen(render) {
     h('div.who.grow', {},
       h('h2', {}, `${s.name} ${s.surname}`),
       h('div.muted', {}, `${s.age} yaş · ${st.name} · ${s.calendarYear}`),
-      s.career.job ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `${JOBS[s.career.job.id].icon} ${jobTitle(s.career.job)}`) : s.edu.stage === 'uni' ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `🎓 ${deptById[s.edu.dept].name} ${s.edu.uniYears + 1}. sınıf`) : null),
+      s.career.job ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `${JOBS[s.career.job.id].icon} ${jobTitle(s.career.job)}`)
+        : s.career.biz?.step >= 2 ? h('div.tiny', { style: { color: '#ffd27a', fontWeight: 800 } }, `${BIZ_STEPS[s.career.biz.step].icon} ${T('{x} sahibi · Girişimci', { x: T(BIZ_STEPS[s.career.biz.step].name) })}`)
+        : s.edu.stage === 'uni' ? h('div.tiny', { style: { color: '#c9c2ff', fontWeight: 800 } }, `🎓 ${deptById[s.edu.dept].name} ${s.edu.uniYears + 1}. sınıf`) : null),
     h('button.icon-btn', { onclick: () => menuSheet() }, '☰')));
   // HUD: iki eşit kutu + tam genişlik stat şeridi (içerik ne olursa olsun yükseklik sabit)
   const full = s.energy.value >= s.energy.max;
@@ -371,7 +373,7 @@ function careerTab(render) {
       h('div.sum-line', { style: { borderBottom: 0 } }, 'Terfi', h('b', {}, (() => { const lv = J.levels[j.level]; if (j.level >= J.levels.length - 1) return 'Zirvedesin'; if (lv[3]) return `Kapı: ${DOORS[lv[3]].name} (${lv[2]} yıl sonra)`; return `${lv[2]} yıl + performans 55`; })())),
       h('div.btns', {}, btn('İşten ayrıl', async () => { if (await confirmBox('İşten ayrıl', 'Emin misin? Maaşın kesilecek.', 'Ayrıl', 'Vazgeç', 'danger')) { Y.quitJob(s); save(); render(); } }, 'ghost sm'))));
   } else {
-    out.push(h('div.card', {}, h('p', { style: { margin: 0 } }, s.career.retired ? `🪑 Emeklisin. Aylık emekli maaşı: ${fmtTL(s.career.pension * s.priceIndex)}` : s.age < 14 ? 'Henüz çalışma yaşında değilsin.' : 'Şu an bir işin yok. "İş ara" eylemiyle başvurabilirsin.')));
+    out.push(h('div.card', {}, h('p', { style: { margin: 0 } }, s.career.biz?.step >= 2 ? `${BIZ_STEPS[s.career.biz.step].icon} Mesleğin girişimcilik: kendi işini yönetiyorsun (aşağıda). İşletme tam zamanlıdır; maaşlı bir işe girmek için önce işletmeni devretmen gerekir.` : s.career.retired ? `🪑 Emeklisin. Aylık emekli maaşı: ${fmtTL(s.career.pension * s.priceIndex)}` : s.age < 14 ? 'Henüz çalışma yaşında değilsin.' : 'Şu an bir işin yok. "İş ara" eylemiyle başvurabilirsin.')));
   }
   // Kapılar
   const allDoors = Object.keys(DOORS).filter(id => s.career.doors[id]?.open || Y.visibleDoors(s).includes(id));
@@ -388,11 +390,11 @@ function careerTab(render) {
   const nb = nextStepReqs(s);
   const bizInterest = b || s.skills.ticaret >= 15 || (s.train.ticaret || 0) >= 1 || s.edu.alan === 'ea';
   if (!bizInterest) {
-    out.push(h('div.sec-title', {}, '🏪 Kendi işin'));
+    out.push(h('div.sec-title', {}, '🏪 Girişimcilik yolu'));
     out.push(h('div.card', {}, h('p.small.muted', { style: { margin: 0 } }, 'Ticarete ilgi gösterirsen (bakkala yardım, pazarda çalışma, ticaret dersleri) kendi işini kurma yolu açılır.')));
     return out;
   }
-  out.push(h('div.sec-title', {}, '🏪 Kendi işin'));
+  out.push(h('div.sec-title', {}, '🏪 Girişimcilik yolu'));
   out.push(h('div.card', {},
     h('div.row', { style: { gap: '4px', flexWrap: 'wrap' } }, BIZ_STEPS.map((st, i) => h('span.chip' + (b && i === b.step ? '.gold' : b && i < b.step ? '.green' : ''), {}, st.icon, ' ', st.name))),
     h('div.sp'),
@@ -405,7 +407,7 @@ function careerTab(render) {
       b.boost ? h('div.sum-line', {}, 'Büyüme hamlesi', h('b', {}, `×${b.boost.mul} · ${b.boost.years} yıl`)) : null,
       h('div.sum-line', {}, 'Bu yılki ticaret becerisi', h('b', {}, b.skillN ? Math.round(b.skillSum / b.skillN) : '— (işletmeni yönet!)')),
       h('div.sum-line', { style: { borderBottom: 0 } }, 'Kötü yıl riski', h('b', {}, `%${Math.round(BIZ_STEPS[b.step].risk * 100)} × beceri etkisi`)),
-      h('div.tiny.muted', {}, 'Ticaret risklidir: ürünün tutarsa bir yılda servet kazanabilir, ortak dolandırıcılığı, yangın ya da kur şokuyla bir anda batabilirsin. Beceri, itibar ve sigorta riski azaltır.')) :h('p.small.muted', {}, 'Ticarete ilgin var. "Kendi küçük işini kur" eylemiyle (12+ yaş) girişimcilik yoluna başlayabilirsin.'),
+      h('div.tiny.muted', {}, 'Ticaret risklidir: ürünün tutarsa bir yılda servet kazanabilir, ortak dolandırıcılığı, yangın ya da kur şokuyla bir anda batabilirsin. Beceri, itibar ve sigorta riski azaltır.')) :h('p.small.muted', {}, 'Ticarete ilgin var. "Kendi küçük işini kur" eylemiyle küçük satışlarla başla; pazar tezgâhında tecrübe kazan. Dükkândan itibaren ticaret tam zamanlı bir meslektir.'),
     nb ? h('div.tile', { style: { marginTop: '10px' } },
       h('b', {}, `Sonraki: ${nb.info.icon} ${nb.info.name}`),
       h('div.small.muted', {}, `Sermaye ${fmtTL(nb.info.capital * s.priceIndex)} (nakit ×1,2 gerekir) · İtibar ${nb.info.rep}+ · ${nb.info.age}+ yaş`),

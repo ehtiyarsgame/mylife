@@ -64,7 +64,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
   ülkeye özgü coğrafya/meclis/bayram soruları yok. Dil dersleri dile göre: Türk oyuncuya Türkçe dilbilgisi + İngilizce, İngiliz oyuncuya İngilizce dilbilgisi + İspanyolca.
   İsimler ve memleket şehirleri dile göre (İngilizcede uluslararası isimler ve kurgusal şehirler).
 
-### Mini oyun kataloğu (118)
+### Mini oyun kataloğu (146)
 
 Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
@@ -91,7 +91,7 @@ Her eylem ve meslek birkaç oyundan birini rastgele seçer (ör. Spor salonu: ko
 
 Her mini oyun `skill` (karakter becerisi) ve `stakes` (önem) ile ölçeklenir; değiştiriciler
 (yağmur, gece, kalabalık, yorgun, stresli, motivasyon, kritik, efsanevi…) oynanışı değiştirir.
-Tümü "Mini oyun salonu"nda serbestçe denenebilir.
+Mini oyunlar sürpriz olsun diye oyuncuya ayrı bir salon açılmaz (salon yalnızca geliştirici testinde, localhost’ta görünür). Her mesleğin kendine özgü oyunları vardır: garsonun servis sırası, hemşirenin serum hızı, avukatın dava dosyası, bankacının kredi başvurusu…
 
 ## Proje yapısı
 

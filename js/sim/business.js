@@ -1,14 +1,16 @@
 import { fmtTL } from '../core/util.js';
 // Ticaret yolu ekonomik modeli (Tasarım Dokümanı §9).
+// skill: basamak için gereken ticaret becerisi. Dükkândan itibaren tam zamanlı bir meslektir.
 export const BIZ_STEPS = [
-  { name: 'Okulda satış',       icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, risk: 0.05, mgs: ['paraustu', 'pazarlik', 'para_say'] },
-  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 22000,   rep: 0,  prevYears: 2, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu', 'terazi', 'musteri_sikayeti'] },
-  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 55000,   rep: 30, prevYears: 3, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik', 'stok_sayimi', 'sahte_para'] },
-  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 120000,  rep: 40, prevYears: 2, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat', 'kargo_istif', 'musteri_sikayeti'] },
-  { name: 'Toptancılık',        icon: '🚛', age: 27, capital: 2500000,    monthly: 200000,  rep: 60, prevYears: 3, risk: 0.15, mgs: ['pazarlik', 'stok', 'rota', 'kargo_istif', 'yuzde_hesap', 'yukleme'] },
-  { name: 'Kendi markası',      icon: '🏷️', age: 31, capital: 12000000,   monthly: 450000,  rep: 75, prevYears: 4, risk: 0.18, mgs: ['urunsayfa', 'fiyat', 'konusma', 'basin_toplantisi', 'kriz_yonetimi'] },
-  { name: 'İhracat',            icon: '🌍', age: 36, capital: 60000000,   monthly: 1500000, rep: 90, prevYears: 5, risk: 0.20, mgs: ['pazarlik', 'stok', 'konusma', 'yuzde_hesap', 'kriz_yonetimi'] },
+  { name: 'Küçük satışlar',     icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, skill: 0,  risk: 0.05, mgs: ['paraustu', 'pazarlik', 'para_say'] },
+  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 6000,    rep: 0,  prevYears: 2, skill: 20, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu', 'terazi', 'musteri_sikayeti'] },
+  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 45000,   rep: 30, prevYears: 2, skill: 45, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik', 'stok_sayimi', 'sahte_para', 'gelir_gider'] },
+  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 85000,   rep: 40, prevYears: 2, skill: 55, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat', 'kargo_istif', 'musteri_sikayeti', 'gelir_gider'] },
+  { name: 'Toptancılık',        icon: '🚛', age: 27, capital: 2500000,    monthly: 150000,  rep: 60, prevYears: 3, skill: 65, risk: 0.15, mgs: ['pazarlik', 'stok', 'rota', 'kargo_istif', 'yuzde_hesap', 'yukleme'] },
+  { name: 'Kendi markası',      icon: '🏷️', age: 31, capital: 12000000,   monthly: 320000,  rep: 75, prevYears: 4, skill: 72, risk: 0.18, mgs: ['urunsayfa', 'fiyat', 'konusma', 'basin_toplantisi', 'kriz_yonetimi'] },
+  { name: 'İhracat',            icon: '🌍', age: 36, capital: 60000000,   monthly: 900000,  rep: 90, prevYears: 5, skill: 80, risk: 0.20, mgs: ['pazarlik', 'stok', 'konusma', 'yuzde_hesap', 'kriz_yonetimi'] },
 ];
+export const bizFullTime = b => !!b && b.step >= 2;
 
 // Bir sonraki basamağa geçiş koşulları; eksikleri liste olarak döner.
 export function nextStepReqs(state) {
@@ -22,7 +24,10 @@ export function nextStepReqs(state) {
   if (state.age < next.age) miss.push(`En erken ${next.age} yaş`);
   if (state.money + (state.age >= 18 ? state.savings : 0) < need) miss.push(`Nakit: ${fmtTL(need)} (sermaye ×1,2)`);
   if (state.stats.itibar < next.rep) miss.push(`İtibar ${next.rep}+`);
-  if (b && b.years < next.prevYears) miss.push(`Önceki basamakta ${next.prevYears} yıl (şu an ${b.years})`);
+  if ((state.skills.ticaret ?? 0) < next.skill) miss.push(`Ticaret becerisi ${next.skill}+ (şu an ${Math.round(state.skills.ticaret ?? 0)})`);
+  // Dükkân bir meslek kapısıdır: pazar tecrübesi ya da ticaret eğitimi ister
+  if (cur + 1 === 2 && !(b && b.step >= 1 && b.years >= next.prevYears) && !['isletme', 'ekonomi'].includes(state.edu.degree)) miss.push('Pazarda 2 yıl tecrübe ya da İşletme/Ekonomi mezuniyeti');
+  else if (cur + 1 !== 2 && b && b.years < next.prevYears) miss.push(`Önceki basamakta ${next.prevYears} yıl (şu an ${b.years})`);
   return { step: cur + 1, info: next, need, miss };
 }
 

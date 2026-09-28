@@ -85,7 +85,7 @@ export const ACTIONS = [
     skills: { doga: 5 }, flag: 'tarimKursu' },
 
   // ——— İŞ ———
-  { id: 'is_ara', name: 'İş ara', icon: '🔎', cat: 'is', ep: 1, when: s => s.age >= 14 && !s.career.retired && s.edu.stage !== 'uni',
+  { id: 'is_ara', name: 'İş ara', icon: '🔎', cat: 'is', ep: 1, when: s => s.age >= 14 && !s.career.retired && s.edu.stage !== 'uni' && !(s.career.biz && s.career.biz.step >= 2),
     desc: 'Uygun ilanlara başvur, mülakata gir.', special: 'jobsearch' },
   { id: 'mesai', name: 'Mesaiye odaklan', icon: '💼', cat: 'is', ep: 1, when: s => !!s.career.job,
     desc: 'İşini en iyi şekilde yap. Performans terfiyi ve primi belirler.', mg: s => JOBS[s.career.job.id].mg, mgSkill: s => JOBS[s.career.job.id].skill,

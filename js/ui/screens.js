@@ -34,9 +34,10 @@ route('title', root => {
     btn(has ? '✨  Yeni hayat (📺 3 reklam)' : '✨  Yeni hayat', async () => { if (has && !(await abandonLife())) return; go('create'); }, (has ? '' : 'primary ') + 'block'),
     h('div.menu-grid', { style: { marginTop: '6px' } },
       btn([h('b', {}, '📅'), 'Günlük meydan okuma'], async () => { if (has && !(await abandonLife())) return; go('create', { daily: true }); }),
-      btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')),
+      // Mini oyunlar sürpriz kalsın: salon yalnızca geliştirici testinde görünür
+      DEV ? btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')) : null,
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
-      btn([h('b', {}, '⚙️'), 'Ayarlar'], () => go('settings', 'title'))),
+      h('button.btn', { style: DEV ? {} : { gridColumn: '1 / -1' }, onclick: () => { sfx.tap(); go('settings', 'title'); } }, h('b', {}, '⚙️'), 'Ayarlar')),
     h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), h('img.eg-word', { src: 'icons/ehtiyars-wordmark.svg', alt: 'Ehtiyars Game' })),
     h('p.center.tiny.muted', { style: { marginTop: '6px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
   ));

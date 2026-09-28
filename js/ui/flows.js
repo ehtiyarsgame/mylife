@@ -132,7 +132,7 @@ export async function doAction(id, rerender) {
   if (lock) { toast('🔒 ' + lock); sfx.bad(); return; }
 
   if (a.special === 'jobsearch') return jobSearch(rerender);
-  if (a.special === 'bizstart') { Y.startBiz(s); save(); toast('🍪 Okulda satış başladı! "İşletmeni yönet" ile kâr et.'); rerender(); return afterAction(rerender); }
+  if (a.special === 'bizstart') { Y.startBiz(s); save(); toast('🍪 Küçük satışlara başladın! "İşletmeni yönet" ile kâr et, pazar tezgâhına büyü.'); rerender(); return afterAction(rerender); }
   if (a.special === 'retire') { Y.retire(s); save(); toast('🪑 Emekli oldun. Hayırlı olsun!'); rerender(); return afterAction(rerender); }
   if (a.exam) return runExam(a.exam, { actionId: id, rerender });
 

@@ -21,7 +21,7 @@ Lifetide is a life simulator where you don't just tap buttons — you actually p
 🌱 FROM CRADLE TO OLD AGE
 Grow up in a poor, middle-class or wealthy family, in a village or a big city. Your talents, temperament and family shape your start, but your effort decides where you end up.
 
-🎮 118 MINI-GAMES
+🎮 140+ MINI-GAMES
 Football, basketball, table tennis, parallel parking, surgery, triage, coding, circuits, farming, cooking, trading and many more. Your character's skill makes them easier, but your own skill matters too.
 
 📚 REAL EXAMS
@@ -60,7 +60,7 @@ Hayat Yolu, düğmelere basmakla yetinmediğin, hayatını gerçekten oynadığ�
 🌱 BEŞİKTEN YAŞLILIĞA
 Fakir, orta hâlli ya da varlıklı bir ailede, köyde ya da büyük şehirde doğ. Yeteneklerin, mizacın ve ailen başlangıcını belirler; nereye varacağını ise emeğin.
 
-🎮 118 MİNİ OYUN
+🎮 140+ MİNİ OYUN
 Futbol, basketbol, masa tenisi, paralel park, ameliyat, triyaj, kodlama, devre, tarım, yemek, ticaret ve daha fazlası. Karakterinin becerisi oyunu kolaylaştırır, ama senin becerin de önemli.
 
 📚 GERÇEK SINAVLAR
