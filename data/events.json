@@ -8903,5 +8903,549 @@
     "result": "Dünya değişiyor; yetişmek zor ama imkânsız değil."
    }
   ]
+ },
+ {
+  "id": "biz_viral",
+  "rarity": "epic",
+  "icon": "🚀",
+  "title": "Ürünün patladı!",
+  "cond": {
+   "biz": 1
+  },
+  "cooldown": 12,
+  "text": "Bir ürünün sosyal medyada yayıldı; siparişler on katına çıktı. Kapasiten yetmiyor.",
+  "options": [
+   {
+    "text": "Kredi çekip üretimi büyüt",
+    "effects": {
+     "bizMoney": -6
+    },
+    "gamble": {
+     "p": 0.55,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizBoost": {
+       "mul": 2.6,
+       "years": 2
+      },
+      "stats": {
+       "itibar": 3,
+       "mutluluk": 5
+      }
+     },
+     "result": "Büyüme tuttu! Önümüzdeki iki yıl kârın katlanacak."
+    },
+    "fail": {
+     "effects": {
+      "bizBoost": {
+       "mul": 0.6,
+       "years": 1
+      },
+      "stats": {
+       "mutluluk": -5
+      }
+     },
+     "result": "Moda bir anda geçti; kredi borcuyla fazla stok elinde kaldı."
+    },
+    "result": "Büyük bir kumar oynadın…"
+   },
+   {
+    "text": "Ön sipariş al, kaliteyi bozma",
+    "effects": {
+     "bizBoost": {
+      "mul": 1.4,
+      "years": 1
+     },
+     "stats": {
+      "itibar": 3
+     }
+    },
+    "result": "Müşteriler bekledi ama memnun kaldı. Sağlam bir büyüme."
+   },
+   {
+    "text": "Fiyatı ikiye katla",
+    "effects": {
+     "bizMoney": 5,
+     "stats": {
+      "itibar": -4
+     }
+    },
+    "result": "Kısa vadede iyi para, ama bazı müşteriler kırıldı."
+   }
+  ]
+ },
+ {
+  "id": "biz_ortak_teklif",
+  "rarity": "rare",
+  "icon": "🤝",
+  "title": "Ortaklık teklifi",
+  "cond": {
+   "biz": 1
+  },
+  "cooldown": 12,
+  "text": "Eski bir tanıdık \"sermaye bende, emek sende\" diyerek ortak olmak istiyor. Tatlı dilli ama geçmişi bulanık.",
+  "options": [
+   {
+    "text": "Ortak ol, işi büyüt",
+    "gamble": {
+     "p": 0.5,
+     "skill": "empati"
+    },
+    "success": {
+     "effects": {
+      "bizBoost": {
+       "mul": 1.8,
+       "years": 3
+      },
+      "stats": {
+       "mutluluk": 3
+      }
+     },
+     "result": "Dürüst bir ortak çıktı; işler büyüdü."
+    },
+    "fail": {
+     "effects": {
+      "bizMoney": -14,
+      "stats": {
+       "mutluluk": -8,
+       "itibar": -3
+      }
+     },
+     "result": "Bir sabah kasa boştu, ortağın ortada yoktu. Ağır bir ders."
+    },
+    "result": "Tokalaştınız…"
+   },
+   {
+    "text": "Önce noterde sözleşme, sonra ortaklık",
+    "req": {
+     "skills": {
+      "ticaret": 30
+     }
+    },
+    "effects": {
+     "bizBoost": {
+      "mul": 1.4,
+      "years": 2
+     },
+     "stats": {
+      "itibar": 2
+     }
+    },
+    "result": "Sözleşme seni korudu; ortaklık sağlam başladı."
+   },
+   {
+    "text": "Kibarca reddet",
+    "effects": {
+     "stats": {
+      "disiplin": 1
+     }
+    },
+    "result": "Temkinli olmak bazen en iyi yatırımdır."
+   }
+  ]
+ },
+ {
+  "id": "biz_ihale",
+  "rarity": "rare",
+  "icon": "🏛️",
+  "title": "Büyük ihale",
+  "cond": {
+   "biz": 2
+  },
+  "cooldown": 10,
+  "text": "Belediyenin büyük bir tedarik ihalesi var. Kazanırsan yılın kârı katlanır, ama teminat yatırman gerekiyor.",
+  "options": [
+   {
+    "text": "Teminat yatır ve teklif ver",
+    "effects": {
+     "bizMoney": -4
+    },
+    "gamble": {
+     "p": 0.4,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizMoney": 20,
+      "stats": {
+       "itibar": 4
+      }
+     },
+     "result": "İhaleyi kazandın! Yılın en büyük işi."
+    },
+    "fail": {
+     "effects": {
+      "bizMoney": 3
+     },
+     "result": "İhale başka firmaya gitti; teminatının bir kısmı masraflara gitti."
+    },
+    "result": "Zarflar açıldı…"
+   },
+   {
+    "text": "Rüşvet teklif eden aracıyı dinle",
+    "effects": {
+     "stats": {
+      "itibar": -10
+     }
+    },
+    "gamble": {
+     "p": 0.35
+    },
+    "success": {
+     "effects": {
+      "bizMoney": 12
+     },
+     "result": "Kazandın ama içinde bir huzursuzluk kaldı."
+    },
+    "fail": {
+     "effects": {
+      "biz": "down",
+      "stats": {
+       "mutluluk": -10
+      }
+     },
+     "result": "Soruşturma açıldı; işletmen ağır darbe aldı."
+    },
+    "result": "Karanlık bir yola saptın…"
+   },
+   {
+    "text": "Bu işe girme",
+    "effects": {},
+    "result": "Kendi müşterilerine odaklandın."
+   }
+  ]
+ },
+ {
+  "id": "biz_kur_soku",
+  "rarity": "rare",
+  "icon": "💱",
+  "title": "Kur şoku",
+  "cond": {
+   "biz": 2
+  },
+  "cooldown": 10,
+  "text": "Döviz bir haftada sert yükseldi. Tedarikçiler fiyat vermiyor; raflardaki mal bir anda değerlendi ama yenisini almak zor.",
+  "options": [
+   {
+    "text": "Stoku hemen sat, nakde geç",
+    "effects": {
+     "bizMoney": 4,
+     "bizTrend": -0.3
+    },
+    "result": "Nakit elde; ama raflar boşaldı."
+   },
+   {
+    "text": "Stoku elde tut, fiyatlar daha da artar",
+    "gamble": {
+     "p": 0.5,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizMoney": 10
+     },
+     "result": "Tahminin tuttu; stok altın değerindeydi."
+    },
+    "fail": {
+     "effects": {
+      "bizMoney": -6,
+      "bizTrend": -0.4
+     },
+     "result": "Kur geri döndü, talep çöktü; mal elinde kaldı."
+    },
+    "result": "Beklemeye başladın…"
+   },
+   {
+    "text": "Yerli tedarikçiye geç",
+    "effects": {
+     "bizTrend": 0.2,
+     "skills": {
+      "ticaret": 2
+     }
+    },
+    "result": "Maliyet biraz arttı ama işler durmadı."
+   }
+  ]
+ },
+ {
+  "id": "biz_depo_yangin",
+  "rarity": "epic",
+  "icon": "🔥",
+  "title": "Depoda yangın",
+  "cond": {
+   "biz": 1
+  },
+  "cooldown": 20,
+  "text": "Gece yarısı telefon çaldı: deponda yangın çıkmış.",
+  "options": [
+   {
+    "text": "Sigortayı ara",
+    "req": {
+     "flags": [
+      "sigorta"
+     ]
+    },
+    "effects": {
+     "bizMoney": -2
+    },
+    "result": "Sigorta zararın büyük kısmını karşıladı. İyi ki yaptırmışsın."
+   },
+   {
+    "text": "Borç alıp yeniden stok yap",
+    "effects": {
+     "bizMoney": -10,
+     "stats": {
+      "mutluluk": -6
+     }
+    },
+    "result": "Zor bir yıl ama işin ayakta kaldı."
+   },
+   {
+    "text": "İşi küçült, kalanı kurtar",
+    "effects": {
+     "biz": "down",
+     "stats": {
+      "mutluluk": -8
+     }
+    },
+    "result": "Bir basamak geri düştün ama borca batmadın."
+   }
+  ]
+ },
+ {
+  "id": "biz_alacak",
+  "rarity": "rare",
+  "icon": "🧾",
+  "title": "Vadeli büyük sipariş",
+  "cond": {
+   "biz": 2
+  },
+  "cooldown": 10,
+  "text": "Büyük bir firma 6 ay vadeyle, normalin üç katı sipariş vermek istiyor.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "gamble": {
+     "p": 0.6,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizMoney": 12,
+      "stats": {
+       "itibar": 2
+      }
+     },
+     "result": "Ödeme zamanında geldi. Harika bir yıl!"
+    },
+    "fail": {
+     "effects": {
+      "bizMoney": -9,
+      "stats": {
+       "mutluluk": -6
+      }
+     },
+     "result": "Firma konkordato ilan etti; paranı alamadın."
+    },
+    "result": "Malı teslim ettin…"
+   },
+   {
+    "text": "Peşin ödemede indirim öner",
+    "effects": {
+     "bizMoney": 5
+    },
+    "result": "Daha az kazandın ama paran cebinde."
+   },
+   {
+    "text": "Reddet",
+    "effects": {},
+    "result": "Riskten uzak durdun."
+   }
+  ]
+ },
+ {
+  "id": "biz_sigorta",
+  "rarity": "common",
+  "icon": "🛡️",
+  "title": "İşyeri sigortası",
+  "cond": {
+   "biz": 1,
+   "notFlags": [
+    "sigorta"
+   ]
+  },
+  "cooldown": 8,
+  "text": "Sigortacı işyerini yangın, hırsızlık ve deprem için sigortalamayı öneriyor.",
+  "options": [
+   {
+    "text": "Sigorta yaptır",
+    "effects": {
+     "bizMoney": -1,
+     "flags": [
+      "sigorta"
+     ]
+    },
+    "result": "Artık yangın ve hırsızlıkta zararın çoğu karşılanacak."
+   },
+   {
+    "text": "Gerek yok",
+    "effects": {},
+    "result": "Riskini kendin taşıyorsun."
+   }
+  ]
+ },
+ {
+  "id": "biz_rakip",
+  "rarity": "common",
+  "icon": "🏬",
+  "title": "Yan dükkâna rakip açıldı",
+  "cond": {
+   "biz": 1
+  },
+  "cooldown": 8,
+  "text": "Hemen yanına büyük sermayeli bir rakip açıldı; açılışa özel fiyatlar veriyor.",
+  "options": [
+   {
+    "text": "Fiyat savaşına gir",
+    "effects": {
+     "bizMoney": -3,
+     "bizTrend": -0.2
+    },
+    "gamble": {
+     "p": 0.45,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizBoost": {
+       "mul": 1.3,
+       "years": 2
+      }
+     },
+     "result": "Rakip dayanamadı, kapandı."
+    },
+    "fail": {
+     "effects": {
+      "bizTrend": -0.3
+     },
+     "result": "Sermayesi büyüktü; sen yıprandın."
+    },
+    "result": "Fiyatları kırdın…"
+   },
+   {
+    "text": "Hizmet ve kaliteyle ayrış",
+    "effects": {
+     "stats": {
+      "itibar": 3
+     },
+     "skills": {
+      "ticaret": 2
+     }
+    },
+    "result": "Sadık müşterilerin seni bırakmadı."
+   }
+  ]
+ },
+ {
+  "id": "biz_yeni_urun",
+  "rarity": "common",
+  "icon": "🧪",
+  "title": "Yeni ürün denemesi",
+  "cond": {
+   "biz": 1
+  },
+  "cooldown": 7,
+  "text": "Aklına yeni bir ürün geldi. Denemek biraz sermaye ister.",
+  "options": [
+   {
+    "text": "Küçük bir partiyle dene",
+    "effects": {
+     "bizMoney": -1.5
+    },
+    "gamble": {
+     "p": 0.5,
+     "skill": "ticaret"
+    },
+    "success": {
+     "effects": {
+      "bizBoost": {
+       "mul": 1.5,
+       "years": 1
+      },
+      "stats": {
+       "mutluluk": 3
+      }
+     },
+     "result": "Ürün tuttu! Raflardan kapışılıyor."
+    },
+    "fail": {
+     "effects": {
+      "stats": {
+       "mutluluk": -2
+      }
+     },
+     "result": "Beğenilmedi; küçük bir zarar, iyi bir ders."
+    },
+    "result": "Ürünü rafa koydun…"
+   },
+   {
+    "text": "Şimdilik bekle",
+    "effects": {},
+    "result": "Fikrini deftere yazdın."
+   }
+  ]
+ },
+ {
+  "id": "biz_kira",
+  "rarity": "common",
+  "icon": "🏚️",
+  "title": "Kira artışı",
+  "cond": {
+   "biz": 2
+  },
+  "cooldown": 8,
+  "text": "Mal sahibi kirayı iki katına çıkarmak istiyor, yoksa çık diyor.",
+  "options": [
+   {
+    "text": "Kabul et",
+    "effects": {
+     "bizMoney": -3
+    },
+    "result": "Yerini korudun ama kâr marjın daraldı."
+   },
+   {
+    "text": "Daha ucuz bir semte taşın",
+    "effects": {
+     "bizMoney": -1,
+     "bizTrend": -0.2
+    },
+    "result": "Müşterilerin bir kısmı seni yeni yerinde bulamadı."
+   },
+   {
+    "text": "Pazarlık yap",
+    "gamble": {
+     "p": 0.5,
+     "skill": "liderlik"
+    },
+    "success": {
+     "effects": {
+      "bizMoney": -1,
+      "stats": {
+       "itibar": 1
+      }
+     },
+     "result": "Makul bir artışta anlaştınız."
+    },
+    "fail": {
+     "effects": {
+      "bizMoney": -3
+     },
+     "result": "Mal sahibi geri adım atmadı."
+    },
+    "result": "Masaya oturdunuz…"
+   }
+  ]
  }
 ]

@@ -571,6 +571,13 @@ export function applyEffects(s, e, card) {
   if (e.biz === 'start' && !s.career.biz) s.career.biz = { step: 0, years: 0, skillSum: 0, skillN: 0, bankrupt: 0 };
   if (e.biz === 'down' && s.career.biz) bankrupt(s);
   if (e.bizSkill && s.career.biz) { s.career.biz.skillSum += e.bizSkill; s.career.biz.skillN++; }
+  if (e.bizBoost && s.career.biz) s.career.biz.boost = { ...e.bizBoost };
+  if (e.bizTrend && s.career.biz) s.career.biz.trend = clamp((s.career.biz.trend ?? 0) + e.bizTrend, -1, 1);
+  // bizMoney: işletmenin aylık kârı cinsinden tutar (her basamakta orantılı büyür)
+  if (e.bizMoney && s.career.biz) {
+    const v = e.bizMoney * BIZ_STEPS[s.career.biz.step].monthly * pi;
+    s.money += v; lines.push({ k: 'money', v });
+  }
   if (e.giveMoneyPct && s.home) { const amt = Math.max(0, s.money) * e.giveMoneyPct; s.money -= amt; s.home.cash += amt; s.home.helpYear += amt; s.home.helpTotal += amt; if (amt > 0) lines.push({ k: 'money', v: -amt, text: `🏠 Ailene ${fmt(amt)} verdin.` }); }
   if (e.homeCash && s.home) { s.home.cash += e.homeCash * pi; lines.push({ text: `🏠 Aile kasası ${e.homeCash > 0 ? '+' : '−'}${fmt(Math.abs(e.homeCash * pi))}` }); }
   if (e.homeStress && s.home) { s.home.stress = clamp(s.home.stress + e.homeStress, 0, 100); lines.push({ text: `🏠 Aile stresi ${e.homeStress > 0 ? '+' : ''}${e.homeStress}` }); }
@@ -654,7 +661,15 @@ export function resolveOption(s, card, idx, mgScore = null) {
   if (opt.honest) { out.lines.push(...applyEffects(s, { honest: true }, card)); }
   out.lines.push(...applyEffects(s, opt.effects, card));
   let result = opt.result;
-  if (opt.mg && mgScore !== null) {
+  // Riskli karar: başarı şansı beceri, itibar ve piyasa havasına bağlı (mini oyunsuz)
+  if (opt.gamble && !opt.mg) {
+    const g = opt.gamble;
+    const sk = g.skill ? (s.skills[g.skill] ?? 0) : 50;
+    const tr = s.career.biz?.trend ?? 0;
+    const p = clamp((g.p ?? 0.5) + (sk - 50) / 250 + tr * 0.1 + (s.stats.itibar - 50) / 500, 0.08, 0.92);
+    mgScore = withRng(s, r => r.chance(p)) ? 100 : 0;
+  }
+  if ((opt.mg || opt.gamble) && mgScore !== null) {
     const need = opt.success?.min ?? 60;
     out.success = mgScore >= need;
     const br = out.success ? opt.success : opt.fail;
@@ -773,10 +788,13 @@ export function endYear(s) {
     if (s.career.biz) {
       const br = bizYear(s, r);
       if (br) {
-        if (br.bad) sum.expense.push([`Kötü yıl · ${br.step.name}`, -br.net]);
-        else sum.income.push([`${br.step.name} kârı (beceri ${Math.round(br.skill)})`, br.net]);
+        const label = { boom: '🚀 Rekor yıl', crash: '💥 Çöküş', bad: 'Kötü yıl', good: 'Kâr' }[br.kind];
+        if (br.bad) sum.expense.push([`${label} · ${br.step.name}`, -br.net]);
+        else sum.income.push([`${label} · ${br.step.name} (beceri ${Math.round(br.skill)})`, br.net]);
         s.money += br.net;
-        if (br.bad) sum.notes.push('📉 Kötü bir yıl geçirdin: iade dalgası, maliyet artışı… Beceri yükseldikçe bu risk azalır.');
+        if (br.kind === 'boom') { sum.notes.push(`🚀 ${br.reason} Kâr normalin kat kat üstünde!`); log(s, `Ticarette rekor yıl: ${br.reason}`, 'epic'); }
+        else if (br.kind === 'crash') { sum.notes.push(`💥 ${br.reason} Birikimin açığı kapatamazsa iflas kapıda.`); log(s, `Ticarette büyük darbe: ${br.reason}`, 'rare'); }
+        else if (br.kind === 'bad') sum.notes.push(`📉 Kötü yıl: ${br.reason} Beceri yükseldikçe bu risk azalır.`);
       }
     }
 

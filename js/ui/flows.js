@@ -214,7 +214,7 @@ export async function showEvent(card) {
       const ok = Y.optionAvailable(s, o);
       return h('button.opt' + (ok ? '' : '.disabled'), { onclick: () => { sfx.tap(); close(i); } },
         renderText(s, o.text),
-        o.mg ? h('span.chip.accent.tag', {}, '🎮 Mini oyun') : o.honest ? h('span.chip.green.tag', {}, '⭐ Dürüst') : !ok ? h('span.chip.tag', {}, '🔒') : null);
+        o.mg ? h('span.chip.accent.tag', {}, '🎮 Mini oyun') : o.gamble && ok ? h('span.chip.gold.tag', {}, '🎲 Riskli') : o.honest ? h('span.chip.green.tag', {}, '⭐ Dürüst') : !ok ? h('span.chip.tag', {}, '🔒') : null);
     }),
   ), { dismissable: false });
   const opt = card.options[idx];

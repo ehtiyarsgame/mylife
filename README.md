@@ -1,6 +1,6 @@
 # 🌱 Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.1-test.apk`](apk/HayatYolu-0.3.1-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.2-test.apk`](apk/HayatYolu-0.3.2-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -36,7 +36,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Yaşam dengesi** | 6 alan takip edilir: ders, spor, sosyal, aile, dinlenme, hobi. 3 yıl üst üste emek → alışkanlık ödülü (sağlık, mutluluk, sınav hazırlığı +4, aile bağı). İhmal → kademeli bedel: ders çalışmayan unutur, veli çağrılır, iki yıl üst üste çok zayıf karne **sınıfta bırakır**; spor yapmayanın fiziği ve sağlığı düşer; sosyal hayatı olmayan yalnızlaşır, arkadaş kaybeder; aileyi ihmal eden kopar; dinlenmeyen tükenir. Kullanılmayan beceri 3 yıl sonra körelir. Dengeli yaşayan ~75, özensiz ~65 yıl yaşar. |
 | **Kader** | Başlangıç zarı bir kez atılır ve kaydedilir. Zarı yeniden atmak, devam eden hayatı silip yenisine başlamak ya da ölümde (hayat başına bir kez) ikinci şans almak **3 ödüllü reklam** ister; aksi hâlde kadere razı olunur. İzlenen reklam ilerlemesi kaydedilir. |
 | **Alan seçimi** | Lise 2'de Sayısal / Eşit Ağırlık / Sözel / Dil. Yeteneklerine göre öneri gelir; alanın YKS'de girebileceğin bölümleri, alan derslerini ve sınav hazırlığını belirler. Meslek lisesi öğrencisinin alanı meslektir. |
-| **Kart dengesi** | Kartlar yaşa, aile durumuna (fakirin, orta hallinin, zenginin dertleri ayrı), köy/kasaba/şehre göre gelir. Bir kart nadirliğine göre 6–14 yıl tekrar etmez, aynı kart asla üst üste gelmez; seçenekler yaşa göre gizlenir. |
+| **Kart dengesi** | Kartlar yaşa, aile durumuna (fakirin, orta hallinin, zenginin dertleri ayrı), köy/kasaba/şehre göre gelir. Bir kart nadirliğine göre 6–14 yıl tekrar etmez, aynı kart asla üst üste gelmez; seçenekler yaşa göre gizlenir. Metninde baban/annen/kardeşin/deden/eşin geçen kart ya da seçenek, o kişi öldüyse veya yoksa otomatik olarak gelmez. |
 | **İş = emek** | Maaş, yıl içinde **mesaiye gittiğin oranda** yatar (tam zamanlı iş 2 EP). Hiç gitmezsen maaşın kesilir, üst üste olursa kovulursun. |
 | **Eş seçimi** | Her başarılı tanışmada 3 aday: *çok çekici*, *çok uyumlu*, *varlıklı çevreden*. Görünüş, uyum, karakter (destekleyici, tutumlu, savurgan, hırslı, kıskanç, sakin, aile odaklı, maceracı), iş, ailesi ve çocuk isteği farklıdır. Eşin geliri, gider alışkanlığı, mutluluğun ve tartışmalar buna göre şekillenir; sevgi bakımsız kalırsa boşanma ve mal paylaşımı olur. |
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
@@ -44,7 +44,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
 | **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
 | **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
-| **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). |
+| **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). Ticarette piyasa havası dalgalanır; ürünün tutarsa rekor yıl (kâr kat kat), ortak dolandırıcılığı / yangın / kur şoku / batan müşteri gibi çöküşlerle iflas. Riskli kararlar (🎲) beceri, itibar ve piyasaya göre tutar ya da batar; sigorta yangın ve hırsızlıkta korur. |
 | **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
 
 ### Mini oyun kataloğu (112)
@@ -76,7 +76,7 @@ Tümü "Mini oyun salonu"nda serbestçe denenebilir.
 ```
 index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışır)
 css/style.css                              tasarım sistemi (mobil öncelikli)
-data/events.json                           olay destesi (206 kart) — kod bilmeden genişletilir
+data/events.json                           olay destesi (216 kart) — kod bilmeden genişletilir
 data/questions.json                        elle yazılmış soru bankası (tıp, ehliyet, ustalık, KPSS…)
 js/sim/qgen.js, qdata.js                   veri tablolarından soru üretici (okul seviyelerinde 1.300+, tıp ~420, ustalık ~200, ehliyet ~130 farklı soru)
 js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
@@ -108,7 +108,7 @@ tests/          başsız simülasyon testleri ve denge botu
 
 Koşullar: `age, stage, looks, charisma, mizac, livingHome, homeStress, homeBroke, partnerTrait, partnerWealth, inSchool, stats, statsMax, skills, train, place, wealth, flags, anyFlag, notFlags, counters, job, hasJob, path, biz, edu, partner, married, kids, money, retired`.
 Etkiler: `stats, homeCash, homeStress, homeCrisis, homeIncPct, homeExpPct, giveMoneyPct, eduDrop, relation, karizma, partnerSalaryPct, partnerJobless, skills, money, moneyPct, flags, unflags, counters, energy, honest, famRep, door, legend, title, friend, mentor, chain, job, loseJob, biz, bizSkill, partner, partnerLove, marry, child, parentDies, random`.
-Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabilir. `npm test` tüm kartları ve zincir referanslarını doğrular.
+Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabilir. `npm test` tüm kartları ve zincir referanslarını doğrular. Seçenekte `"gamble": { "p": 0.5, "skill": "ticaret" }` + `success`/`fail` dalları riskli karar yapar; `bizMoney` (işletmenin aylık kârı cinsinden), `bizBoost` ve `bizTrend` ticaret etkileridir.
 
 **Soru** (`data/questions.json`): `{"l": "lise", "s": "Fizik", "q": "…", "a": ["doğru", "yanlış", "yanlış", "yanlış"], "c": 0, "h": "ipucu"}` — şıklar oyunda karıştırılır.
 

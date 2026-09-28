@@ -229,3 +229,39 @@ test('eylem ve işlerdeki tüm mini oyunlar kayıtlı ve 100+ oyun var', async (
   for (const s of BIZ_STEPS) used.push(...s.mgs);
   for (const id of used) assert.ok(ids.has(id), `kayıtsız mini oyun: ${id}`);
 });
+
+test('ölen ya da olmayan aile üyesinden bahseden kart ve seçenek gelmez', async () => {
+  const { drawCard, cardFits } = await import('../js/sim/events.js');
+  const r = new RNG('olu-baba');
+  for (let i = 0; i < 30; i++) {
+    const s = newLife({ seed: 'ob' + i, name: 'A', gender: 'e' });
+    s.age = 6 + (i % 14);
+    s.family.parents.find(p => p.role === 'Baba').alive = false;
+    s.family.siblings = 0;
+    s.seen.dede_vefat = true;
+    for (let k = 0; k < 40; k++) {
+      s.seenAt = {}; if (s.year) s.year.seenIds = [];
+      const c = drawCard(s, r);
+      if (!c) continue;
+      const txt = [c.title, c.text].join(' ');
+      assert.ok(!(c._need?.baba || c._need?.kardes || c._need?.dede), `${c.id} ölen/olmayan kişiden bahsediyor: ${txt}`);
+      for (const o of c.options) if (optionVisible(s, o)) assert.ok(!(o._need?.baba || o._need?.kardes), `${c.id} seçeneği: ${o.text}`);
+    }
+    assert.ok(!cardFits(events.find(e => e.id === 'baba_isten_cikti'), s), 'babası ölmüşken "baban işsiz kaldı" gelmemeli');
+  }
+});
+
+test('ticarette rekor ve çöküş yılları gerçekçi sıklıkta yaşanır', async () => {
+  const { bizYear } = await import('../js/sim/business.js');
+  const r = new RNG('ticaret-gercek');
+  const kinds = { good: 0, bad: 0, boom: 0, crash: 0 };
+  for (let i = 0; i < 400; i++) {
+    const s = newLife({ seed: 'tg' + i, name: 'A', gender: 'e' });
+    s.career.biz = { step: 1 + (i % 5), years: 0, skillSum: 0, skillN: 0, bankrupt: 0 };
+    for (let y = 0; y < 10; y++) { s.career.biz.skillSum = 30 + (i % 50); s.career.biz.skillN = 1; kinds[bizYear(s, r).kind]++; }
+  }
+  const n = 4000;
+  assert.ok(kinds.boom / n > 0.015 && kinds.boom / n < 0.12, `rekor yıl oranı ${kinds.boom / n}`);
+  assert.ok(kinds.crash / n > 0.01 && kinds.crash / n < 0.08, `çöküş oranı ${kinds.crash / n}`);
+  assert.ok(kinds.good > kinds.bad, 'çoğu yıl kârlı olmalı');
+});

@@ -7,7 +7,7 @@ import { tickEnergy, secondsToNext, secondsToFull } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { availableActions, CATEGORIES, actionCost, stageId, resolve as res } from '../sim/actions.js';
 import { JOBS, DOORS, DEPTS, EXAMS, PATHS, ALANLAR, jobTitle, deptById } from '../sim/careers.js';
-import { BIZ_STEPS, nextStepReqs, advanceBiz } from '../sim/business.js';
+import { BIZ_STEPS, nextStepReqs, advanceBiz, trendText } from '../sim/business.js';
 import { hintFor, stageOf, ceilingOf } from '../sim/stats.js';
 import { WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
 import * as Y from '../sim/year.js';
@@ -396,8 +396,12 @@ function careerTab(render) {
       h('div.sum-line', {}, 'Basamak', h('b', {}, `${BIZ_STEPS[b.step].icon} ${BIZ_STEPS[b.step].name} · ${b.years} yıl`)),
       h('div.sum-line', {}, 'Ortalama aylık net (beceri 60)', h('b', {}, fmtTL(BIZ_STEPS[b.step].monthly * s.priceIndex * (0.2 + 1.2 * 0.6)))),
       b.lastNet !== undefined ? h('div.sum-line', {}, 'Geçen yıl', h('b', { class: b.lastNet >= 0 ? 'pos' : 'neg' }, fmtTL(b.lastNet))) : null,
+      b.lastReason ? h('div.tiny.muted', { style: { padding: '2px 0 6px' } }, (b.lastKind === 'boom' ? '🚀 ' : b.lastKind === 'crash' ? '💥 ' : '📉 ') + b.lastReason) : null,
+      h('div.sum-line', {}, 'Piyasa', h('b', {}, trendText(b.trend ?? 0))),
+      b.boost ? h('div.sum-line', {}, 'Büyüme hamlesi', h('b', {}, `×${b.boost.mul} · ${b.boost.years} yıl`)) : null,
       h('div.sum-line', {}, 'Bu yılki ticaret becerisi', h('b', {}, b.skillN ? Math.round(b.skillSum / b.skillN) : '— (işletmeni yönet!)')),
-      h('div.sum-line', { style: { borderBottom: 0 } }, 'Kötü yıl riski', h('b', {}, `%${Math.round(BIZ_STEPS[b.step].risk * 100)} × beceri etkisi`))) : h('p.small.muted', {}, 'Ticarete ilgin var. "Kendi küçük işini kur" eylemiyle (12+ yaş) girişimcilik yoluna başlayabilirsin.'),
+      h('div.sum-line', { style: { borderBottom: 0 } }, 'Kötü yıl riski', h('b', {}, `%${Math.round(BIZ_STEPS[b.step].risk * 100)} × beceri etkisi`)),
+      h('div.tiny.muted', {}, 'Ticaret risklidir: ürünün tutarsa bir yılda servet kazanabilir, ortak dolandırıcılığı, yangın ya da kur şokuyla bir anda batabilirsin. Beceri, itibar ve sigorta riski azaltır.')) :h('p.small.muted', {}, 'Ticarete ilgin var. "Kendi küçük işini kur" eylemiyle (12+ yaş) girişimcilik yoluna başlayabilirsin.'),
     nb ? h('div.tile', { style: { marginTop: '10px' } },
       h('b', {}, `Sonraki: ${nb.info.icon} ${nb.info.name}`),
       h('div.small.muted', {}, `Sermaye ${fmtTL(nb.info.capital * s.priceIndex)} (nakit ×1,2 gerekir) · İtibar ${nb.info.rep}+ · ${nb.info.age}+ yaş`),

@@ -11,6 +11,45 @@ let BY_ID = {};
 export function setDeck(cards) {
   DECK = cards;
   BY_ID = Object.fromEntries(cards.map(c => [c.id, c]));
+  for (const c of cards) {
+    c._need = needsFrom([c.title, c.text].join(' '), c.id);
+    for (const o of c.options || []) o._need = needsFrom([o.text, o.result].join(' '), c.id);
+  }
+}
+
+// Metinde adı geçen kişiler hayatta/var olmalı: ölen babanın "işten çıkarıldı" kartı gelmesin.
+// Ölüm kartları da kişi hayattayken çekilir (ölüm, kartın etkisiyle olur), bu yüzden kurala tabidir.
+// Yalnızca geçmişi anan metinler (rahmetli, mezar, "dedenden kalan") kuralın dışında kalır.
+const MEMORIAL = /rahmetli|mezar|den kalan|dan kalan|anısına/i;
+const WHO = {
+  baba: /\{baba\}|\bbaban\b|baban[ıi]n|babana|babanla|baban[ıi]\b|babandan/i,
+  anne: /\{anne\}|\bannen\b|annenin|annene|annenle|anneni\b|annenden/i,
+  ikisi: /anne-?baban|annenle baban|annen ve baban|annenler/i,
+  kardes: /\bkardeşin\b|kardeşinin|kardeşine|kardeşinle|kardeşini\b|kardeşlerin/i,
+  dede: /\bdeden\b|dedenin|dedene|dedenle|dedeni\b|\bninen\b|ninenin|ninene|ninenle/i,
+  partner: /\{partner\}|\beşin\b|eşinin|eşine|eşinle|eşini\b|\bkarın\b|karının|\bkocan\b|kocanın/i,
+};
+function needsFrom(txt, id) {
+  if (!txt || MEMORIAL.test(txt)) return null;
+  const n = {};
+  for (const k in WHO) if (WHO[k].test(txt)) n[k] = true;
+  if (id === 'dede_vefat') delete n.dede;
+  return Object.keys(n).length ? n : null;
+}
+const parentAlive = (s, role) => s.family.parents.some(p => p.alive && p.role === role);
+function needsMet(n, s) {
+  if (!n) return true;
+  if (n.baba && !parentAlive(s, 'Baba')) return false;
+  if (n.anne && !parentAlive(s, 'Anne')) return false;
+  if (n.ikisi && !(parentAlive(s, 'Baba') && parentAlive(s, 'Anne'))) return false;
+  if (n.kardes && !(s.family.siblings > 0)) return false;
+  if (n.dede && (s.seen?.dede_vefat || s.age > 40)) return false;
+  if (n.partner && !s.rel.partner) return false;
+  return true;
+}
+// Kart çekilebilir mi: koşul + adı geçen kişiler + en az bir seçeneğin görünmesi
+export function cardFits(c, s) {
+  return checkCond(c.cond, s) && needsMet(c._need, s) && (c.options || []).some(o => optionVisible(s, o));
 }
 export const cardById = id => BY_ID[id];
 export const deckSize = () => DECK.length;
@@ -70,7 +109,7 @@ export function drawCard(s, rng) {
   if (dueIdx >= 0) {
     const due = s.chains.splice(dueIdx, 1)[0];
     const card = BY_ID[due.id];
-    if (card && checkCond(card.cond, s)) return card;
+    if (card && cardFits(card, s)) return card;
   }
   const P = { ...Object.fromEntries(Object.entries(CONFIG.rarity).map(([k, v]) => [k, v.p])) };
   if (s.traits?.mizac === 'maceraci') { P.rare *= 1.25; P.epic *= 1.35; P.legendary *= 1.2; }
@@ -83,7 +122,7 @@ export function drawCard(s, rng) {
   for (let i = order.indexOf(rar); i < order.length; i++) {
     // Tekrar önleme: kart, nadirliğine göre yıllarca geri gelmez; aynı kart üst üste iki yıl asla çıkmaz
     for (const strict of [1, 0.5]) {
-      const pool = DECK.filter(c => c.rarity === order[i] && !c.chainOnly && checkCond(c.cond, s) && !(c.once && s.seen[c.id])
+      const pool = DECK.filter(c => c.rarity === order[i] && !c.chainOnly && cardFits(c, s) && !(c.once && s.seen[c.id])
         && !s.year?.seenIds?.includes(c.id) && cooledDown(s, c, strict));
       if (pool.length) return rng.weighted(pool.map(c => [c, (c.weight ?? 1) * (s.seen[c.id] ? 0.4 : 1)]));
     }
@@ -99,7 +138,7 @@ function cooledDown(s, c, strict) {
   return gap >= 2 && gap >= (c.cooldown ?? COOLDOWN[c.rarity]) * strict;
 }
 // Seçenek yaşa/duruma uygun mu (uygunsuzsa hiç gösterilmez)
-export const optionVisible = (s, o) => !o.show || checkCond(o.show, s);
+export const optionVisible = (s, o) => (!o.show || checkCond(o.show, s)) && needsMet(o._need, s);
 
 export function textVars(s) {
   const alive = s.family.parents;
