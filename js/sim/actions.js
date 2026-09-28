@@ -5,6 +5,7 @@
 //   mg: mini oyun id'si ya da (state) => id
 //   req(state) → kilit sebebi (string) ya da null
 import { JOBS } from './careers.js';
+import { fmtTL } from '../core/util.js';
 import { BIZ_STEPS } from './business.js';
 
 const inSchool = s => ['ilkokul', 'orta', 'lise'].includes(s.edu.stage);
@@ -49,7 +50,7 @@ export const ACTIONS = [
     skills: { matematik: 3, fen: 3, dil: 3 }, stats: { zeka: 2, disiplin: 2, mutluluk: -2 }, study: 2 },
   // ——— Lise alan dersleri ———
   { id: 'alan_sayisal', name: 'Fizik-Kimya-Biyoloji', icon: '⚗️', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'lise' && s.edu.alan === 'sayisal',
-    desc: 'Sayısal alan dersleri. YKS\'de tıp ve mühendislik için şart.', mg: ['devre', 'teshis', 'hizlimat', 'dogruyanlis', 'element_sembol', 'sekil_alan', 'kesir_karsilastir'], mgSkill: 'fen',
+    desc: 'Sayısal alan dersleri. Üniversite sınavında tıp ve mühendislik için şart.', mg: ['devre', 'teshis', 'hizlimat', 'dogruyanlis', 'element_sembol', 'sekil_alan', 'kesir_karsilastir'], mgSkill: 'fen',
     skills: { fen: 4, matematik: 2 }, stats: { zeka: 1.2 }, study: 1, train: 'fen' },
   { id: 'alan_ea', name: 'Ekonomi & hukuk okumaları', icon: '📈', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'lise' && s.edu.alan === 'ea',
     desc: 'Eşit ağırlık: matematik, ekonomi, hukuk. İşletme, hukuk, psikoloji yolu.', mg: ['fiyat', 'sorgu', 'hizlimat', 'yuzde_hesap', 'fatura_hesap', 'kita_ulke'], mgSkill: 'ticaret',
@@ -74,8 +75,8 @@ export const ACTIONS = [
     skills: {}, deptSkills: 4, stats: { disiplin: 1, sosyal: 1 }, flag: 'staj' },
   { id: 'ehliyet', name: 'Ehliyet sınavı', icon: '🚗', cat: 'egitim', ep: 1, when: s => s.age >= 18 && !s.flags.ehliyet, exam: 'ehliyet',
     desc: 'Trafik kuralları sınavı. Şoförlük ve kargo işlerini açar.', cost: 12000, mg: ['sinav', 'park'], mgSkill: 'zeka' },
-  { id: 'kpss', name: 'KPSS\'ye gir', icon: '🏛️', cat: 'egitim', ep: 2, when: s => s.age >= 20 && s.age <= 40 && !s.flags.kpss && s.edu.gpa !== null,
-    desc: 'Kamu Personeli Seçme Sınavı. Memurluk ve polisliği açar.', exam: 'kpss', mg: 'sinav', mgSkill: 'zeka' },
+  { id: 'kpss', name: 'Kamu sınavına gir', icon: '🏛️', cat: 'egitim', ep: 2, when: s => s.age >= 20 && s.age <= 40 && !s.flags.kpss && s.edu.gpa !== null,
+    desc: 'Devlet memurluğu sınavı. Memurluk ve polisliği açar.', exam: 'kpss', mg: 'sinav', mgSkill: 'zeka' },
   { id: 'sertifika', name: 'Sertifika programı', icon: '📜', cat: 'egitim', ep: 1, when: s => adult(s) && !!s.career.job,
     desc: 'İşinle ilgili uzmanlık eğitimi. Mesleki beceri + terfi şansı.', mg: s => JOBS[s.career.job.id].mg, mgSkill: s => JOBS[s.career.job.id].skill, cost: 15000,
     skills: {}, jobSkill: 5, stats: { disiplin: 1 }, perfBonus: 8 },
@@ -107,7 +108,7 @@ export const ACTIONS = [
     desc: 'Hafta sonu pazarda tezgâh yardımcılığı. Para üstü, pazarlık, yorgunluk.', mg: ['paraustu', 'terazi', 'kiraz', 'stok_sayimi'], mgSkill: 'ticaret',
     skills: { ticaret: 3 }, stats: { disiplin: 1, mutluluk: -1 }, earn: 12000, childWork: true, train: 'ticaret' },
   { id: 'acik_lise', name: 'Açık liseye çalış', icon: '📘', cat: 'egitim', ep: 1, when: s => !!s.flags.okulBirakti && !s.flags.liseDiploma && s.age >= 15,
-    desc: 'Okulu bıraktın ama yol bitmedi. 2 yıl çalışırsan lise diploması ve YKS hakkı.', mg: 'sinav', mgSkill: 'zeka',
+    desc: 'Okulu bıraktın ama yol bitmedi. 2 yıl çalışırsan lise diploması ve üniversite sınavı hakkı.', mg: 'sinav', mgSkill: 'zeka',
     stats: { zeka: 1.5, disiplin: 1.5 }, skills: { matematik: 2, dil: 2 }, study: 1, acikLise: true },
   { id: 'bakim', name: 'Kendine bak', icon: '🪞', cat: 'saglik', ep: 1, when: s => s.age >= 14, cost: 3000,
     desc: 'Berber/kuaför, düzenli uyku, cilt bakımı. Görünüşünü ve özgüvenini artırır.', stats: { mutluluk: 2, saglik: 1 }, flagYear: 'bakim' },
@@ -228,7 +229,7 @@ export function actionCost(a, s) {
 
 export function actionLock(a, s) {
   const { money } = actionCost(a, s);
-  if (money > 0 && s.money < money) return `Para yetmiyor (${Math.round(money).toLocaleString('tr-TR')} TL)`;
+  if (money > 0 && s.money < money) return `Para yetmiyor (${fmtTL(money)})`;
   if (a.id === 'is_ara' && s.career.job && s.year?.done.includes('is_ara')) return 'Bu yıl zaten iş aradın';
   if (a.special === 'bizstart' && s.year?.done.includes('isletme_ac')) return null;
   if (a.exam && a.id !== 'uni_ders' && s.year?.done.includes(a.id)) return 'Bu sınava yılda bir kez girebilirsin';

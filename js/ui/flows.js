@@ -278,7 +278,7 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
   const out = Y.applyExam(s, examId, sc);
   save();
   rerender?.();
-  const topTxt = ['lgs', 'yks', 'kpss', 'tus'].includes(examId) ? `Türkiye sıralaması: ilk %${sc.top}` : null;
+  const topTxt = ['lgs', 'yks', 'kpss', 'tus'].includes(examId) ? `Ülke sıralaması: ilk %${sc.top}` : null;
   await sheet(close => h('div', {},
     h('div.center', { style: { fontSize: '44px' } }, sc.score >= 80 ? '🏆' : sc.score >= 55 ? '📄' : '📉'),
     h('h2.center', {}, `${E.name}: ${sc.score} puan`),
@@ -301,7 +301,7 @@ async function choiceSheet(ch) {
   const title = ch.kind === 'school' ? '🏫 Hangi liseye gideceksin?' : '🎓 Tercihini yap';
   const id = await sheet(close => h('div', {},
     h('h2', {}, title),
-    h('p.small.muted', {}, ch.kind === 'school' ? 'LGS sonucuna göre girebileceğin okullar:' : 'YKS sıralamana göre girebileceğin bölümler:'),
+    h('p.small.muted', {}, ch.kind === 'school' ? 'Lise sınavı sonucuna göre girebileceğin okullar:' : 'Üniversite sınavı sıralamana göre girebileceğin bölümler:'),
     ch.list.map(o => h('button.opt', { onclick: () => close(o.id) }, h('span', { style: { fontSize: '24px' } }, o.icon), h('div', {}, h('div', {}, o.name), h('div.tiny.muted', {}, o.desc)))),
   ), { dismissable: false });
   if (ch.kind === 'school') Y.chooseSchool(s, id); else Y.chooseDept(s, id);
@@ -315,7 +315,7 @@ export async function alanSheet() {
   const best = scores[0][0];
   const id = await sheet(close => h('div', {},
     h('h2', {}, '🧭 Alanını seç'),
-    h('p.small.muted', {}, 'Lise 2\'desin. Seçtiğin alan, YKS\'de girebileceğin bölümleri ve derslerini belirler. Yeteneklerine göre önerimiz işaretli — ama karar senin.'),
+    h('p.small.muted', {}, 'Lise 2\'desin. Seçtiğin alan, üniversite sınavında girebileceğin bölümleri ve derslerini belirler. Yeteneklerine göre önerimiz işaretli — ama karar senin.'),
     scores.map(([k, v]) => {
       const A = ALANLAR[k];
       const depts = DEPTS.filter(d => Array.isArray(d.alan) && d.alan.includes(k)).map(d => d.name).slice(0, 4).join(', ');

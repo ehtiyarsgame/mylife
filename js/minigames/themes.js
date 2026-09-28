@@ -2,6 +2,19 @@
 import { timingGame, catchGame, sortGame, pairGame, oddGame, countGame, stackGame, runGame, whackGame, dialGame, quickGame } from './engines.js';
 import { register, getGame } from './engine.js';
 import { SCENES } from './life.js';
+import { fmtTL } from '../core/util.js';
+import { lang } from '../core/i18n.js';
+
+// i18n-skip-start
+// Dile bağlı içerik (İngilizce oyuncu için İngilizce dilbilgisi ve İspanyolca kelimeler)
+const TR = lang === 'tr';
+const EN_SYN = [['big', 'large'], ['quick', 'fast'], ['begin', 'start'], ['happy', 'glad'], ['smart', 'clever'], ['angry', 'mad'], ['tiny', 'small'], ['finish', 'end'],
+  ['shut', 'close'], ['gift', 'present'], ['brave', 'courageous'], ['rich', 'wealthy'], ['hard', 'difficult'], ['choose', 'pick'], ['help', 'assist'], ['silent', 'quiet'], ['sick', 'ill'], ['buy', 'purchase']];
+const EN_POS = [['table', 0], ['book', 0], ['city', 0], ['garden', 0], ['beautiful', 1], ['red', 1], ['tall', 1], ['clever', 1], ['run', 2], ['wrote', 2], ['will come', 2], ['reading', 2],
+  ['quickly', 3], ['slowly', 3], ['yesterday', 3], ['early', 3]];
+const EN_FOREIGN = [['manzana', 'apple'], ['libro', 'book'], ['ventana', 'window'], ['cocina', 'kitchen'], ['puente', 'bridge'], ['tiempo', 'weather'], ['honesto', 'honest'], ['vecino', 'neighbor'],
+  ['viaje', 'journey'], ['barato', 'cheap'], ['olvidar', 'forget'], ['ciudad', 'city'], ['perro', 'dog'], ['agua', 'water'], ['feliz', 'happy'], ['escuela', 'school'], ['amigo', 'friend'], ['trabajo', 'work']];
+// i18n-skip-end
 
 // Yanlış şık üretici: doğrudan farklı, benzersiz, makul sayılar
 function near(a, rng, steps = [-3, -2, -1, 1, 2, 3], fmt = String) {
@@ -14,7 +27,7 @@ function near(a, rng, steps = [-3, -2, -1, 1, 2, 3], fmt = String) {
   while (w.size < 3) w.add(fmt(a + w.size + 4));
   return { a: fmt(a), w: [...w] };
 }
-const tl = n => `${Math.round(n).toLocaleString('tr-TR')} TL`;
+const tl = n => fmtTL(n);
 
 // ——————————— ZAMANLAMA (8) ———————————
 timingGame({ id: 'serbest_atis', name: 'Serbest Atış', icon: '🏀', target: '🗑️', verb: 'Atış', tags: ['spor'] });
@@ -37,13 +50,13 @@ catchGame({ id: 'topla_cop', name: 'Çevre Temizliği', icon: '♻️', basket: 
 sortGame({ id: 'geri_donusum', name: 'Geri Dönüşüm', icon: '♻️', bins: ['🟦 Kâğıt', '🟨 Plastik', '🟩 Cam', '⬛ Metal'], tags: ['ev'],
   items: [['📰 Gazete', 0], ['📦 Karton kutu', 0], ['📓 Eski defter', 0], ['🧴 Şampuan şişesi', 1], ['🥤 Pet şişe', 1], ['🛍️ Poşet', 1], ['🍾 Cam şişe', 2], ['🫙 Kavanoz', 2], ['🥫 Konserve kutusu', 3], ['🥤 Alüminyum kutu', 3], ['🔩 Vida', 3], ['🧃 Yoğurt kabı', 1], ['📄 Fatura kâğıdı', 0], ['🍷 Kırık bardak', 2]] });
 sortGame({ id: 'kutuphane', name: 'Kütüphane Rafı', icon: '📚', bins: ['Roman', 'Bilim', 'Tarih', 'Şiir'], tags: ['zihin'],
-  items: [['Suç ve Ceza', 0], ['Kürk Mantolu Madonna', 0], ['Sefiller', 0], ['İnce Memed', 0], ['Kozmos', 1], ['Zamanın Kısa Tarihi', 1], ['Türlerin Kökeni', 1], ['Nutuk', 2], ['Osmanlı Tarihi', 2], ['Kutadgu Bilig', 3], ['Safahat', 3], ['Kuvâyi Milliye Destanı', 3], ['Bencil Gen', 1], ['Yaban', 0], ['Göğe Bakma Durağı', 3], ['Harp Tarihi', 2]] });
-sortGame({ id: 'posta', name: 'Postane Ayıklama', icon: '📮', bins: ['Marmara', 'Ege', 'İç Anadolu', 'Karadeniz'], tags: ['is'],
-  items: [['İstanbul', 0], ['Bursa', 0], ['Kocaeli', 0], ['Tekirdağ', 0], ['İzmir', 1], ['Aydın', 1], ['Muğla', 1], ['Manisa', 1], ['Ankara', 2], ['Konya', 2], ['Kayseri', 2], ['Eskişehir', 2], ['Trabzon', 3], ['Samsun', 3], ['Rize', 3], ['Ordu', 3], ['Balıkesir', 0], ['Denizli', 1], ['Sivas', 2], ['Giresun', 3]] });
+  items: [['Suç ve Ceza', 0], ['Sefiller', 0], ['Savaş ve Barış', 0], ['Don Kişot', 0], ['Yüzyıllık Yalnızlık', 0], ['Kozmos', 1], ['Zamanın Kısa Tarihi', 1], ['Türlerin Kökeni', 1], ['Bencil Gen', 1], ['Sapiens', 2], ['Roma İmparatorluğu\'nun Çöküşü', 2], ['Herodot Tarihi', 2], ['İpek Yolları', 2], ['İlyada', 3], ['İlahi Komedya', 3], ['Çimen Yaprakları', 3], ['Rubailer', 3], ['Mesnevi', 3]] });
+sortGame({ id: 'posta', name: 'Postane Ayıklama', icon: '📮', bins: ['Fransa', 'Almanya', 'İtalya', 'İspanya'], tags: ['is'],
+  items: [['Paris', 0], ['Lyon', 0], ['Marsilya', 0], ['Nice', 0], ['Berlin', 1], ['Münih', 1], ['Hamburg', 1], ['Köln', 1], ['Roma', 2], ['Milano', 2], ['Napoli', 2], ['Venedik', 2], ['Madrid', 3], ['Barselona', 3], ['Sevilla', 3], ['Valensiya', 3], ['Bordo', 0], ['Frankfurt', 1], ['Floransa', 2], ['Bilbao', 3]] });
 sortGame({ id: 'hayvan_sinif', name: 'Hayvan Sınıfları', icon: '🦁', bins: ['Memeli', 'Kuş', 'Sürüngen', 'Balık'], tags: ['zihin'],
   items: [['🐬 Yunus', 0], ['🦇 Yarasa', 0], ['🐄 İnek', 0], ['🐋 Balina', 0], ['🐧 Penguen', 1], ['🦉 Baykuş', 1], ['🦩 Flamingo', 1], ['🐢 Kaplumbağa', 2], ['🐍 Yılan', 2], ['🦎 Kertenkele', 2], ['🐊 Timsah', 2], ['🦈 Köpekbalığı', 3], ['🐟 Hamsi', 3], ['🐡 Balon balığı', 3], ['🦅 Kartal', 1], ['🐎 At', 0]] });
 sortGame({ id: 'kelime_turu', name: 'Kelime Türleri', icon: '🔤', bins: ['İsim', 'Sıfat', 'Fiil', 'Zarf'], tags: ['zihin'],
-  items: [['masa', 0], ['kitap', 0], ['şehir', 0], ['güzel', 1], ['kırmızı', 1], ['uzun', 1], ['koşmak', 2], ['yazdı', 2], ['gelecek', 2], ['hızlıca', 3], ['yavaş yavaş', 3], ['dün', 3], ['bahçe', 0], ['akıllı', 1], ['okuyor', 2], ['erken', 3]] });
+  items: TR ? [['masa', 0], ['kitap', 0], ['şehir', 0], ['güzel', 1], ['kırmızı', 1], ['uzun', 1], ['koşmak', 2], ['yazdı', 2], ['gelecek', 2], ['hızlıca', 3], ['yavaş yavaş', 3], ['dün', 3], ['bahçe', 0], ['akıllı', 1], ['okuyor', 2], ['erken', 3]] : EN_POS });
 sortGame({ id: 'asal_sayi', name: 'Sayı Avcısı', icon: '🔢', bins: ['Asal', 'Çift (asal değil)', 'Tek (asal değil)'], target: 16, tags: ['zihin'],
   items: [['2', 0], ['3', 0], ['5', 0], ['7', 0], ['11', 0], ['13', 0], ['17', 0], ['19', 0], ['23', 0], ['29', 0], ['31', 0], ['37', 0], ['4', 1], ['12', 1], ['18', 1], ['28', 1], ['36', 1], ['50', 1], ['9', 2], ['15', 2], ['21', 2], ['25', 2], ['27', 2], ['33', 2], ['39', 2], ['49', 2], ['51', 2]] });
 sortGame({ id: 'besin_grubu', name: 'Besin Grupları', icon: '🥗', bins: ['Protein', 'Karbonhidrat', 'Vitamin/Lif', 'Yağ'], tags: ['saglik'],
@@ -59,15 +72,15 @@ sortGame({ id: 'ilac_dolabi', name: 'Eczane Rafı', icon: '💊', bins: ['Ağrı
 pairGame({ id: 'baskent', name: 'Başkentler', icon: '🏛️', hint: 'Ülke → başkent', tags: ['zihin'],
   pairs: [['Türkiye', 'Ankara'], ['Fransa', 'Paris'], ['Almanya', 'Berlin'], ['İtalya', 'Roma'], ['İspanya', 'Madrid'], ['Japonya', 'Tokyo'], ['Rusya', 'Moskova'], ['Mısır', 'Kahire'], ['Kanada', 'Ottawa'], ['Avustralya', 'Kanberra'], ['Brezilya', 'Brasilia'], ['Azerbaycan', 'Bakü'], ['Yunanistan', 'Atina'], ['İran', 'Tahran'], ['Hollanda', 'Amsterdam'], ['Güney Kore', 'Seul'], ['Macaristan', 'Budapeşte'], ['Kazakistan', 'Astana']] });
 pairGame({ id: 'es_anlam', name: 'Eş Anlam', icon: '📝', hint: 'Kelime → eş anlamlısı', tags: ['zihin'],
-  pairs: [['siyah', 'kara'], ['kırmızı', 'al'], ['okul', 'mektep'], ['cevap', 'yanıt'], ['soru', 'sual'], ['öğrenci', 'talebe'], ['doktor', 'hekim'], ['yaşlı', 'ihtiyar'], ['hediye', 'armağan'], ['misafir', 'konuk'], ['zengin', 'varlıklı'], ['ülke', 'yurt'], ['yıl', 'sene'], ['akıl', 'us'], ['sınav', 'imtihan'], ['kalp', 'yürek'], ['şehir', 'kent'], ['özgürlük', 'hürriyet']] });
-pairGame({ id: 'ingilizce', name: 'İngilizce Kelime', icon: '🇬🇧', hint: 'English → Türkçe', tags: ['zihin'],
-  pairs: [['apple', 'elma'], ['book', 'kitap'], ['window', 'pencere'], ['kitchen', 'mutfak'], ['bridge', 'köprü'], ['weather', 'hava durumu'], ['honest', 'dürüst'], ['borrow', 'ödünç almak'], ['achieve', 'başarmak'], ['neighbour', 'komşu'], ['careful', 'dikkatli'], ['journey', 'yolculuk'], ['improve', 'geliştirmek'], ['decide', 'karar vermek'], ['angry', 'kızgın'], ['cheap', 'ucuz'], ['wide', 'geniş'], ['forget', 'unutmak']] });
+  pairs: TR ? [['siyah', 'kara'], ['kırmızı', 'al'], ['okul', 'mektep'], ['cevap', 'yanıt'], ['soru', 'sual'], ['öğrenci', 'talebe'], ['doktor', 'hekim'], ['yaşlı', 'ihtiyar'], ['hediye', 'armağan'], ['misafir', 'konuk'], ['zengin', 'varlıklı'], ['ülke', 'yurt'], ['yıl', 'sene'], ['akıl', 'us'], ['sınav', 'imtihan'], ['kalp', 'yürek'], ['şehir', 'kent'], ['özgürlük', 'hürriyet']] : EN_SYN });
+pairGame({ id: 'ingilizce', name: TR ? 'İngilizce Kelime' : 'Spanish Words', icon: TR ? '🇬🇧' : '🇪🇸', hint: TR ? 'English → Türkçe' : 'Español → English', tags: ['zihin'],
+  pairs: TR ? [['apple', 'elma'], ['book', 'kitap'], ['window', 'pencere'], ['kitchen', 'mutfak'], ['bridge', 'köprü'], ['weather', 'hava durumu'], ['honest', 'dürüst'], ['borrow', 'ödünç almak'], ['achieve', 'başarmak'], ['neighbour', 'komşu'], ['careful', 'dikkatli'], ['journey', 'yolculuk'], ['improve', 'geliştirmek'], ['decide', 'karar vermek'], ['angry', 'kızgın'], ['cheap', 'ucuz'], ['wide', 'geniş'], ['forget', 'unutmak']] : EN_FOREIGN });
 pairGame({ id: 'alet_meslek', name: 'Alet ve Meslek', icon: '🧰', hint: 'Alet → meslek', tags: ['is'],
   pairs: [['Stetoskop', 'Doktor'], ['Mala', 'Duvarcı'], ['Makas & tarak', 'Berber'], ['Pense', 'Elektrikçi'], ['Rende', 'Marangoz'], ['Boru anahtarı', 'Tesisatçı'], ['Kepçe', 'Aşçı'], ['Tebeşir', 'Öğretmen'], ['Mikrofon', 'Muhabir'], ['Terazi', 'Manav'], ['Fırça & palet', 'Ressam'], ['Düdük', 'Hakem'], ['Tokmak', 'Hâkim'], ['Kaynak maskesi', 'Kaynakçı'], ['Pusula & harita', 'Denizci'], ['Diş aynası', 'Diş hekimi']] });
 pairGame({ id: 'element_sembol', name: 'Elementler', icon: '⚗️', hint: 'Element → sembol', tags: ['zihin'],
   pairs: [['Hidrojen', 'H'], ['Oksijen', 'O'], ['Karbon', 'C'], ['Azot', 'N'], ['Sodyum', 'Na'], ['Potasyum', 'K'], ['Demir', 'Fe'], ['Bakır', 'Cu'], ['Altın', 'Au'], ['Gümüş', 'Ag'], ['Kalsiyum', 'Ca'], ['Klor', 'Cl'], ['Kükürt', 'S'], ['Çinko', 'Zn'], ['Magnezyum', 'Mg'], ['Helyum', 'He'], ['Kurşun', 'Pb'], ['Cıva', 'Hg']] });
 pairGame({ id: 'yazar_eser', name: 'Yazar ve Eser', icon: '✒️', hint: 'Eser → yazar', tags: ['zihin'],
-  pairs: [['Çalıkuşu', 'Reşat Nuri'], ['İnce Memed', 'Yaşar Kemal'], ['Saatleri Ayarlama Enstitüsü', 'A. H. Tanpınar'], ['Kürk Mantolu Madonna', 'Sabahattin Ali'], ['Sinekli Bakkal', 'Halide Edip'], ['Yaban', 'Yakup Kadri'], ['Safahat', 'Mehmet Akif'], ['Memleketimden İnsan Manzaraları', 'Nazım Hikmet'], ['Tutunamayanlar', 'Oğuz Atay'], ['Aşk-ı Memnu', 'Halit Ziya'], ['Suç ve Ceza', 'Dostoyevski'], ['Sefiller', 'Victor Hugo'], ['Hamlet', 'Shakespeare'], ['Dönüşüm', 'Kafka'], ['Semaver', 'Sait Faik'], ['Araba Sevdası', 'Recaizade Ekrem']] });
+  pairs: [['Suç ve Ceza', 'Dostoyevski'], ['Sefiller', 'Victor Hugo'], ['Hamlet', 'Shakespeare'], ['Dönüşüm', 'Kafka'], ['Savaş ve Barış', 'Tolstoy'], ['Don Kişot', 'Cervantes'], ['1984', 'George Orwell'], ['Yüzyıllık Yalnızlık', 'García Márquez'], ['Küçük Prens', 'Saint-Exupéry'], ['Gurur ve Önyargı', 'Jane Austen'], ['İlyada', 'Homeros'], ['İlahi Komedya', 'Dante'], ['Faust', 'Goethe'], ['Oliver Twist', 'Charles Dickens'], ['Kürk Mantolu Madonna', 'Sabahattin Ali'], ['Simyacı', 'Paulo Coelho'], ['Yaşlı Adam ve Deniz', 'Hemingway'], ['Mesnevi', 'Mevlana']] });
 pairGame({ id: 'hayvan_yavru', name: 'Hayvan Yavruları', icon: '🐣', hint: 'Hayvan → yavrusu', tags: ['tarim'],
   pairs: [['İnek', 'Buzağı'], ['At', 'Tay'], ['Koyun', 'Kuzu'], ['Keçi', 'Oğlak'], ['Köpek', 'Enik'], ['Kedi', 'Yavru kedi'], ['Tavuk', 'Civciv'], ['Ördek', 'Palaz'], ['Deve', 'Köşek'], ['Eşek', 'Sıpa'], ['Manda', 'Malak'], ['Kurbağa', 'İribaş'], ['Ayı', 'Ayı yavrusu']] });
 pairGame({ id: 'sekil_alan', name: 'Formül Eşle', icon: '📐', hint: 'Şekil → alan formülü', tags: ['zihin', 'teknik'],
@@ -140,7 +153,7 @@ quickGame({ id: 'fatura_hesap', name: 'Fatura Hesabı', icon: '🧾', target: 9,
   const t = r.int(0, 2);
   if (t === 0) { const n = r.int(2, 9), p = r.int(3, 40) * 5; return { q: `${n} adet × ${tl(p)} = ?`, ...near(n * p, r, [-p, p, -10, 10, 5 * n], tl) }; }
   if (t === 1) { const p = r.int(10, 80) * 10, pc = r.pick([10, 20, 25, 50]); return { q: `${tl(p)} ürüne %${pc} indirim. Yeni fiyat?`, ...near(p - p * pc / 100, r, [-p * 0.05, p * 0.05, p * pc / 100, -10], tl) }; }
-  const k = r.int(80, 400), fiyat = r.pick([2, 3, 4, 5]); return { q: `${k} kWh elektrik, kWh başı ${fiyat} TL. Fatura?`, ...near(k * fiyat, r, [-k, k, -20, 20, 50], tl) };
+  const k = r.int(80, 400), fiyat = r.pick([2, 3, 4, 5]); return { q: `${k} kWh elektrik, kWh başı ${fiyat} 🪙. Fatura?`, ...near(k * fiyat, r, [-k, k, -20, 20, 50], tl) };
 } });
 quickGame({ id: 'birim_cevirme', name: 'Birim Çevirme', icon: '📏', target: 10, tags: ['zihin', 'teknik'], gen: r => {
   const T = [['km', 'm', 1000], ['m', 'cm', 100], ['kg', 'g', 1000], ['L', 'mL', 1000], ['saat', 'dakika', 60], ['dakika', 'saniye', 60], ['ton', 'kg', 1000], ['gün', 'saat', 24]];

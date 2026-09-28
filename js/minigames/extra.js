@@ -103,11 +103,11 @@ register({
 
 // ————————————————— DOĞRU MU YANLIŞ MI —————————————————
 const FACTS = [
-  ['Türkiye\'nin başkenti Ankara\'dır.', true], ['Su 50 °C\'de kaynar.', false], ['Bir yılda 12 ay vardır.', true], ['Güneş bir gezegendir.', false],
+  ['Kanada\'nın başkenti Ottawa\'dır.', true], ['Su 50 °C\'de kaynar.', false], ['Bir yılda 12 ay vardır.', true], ['Güneş bir gezegendir.', false],
   ['Ay, Dünya\'nın uydusudur.', true], ['Balinalar balık türüdür.', false], ['Üçgenin iç açıları toplamı 180°\'dir.', true], ['Işık sesten yavaş yayılır.', false],
   ['İstanbul 1453\'te fethedildi.', true], ['Bitkiler karbondioksit alıp oksijen verir.', true], ['Mars\'a \"Kızıl Gezegen\" denir.', true], ['Bir haftada 8 gün vardır.', false],
   ['Kalp, kanı vücuda pompalar.', true], ['Buz, sudan ağırdır.', false], ['Everest dünyanın en yüksek dağıdır.', true], ['Penguenler uçabilir.', false],
-  ['Karadeniz tuzlu değildir.', false], ['İnsanın 206 kemiği vardır.', true], ['Mıknatıs tahtayı çeker.', false], ['Atatürk 1881\'de doğdu.', true],
+  ['Okyanus suyu tuzsuzdur.', false], ['İnsanın 206 kemiği vardır.', true], ['Mıknatıs tahtayı çeker.', false], ['İnsan Ay\'a ilk kez 1969\'da ayak bastı.', true],
 ];
 register({
   id: 'dogruyanlis', name: 'Doğru mu, Yanlış mı?', icon: '✅',
@@ -148,7 +148,7 @@ register({
 });
 
 // ————————————————— SIRALAMA —————————————————
-const HISTORY = [['Malazgirt Savaşı', 1071], ['İstanbul\'un Fethi', 1453], ['TBMM\'nin açılışı', 1920], ['Cumhuriyet\'in ilanı', 1923], ['Kurtuluş Savaşı\'nın başlangıcı', 1919], ['Harf Devrimi', 1928], ['Kadınlara seçme hakkı', 1934], ['İlk Türk uydusu (Türksat 1B)', 1994]];
+const HISTORY = [['Mısır piramitlerinin inşası', -2560], ['Roma İmparatorluğu\'nun ikiye ayrılması', 395], ['İstanbul\'un Fethi', 1453], ['Amerika\'nın keşfi', 1492], ['Matbaanın icadı (Gutenberg)', 1450], ['Fransız İhtilali', 1789], ['I. Dünya Savaşı\'nın başlaması', 1914], ['Ay\'a ilk insanın inişi', 1969], ['Berlin Duvarı\'nın yıkılışı', 1989], ['Web\'in icadı', 1991]];
 const SIZES = [['🐜 Karınca', 1], ['🐭 Fare', 2], ['🐈 Kedi', 3], ['🐕 Köpek', 4], ['🐎 At', 5], ['🐘 Fil', 6], ['🐋 Balina', 7]];
 register({
   id: 'siralama', name: 'Sıralama', icon: '🔢',

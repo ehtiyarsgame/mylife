@@ -85,7 +85,7 @@ function buildScreen(render) {
       h('div.bar', {}, h('i', { id: 'en-bar', style: { width: clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%' } })),
       h('div.hud-sub', { id: 'en-next' }, full ? 'Dolu' : '…')),
     h('div.card.money', { onclick: () => { app.tab = 'ev'; render(); } },
-      h('div.hud-top', {}, h('span.hud-ic', {}, s.age < 18 ? '🪙' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
+      h('div.hud-top', {}, h('span.hud-ic', {}, s.age < 18 ? '👛' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
       h('div.hud-sub', {}, s.age < 18
         ? (s.age >= 6 ? `Harçlık ${fmtTL(Y.allowanceWeekly(s))}/hafta` : 'Harçlık yok')
         : s.savings > 0 ? `🏦 ${fmtTL(s.savings)}` : 'Cebindeki'),
@@ -271,8 +271,8 @@ async function summarySheet(sum) {
 async function stageBanner(st) {
   const texts = {
     ilkokul: 'Okul çantan hazır! Artık eylemler açılıyor: ders, oyun, spor, arkadaşlık…',
-    orta: 'Ortaokul: dershane, kulüpler ve ilk küçük ticaretin. Sonunda LGS var!',
-    lise: 'Lise yılları: staj, çıraklık, yarışmalar, ilk aşk… Sonunda YKS seni bekliyor.',
+    orta: 'Ortaokul: dershane, kulüpler ve ilk küçük ticaretin. Sonunda lise sınavı var!',
+    lise: 'Lise yılları: staj, çıraklık, yarışmalar, ilk aşk… Sonunda üniversite sınavı seni bekliyor.',
     genc: 'Artık yetişkinsin! Üniversite, iş, kendi işini kurmak… Kira ve faturalar da başlıyor.',
     yetiskin: 'Kariyerinde yükselme, yatırım, aile… Hayatın en yoğun dönemi.',
     olgun: 'Tecrübenin meyvelerini topla: danışmanlık, torunlar, miras planı.',
@@ -315,8 +315,8 @@ function meTab(render) {
     schoolName ? h('div.sum-line', {}, 'Lise', h('b', {}, schoolName)) : null,
     s.edu.alan && ALANLAR[s.edu.alan] ? h('div.sum-line', {}, 'Alan', h('b', {}, `${ALANLAR[s.edu.alan].icon} ${ALANLAR[s.edu.alan].name}`)) : null,
     e.gpa !== null ? h('div.sum-line', {}, 'Karne ortalaması', h('b', {}, e.gpa)) : null,
-    e.lgsTop !== null ? h('div.sum-line', {}, 'LGS', h('b', {}, `ilk %${e.lgsTop}`)) : null,
-    e.yksTop !== null ? h('div.sum-line', {}, 'YKS', h('b', {}, `ilk %${e.yksTop}`)) : null,
+    e.lgsTop !== null ? h('div.sum-line', {}, 'Lise sınavı', h('b', {}, `ilk %${e.lgsTop}`)) : null,
+    e.yksTop !== null ? h('div.sum-line', {}, 'Üniversite sınavı', h('b', {}, `ilk %${e.yksTop}`)) : null,
     e.dept ? h('div.sum-line', {}, 'Bölüm', h('b', {}, deptById[e.dept].name + (e.degree ? ' (mezun)' : ` · ${e.uniYears + 1}. sınıf`))) : null,
     h('div.sum-line', { style: { borderBottom: 0 } }, 'Sınav hazırlığı (genel)', h('b', {}, Y.examPrep(s, 'yks')))));
   // Yaşam dengesi

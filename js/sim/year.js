@@ -1,7 +1,7 @@
 // Yıl motoru: yıl başlat → eylemler & olaylar → sınavlar → yıl sonu.
 import { CONFIG, SKILLS } from '../config.js';
 import { RNG } from '../core/rng.js';
-import { clamp, normCdf, round } from '../core/util.js';
+import { clamp, normCdf, round, fmtTL } from '../core/util.js';
 import { spendEnergy, addEnergy } from '../core/energy.js';
 import { stageOf, addSkill, addStat, hintFor } from './stats.js';
 import { actionById, actionCost, actionLock, resolve, stageId, deptSkill } from './actions.js';
@@ -169,7 +169,7 @@ export function performAction(s, id, perf = 60) {
     if (s.counters.acikLise >= 2) {
       s.flags.liseDiploma = true; s.flags.yksTekrar = true; s.flags.acikLiseYks = true;
       if (s.edu.gpa === null) s.edu.gpa = Math.round(40 + perf / 3);
-      out.lines.push('🎓 Açık liseyi bitirdin! Lise diploman var; seneye YKS\'ye girebilirsin.');
+      out.lines.push('🎓 Açık liseyi bitirdin! Lise diploman var; seneye üniversite sınavına girebilirsin.');
       log(s, 'Açık liseden diploma aldı.', 'rare');
     } else out.lines.push('📘 Açık lisede bir yılı tamamladın. Bir yıl daha!');
   }
@@ -238,7 +238,7 @@ function pathOfAction(a, s) {
   return null;
 }
 
-const fmt = v => Math.round(v).toLocaleString('tr-TR') + ' TL';
+const fmt = v => fmtTL(v);
 
 // Özel eylemler
 export function spendActionOnly(s, id) {
@@ -332,12 +332,12 @@ export function applyExam(s, examId, res) {
     case 'lgs': {
       s.edu.lgsTop = res.top;
       const ch = [];
-      if (res.top <= 3) ch.push({ id: 'fen', name: 'Fen Lisesi', icon: '🔭', desc: 'Fen ve matematikte +%20 gelişim, YKS\'de avantaj.' });
+      if (res.top <= 3) ch.push({ id: 'fen', name: 'Fen Lisesi', icon: '🔭', desc: 'Fen ve matematikte +%20 gelişim, üniversite sınavında avantaj.' });
       if (res.top <= 25) ch.push({ id: 'anadolu', name: 'Anadolu Lisesi', icon: '🏫', desc: 'Dengeli eğitim, dil ağırlıklı.' });
       ch.push({ id: 'meslek', name: 'Meslek Lisesi', icon: '🔧', desc: 'Çıraklık ve ustalığa hızlı giriş, el becerisi +.' });
       ch.push({ id: 'duz', name: 'Mahalle Lisesi', icon: '🏢', desc: 'Evine yakın, sakin bir okul.' });
       out.choices = { kind: 'school', list: ch };
-      log(s, `LGS'de ilk %${res.top} dilime girdi.`, res.top <= 3 ? 'epic' : 'common');
+      log(s, `Lise sınavında ilk %${res.top} dilime girdi.`, res.top <= 3 ? 'epic' : 'common');
       break;
     }
     case 'yks': {
@@ -352,7 +352,7 @@ export function applyExam(s, examId, res) {
       list.push({ id: 'none', name: 'Üniversiteye gitme', icon: '🛠️', desc: 'Doğrudan iş hayatına ya da çıraklığa başla.' });
       if (s.edu.yksTries < 3) list.push({ id: 'retake', name: 'Seneye tekrar gir', icon: '🔁', desc: 'Bir yıl hazırlan, yeniden dene. Kaybetmek son değil.' });
       out.choices = { kind: 'dept', list };
-      log(s, `YKS'de ilk %${res.top} dilimine girdi.`, res.top <= 2 ? 'epic' : 'common');
+      log(s, `Üniversite sınavında ilk %${res.top} dilimine girdi.`, res.top <= 2 ? 'epic' : 'common');
       break;
     }
     case 'ehliyet':
@@ -360,8 +360,8 @@ export function applyExam(s, examId, res) {
       else { out.pass = false; out.lines.push('Ehliyet sınavını geçemedin. Seneye tekrar dene.'); }
       break;
     case 'kpss':
-      if (res.top <= 30) { s.flags.kpss = true; s.counters.kpssTop = res.top; out.pass = true; out.lines.push('🏛️ KPSS puanın kamu işlerine yetiyor!'); log(s, `KPSS'de ilk %${res.top}.`); }
-      else { out.pass = false; out.lines.push('KPSS puanın yetmedi (ilk %30 gerekli). Tekrar deneyebilirsin.'); }
+      if (res.top <= 30) { s.flags.kpss = true; s.counters.kpssTop = res.top; out.pass = true; out.lines.push('🏛️ Kamu sınavı puanın devlet işlerine yetiyor!'); log(s, `Kamu sınavında ilk %${res.top}.`); }
+      else { out.pass = false; out.lines.push('Kamu sınavı puanın yetmedi (ilk %30 gerekli). Tekrar deneyebilirsin.'); }
       break;
     case 'uni':
       s.edu.uniGrades.push(res.score);
@@ -384,7 +384,7 @@ export function chooseSchool(s, id) {
 }
 
 export function chooseDept(s, id) {
-  if (id === 'retake') { s.flags.yksTekrar = true; s.edu.pendingDept = null; log(s, 'YKS\'ye bir yıl daha hazırlanmaya karar verdi.'); return; }
+  if (id === 'retake') { s.flags.yksTekrar = true; s.edu.pendingDept = null; log(s, 'Üniversite sınavına bir yıl daha hazırlanmaya karar verdi.'); return; }
   if (id === 'none') { s.edu.pendingDept = 'none'; return; }
   s.edu.pendingDept = id;
   log(s, `${deptById[id].name} bölümünü kazandı!`, id === 'tip' ? 'epic' : 'rare');
@@ -398,7 +398,7 @@ export function jobEligible(s, id) {
   const miss = [];
   if (J.viaDoor) miss.push('Kapı ile açılır');
   if (s.age < J.minAge) miss.push(`${J.minAge} yaş`);
-  if (J.needFlag && !s.flags[J.needFlag]) miss.push(J.needFlag === 'ehliyet' ? 'Ehliyet' : 'KPSS');
+  if (J.needFlag && !s.flags[J.needFlag]) miss.push(J.needFlag === 'ehliyet' ? 'Ehliyet' : 'Kamu sınavı');
   if (J.needDept && s.edu.degree !== J.needDept) miss.push(`${deptById[J.needDept].name} mezuniyeti`);
   if (J.needAny && !J.needAny.some(o => (o.dept && s.edu.degree === o.dept) || (o.skill && s.skills[o.skill] >= o.min) || (o.flag && s.flags[o.flag]))) {
     miss.push(J.needAny.map(o => o.dept ? deptById[o.dept].name : o.skill ? `${o.skill} ${o.min}+` : 'deneyim').join(' veya '));

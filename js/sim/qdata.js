@@ -86,31 +86,53 @@ export const ELEMENTS = [
   ['Bakır', 'Cu', 29], ['Çinko', 'Zn', 30], ['Gümüş', 'Ag', 47], ['Kalay', 'Sn', 50], ['İyot', 'I', 53], ['Altın', 'Au', 79], ['Cıva', 'Hg', 80], ['Kurşun', 'Pb', 82],
 ];
 
-// [eser, yazar, dönem/tür]
+// [eser, yazar] — dünya edebiyatı (her dilde ortak)
 export const WORKS = [
-  ['Çalıkuşu', 'Reşat Nuri Güntekin'], ['İnce Memed', 'Yaşar Kemal'], ['Saatleri Ayarlama Enstitüsü', 'Ahmet Hamdi Tanpınar'],
-  ['Kürk Mantolu Madonna', 'Sabahattin Ali'], ['Sinekli Bakkal', 'Halide Edib Adıvar'], ['Yaban', 'Yakup Kadri Karaosmanoğlu'],
-  ['Safahat', 'Mehmet Akif Ersoy'], ['Memleketimden İnsan Manzaraları', 'Nazım Hikmet'], ['Tutunamayanlar', 'Oğuz Atay'],
-  ['Aşk-ı Memnu', 'Halit Ziya Uşaklıgil'], ['Araba Sevdası', 'Recaizade Mahmut Ekrem'], ['Vatan Yahut Silistre', 'Namık Kemal'],
-  ['Şair Evlenmesi', 'Şinasi'], ['Mai ve Siyah', 'Halit Ziya Uşaklıgil'], ['Huzur', 'Ahmet Hamdi Tanpınar'], ['Semaver', 'Sait Faik Abasıyanık'],
-  ['Kuyucaklı Yusuf', 'Sabahattin Ali'], ['Yorgun Savaşçı', 'Kemal Tahir'], ['Tatarcık', 'Yaşar Kemal'], ['Yaprak Dökümü', 'Reşat Nuri Güntekin'],
-  ['Ateşten Gömlek', 'Halide Edib Adıvar'], ['Kiralık Konak', 'Yakup Kadri Karaosmanoğlu'], ['Eylül', 'Mehmet Rauf'], ['Nutuk', 'Mustafa Kemal Atatürk'],
-  ['Kutadgu Bilig', 'Yusuf Has Hacib'], ['Divânu Lugâti\'t-Türk', 'Kaşgarlı Mahmud'], ['Suç ve Ceza', 'Fyodor Dostoyevski'], ['Sefiller', 'Victor Hugo'],
-  ['Hamlet', 'William Shakespeare'], ['Dönüşüm', 'Franz Kafka'], ['Savaş ve Barış', 'Lev Tolstoy'], ['Don Kişot', 'Miguel de Cervantes'],
-  ['Küçük Prens', 'Antoine de Saint-Exupéry'], ['1984', 'George Orwell'], ['Simyacı', 'Paulo Coelho'], ['Yüzyıllık Yalnızlık', 'Gabriel García Márquez'],
+  ['Suç ve Ceza', 'Fyodor Dostoyevski'], ['Karamazov Kardeşler', 'Fyodor Dostoyevski'], ['Savaş ve Barış', 'Lev Tolstoy'], ['Anna Karenina', 'Lev Tolstoy'],
+  ['Sefiller', 'Victor Hugo'], ['Notre Dame\'ın Kamburu', 'Victor Hugo'], ['Hamlet', 'William Shakespeare'], ['Romeo ve Juliet', 'William Shakespeare'],
+  ['Dönüşüm', 'Franz Kafka'], ['Dava', 'Franz Kafka'], ['Don Kişot', 'Miguel de Cervantes'], ['Küçük Prens', 'Antoine de Saint-Exupéry'],
+  ['1984', 'George Orwell'], ['Hayvan Çiftliği', 'George Orwell'], ['Simyacı', 'Paulo Coelho'], ['Yüzyıllık Yalnızlık', 'Gabriel García Márquez'],
+  ['Gurur ve Önyargı', 'Jane Austen'], ['Oliver Twist', 'Charles Dickens'], ['İki Şehrin Hikâyesi', 'Charles Dickens'], ['Yaşlı Adam ve Deniz', 'Ernest Hemingway'],
+  ['Faust', 'Johann Wolfgang von Goethe'], ['İlahi Komedya', 'Dante Alighieri'], ['İlyada', 'Homeros'], ['Odysseia', 'Homeros'],
+  ['Madame Bovary', 'Gustave Flaubert'], ['Yabancı', 'Albert Camus'], ['Fareler ve İnsanlar', 'John Steinbeck'], ['Bülbülü Öldürmek', 'Harper Lee'],
+  ['Kürk Mantolu Madonna', 'Sabahattin Ali'], ['Benim Adım Kırmızı', 'Orhan Pamuk'], ['Mesnevi', 'Mevlana'], ['Rubailer', 'Ömer Hayyam'],
+  ['Binbir Gece Masalları', 'Anonim'], ['Robinson Crusoe', 'Daniel Defoe'], ['Frankenstein', 'Mary Shelley'], ['Uğultulu Tepeler', 'Emily Brontë'],
 ];
 
-// [olay, yıl]
+// [olay, yıl] — dünya tarihi (her dilde ortak)
 export const HISTORY = [
-  ['Malazgirt Savaşı', 1071], ['İstanbul\'un Fethi', 1453], ['Miryokefalon Savaşı', 1176], ['Osmanlı Devleti\'nin kuruluşu', 1299], ['Ankara Savaşı', 1402],
-  ['Çaldıran Savaşı', 1514], ['Mercidabık Savaşı', 1516], ['Mohaç Meydan Muharebesi', 1526], ['Preveze Deniz Savaşı', 1538], ['Viyana Kuşatması (II.)', 1683],
-  ['Karlofça Antlaşması', 1699], ['Lale Devri\'nin sonu (Patrona Halil)', 1730], ['Tanzimat Fermanı', 1839], ['Islahat Fermanı', 1856], ['I. Meşrutiyet', 1876],
-  ['II. Meşrutiyet', 1908], ['Çanakkale Zaferi', 1915], ['Mondros Ateşkesi', 1918], ['Atatürk\'ün Samsun\'a çıkışı', 1919], ['TBMM\'nin açılışı', 1920],
-  ['Sakarya Meydan Muharebesi', 1921], ['Büyük Taarruz', 1922], ['Lozan Antlaşması', 1923], ['Cumhuriyet\'in ilanı', 1923], ['Halifeliğin kaldırılması', 1924],
-  ['Harf Devrimi', 1928], ['Soyadı Kanunu', 1934], ['Kadınlara milletvekili seçme ve seçilme hakkı', 1934], ['Hatay\'ın anavatana katılması', 1939], ['Çok partili hayata geçiş (ilk seçim)', 1946],
-  ['Türkiye\'nin NATO\'ya girişi', 1952], ['Fransız İhtilali', 1789], ['Amerika\'nın keşfi', 1492], ['Coğrafi Keşifler / Ümit Burnu', 1488], ['I. Dünya Savaşı\'nın başlaması', 1914],
-  ['II. Dünya Savaşı\'nın başlaması', 1939], ['II. Dünya Savaşı\'nın bitişi', 1945], ['Berlin Duvarı\'nın yıkılışı', 1989], ['Ay\'a ilk insanın ayak basması', 1969], ['Matbaanın Osmanlı\'ya gelişi (İbrahim Müteferrika)', 1727],
+  ['Mısır\'da Büyük Giza Piramidi\'nin inşası', -2560], ['İlk Olimpiyat Oyunları (Antik Yunan)', -776], ['Büyük İskender\'in ölümü', -323], ['Julius Caesar\'ın öldürülmesi', -44],
+  ['Batı Roma İmparatorluğu\'nun çöküşü', 476], ['Magna Carta\'nın imzalanması', 1215], ['İstanbul\'un Fethi (Bizans\'ın sonu)', 1453], ['Gutenberg matbaası', 1450],
+  ['Kolomb\'un Amerika\'ya ulaşması', 1492], ['Macellan seferinin dünyayı dolaşması', 1522], ['Amerikan Bağımsızlık Bildirgesi', 1776], ['Fransız İhtilali', 1789],
+  ['Waterloo Savaşı', 1815], ['İlk telefon görüşmesi (Bell)', 1876], ['Wright kardeşlerin ilk uçuşu', 1903], ['I. Dünya Savaşı\'nın başlaması', 1914],
+  ['I. Dünya Savaşı\'nın bitişi', 1918], ['Türkiye Cumhuriyeti\'nin kuruluşu', 1923], ['Penisilinin keşfi', 1928], ['Büyük Buhran (borsa çöküşü)', 1929],
+  ['II. Dünya Savaşı\'nın başlaması', 1939], ['II. Dünya Savaşı\'nın bitişi', 1945], ['Birleşmiş Milletler\'in kuruluşu', 1945], ['Hindistan\'ın bağımsızlığı', 1947],
+  ['DNA\'nın çift sarmal yapısının keşfi', 1953], ['İlk uydu Sputnik', 1957], ['Uzaya çıkan ilk insan (Gagarin)', 1961], ['Ay\'a ilk insanın ayak basması', 1969],
+  ['Berlin Duvarı\'nın yıkılışı', 1989], ['Nelson Mandela\'nın serbest bırakılması', 1990], ['Web\'in icadı', 1991], ['Sovyetler Birliği\'nin dağılması', 1991],
+  ['Avrupa Birliği\'nin kuruluşu (Maastricht)', 1993], ['İnsan Genom Projesi\'nin tamamlanması', 2003], ['İlk akıllı telefon devrimi (iPhone)', 2007], ['Paris İklim Anlaşması', 2015],
 ];
+
+// İngilizce oyuncu için dil tabloları
+export const EN_SYNONYMS = [['big', 'large'], ['quick', 'fast'], ['begin', 'start'], ['happy', 'glad'], ['smart', 'clever'], ['angry', 'furious'], ['tiny', 'little'], ['finish', 'complete'],
+  ['shut', 'close'], ['gift', 'present'], ['brave', 'courageous'], ['rich', 'wealthy'], ['hard', 'difficult'], ['choose', 'select'], ['help', 'assist'], ['silent', 'quiet'],
+  ['sick', 'ill'], ['buy', 'purchase'], ['old', 'ancient'], ['answer', 'reply'], ['correct', 'right'], ['fix', 'repair'], ['huge', 'enormous'], ['calm', 'peaceful']];
+export const EN_ANTONYMS = [['long', 'short'], ['hot', 'cold'], ['rich', 'poor'], ['early', 'late'], ['easy', 'hard'], ['fast', 'slow'], ['young', 'old'], ['brave', 'cowardly'],
+  ['full', 'empty'], ['heavy', 'light'], ['clean', 'dirty'], ['cheap', 'expensive'], ['win', 'lose'], ['open', 'close'], ['generous', 'stingy'], ['friend', 'enemy'],
+  ['sweet', 'bitter'], ['wide', 'narrow'], ['deep', 'shallow'], ['wet', 'dry'], ['near', 'far'], ['begin', 'end'], ['true', 'false'], ['quiet', 'noisy']];
+export const EN_IDIOMS = [
+  ['Actions speak louder', 'than words', ['than thoughts', 'than money', 'than time']], ['Better late', 'than never', ['than early', 'than sorry', 'than soon']],
+  ['Every cloud has', 'a silver lining', ['a rainy day', 'a golden sun', 'a dark side']], ['Practice makes', 'perfect', ['progress', 'habits', 'friends']],
+  ['Don\'t judge a book', 'by its cover', ['by its pages', 'by its title', 'by its price']], ['Rome wasn\'t built', 'in a day', ['in a year', 'by one man', 'without stones']],
+  ['The early bird', 'catches the worm', ['sings the song', 'flies the highest', 'sleeps the least']], ['Two heads are', 'better than one', ['worse than one', 'too many', 'a crowd']],
+  ['When in Rome,', 'do as the Romans do', ['see the Colosseum', 'speak Latin', 'eat pasta']], ['A penny saved is', 'a penny earned', ['a penny spent', 'a penny lost', 'a dollar made']],
+  ['Don\'t count your chickens', 'before they hatch', ['after they hatch', 'in the morning', 'in the dark']], ['Where there\'s a will,', 'there\'s a way', ['there\'s a wish', 'there\'s a road', 'there\'s a gift']],
+  ['An apple a day', 'keeps the doctor away', ['makes you strong', 'keeps you awake', 'brings good luck']], ['Honesty is', 'the best policy', ['the hardest road', 'a rare gift', 'always easy']],
+  ['Slow and steady', 'wins the race', ['loses the game', 'gets nowhere', 'saves the day']], ['Knowledge is', 'power', ['money', 'silence', 'luck']],
+];
+export const SPANISH = [['manzana', 'apple'], ['libro', 'book'], ['ventana', 'window'], ['cocina', 'kitchen'], ['puente', 'bridge'], ['tiempo', 'weather'], ['honesto', 'honest'],
+  ['vecino', 'neighbor'], ['viaje', 'journey'], ['barato', 'cheap'], ['olvidar', 'to forget'], ['ciudad', 'city'], ['perro', 'dog'], ['agua', 'water'], ['feliz', 'happy'],
+  ['escuela', 'school'], ['amigo', 'friend'], ['trabajo', 'work'], ['hospital', 'hospital'], ['médico', 'doctor'], ['dinero', 'money'], ['cliente', 'customer'],
+  ['cuidadoso', 'careful'], ['mejorar', 'to improve'], ['decidir', 'to decide'], ['enfadado', 'angry'], ['ancho', 'wide'], ['cosecha', 'harvest'], ['ley', 'law'], ['ganancia', 'profit']];
 
 // [atasözü/deyim başı, doğru devam, yanlışlar]
 export const PROVERBS = [

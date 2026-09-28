@@ -265,3 +265,27 @@ test('ticarette rekor ve çöküş yılları gerçekçi sıklıkta yaşanır', a
   assert.ok(kinds.crash / n > 0.01 && kinds.crash / n < 0.08, `çöküş oranı ${kinds.crash / n}`);
   assert.ok(kinds.good > kinds.bad, 'çoğu yıl kârlı olmalı');
 });
+
+test('İngilizce çeviri eksiksiz: kartlar, sorular ve arayüz sözlüğü', async () => {
+  const E = JSON.parse(readFileSync(new URL('../data/events.json', import.meta.url)));
+  const EN = JSON.parse(readFileSync(new URL('../data/events.en.json', import.meta.url)));
+  for (const c of E) {
+    const x = EN[c.id];
+    assert.ok(x && x.title && x.text, `çevrilmemiş kart: ${c.id}`);
+    assert.equal(x.options.length, c.options.length, `${c.id} seçenek sayısı`);
+    c.options.forEach((o, i) => {
+      if (o.success?.result) assert.ok(x.options[i].success, `${c.id}#${i} başarı metni`);
+      if (o.fail?.result) assert.ok(x.options[i].fail, `${c.id}#${i} başarısızlık metni`);
+    });
+    const vars = s => (s.match(/\{\w+\}/g) || []).sort().join();
+    assert.equal(vars(x.text), vars(c.text), `${c.id} şablon değişkenleri`);
+  }
+  const Q = JSON.parse(readFileSync(new URL('../data/questions.json', import.meta.url)));
+  const QE = JSON.parse(readFileSync(new URL('../data/questions.en.json', import.meta.url)));
+  assert.equal(QE.length, Q.length);
+  for (const q of QE) assert.equal(new Set(q.a).size, 4, q.q);
+  const { extract } = await import('../scripts/i18n-extract.mjs');
+  const { DICT } = await import('../js/i18n/en.js');
+  const miss = [...extract().keys()].filter(k => !(k in DICT));
+  assert.ok(miss.length < 130, `çevrilmemiş arayüz metni: ${miss.length} (${miss.slice(0, 8).join(' | ')})`);
+});

@@ -8,6 +8,7 @@ import { migrate, rollStart, newLife, newChildLife, lifeScoreTitle, WEALTH, PLAC
 import { MIZAC, traitLabel } from '../sim/traits.js';
 import { CONFIG, APP_VERSION } from '../config.js';
 import { NAMES } from '../sim/names.js';
+import { LANGS, lang, setLang } from '../core/i18n.js';
 import { JOBS, PATHS, jobTitle, DOORS } from '../sim/careers.js';
 import { BIZ_STEPS } from '../sim/business.js';
 import { deckSize } from '../sim/events.js';
@@ -269,6 +270,9 @@ route('settings', (root, back = 'title') => {
   root.append(h('div.screen', {},
     h('div.row', {}, h('h1.grow', {}, '⚙️ Ayarlar'), btn('← Geri', () => go(back), 'ghost sm')),
     h('div.sp'),
+    h('div.tile', { style: { marginBottom: '8px' } }, h('b', {}, '🌐 Dil / Language'),
+      h('div.row', { style: { gap: '6px', marginTop: '8px' } }, LANGS.map(L => h('button.btn.sm' + (L.id === lang ? '.green' : ''), {
+        onclick: () => { if (L.id === lang) return; setLang(L.id); save(); location.reload(); } }, `${L.flag} ${L.name}`)))),
     toggle('sound', '🔊 Ses efektleri', 'Dokunma, başarı ve kart açılış sesleri'),
     toggle('haptics', '📳 Titreşim', 'Destekleyen cihazlarda'),
     toggle('testEnergy', '🧪 Test modu: hızlı enerji', 'Prototip testleri için: enerji her 2 saniyede dolar'),

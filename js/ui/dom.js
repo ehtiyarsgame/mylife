@@ -1,5 +1,6 @@
 // Küçük DOM yardımcıları ve ortak bileşenler (modal, toast, onay).
 import { sfx, vibrate } from '../core/audio.js';
+import { T } from '../core/i18n.js';
 
 export function h(tag, attrs = {}, ...kids) {
   const [t, ...cls] = tag.split('.');
@@ -11,7 +12,7 @@ export function h(tag, attrs = {}, ...kids) {
     else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
     else if (k.startsWith('on')) el.addEventListener(k.slice(2).toLowerCase(), v);
     else if (k === 'html') el.innerHTML = v;
-    else el.setAttribute(k, v === true ? '' : v);
+    else el.setAttribute(k, v === true ? '' : (k === 'placeholder' || k === 'title' || k === 'aria-label') ? T(v) : v);
   }
   append(el, kids);
   return el;
@@ -19,7 +20,7 @@ export function h(tag, attrs = {}, ...kids) {
 function append(el, kids) {
   for (const k of kids.flat(Infinity)) {
     if (k === null || k === undefined || k === false) continue;
-    el.append(k instanceof Node ? k : document.createTextNode(String(k)));
+    el.append(k instanceof Node ? k : document.createTextNode(T(String(k))));
   }
 }
 export const $ = (sel, root = document) => root.querySelector(sel);

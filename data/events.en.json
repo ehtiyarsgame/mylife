@@ -1,0 +1,3161 @@
+{
+ "ilk_kelime": {
+  "title": "First word",
+  "text": "{ad} said their first word today! Everyone claims it was their own name.",
+  "options": [
+   {
+    "text": "\"Mama!\"",
+    "result": "{anne} couldn't hold back the tears."
+   },
+   {
+    "text": "\"Dada!\"",
+    "result": "{baba} called every relative."
+   },
+   {
+    "text": "\"Ball!\"",
+    "result": "Everyone at home laughed. The ball never leaves your hands."
+   }
+  ]
+ },
+ "ilk_adim": {
+  "title": "First steps",
+  "text": "Holding on to the coffee table, you took your first steps. How should your family encourage you?",
+  "options": [
+   {
+    "text": "Take you on lots of walks",
+    "result": "The parks became yours."
+   },
+   {
+    "text": "Set up a safe play area",
+    "result": "You started exploring your own corner."
+   }
+  ]
+ },
+ "oyuncak": {
+  "title": "Birthday present",
+  "text": "Your family is choosing a birthday present for you. Which one will you reach for?",
+  "options": [
+   {
+    "text": "⚽ A ball",
+    "result": "Not a single vase survived at home."
+   },
+   {
+    "text": "📚 A picture book",
+    "result": "You made them read the same book a hundred times."
+   },
+   {
+    "text": "🧱 Building blocks",
+    "result": "Towers, bridges, castles…"
+   },
+   {
+    "text": "🖍️ Crayons",
+    "result": "The walls got their share too."
+   },
+   {
+    "text": "🎹 A toy piano",
+    "result": "There was never a day without a concert at home."
+   }
+  ]
+ },
+ "anaokulu": {
+  "title": "Kindergarten",
+  "text": "First day of kindergarten. Some kids are crying at the door.",
+  "options": [
+   {
+    "text": "Give your toy to a crying child",
+    "result": "You made your first friend."
+   },
+   {
+    "text": "Run straight to the coloring table",
+    "result": "Your teacher pinned your drawing on the board."
+   },
+   {
+    "text": "Cling to {anne}",
+    "result": "The second day went easier."
+   }
+  ]
+ },
+ "ates": {
+  "title": "High fever",
+  "text": "One night your fever rose to 39 °C. Your family rushed you to the doctor.",
+  "options": [
+   {
+    "text": "Take your medicine regularly",
+    "result": "You recovered in a few days."
+   }
+  ]
+ },
+ "kardes_dogdu": {
+  "title": "A new sibling",
+  "text": "A tiny sibling arrived home. Now the attention will be shared.",
+  "options": [
+   {
+    "text": "Act like a big sibling and help",
+    "result": "Your sibling's first smile was for you."
+   },
+   {
+    "text": "Get a little jealous",
+    "result": "Over time you learned to love your sibling."
+   }
+  ]
+ },
+ "dede_hikaye": {
+  "title": "Grandpa's stories",
+  "text": "Your grandpa tells stories of the old days: fields, markets, hard years.",
+  "options": [
+   {
+    "text": "Ask about the market",
+    "result": "\"A true merchant keeps their word.\""
+   },
+   {
+    "text": "Ask about the fields",
+    "result": "You listened to the language of the land."
+   },
+   {
+    "text": "Ask for a fairy tale",
+    "result": "You listened until you fell asleep."
+   }
+  ]
+ },
+ "bocek": {
+  "title": "Garden discovery",
+  "text": "You found a ladybug in the garden. You're counting its spots.",
+  "options": [
+   {
+    "text": "Wonder how it flies",
+    "result": "Your first scientific observation!"
+   },
+   {
+    "text": "Draw it",
+    "result": "You colored all seven spots one by one."
+   }
+  ]
+ },
+ "tablet": {
+  "title": "Tablet or playground?",
+  "text": "While visiting, they want to keep you busy with a tablet.",
+  "options": [
+   {
+    "text": "Open an educational app",
+    "result": "You learned letters and numbers through a game."
+   },
+   {
+    "text": "Play outside with the other kids",
+    "result": "You came back sweaty but happy."
+   }
+  ]
+ },
+ "yetenek_parlama": {
+  "title": "Something was noticed",
+  "text": "A relative stopped while watching you: \"There's something about this child…\"",
+  "options": [
+   {
+    "text": "Ask curiously what it is",
+    "result": "Your talents will show themselves in time. Try different things!"
+   }
+  ]
+ },
+ "okuma_yazma": {
+  "title": "Reading and writing",
+  "text": "You put letters together and read your first sentence: \"Sam, throw the ball.\"",
+  "options": [
+   {
+    "text": "Read signs out loud",
+    "result": "Car trips are more fun now."
+   },
+   {
+    "text": "Write your own story",
+    "result": "Your first book: 3 pages, lots of pictures."
+   }
+  ]
+ },
+ "kayip_cuzdan": {
+  "title": "A wallet on the ground",
+  "text": "You found a wallet full of money on the street. There's an ID inside.",
+  "options": [
+   {
+    "text": "Find the owner and return it",
+    "result": "The owner was deeply moved; you became known as honest in the neighborhood."
+   },
+   {
+    "text": "Take it to the police station",
+    "result": "The officer congratulated you."
+   }
+  ]
+ },
+ "zorbalik": {
+  "title": "Bullying at school",
+  "text": "Someone in your class is forcing a younger kid to hand over their lunch.",
+  "options": [
+   {
+    "text": "Tell the teacher",
+    "result": "The teacher handled it; the younger kid thanked you."
+   },
+   {
+    "text": "Stand up for the kid",
+    "result": "When you spoke up, others joined you. The bully backed off."
+   },
+   {
+    "text": "Look away",
+    "result": "It stayed on your mind that night. Next time you won't stay silent."
+   }
+  ]
+ },
+ "zorbalik_hedef": {
+  "title": "You're the target",
+  "text": "A few kids are mocking you and hiding your things.",
+  "options": [
+   {
+    "text": "Tell your family and the school counselor",
+    "result": "The school acted right away. You saw you're not alone."
+   },
+   {
+    "text": "Find a new group of friends",
+    "result": "You found people who like you at the chess club."
+   }
+  ]
+ },
+ "ogretmen_ilgi": {
+  "title": "Your teacher noticed you",
+  "text": "Your teacher loved a question you asked in class and called you over at break.",
+  "options": [
+   {
+    "text": "Ask for an extra reading list",
+    "result": "You now have the 'Ask the teacher' lifeline in exams."
+   },
+   {
+    "text": "Ask for help with a project",
+    "result": "You now have the 'Ask the teacher' lifeline in exams."
+   }
+  ]
+ },
+ "kutuphane": {
+  "title": "Library card",
+  "text": "The neighborhood library is holding a summer reading challenge.",
+  "options": [
+   {
+    "text": "Join and aim for 20 books",
+    "result": "You got your medal at the end of summer."
+   },
+   {
+    "text": "Spend the summer outside",
+    "result": "There wasn't a street you didn't explore by bike."
+   }
+  ]
+ },
+ "sokak_kedisi": {
+  "title": "Injured cat",
+  "text": "On the way to school you found a cat with an injured paw.",
+  "options": [
+   {
+    "text": "Ask your family to help take it to the vet",
+    "result": "You named the cat 'Snowball'; now it's always at your door."
+   },
+   {
+    "text": "Leave it water and food",
+    "result": "The next day the cat was waiting for you."
+   }
+  ]
+ },
+ "satranc": {
+  "title": "Chess tournament",
+  "text": "There's a chess tournament at school. Will you join?",
+  "options": [
+   {
+    "text": "Join and study strategy",
+    "result": "You made it to the quarterfinals."
+   },
+   {
+    "text": "Watch",
+    "result": "Next time you'll play too."
+   }
+  ]
+ },
+ "arkadas_tasindi": {
+  "title": "Your friend is moving",
+  "text": "{arkadas} is moving to another city.",
+  "options": [
+   {
+    "text": "Prepare a farewell gift",
+    "result": "You wrote letters to each other for years."
+   },
+   {
+    "text": "Promise video calls",
+    "result": "Distance didn't end the friendship."
+   }
+  ]
+ },
+ "bilim_senligi": {
+  "title": "Science fair",
+  "text": "You need to prepare an experiment for the school science fair.",
+  "options": [
+   {
+    "text": "Make a lemon battery",
+    "success": "The bulb lit up and the hall applauded!",
+    "fail": "The bulb didn't light, but you explained why; the judges liked that too."
+   },
+   {
+    "text": "Build a volcano model",
+    "result": "The foaming lava made everyone laugh."
+   }
+  ]
+ },
+ "mahalle_turnuva": {
+  "title": "Neighborhood tournament final",
+  "text": "The neighborhood tournament final! The score is tied in the last minute. You have the ball.",
+  "options": [
+   {
+    "text": "Dribble past the keeper",
+    "success": "Goal! They carried you on their shoulders.",
+    "fail": "It hit the post. The match was lost on penalties, but you played great."
+   },
+   {
+    "text": "Pass to your open teammate",
+    "result": "Your friend scored, and you were the first one they hugged."
+   }
+  ]
+ },
+ "bakkal_amca": {
+  "title": "The corner shop owner",
+  "text": "The corner shop owner gave you too much change.",
+  "options": [
+   {
+    "text": "Go back and return the extra",
+    "result": "\"You'll make a fine shopkeeper one day,\" he said, and gave you a chocolate."
+   }
+  ]
+ },
+ "karne_hediye": {
+  "title": "Report card present",
+  "text": "Your family wants to buy you a present for your honors certificate.",
+  "options": [
+   {
+    "text": "A bicycle",
+    "result": "You felt the wind on your face."
+   },
+   {
+    "text": "A science kit",
+    "result": "The kitchen turned into a lab."
+   },
+   {
+    "text": "Save the money",
+    "result": "Your piggy bank got heavier."
+   }
+  ]
+ },
+ "koy_hasat": {
+  "title": "Harvest time",
+  "text": "The whole village is out for the harvest. Everyone is helping.",
+  "options": [
+   {
+    "text": "Go out to the fields too",
+    "success": "The crop was brought in on time; the elders praised you.",
+    "fail": "Some of the crop rotted, but you learned a lot."
+   },
+   {
+    "text": "Help prepare the meals",
+    "result": "You carried drinks to everyone in the fields."
+   }
+  ]
+ },
+ "sehir_kurs": {
+  "title": "Weekend workshop",
+  "text": "The city is opening free weekend workshops.",
+  "options": [
+   {
+    "text": "Robotics",
+    "result": "Your line-following robot finished the course."
+   },
+   {
+    "text": "Theater",
+    "result": "You overcame stage fright."
+   },
+   {
+    "text": "Ceramics",
+    "result": "A wonky but lovely vase for your mom."
+   }
+  ]
+ },
+ "izci": {
+  "title": "A scout at the match",
+  "text": "Someone in the stands is taking notes. A big club's scout is watching you.",
+  "options": [
+   {
+    "text": "Focus on the match",
+    "success": "The scout came over: \"Come to the club on Monday.\" The academy gate opened!",
+    "fail": "Nerves made you miss a few chances. The scout left a card: \"Keep working.\""
+   },
+   {
+    "text": "Get excited and show off",
+    "success": "The risky tricks worked! The scout was impressed. You're in the academy!",
+    "fail": "Showing off didn't work. The scout shook his head and left. Lesson learned."
+   }
+  ]
+ },
+ "izci_aile": {
+  "title": "Your family's decision",
+  "text": "The club's facilities are far away. Your family has to decide.",
+  "options": [
+   {
+    "text": "Move closer to the club",
+    "result": "New home, new school, new life. You're at training every day."
+   },
+   {
+    "text": "Take the shuttle every day",
+    "result": "The trips are tiring, but you're determined."
+   }
+  ]
+ },
+ "u17_cagri": {
+  "title": "U17 national team call-up",
+  "text": "The phone rang: the U17 national team is inviting you to camp!",
+  "options": [
+   {
+    "text": "Give everything at camp",
+    "success": "You scored the penalty in the friendly. You wore the national jersey!",
+    "fail": "You didn't make the squad, but the coaches starred your name."
+   }
+  ]
+ },
+ "okul_secme": {
+  "title": "School team tryouts",
+  "text": "The PE teacher is holding tryouts for the school team.",
+  "options": [
+   {
+    "text": "Try out",
+    "success": "You're on the team! Your shirt number is 10.",
+    "fail": "Not this time. Keep practicing in street games."
+   },
+   {
+    "text": "Don't try out",
+    "result": "You focused on other things."
+   }
+  ]
+ },
+ "sinif_baskani": {
+  "title": "Class president election",
+  "text": "There's a class president election. Will you run?",
+  "options": [
+   {
+    "text": "Run and give a speech",
+    "success": "You won! Your first act: a class library.",
+    "fail": "You lost by a small margin, but the class listened to you."
+   },
+   {
+    "text": "Support your friend",
+    "result": "Your friend won and you became vice president."
+   }
+  ]
+ },
+ "kopya_rica": {
+  "title": "Your friend needs help",
+  "text": "Before tomorrow's test, {arkadas} is very worried: \"I didn't understand anything.\"",
+  "options": [
+   {
+    "text": "Offer to study together tonight",
+    "result": "You studied together and both got good grades. Now you have a study group."
+   },
+   {
+    "text": "Ask the teacher for extra help",
+    "result": "The teacher gave you both extra study sessions."
+   }
+  ]
+ },
+ "calisma_grubu": {
+  "title": "Study group",
+  "text": "A study group is forming in class. Two evenings a week.",
+  "options": [
+   {
+    "text": "Join",
+    "result": "The 'Study group' lifeline is now unlocked in exams."
+   },
+   {
+    "text": "Prefer to study alone",
+    "result": "You like your own pace."
+   }
+  ]
+ },
+ "dolandirici_mesaj": {
+  "title": "\"Congratulations, you won!\"",
+  "text": "You got a message: \"You've won a phone! Enter your card details.\"",
+  "options": [
+   {
+    "text": "Delete it and warn your family and friends",
+    "result": "It was a phishing attack. You warned a friend too."
+   },
+   {
+    "text": "Click the link",
+    "result": "Money was taken from your account. You called the bank; be careful next time!"
+   }
+  ]
+ },
+ "ekran_bagimliligi": {
+  "title": "Glued to the screen",
+  "text": "You realized you spend 6 hours a day on your phone.",
+  "options": [
+   {
+    "text": "Set a screen time limit",
+    "result": "Your sleep improved and your energy went up."
+   },
+   {
+    "text": "Never mind",
+    "result": "Your eyes are tired and your mind scattered."
+   }
+  ]
+ },
+ "bilim_olimpiyati": {
+  "title": "Science olympiad",
+  "text": "You were selected for the national science olympiad! The final exam is very hard.",
+  "options": [
+   {
+    "text": "Take the exam",
+    "success": "Bronze medal! A university scholarship is in your pocket.",
+    "fail": "No medal, but even reaching the final is a big achievement."
+   }
+  ]
+ },
+ "harclik_birikim": {
+  "title": "Piggy bank",
+  "text": "Some of your allowance is left over.",
+  "options": [
+   {
+    "text": "Put it in the piggy bank",
+    "result": "Saving feels good."
+   },
+   {
+    "text": "Buy ice cream for your friends",
+    "result": "Everyone will remember you that summer."
+   }
+  ]
+ },
+ "bisiklet_tamir": {
+  "title": "Flat tire",
+  "text": "Your bike has a flat tire.",
+  "options": [
+   {
+    "text": "Fix it yourself",
+    "success": "The patch held. You're now the neighborhood bike mechanic.",
+    "fail": "You had a part left over. The mechanic showed you where it went."
+   },
+   {
+    "text": "Take it to the repair shop",
+    "result": "The mechanic showed you how it's done."
+   }
+  ]
+ },
+ "sinav_kaygisi": {
+  "title": "Exam anxiety",
+  "text": "As the big exam gets closer, you can't sleep.",
+  "options": [
+   {
+    "text": "Talk to the school counselor",
+    "result": "Breathing exercises and a study plan helped."
+   },
+   {
+    "text": "Relax with exercise",
+    "result": "Your head cleared and your focus improved."
+   },
+   {
+    "text": "Study day and night",
+    "result": "You know more, but you're exhausted."
+   }
+  ]
+ },
+ "ilk_ask": {
+  "title": "First love",
+  "text": "Someone from class left you a note at break. Your heart is pounding.",
+  "options": [
+   {
+    "text": "Write back",
+    "result": "First love… never forgotten."
+   },
+   {
+    "text": "Get shy and stay friends",
+    "result": "Maybe it's not the time."
+   }
+  ]
+ },
+ "rehberlik": {
+  "title": "Career guidance",
+  "text": "The school counselor wants to review your talents with you.",
+  "options": [
+   {
+    "text": "Take an aptitude test",
+    "result": "The results gave hints about where you could shine (Me tab)."
+   }
+  ]
+ },
+ "proje_yarismasi": {
+  "title": "Project competition win",
+  "text": "You reached the final of the national science project competition. You must demonstrate your system in front of the jury.",
+  "options": [
+   {
+    "text": "Run the system live",
+    "success": "First place! An award, a scholarship and your photo in the papers.",
+    "fail": "The system froze at the last moment, but the jury gave your idea an honorable mention."
+   }
+  ]
+ },
+ "yurtdisi_burs": {
+  "title": "Scholarship abroad",
+  "text": "Thanks to your grades you won a scholarship to a summer school abroad.",
+  "options": [
+   {
+    "text": "Accept",
+    "result": "A new language, a new world."
+   },
+   {
+    "text": "Decline and stay with family",
+    "result": "Your family was very happy with your decision."
+   }
+  ]
+ },
+ "mentor_ogretmen": {
+  "title": "A mentor",
+  "text": "A well-known figure wants to mentor you. Which field will you choose?",
+  "options": [
+   {
+    "text": "⚽ A former national team footballer",
+    "result": "Your football growth is 20% faster."
+   },
+   {
+    "text": "🩺 A retired surgeon",
+    "result": "Your science growth is 20% faster."
+   },
+   {
+    "text": "💼 A successful merchant",
+    "result": "Your business growth is 20% faster."
+   },
+   {
+    "text": "💻 A software founder",
+    "result": "Your technology growth is 20% faster."
+   }
+  ]
+ },
+ "sakatlik_genc": {
+  "title": "Injury",
+  "text": "You twisted your knee at training. The doctor says to rest.",
+  "options": [
+   {
+    "text": "Follow the treatment patiently",
+    "result": "You fully recovered; patience paid off."
+   },
+   {
+    "text": "Return to the pitch early",
+    "result": "A risky decision…"
+   }
+  ]
+ },
+ "fenomen": {
+  "title": "Your video went viral",
+  "text": "A video you posted got a million views overnight!",
+  "options": [
+   {
+    "text": "Keep making useful content",
+    "result": "Your followers love you, and a little ad income started."
+   },
+   {
+    "text": "Focus on becoming famous",
+    "result": "The attention faded fast. Your grades slipped."
+   }
+  ]
+ },
+ "deprem_tatbikati": {
+  "title": "Earthquake drill",
+  "text": "There's an earthquake drill at school/work. Most people aren't taking it seriously.",
+  "options": [
+   {
+    "text": "Take it seriously and learn the exits",
+    "result": "You prepared an emergency kit. You'll be better off in a real earthquake."
+   },
+   {
+    "text": "Brush it off",
+    "result": "The drill ended."
+   }
+  ]
+ },
+ "kulup_kur": {
+  "title": "Start a club",
+  "text": "Your school has no coding, music or nature club. What if you started one?",
+  "options": [
+   {
+    "text": "Start it and be president",
+    "result": "23 people came to the first meeting!"
+   },
+   {
+    "text": "Let someone else start it; you join",
+    "result": "You made a great team."
+   }
+  ]
+ },
+ "yaz_isi": {
+  "title": "Summer job offer",
+  "text": "The ice cream shop on the beach is hiring for the summer.",
+  "options": [
+   {
+    "text": "Accept",
+    "success": "You ran the register all summer; the boss invited you back next year.",
+    "fail": "The till came up short a few times, but you learned a lot."
+   },
+   {
+    "text": "Spend the summer resting",
+    "result": "Batteries recharged."
+   }
+  ]
+ },
+ "ilk_maas": {
+  "title": "First paycheck",
+  "text": "Your first paycheck hit your account!",
+  "options": [
+   {
+    "text": "Buy a gift for your family",
+    "result": "The smile on {anne}'s face was worth everything."
+   },
+   {
+    "text": "Put it into savings",
+    "result": "You planted a small seed for the future."
+   }
+  ]
+ },
+ "sahte_ilan": {
+  "title": "Rental listing",
+  "text": "You found a very cheap apartment for rent. The owner says: \"I'm abroad; send the deposit and I'll mail you the key.\"",
+  "options": [
+   {
+    "text": "Don't send money without seeing it",
+    "result": "Right call! The listing was a scam."
+   },
+   {
+    "text": "Send the deposit",
+    "result": "No apartment, no owner. You went to the police. A painful lesson."
+   }
+  ]
+ },
+ "universite_kulup": {
+  "title": "Campus life",
+  "text": "Club fair day. The stands are full of color.",
+  "options": [
+   {
+    "text": "Entrepreneurship club",
+    "result": "You found your first business idea here."
+   },
+   {
+    "text": "Mountaineering club",
+    "result": "Your first summit!"
+   },
+   {
+    "text": "Community service club",
+    "result": "You took books to village schools."
+   }
+  ]
+ },
+ "burs_basvuru": {
+  "title": "Scholarship application",
+  "text": "A foundation offers scholarships to top students. You were invited to an interview.",
+  "options": [
+   {
+    "text": "Go to the interview",
+    "success": "You won the scholarship! Your living costs are halved.",
+    "fail": "Not this term. You can apply again next term."
+   }
+  ]
+ },
+ "evlilik_teklifi": {
+  "title": "Marriage",
+  "text": "You and {partner} have been together for years. Is it time to share your lives?",
+  "options": [
+   {
+    "text": "Propose",
+    "result": "\"Yes!\" You joined your lives with a simple, warm wedding."
+   },
+   {
+    "text": "Wait a little longer",
+    "result": "{partner} was a bit hurt but understood."
+   }
+  ]
+ },
+ "cocuk_istegi": {
+  "title": "Growing the family?",
+  "text": "You and {partner} are talking about having children.",
+  "options": [
+   {
+    "text": "Yes, we're ready",
+    "result": "A little miracle entered your life."
+   },
+   {
+    "text": "Not yet",
+    "result": "Career and home first."
+   }
+  ]
+ },
+ "cocuk_istegi2": {
+  "title": "Another sibling?",
+  "text": "Your child wants a sibling.",
+  "options": [
+   {
+    "text": "Let the family grow",
+    "result": "The house came alive!"
+   },
+   {
+    "text": "One child is enough",
+    "result": "You give them all your love."
+   }
+  ]
+ },
+ "kredi_karti": {
+  "title": "Credit card offer",
+  "text": "The bank offers a high-limit credit card. Buy-now-pay-later is at the door.",
+  "options": [
+   {
+    "text": "Use it only as needed",
+    "result": "The card made life easier, and you didn't go into debt."
+   },
+   {
+    "text": "Buy a new phone and clothes",
+    "result": "The installments lasted for months…"
+   }
+  ]
+ },
+ "ortaklik_teklifi": {
+  "title": "Partnership offer",
+  "text": "An old friend wants to open a café and asks you to be a partner. No business plan, but lots of enthusiasm.",
+  "options": [
+   {
+    "text": "Ask for a business plan and numbers first",
+    "result": "Once the plan was done you saw the numbers didn't work; the friendship and the money stayed safe."
+   },
+   {
+    "text": "Trust them and invest",
+    "result": "The dice are cast…"
+   }
+  ]
+ },
+ "startup": {
+  "title": "Startup idea",
+  "text": "The app you built caught the eye of an accelerator. Demo day is tomorrow!",
+  "options": [
+   {
+    "text": "Give the demo",
+    "success": "You got funded! You built a small team and grew the product.",
+    "fail": "A bug appeared during the demo. The investors said to come back in a year."
+   }
+  ]
+ },
+ "ilk_araba": {
+  "title": "Used car",
+  "text": "You found an affordable used car.",
+  "options": [
+   {
+    "text": "Get it inspected, then buy",
+    "result": "It checked out. Now you're on the road every weekend."
+   },
+   {
+    "text": "Keep taking public transport",
+    "result": "Your savings keep growing."
+   }
+  ]
+ },
+ "ev_alma": {
+  "title": "Owning a home",
+  "text": "Your savings are enough for a down payment on a home.",
+  "options": [
+   {
+    "text": "Buy a home",
+    "result": "No more rent — the key is yours!"
+   },
+   {
+    "text": "Keep renting and invest in your work",
+    "result": "You kept your cash strong."
+   }
+  ]
+ },
+ "ekonomik_kriz": {
+  "title": "Economic crisis",
+  "text": "The currency collapsed and markets froze. Everyone is wondering what to do.",
+  "options": [
+   {
+    "text": "Save and cut costs",
+    "result": "It was a hard year, but you came through solid."
+   },
+   {
+    "text": "Buy assets while they're cheap",
+    "result": "A bold move…"
+   },
+   {
+    "text": "Scale down your business",
+    "result": "You protected your staff and cut costs."
+   }
+  ]
+ },
+ "deprem": {
+  "title": "Earthquake",
+  "text": "4:17 am. The ground shook. The street is full of dust. Voices come from the rubble.",
+  "options": [
+   {
+    "text": "Join the search and rescue",
+    "success": "You pulled a family from the rubble. The neighborhood calls you a \"People's Hero\".",
+    "fail": "You did all you could. When the teams arrived, you collapsed from exhaustion."
+   },
+   {
+    "text": "Move your family to safety and gather aid",
+    "result": "You handed out blankets and water at the assembly area."
+   }
+  ]
+ },
+ "kayip_akraba": {
+  "title": "Lost relative",
+  "text": "A letter arrived: you have an uncle your father never mentioned, and he wants to meet you.",
+  "options": [
+   {
+    "text": "Meet him",
+    "result": "An old man whose eyes look like yours…"
+   },
+   {
+    "text": "Leave the past alone",
+    "result": "You put the letter in a drawer."
+   }
+  ]
+ },
+ "kayip_akraba2": {
+  "title": "Family secret",
+  "text": "Your uncle tells you about a fight from years ago. He asks for your help to make peace.",
+  "options": [
+   {
+    "text": "Reconcile the two brothers",
+    "success": "After years, the two brothers embraced.",
+    "fail": "The hurt ran deep. But you opened a door."
+   }
+  ]
+ },
+ "kayip_akraba3": {
+  "title": "Your uncle's will",
+  "text": "Your uncle passed away. In his will he left you an old olive grove and a letter: \"For bringing the family together.\"",
+  "options": [
+   {
+    "text": "Run the olive grove",
+    "result": "The olive trees bore fruit again."
+   },
+   {
+    "text": "Donate it to the village school",
+    "result": "The school now bears your uncle's name."
+   }
+  ]
+ },
+ "ebeveyn_vefat": {
+  "title": "Farewell",
+  "text": "After a long and full life, one of your parents passed away.",
+  "options": [
+   {
+    "text": "Grieve and stay with family",
+    "result": "What they taught you stays with you."
+   }
+  ]
+ },
+ "hastalik": {
+  "title": "Health problem",
+  "text": "You've been tired for a while. The doctor wants some tests.",
+  "options": [
+   {
+    "text": "Get tested and start treatment now",
+    "result": "Thanks to early diagnosis, you got through it easily."
+   },
+   {
+    "text": "Wait for it to pass",
+    "result": "The illness progressed and treatment took long."
+   }
+  ]
+ },
+ "bel_agrisi": {
+  "title": "Back pain",
+  "text": "Hours at the desk have worn out your back.",
+  "options": [
+   {
+    "text": "Start an exercise program",
+    "result": "The pain eased and your energy rose."
+   },
+   {
+    "text": "Get by with painkillers",
+    "result": "The pain faded for a while."
+   }
+  ]
+ },
+ "orta_yas": {
+  "title": "The question in the mirror",
+  "text": "One morning you looked in the mirror and wondered: \"Is this the life I dreamed of?\"",
+  "options": [
+   {
+    "text": "Pick up a new hobby",
+    "result": "Guitar lessons began."
+   },
+   {
+    "text": "Spend more time with family",
+    "result": "Family dinners became sacred."
+   },
+   {
+    "text": "Set a new career goal",
+    "result": "A new motivation."
+   }
+  ]
+ },
+ "vergi_denetimi": {
+  "title": "Tax audit",
+  "text": "A tax inspector wants to review your books.",
+  "options": [
+   {
+    "text": "Present every document in full",
+    "result": "Your books were spotless. You made the trusted-business list."
+   }
+  ]
+ },
+ "fazla_odeme": {
+  "title": "The customer's mistake",
+  "text": "A customer accidentally paid twice and didn't notice.",
+  "options": [
+   {
+    "text": "Call them and refund it",
+    "result": "The customer was so impressed they brought their friends."
+   }
+  ]
+ },
+ "sahte_tedarikci": {
+  "title": "Fake supplier",
+  "text": "A new supplier is selling at half the market price. They want cash up front and won't give invoices.",
+  "options": [
+   {
+    "text": "Notice the red flags and stay away",
+    "result": "A few weeks later the supplier turned out to be a fraud. You were safe."
+   },
+   {
+    "text": "Try a small order",
+    "result": "The goods never came. A small loss, a big lesson."
+   }
+  ]
+ },
+ "rakip_karalama": {
+  "title": "A rival's smear",
+  "text": "A rival shop is posting fake reviews about your products on social media.",
+  "options": [
+   {
+    "text": "Answer with quality and transparency",
+    "result": "Your customers defended you."
+   },
+   {
+    "text": "File a legal complaint",
+    "result": "The reviews were taken down."
+   }
+  ]
+ },
+ "yatirimci": {
+  "title": "An investor noticed your shop",
+  "text": "A well-known investor offers big capital for 30% of your business.",
+  "options": [
+   {
+    "text": "Negotiate and sell shares",
+    "success": "You got a good valuation. Fuel for growth is ready!",
+    "fail": "You settled at a low valuation, but the capital still came in."
+   },
+   {
+    "text": "Stay independent",
+    "result": "You chose to grow at your own pace."
+   }
+  ]
+ },
+ "unlu_urun": {
+  "title": "A celebrity used your product",
+  "text": "A famous actor shared your product. Orders are exploding!",
+  "options": [
+   {
+    "text": "Plan your stock carefully",
+    "success": "You shipped every order on time for three months. You became a brand!",
+    "fail": "Stock ran out and some orders were late. You still earned well."
+   }
+  ]
+ },
+ "toptan_firsat": {
+  "title": "Bulk order",
+  "text": "A hotel chain wants to place a bulk order but expects a discount.",
+  "options": [
+   {
+    "text": "Negotiate",
+    "success": "You made a profitable deal!",
+    "fail": "Your margin dropped a lot, but you won a customer."
+   },
+   {
+    "text": "Politely decline",
+    "result": "You focused on your existing customers."
+   }
+  ]
+ },
+ "tarla_eser": {
+  "title": "Ancient find in the field",
+  "text": "While driving the tractor, an old amphora surfaced from the soil.",
+  "options": [
+   {
+    "text": "Hand it over to the authorities",
+    "result": "The museum gave you a reward; your name was in the local paper."
+   },
+   {
+    "text": "Donate it and help with the dig",
+    "result": "The dig uncovered an ancient farmhouse. A documentary was made about it."
+   }
+  ]
+ },
+ "dolu": {
+  "title": "Hailstorm",
+  "text": "Hail fell a week before the harvest.",
+  "options": [
+   {
+    "text": "Use your crop insurance",
+    "result": "The insurance covered the loss."
+   },
+   {
+    "text": "Save what's left of the crop",
+    "success": "You saved half the crop.",
+    "fail": "The damage is big. You should get insurance next year."
+   }
+  ]
+ },
+ "tarim_sigortasi": {
+  "title": "Crop insurance",
+  "text": "The cooperative is explaining state-backed crop insurance.",
+  "options": [
+   {
+    "text": "Get insured",
+    "result": "You're now protected against natural disasters."
+   },
+   {
+    "text": "No need",
+    "result": "Hope the weather smiles on you."
+   }
+  ]
+ },
+ "kooperatif": {
+  "title": "Start a cooperative?",
+  "text": "The village farmers sell their crops to traders far too cheaply. What if you united?",
+  "options": [
+   {
+    "text": "Found the cooperative",
+    "success": "The village united; the crops now go straight to the market.",
+    "fail": "You couldn't convince everyone. Try again next year."
+   }
+  ]
+ },
+ "zor_vaka": {
+  "title": "A tough case",
+  "text": "A patient with confusing symptoms came into the ER. The other doctors aren't sure.",
+  "options": [
+   {
+    "text": "Take the case",
+    "success": "Correct diagnosis! The patient recovered and wrote you a thank-you letter.",
+    "fail": "A consultation led to the right diagnosis. You learned something new."
+   }
+  ]
+ },
+ "nobet": {
+  "title": "Night shift",
+  "text": "You're on call on a holiday night. The ER is packed.",
+  "options": [
+   {
+    "text": "Run the triage yourself",
+    "success": "Critical patients were treated first. The chief physician congratulated you.",
+    "fail": "It was a hard night; some patients waited a long time."
+   }
+  ]
+ },
+ "koprü_proje": {
+  "title": "New project",
+  "text": "The company entrusted you with a key client's system.",
+  "options": [
+   {
+    "text": "Build the system",
+    "success": "The project was delivered on time; you got a bonus!",
+    "fail": "You were a few days late, but it finally worked."
+   }
+  ]
+ },
+ "usulsuz_teklif": {
+  "title": "Improper offer",
+  "text": "A company offers you a \"gift\" if you favor them in a tender.",
+  "options": [
+   {
+    "text": "Refuse and report it to your manager",
+    "result": "It became a model case for the company's ethics board. Your integrity was confirmed."
+   },
+   {
+    "text": "Politely refuse",
+    "result": "You drew your lines clearly."
+   }
+  ]
+ },
+ "gece_bug": {
+  "title": "Midnight bug",
+  "text": "The live system crashed! It's 2 am and your phone is ringing.",
+  "options": [
+   {
+    "text": "Find the bug",
+    "success": "You fixed it in 15 minutes. The team calls you the 'firefighter'.",
+    "fail": "You worked until morning, but you solved it."
+   }
+  ]
+ },
+ "derbi": {
+  "title": "Derby day",
+  "text": "Derby! The stadium is packed. You won a last-minute penalty.",
+  "options": [
+   {
+    "text": "Take the ball",
+    "success": "GOAL! The stands are chanting your name.",
+    "fail": "The keeper saved it. You're in the headlines the next day… but your team has your back."
+   },
+   {
+    "text": "Leave it to the captain",
+    "result": "The captain scored, and you were the first one they hugged."
+   }
+  ]
+ },
+ "transfer_teklifi": {
+  "title": "Transfer offer",
+  "text": "Another club is offering a higher salary. Your agent suggests negotiating.",
+  "options": [
+   {
+    "text": "Negotiate",
+    "success": "A signing bonus in your pocket!",
+    "fail": "You didn't reach your number, but you agreed."
+   },
+   {
+    "text": "Stay loyal to your club",
+    "result": "The fans won't forget your loyalty."
+   }
+  ]
+ },
+ "zor_ariza": {
+  "title": "The fault nobody could fix",
+  "text": "An engine that stumped everyone in the industrial area came to your workshop.",
+  "options": [
+   {
+    "text": "Find the fault",
+    "success": "It was a gasket! Your name is on everyone's lips.",
+    "fail": "Your master showed you; you'll never forget it."
+   }
+  ]
+ },
+ "cirak_yetistir": {
+  "title": "New apprentice",
+  "text": "A new apprentice joined the workshop; very eager but clumsy.",
+  "options": [
+   {
+    "text": "Teach them patiently",
+    "result": "Years later that apprentice will speak of you as 'my master'."
+   },
+   {
+    "text": "Do the work yourself",
+    "result": "Things go fast but it's exhausting."
+   }
+  ]
+ },
+ "veli_toplantisi": {
+  "title": "Parent-teacher meeting",
+  "text": "Your child's teacher wants to talk with you.",
+  "options": [
+   {
+    "text": "Get involved and help with homework",
+    "result": "Your child's grades went up."
+   },
+   {
+    "text": "Too busy with work to go",
+    "result": "Next time you'll definitely go."
+   }
+  ]
+ },
+ "cocuk_hastalik": {
+  "title": "Your child is sick",
+  "text": "Your child's fever won't go down.",
+  "options": [
+   {
+    "text": "Take time off and stay by their side",
+    "result": "They recovered in a few days and hugged you for being there."
+   }
+  ]
+ },
+ "torun": {
+  "title": "Grandchild",
+  "text": "Great news from your child: you're going to be a grandparent!",
+  "options": [
+   {
+    "text": "Jump for joy",
+    "result": "Life's most beautiful title."
+   }
+  ]
+ },
+ "emeklilik_partisi": {
+  "title": "Farewell party",
+  "text": "Your coworkers threw you a surprise farewell party.",
+  "options": [
+   {
+    "text": "Give an emotional speech",
+    "result": "Everyone wiped away tears."
+   }
+  ]
+ },
+ "ani_kitabi": {
+  "title": "Write your memoirs",
+  "text": "Your grandchildren want you to write down your stories.",
+  "options": [
+   {
+    "text": "Write a memoir",
+    "result": "Your book is sold in local bookstores."
+   },
+   {
+    "text": "Tell them aloud and let them record",
+    "result": "A priceless recording for the family archive."
+   }
+  ]
+ },
+ "eski_dost": {
+  "title": "An old friend",
+  "text": "You ran into {arkadas}, whom you hadn't seen in years.",
+  "options": [
+   {
+    "text": "Have a coffee together",
+    "result": "It's as if you'd never been apart."
+   }
+  ]
+ },
+ "miras_planı": {
+  "title": "Estate plan",
+  "text": "Your lawyer asks how you want to divide your estate.",
+  "options": [
+   {
+    "text": "Split it fairly among your children",
+    "result": "Family peace is secured."
+   },
+   {
+    "text": "Donate part to a scholarship fund",
+    "result": "A scholarship fund was created in your name."
+   }
+  ]
+ },
+ "dunya_turu": {
+  "title": "World tour",
+  "text": "There's a chance for the world tour you've always dreamed of.",
+  "options": [
+   {
+    "text": "Hit the road",
+    "result": "From Machu Picchu to Cappadocia… memories too big for the album."
+   },
+   {
+    "text": "Leave the money to the grandchildren",
+    "result": "Their future is your happiness."
+   }
+  ]
+ },
+ "genclere_mentor": {
+  "title": "Mentoring young people",
+  "text": "A university asks you to give students a career talk.",
+  "options": [
+   {
+    "text": "Give the talk",
+    "success": "The hall gave you a standing ovation. Three students emailed you afterwards.",
+    "fail": "You were a bit nervous, but the students showed interest with their questions."
+   }
+  ]
+ },
+ "komsu_yardim": {
+  "title": "The neighbor's trouble",
+  "text": "Your elderly neighbor has no one to carry their shopping.",
+  "options": [
+   {
+    "text": "Help every week",
+    "result": "Your neighbor loves you like a grandchild."
+   },
+   {
+    "text": "Call the city's help line",
+    "result": "They now get regular support."
+   }
+  ]
+ },
+ "dogum_gunu": {
+  "title": "Surprise birthday",
+  "text": "Your friends threw you a surprise birthday party!",
+  "options": [
+   {
+    "text": "Enjoy it",
+    "result": "You blew out the candles and made a wish."
+   }
+  ]
+ },
+ "evcil_hayvan": {
+  "title": "A stray dog",
+  "text": "There's a dog at the shelter looking at you.",
+  "options": [
+   {
+    "text": "Adopt it",
+    "result": "Now you go for a walk together every morning."
+   },
+   {
+    "text": "Donate to the shelter",
+    "result": "Food and medicine were bought."
+   }
+  ]
+ },
+ "burnout": {
+  "title": "Burnout",
+  "text": "Getting out of bed in the morning is hard. Nothing feels enjoyable.",
+  "options": [
+   {
+    "text": "Get support from a professional",
+    "result": "Talking helped. You're slowly recovering."
+   },
+   {
+    "text": "Take time off and go into nature",
+    "result": "The mountain air cleared your head."
+   }
+  ]
+ },
+ "yangin": {
+  "title": "Kitchen fire",
+  "text": "A frying pan caught fire!",
+  "options": [
+   {
+    "text": "Cover it with a lid and turn off the stove",
+    "result": "Right move! The fire went out."
+   },
+   {
+    "text": "Pour water on it",
+    "result": "The flames grew and the fire brigade came. Never pour water on an oil fire."
+   }
+  ]
+ },
+ "gonullu_ogretmen": {
+  "title": "Village school",
+  "text": "A charity is looking for weekend volunteer teachers for village schools.",
+  "options": [
+   {
+    "text": "Volunteer",
+    "result": "The children's curiosity inspired you too."
+   },
+   {
+    "text": "Donate books",
+    "result": "The school library grew."
+   }
+  ]
+ },
+ "yarışma_tv": {
+  "title": "Quiz show",
+  "text": "You were chosen for a TV quiz show! You reached the final question.",
+  "options": [
+   {
+    "text": "Answer the questions",
+    "success": "The grand prize is yours! Knowledge is earned through effort.",
+    "fail": "You got stuck on the last question but went home with a nice prize."
+   },
+   {
+    "text": "Walk away with your winnings",
+    "result": "A wise decision."
+   }
+  ]
+ },
+ "hayir_kermesi": {
+  "title": "School charity fair",
+  "text": "There's a charity fair at school for students in need.",
+  "options": [
+   {
+    "text": "Open a stall and sell cookies",
+    "success": "Your stall raised the most donations!",
+    "fail": "The accounts got a bit mixed up, but the donation goal was reached."
+   },
+   {
+    "text": "Design the poster",
+    "result": "Your poster was the talk of the school."
+   }
+  ]
+ },
+ "muzik_yarismasi": {
+  "title": "Music competition",
+  "text": "You have a chance to enter the city music competition.",
+  "options": [
+   {
+    "text": "Take the stage",
+    "success": "You won first place! A studio got in touch.",
+    "fail": "You missed a note, but the jury saw your potential."
+   }
+  ]
+ },
+ "resim_sergisi": {
+  "title": "First exhibition",
+  "text": "A gallery wants to exhibit your work.",
+  "options": [
+   {
+    "text": "Prepare a new piece",
+    "success": "Your painting sold!",
+    "fail": "The show drew little interest, but the first step is taken."
+   }
+  ]
+ },
+ "aile_fatura": {
+  "title": "Bills are piling up",
+  "text": "The electricity and gas bills went unpaid; a disconnection notice arrived. {anne} is doing sums late into the night. The mood at home is heavy.",
+  "log": "The family couldn't pay the bills.",
+  "options": [
+   {
+    "text": "Give all my savings to my family",
+    "result": "{anne} hugged you: \"You're our pride.\""
+   },
+   {
+    "text": "Work on weekends to help",
+    "result": "You promised. Find work at the market or in the neighborhood and give your earnings to the family — or the problems will grow."
+   },
+   {
+    "text": "It's not my problem",
+    "result": "You closed your door, but the silence behind the walls gets heavier every night."
+   },
+   {
+    "text": "Say you don't want your allowance",
+    "result": "A big help from small hands."
+   },
+   {
+    "text": "Quietly sense the tension at home",
+    "result": "You don't fully understand, but everyone is very tired."
+   }
+  ]
+ },
+ "aile_kira": {
+  "title": "Rent warning",
+  "text": "The landlord sent a formal warning over unpaid rent. Either the debt is paid, or you move to a smaller home farther away.",
+  "log": "The family received a rent warning.",
+  "options": [
+   {
+    "text": "Give all my savings so we keep our home",
+    "result": "The rent was paid. Your family will never forget this sacrifice."
+   },
+   {
+    "text": "Let's move to a smaller home",
+    "result": "The new home is cramped and school is farther. You see old friends less, but the family can breathe."
+   },
+   {
+    "text": "Let's borrow from relatives",
+    "result": "Your uncle lent the money. But one day it will have to be repaid."
+   },
+   {
+    "text": "Move to the new home with your family",
+    "result": "The new home is small and school is far. You cried a little packing your things into boxes."
+   }
+  ]
+ },
+ "akraba_borc": {
+  "title": "The loan comes due",
+  "text": "The uncle who lent your family money years ago is now struggling himself. He asks for it back.",
+  "options": [
+   {
+    "text": "I'll repay the debt for my family",
+    "result": "Your uncle thanked you with tears in his eyes. A promise is a bond."
+   },
+   {
+    "text": "Let's repay it in installments together",
+    "result": "The installments will be tough, but the promise was kept."
+   },
+   {
+    "text": "Say \"We can't right now\"",
+    "result": "A chill came between you and your uncle."
+   }
+  ]
+ },
+ "aile_icra": {
+  "title": "Debt collectors at the door",
+  "text": "{baba}'s debts went to collection; the furniture is being seized. {kardes} is thinking of leaving school to work. Everyone is looking at you.",
+  "log": "The family went through debt collection and seizures.",
+  "options": [
+   {
+    "text": "I'll leave school and work full-time",
+    "result": "Life made you grow up early. But the road isn't over: you can finish an equivalency diploma later."
+   },
+   {
+    "text": "Keep going to school and work nights",
+    "result": "School by day, warehouse by night. You're tired, but you carry both loads."
+   },
+   {
+    "text": "Let my sibling leave school",
+    "result": "Your sibling started working at a factory. An ache stayed with you that never faded."
+   },
+   {
+    "text": "Tell your teacher about your fears",
+    "result": "Your teacher arranged school supplies and clothes through the parents' association."
+   }
+  ]
+ },
+ "aile_dagilma": {
+  "title": "The family is falling apart",
+  "text": "Debts, fights, doors that won't close… {anne} and {baba} are talking about separating.",
+  "log": "The family reached a breaking point.",
+  "options": [
+   {
+    "text": "Sit them down and get them talking",
+    "success": "That night, for the first time, everyone listened. You made a plan; the family held together.",
+    "fail": "They started living in separate homes. Life goes on, but now you have two homes."
+   },
+   {
+    "text": "Let's see a family counselor",
+    "result": "The counselor showed that the problem wasn't money but not talking."
+   },
+   {
+    "text": "Write your parents a letter: \"Please stop fighting\"",
+    "result": "After reading it, both were silent for a long time. That evening they talked at the dinner table for the first time."
+   }
+  ]
+ },
+ "ebeveyn_zor": {
+  "title": "Your parents are struggling",
+  "text": "Your parents are struggling to get by. Rent, medicine, bills… They were too proud to tell you.",
+  "log": "Learned that their elderly parents were struggling financially.",
+  "options": [
+   {
+    "text": "I'll send support every month",
+    "result": "Loyalty. For the first time in years, your father sounded relaxed on the phone."
+   },
+   {
+    "text": "Take them in and live together",
+    "result": "The house got crowded; sometimes hard, but they share the table with their grandchildren."
+   },
+   {
+    "text": "I can't afford it right now",
+    "result": "The call you hung up kept gnawing at you."
+   }
+  ]
+ },
+ "baba_isten_cikti": {
+  "title": "Your father lost his job",
+  "text": "{baba}'s workplace downsized and your father was laid off. Household income dropped overnight.",
+  "log": "Their father lost his job; the family's income dropped.",
+  "options": [
+   {
+    "text": "Cheer your father up and look at listings together",
+    "result": "Your father smiled shyly: \"I'm glad I have you.\""
+   },
+   {
+    "text": "Say you don't want your allowance",
+    "result": "A small sacrifice, but the family noticed."
+   },
+   {
+    "text": "I'll start working too",
+    "result": "Don't forget to give what you earn from work to the family (Home tab)."
+   },
+   {
+    "text": "Hug your father",
+    "result": "Even if you don't fully understand, your hug gave him strength."
+   }
+  ]
+ },
+ "anne_hastalik": {
+  "title": "Your mother fell ill",
+  "text": "{anne} fell ill. There are treatment costs, and for a while she can't work or do the housework.",
+  "log": "Their mother went through a long illness.",
+  "options": [
+   {
+    "text": "Take on the chores and look after your siblings",
+    "result": "For a year you were the pillar of the home. When your mother recovered, she thanked you first."
+   },
+   {
+    "text": "Stay with her at the hospital",
+    "result": "You watched the doctors in the corridors. Maybe one day you too…"
+   },
+   {
+    "text": "Draw your mother a picture to cheer her up",
+    "result": "She put it by her bed: \"The best medicine.\""
+   },
+   {
+    "text": "Be good and help with small things",
+    "result": "You tidied your toys and set the table. Small, but precious."
+   }
+  ]
+ },
+ "kira_zammi": {
+  "title": "Huge rent increase",
+  "text": "The landlord wants to raise the rent by 60%. {baba} is thinking of negotiating.",
+  "options": [
+   {
+    "text": "Help your father negotiate",
+    "success": "You brought the increase down to a reasonable level!",
+    "fail": "The landlord wouldn't budge. The budget got even tighter."
+   },
+   {
+    "text": "Accept it; moving is harder",
+    "result": "A little less left over every month."
+   }
+  ]
+ },
+ "baba_terfi": {
+  "title": "Good news at home",
+  "text": "{baba} and {anne} advanced at work; the household income rose.",
+  "options": [
+   {
+    "text": "Celebration dinner!",
+    "result": "Laughter at the table — the first easy year in a long time."
+   }
+  ]
+ },
+ "kardes_masraf": {
+  "title": "Your sibling got into university",
+  "text": "{kardes} got into a university in another city. Dorm, travel, books… A new expense for the family.",
+  "options": [
+   {
+    "text": "Help out from your own savings",
+    "result": "Your sibling got their first allowance from you."
+   },
+   {
+    "text": "Congratulate them and wish them well",
+    "result": "The family is proud, but the budget will be tighter for four years."
+   }
+  ]
+ },
+ "dede_bakimi": {
+  "title": "Caring for grandpa",
+  "text": "Your grandpa can no longer live alone; he's moving in with you. Both a joy and a responsibility.",
+  "options": [
+   {
+    "text": "Spend time with grandpa and look after him",
+    "result": "Grandpa's stories became the most valuable lessons of your life."
+   },
+   {
+    "text": "Give your room to grandpa",
+    "result": "You sleep in the living room, but you feel at peace."
+   }
+  ]
+ },
+ "akraba_yardim": {
+  "title": "A relative offers help",
+  "text": "A well-off relative wants to help your family. {baba} hesitates out of pride.",
+  "options": [
+   {
+    "text": "Convince them to accept",
+    "result": "The help came just in time."
+   },
+   {
+    "text": "We'll get through on our own",
+    "result": "You chose an honorable but hard road."
+   }
+  ]
+ },
+ "okul_gezisi": {
+  "title": "School trip",
+  "text": "There's a class museum trip, but your family can't afford the fee.",
+  "options": [
+   {
+    "text": "Pay with your own money",
+    "result": "A trip paid for by your own effort meant more."
+   },
+   {
+    "text": "Don't go; don't burden your family",
+    "result": "You smiled as your friends showed their photos, and made yourself a promise."
+   },
+   {
+    "text": "Tell your teacher",
+    "result": "Your teacher covered it through the parents' association. Nothing to be ashamed of."
+   }
+  ]
+ },
+ "calisan_cocuk": {
+  "title": "Sunday morning",
+  "text": "While your classmates met at a café, you were counting the till at the market. One of them saw you.",
+  "options": [
+   {
+    "text": "Hold your head high: \"I'm helping my family.\"",
+    "result": "The next day they looked at you with respect."
+   },
+   {
+    "text": "Hide out of embarrassment",
+    "result": "Hard work is nothing to be ashamed of. You'll learn that in time."
+   }
+  ]
+ },
+ "zengin_baski": {
+  "title": "Family business pressure",
+  "text": "Your family sees your future in the family business. But you have other dreams.",
+  "options": [
+   {
+    "text": "Forge your own path",
+    "result": "Your family was upset but respected it."
+   },
+   {
+    "text": "Intern at the family business",
+    "result": "You learned how the business really works."
+   }
+  ]
+ },
+ "modellik": {
+  "title": "Ad shoot offer",
+  "text": "An agency spotted you on the street and invited you to an ad shoot.",
+  "options": [
+   {
+    "text": "Accept",
+    "result": "Your face is on bus stops! Nice extra income."
+   },
+   {
+    "text": "School/work comes first",
+    "result": "You know your priorities."
+   }
+  ]
+ },
+ "ilk_izlenim": {
+  "title": "The room went quiet",
+  "text": "You spoke up at a meeting; everyone stopped talking to listen.",
+  "options": [
+   {
+    "text": "State your idea clearly",
+    "result": "Your proposal was accepted. Charisma is inborn, but effort makes it shine."
+   }
+  ]
+ },
+ "dedikodu": {
+  "title": "Gossip",
+  "text": "Some say your success is only thanks to your looks.",
+  "options": [
+   {
+    "text": "Show your work; let the results speak",
+    "result": "The gossip stopped; your grades and your work spoke."
+   },
+   {
+    "text": "Let it get to you",
+    "result": "What people say doesn't define you."
+   }
+  ]
+ },
+ "ozguven": {
+  "title": "You in the mirror",
+  "text": "You looked in the mirror and didn't like what you saw. Everyone on social media looks perfect.",
+  "options": [
+   {
+    "text": "Start exercising and self-care",
+    "result": "Taking care of yourself is a way of loving yourself."
+   },
+   {
+    "text": "Stand out with your character",
+    "result": "Looks shape first impressions, but character keeps people by your side."
+   }
+  ]
+ },
+ "dogal_lider": {
+  "title": "They chose you as leader",
+  "text": "Your friends want you to lead the team for a new project.",
+  "options": [
+   {
+    "text": "Gather the team and explain the goal",
+    "success": "The project was a success; everyone wants to work with you again.",
+    "fail": "The team fell apart, but you learned leadership's first lesson: listening."
+   },
+   {
+    "text": "Leave it to someone else",
+    "result": "Maybe next time."
+   }
+  ]
+ },
+ "sahne_korkusu": {
+  "title": "Stage fright",
+  "text": "Your tongue ties when you have to speak in front of a crowd.",
+  "options": [
+   {
+    "text": "Sign up for theater or debate",
+    "result": "Charisma is like a muscle: it grows with practice."
+   },
+   {
+    "text": "Avoid it and stay in the back row",
+    "result": "Comfortable, but a small world."
+   }
+  ]
+ },
+ "es_terfi": {
+  "title": "{partner} got promoted!",
+  "text": "{partner} got a big promotion at work. Household income is rising.",
+  "options": [
+   {
+    "text": "Be proud and celebrate",
+    "result": "Each other's success is your shared success."
+   }
+  ]
+ },
+ "es_issiz": {
+  "title": "{partner} lost their job",
+  "text": "{partner}'s company downsized; they'll be out of work for a while. The household budget is shaken.",
+  "options": [
+   {
+    "text": "Cheer them up and plan together",
+    "result": "Hand in hand through hard times. Within a year they found a new job."
+   },
+   {
+    "text": "Speak with blame",
+    "result": "The chill at home lasted longer than the unemployment."
+   }
+  ]
+ },
+ "es_tartisma": {
+  "title": "Budget argument",
+  "text": "You and {partner} argued about money and time. Voices were raised.",
+  "options": [
+   {
+    "text": "Talk calmly and make a shared plan",
+    "success": "The argument turned into a plan; your relationship grew stronger.",
+    "fail": "Hurtful words came out again. It needs time."
+   },
+   {
+    "text": "Prove you're right",
+    "result": "You won the argument but lost ground in the relationship."
+   }
+  ]
+ },
+ "kayin_yardim": {
+  "title": "An offer from your in-laws",
+  "text": "{partner}'s family offers major support to help you buy a home.",
+  "options": [
+   {
+    "text": "Accept",
+    "result": "The key to your own home is in your hands. With your savings and their help you can become a homeowner."
+   },
+   {
+    "text": "Let's make our own way",
+    "result": "An honorable decision; your partner was a little upset but respected it."
+   }
+  ]
+ },
+ "yildonumu": {
+  "title": "Anniversary",
+  "text": "Today is your wedding anniversary.",
+  "options": [
+   {
+    "text": "Prepare a surprise dinner",
+    "result": "By candlelight, you talked about the day you first met."
+   },
+   {
+    "text": "You forgot because of work",
+    "result": "When you got home, a lonely cake was waiting on the table…"
+   }
+  ]
+ },
+ "es_savurgan": {
+  "title": "Credit card statement",
+  "text": "{partner} made a big purchase on the credit card. The statement is hefty.",
+  "options": [
+   {
+    "text": "Make a monthly budget together",
+    "result": "The budget sheet is on the fridge door."
+   },
+   {
+    "text": "Pay it silently",
+    "result": "That silence could become a habit."
+   }
+  ]
+ },
+ "es_destek": {
+  "title": "Someone by your side",
+  "text": "At the end of a hard week, {partner} was waiting with warm soup and a listening ear.",
+  "options": [
+   {
+    "text": "Say thank you",
+    "result": "Marrying the right person is one of life's best decisions."
+   }
+  ]
+ },
+ "es_macera": {
+  "title": "Weekend adventure",
+  "text": "{partner} planned a camping trip for the weekend!",
+  "options": [
+   {
+    "text": "Hit the road right away",
+    "result": "Two days under the stars, no phones."
+   },
+   {
+    "text": "There's work; let's postpone",
+    "result": "The camping bag waited until next spring."
+   }
+  ]
+ },
+ "fazla_mesai_istegi": {
+  "title": "The boss's request",
+  "text": "Your boss wants you to work overtime this weekend. But you'd made plans with your family.",
+  "options": [
+   {
+    "text": "Go to work",
+    "result": "The bonus is in your pocket, but a chair stayed empty at the table."
+   },
+   {
+    "text": "Politely decline",
+    "result": "Life isn't only about work."
+   }
+  ]
+ },
+ "veli_cagri": {
+  "title": "The teacher called your parents",
+  "text": "It was noticed that you haven't studied at all for two years. Your teacher called {anne} and {baba} to school. The ride home is very quiet.",
+  "log": "Parents were called in for neglecting studies.",
+  "options": [
+   {
+    "text": "Admit it and make a study plan",
+    "result": "Your teacher gave you extra materials. Study this year and you can close the gap."
+   },
+   {
+    "text": "Say \"School isn't for me\"",
+    "result": "A wall went up between you and your family. If your grades keep falling you may repeat the year."
+   }
+  ]
+ },
+ "sinifta_kaldin": {
+  "title": "You repeated a grade",
+  "text": "Your friends moved up a grade; you're in the same one. Your new classmates are a year younger.",
+  "log": "Repeated a school year.",
+  "options": [
+   {
+    "text": "Let it be a lesson: start fresh",
+    "result": "Seeing the topics a second time, most things clicked. A lost year can become a gained habit."
+   },
+   {
+    "text": "Withdraw out of shame",
+    "result": "You didn't talk to anyone for a while. But life is long; recovery is possible."
+   }
+  ]
+ },
+ "hareketsiz_yasam": {
+  "title": "Sedentary life",
+  "text": "You've barely moved for three years. You're out of breath on the stairs, and the doctor warned: \"Keep this up and your health is at serious risk.\"",
+  "log": "Got a doctor's warning about an inactive lifestyle.",
+  "options": [
+   {
+    "text": "Start walking every morning",
+    "result": "The first week was hard, then it became a habit. Don't neglect sports activities!"
+   },
+   {
+    "text": "\"I don't have time\"",
+    "result": "Those who never find time for health will one day have to make time for illness."
+   }
+  ]
+ },
+ "yalnizlik": {
+  "title": "Loneliness",
+  "text": "Your phone doesn't ring. No one remembered your birthday. You realize you haven't made time for friends in years.",
+  "log": "Went through a period of loneliness.",
+  "options": [
+   {
+    "text": "Call an old friend",
+    "result": "\"Where have you been?!\" Their voice hasn't changed. Friendship takes effort."
+   },
+   {
+    "text": "Join a club or group",
+    "result": "New faces, new stories."
+   },
+   {
+    "text": "Withdraw into your shell",
+    "result": "Loneliness becomes a habit; be careful."
+   }
+  ]
+ },
+ "aile_kopukluk": {
+  "title": "Drifting apart from family",
+  "text": "You haven't made time for your family in a long while. No one talks at dinner; {anne} is hurt. If you have kids, they now see you as someone who's \"always busy\".",
+  "log": "Drifted apart from family.",
+  "options": [
+   {
+    "text": "Give a whole weekend to your family",
+    "result": "At the picnic, everyone laughed for the first time in ages. Make family time a regular thing."
+   },
+   {
+    "text": "When I'm done with work",
+    "result": "\"When I'm done with work\" is a day that never comes."
+   }
+  ]
+ },
+ "tukenmislik": {
+  "title": "Burnout",
+  "text": "No vacation, no rest for years. When the alarm rings, a weight settles on your chest; even your favorite things bring no joy.",
+  "log": "Experienced burnout.",
+  "options": [
+   {
+    "text": "Take leave, rest and see a professional",
+    "result": "For the first time you listened to yourself. Resting is work too — important work."
+   },
+   {
+    "text": "Grit your teeth and push on",
+    "result": "One day the body sends the bill. Don't neglect rest activities."
+   }
+  ]
+ },
+ "anne_vefat": {
+  "title": "You lost your mother",
+  "text": "The phone rang at night. {anne} has passed away. The warmest corner of the home is now empty.",
+  "options": [
+   {
+    "text": "Grieve and be strong for your family",
+    "result": "What she taught you will light your way on the hardest days."
+   },
+   {
+    "text": "Bury your grief in study or work",
+    "result": "You worked hard, but some nights your tears fell silently."
+   },
+   {
+    "text": "Hug your father and siblings",
+    "result": "Your mother's voice is always with you in your dreams."
+   }
+  ]
+ },
+ "baba_vefat": {
+  "title": "You lost your father",
+  "text": "{baba} has passed away. Every time you walk in the door, you listen for his voice.",
+  "options": [
+   {
+    "text": "Grieve and be strong for your family",
+    "result": "You promised to carry on your father's legacy."
+   },
+   {
+    "text": "Decide to carry the household",
+    "result": "You grew up early. Don't forget to give your earnings to the family (Home tab)."
+   },
+   {
+    "text": "Hug your mother; be strong for each other",
+    "result": "You were very young, but you'll never forget that day."
+   }
+  ]
+ },
+ "kardes_vefat": {
+  "title": "You lost your sibling",
+  "text": "An accident, an illness… Your sibling has passed away. Your family is in deep mourning.",
+  "options": [
+   {
+    "text": "Support your parents",
+    "result": "You held on to each other. Their memory is always with you."
+   },
+   {
+    "text": "Withdraw into your shell",
+    "result": "The grief lasted long. Your friends and family are waiting for you."
+   }
+  ]
+ },
+ "es_vefat": {
+  "title": "You lost your spouse",
+  "text": "{partner}, who shared your pillow for years, has passed away. The house is so quiet.",
+  "options": [
+   {
+    "text": "Hold on to your children and friends",
+    "result": "Their memories live on in your grandchildren's stories."
+   },
+   {
+    "text": "Retreat into loneliness",
+    "result": "Loneliness wears on the body too. Call your friends; you're not alone."
+   }
+  ]
+ },
+ "dede_vefat": {
+  "title": "You lost a grandparent",
+  "text": "The whole family gathered at your grandparent's funeral. You remembered their tales and prayers.",
+  "options": [
+   {
+    "text": "Write down their memories for your grandchildren",
+    "result": "What you wrote became the family's memory."
+   },
+   {
+    "text": "Come together with the family",
+    "result": "Even feuding relatives made peace that day."
+   }
+  ]
+ },
+ "sut_disi": {
+  "title": "Your first tooth fell out",
+  "text": "Your front tooth was wobbly, and it came out when you bit an apple!",
+  "options": [
+   {
+    "text": "Put it under your pillow",
+    "result": "In the morning there was a little surprise under your pillow."
+   },
+   {
+    "text": "Keep it in a box as a memento",
+    "result": "Your first keepsake box."
+   }
+  ]
+ },
+ "bisiklet_ogren": {
+  "title": "Learning to ride a bike",
+  "text": "{baba} is holding the back of the bike. \"I won't let go,\" he says…",
+  "options": [
+   {
+    "text": "Pedal on, and get up if you fall",
+    "result": "When you looked back, you saw your father had let go long ago. You were riding on your own!"
+   },
+   {
+    "text": "Get scared and stop",
+    "result": "You'll try again next year."
+   }
+  ]
+ },
+ "karanlik_korkusu": {
+  "title": "Fear of the dark",
+  "text": "At night the shadow in the corner of your room looks like a monster.",
+  "options": [
+   {
+    "text": "Turn on the light and look",
+    "result": "It was your coat on the chair! Facing your fear worked."
+   },
+   {
+    "text": "Run to your mom",
+    "result": "That night you slept soundly next to your mom."
+   }
+  ]
+ },
+ "teneffus_kavga": {
+  "title": "Argument at recess",
+  "text": "You and a friend are arguing about whose turn it is with the ball. It's about to escalate.",
+  "options": [
+   {
+    "text": "Suggest taking turns",
+    "result": "Everyone agreed and the game went on."
+   },
+   {
+    "text": "Take the ball and leave",
+    "result": "The game fell apart, and for a while no one played with you."
+   }
+  ]
+ },
+ "karne_gunu": {
+  "title": "Report card day",
+  "text": "You're coming home with your report card. {anne} is waiting at the door.",
+  "options": [
+   {
+    "text": "Proudly show your report card",
+    "result": "An evening full of praise."
+   },
+   {
+    "text": "Honestly explain the low grades",
+    "result": "\"Thank you for telling the truth; we'll work on it together.\""
+   },
+   {
+    "text": "Hide the report card",
+    "result": "It turned up in your bag the next day. What upset them most was the hiding."
+   }
+  ]
+ },
+ "kayboldun": {
+  "title": "Lost in the crowd",
+  "text": "You lost your mom at the shopping mall. It's very crowded.",
+  "options": [
+   {
+    "text": "Go to a staff member or a checkout",
+    "result": "An announcement was made and your mom came running. You did the right thing!"
+   },
+   {
+    "text": "Wander around crying",
+    "result": "They found you in the end, but you were very scared. When lost, going to a staff member is best."
+   }
+  ]
+ },
+ "hayvanat": {
+  "title": "School trip: the zoo",
+  "text": "Your class went to the zoo. A giraffe is right in front of you!",
+  "options": [
+   {
+    "text": "Ask the zookeeper questions",
+    "result": "You learned that giraffe tongues are purple!"
+   },
+   {
+    "text": "Draw all the animals",
+    "result": "Your notebook turned into an animal encyclopedia."
+   }
+  ]
+ },
+ "ilk_telefon": {
+  "title": "First phone",
+  "text": "Your family got you your first phone. You'll set the rules together.",
+  "options": [
+   {
+    "text": "Agree to a daily time limit",
+    "result": "The phone made life easier without taking it over."
+   },
+   {
+    "text": "I don't want limits",
+    "result": "The first weeks were great… then the homework piled up."
+   }
+  ]
+ },
+ "telefon_yok": {
+  "title": "Everyone has a phone",
+  "text": "Everyone in class has a phone; even homework groups are organized by message. You don't have one.",
+  "options": [
+   {
+    "text": "Save your allowance and buy a used one",
+    "result": "The screen is scratched, but you bought it with your own effort."
+   },
+   {
+    "text": "Ask a friend to write the homework in your notebook",
+    "result": "A true friend shows up in hard times."
+   },
+   {
+    "text": "Feel left out",
+    "result": "A phone doesn't decide a person's worth."
+   }
+  ]
+ },
+ "oyun_bagimliligi": {
+  "title": "Just one more round…",
+  "text": "You played games until 3 am. In class your eyes keep closing.",
+  "options": [
+   {
+    "text": "Plan your gaming hours",
+    "result": "You still enjoy games and your grades aren't slipping."
+   },
+   {
+    "text": "Skip morning class and sleep",
+    "result": "A habit is starting; be careful."
+   }
+  ]
+ },
+ "sivilce": {
+  "title": "Puberty",
+  "text": "Your voice is cracking and your face broke out. You don't want to look in the mirror.",
+  "options": [
+   {
+    "text": "Remember everyone goes through this",
+    "result": "It will pass. It did for everyone."
+   },
+   {
+    "text": "Talk to an adult you trust",
+    "result": "You laughed when you saw your parent's photo at the same age."
+   }
+  ]
+ },
+ "yeni_okul": {
+  "title": "New school, new class",
+  "text": "You don't know anyone at your new school.",
+  "options": [
+   {
+    "text": "Introduce yourself to the person next to you",
+    "result": "You had a friend by the first break."
+   },
+   {
+    "text": "Watch first",
+    "result": "A week later you'd figured out who's who."
+   }
+  ]
+ },
+ "ilk_harclik_kazanc": {
+  "title": "Your first earnings",
+  "text": "You washed a neighbor's car and they gave you 100 🪙.",
+  "options": [
+   {
+    "text": "Put it in the piggy bank",
+    "result": "The first money you earned yourself. It feels different."
+   },
+   {
+    "text": "Buy your mom a gift",
+    "result": "Just a small flower, but your mom's eyes filled with tears."
+   }
+  ]
+ },
+ "eski_ayakkabi": {
+  "title": "Worn-out shoes",
+  "text": "The sole of your shoe has a hole; your socks get wet in the rain. There's no money at home for new ones.",
+  "options": [
+   {
+    "text": "Buy new ones with your own savings",
+    "result": "Shoes bought with your own effort feel sturdier."
+   },
+   {
+    "text": "Get them repaired",
+    "result": "The cobbler resoled them; they'll last another winter."
+   },
+   {
+    "text": "Don't tell your family; make do",
+    "result": "You didn't want to burden your family. But your health matters too."
+   }
+  ]
+ },
+ "kardes_kiyafeti": {
+  "title": "Hand-me-downs",
+  "text": "Instead of new clothes for the holiday, you got your older sibling's old ones.",
+  "options": [
+   {
+    "text": "Iron them nicely and wear them",
+    "result": "Clean and neat, no one even noticed."
+   },
+   {
+    "text": "Sulk",
+    "result": "Your mom was hurt. When the budget is tight, everyone gives something up."
+   }
+  ]
+ },
+ "kis_komur": {
+  "title": "Cold winter",
+  "text": "Winter came early and there wasn't enough money for firewood. Only one room in the house is warm.",
+  "options": [
+   {
+    "text": "Help gather firewood",
+    "result": "Your hands got calloused, but the stove is lit."
+   },
+   {
+    "text": "The whole family gathers in one room",
+    "result": "Stories by the stove, hot tea… Even hardship can't take away every beautiful moment."
+   }
+  ]
+ },
+ "veresiye": {
+  "title": "The shop tab",
+  "text": "Your mom sent you to the corner shop: \"Ask them to put it on our tab.\" The shopkeeper says the tab is already very full.",
+  "options": [
+   {
+    "text": "Pay part of it with your pocket money",
+    "result": "The shopkeeper patted your head: \"You're a good kid.\""
+   },
+   {
+    "text": "Go home embarrassed",
+    "result": "Back home, you and your mom wrote the accounts on a sheet of paper."
+   }
+  ]
+ },
+ "anne_temizlik": {
+  "title": "Your mom works as a cleaner",
+  "text": "To make ends meet, {anne} cleans other people's homes. She comes back exhausted every evening.",
+  "options": [
+   {
+    "text": "Warm up dinner and make her tea when she gets home",
+    "result": "Your mom smiled: \"My tiredness is gone.\""
+   },
+   {
+    "text": "Promise she won't have to work when you grow up",
+    "result": "That promise will motivate you for years."
+   }
+  ]
+ },
+ "burs_fakir": {
+  "title": "Scholarship chance",
+  "text": "A foundation offers scholarships to high-achieving students with limited means. The deadline is tomorrow.",
+  "options": [
+   {
+    "text": "Apply and take the exam",
+    "success": "You won the scholarship! Books and transport are now covered.",
+    "fail": "Not this time; you can apply again next year."
+   },
+   {
+    "text": "Tell yourself \"I won't win\" and don't apply",
+    "result": "Those who never try never win."
+   }
+  ]
+ },
+ "servis_parasi": {
+  "title": "School bus fee",
+  "text": "The school bus fee went up. Your family is struggling to pay.",
+  "options": [
+   {
+    "text": "Walk to school",
+    "result": "You get up early, but it's healthy and saves money."
+   },
+   {
+    "text": "Keep taking the bus",
+    "result": "The family budget got a little tighter."
+   }
+  ]
+ },
+ "kredi_taksit": {
+  "title": "Installments",
+  "text": "Your family bought the car and the fridge in installments. The 15th of every month is tense at home.",
+  "options": [
+   {
+    "text": "Put your wishes on hold for a while",
+    "result": "A mature attitude; your mom noticed."
+   },
+   {
+    "text": "Ask for a new game console",
+    "result": "The request was denied, and silence fell over the house for a while."
+   }
+  ]
+ },
+ "kurs_mu_tatil_mi": {
+  "title": "Course or vacation?",
+  "text": "This summer the budget covers either a course or a vacation. Your family left the choice to you.",
+  "options": [
+   {
+    "text": "Summer course",
+    "result": "In September you were the best prepared in class."
+   },
+   {
+    "text": "Family vacation",
+    "result": "A week by the sea; the best photos in the family album."
+   },
+   {
+    "text": "Neither; keep the money",
+    "result": "Your family was surprised by your maturity."
+   }
+  ]
+ },
+ "orta_komsu": {
+  "title": "Building meeting",
+  "text": "The building's roof is leaking; repair costs are being discussed and everyone is arguing.",
+  "options": [
+   {
+    "text": "Gather everyone's views and propose a shared solution",
+    "success": "The residents want to elect you as building manager!",
+    "fail": "The meeting ended in a fight again."
+   },
+   {
+    "text": "Skip the meeting",
+    "result": "The decision was made without you."
+   }
+  ]
+ },
+ "ozel_okul_baski": {
+  "title": "The weight of expectations",
+  "text": "You're at an expensive private school. After every exam your family says, \"We pay so much for this.\"",
+  "options": [
+   {
+    "text": "Talk to your family about expectations",
+    "success": "For the first time they listened: \"Your happiness matters too.\"",
+    "fail": "The talk turned into an argument."
+   },
+   {
+    "text": "Study harder; don't disappoint them",
+    "result": "Your grades went up, but you can't sleep at night."
+   }
+  ]
+ },
+ "yalniz_zengin": {
+  "title": "Big house, empty house",
+  "text": "Your parents are always on business trips. You're alone in a huge house with your nanny.",
+  "options": [
+   {
+    "text": "Call them and say you miss them",
+    "result": "Your father canceled his meeting the next day and came home."
+   },
+   {
+    "text": "Lose yourself in games and screens",
+    "result": "A screen can't replace a hug."
+   },
+   {
+    "text": "Bake a cake with your nanny",
+    "result": "Sometimes family isn't only about blood."
+   }
+  ]
+ },
+ "cikarci_arkadas": {
+  "title": "A real friend?",
+  "text": "Your new \"friends\" always expect you to pay. When you suggested a free day out, no one came.",
+  "options": [
+   {
+    "text": "Stick with the sincere ones",
+    "result": "Few real friends beat many fake ones."
+   },
+   {
+    "text": "Keep paying",
+    "result": "Your wallet got lighter, but not your loneliness."
+   }
+  ]
+ },
+ "simarik_testi": {
+  "title": "Everything you want",
+  "text": "Your family buys you \"whatever you want\". Even your school bag is the talk of the class.",
+  "options": [
+   {
+    "text": "Share part of your allowance with a classmate in need",
+    "result": "Your friend thanked you with a look you'll never forget."
+   },
+   {
+    "text": "Show it all off",
+    "result": "Jealousy and distance… Money doesn't buy respect."
+   }
+  ]
+ },
+ "yazin_yurtdisi": {
+  "title": "Summer camp abroad",
+  "text": "Your family wants to send you to a summer camp in England.",
+  "options": [
+   {
+    "text": "Go",
+    "result": "Two languages, friends from different cultures, a completely different summer."
+   },
+   {
+    "text": "I want to stay with my neighborhood friends",
+    "result": "The best summer, spent in the dust of your own streets."
+   }
+  ]
+ },
+ "miras_kavgasi": {
+  "title": "Inheritance dispute",
+  "text": "There's tension between you and your siblings over the family company's future.",
+  "options": [
+   {
+    "text": "Propose a fair split",
+    "success": "The siblings shook hands; family ties proved stronger than money.",
+    "fail": "It didn't go to court, but holidays are now spent apart."
+   },
+   {
+    "text": "Give up your share; choose peace",
+    "result": "The money is gone, but your siblings remain."
+   }
+  ]
+ },
+ "koy_dugun": {
+  "title": "Village wedding",
+  "text": "There's a three-day wedding in the village; drums and pipes everywhere.",
+  "options": [
+   {
+    "text": "Join the line dance",
+    "result": "Did you lead the dance or not? Everyone is talking about it."
+   },
+   {
+    "text": "Help with the cooking",
+    "result": "Pots and pots of stew… The village elders praised you."
+   }
+  ]
+ },
+ "koy_hayvan": {
+  "title": "The cow is calving",
+  "text": "Sounds from the barn at midnight; the cow is giving birth and struggling.",
+  "options": [
+   {
+    "text": "Help until the vet arrives",
+    "result": "In the morning there was a calf in the barn on wobbly legs."
+   },
+   {
+    "text": "Wake the grown-ups",
+    "result": "You and your grandpa helped the calf into the world."
+   }
+  ]
+ },
+ "sehir_trafik": {
+  "title": "City traffic",
+  "text": "You spend two hours in traffic every day on your way to work.",
+  "options": [
+   {
+    "text": "Read or listen to podcasts on public transport",
+    "result": "Travel time became time well spent."
+   },
+   {
+    "text": "Get angry and honk",
+    "result": "The traffic didn't change; you just got tired."
+   }
+  ]
+ },
+ "sehir_kira": {
+  "title": "Big-city rent",
+  "text": "The landlord is hiking the rent. Rent in the city swallows half your salary.",
+  "options": [
+   {
+    "text": "Live with a roommate",
+    "result": "Arguments over dishes, but money left in your pocket."
+   },
+   {
+    "text": "Keep paying",
+    "result": "Your savings melted away."
+   },
+   {
+    "text": "Move to a farther neighborhood",
+    "result": "The commute got longer, the rent lower."
+   }
+  ]
+ },
+ "kasaba_pazari": {
+  "title": "Town market",
+  "text": "At the weekly market everyone knows each other. An older lady left her stall in your care for five minutes.",
+  "options": [
+   {
+    "text": "Watch the stall and make a few sales",
+    "success": "When she came back the till was exact, and she gave you some pocket money.",
+    "fail": "You made a mistake or two, but she laughed: \"That's how you learn trade.\""
+   },
+   {
+    "text": "Politely decline",
+    "result": "You disappeared into the market crowd."
+   }
+  ]
+ },
+ "yeni_mudur": {
+  "title": "New manager",
+  "text": "A new manager arrived at work and wants to change everything.",
+  "options": [
+   {
+    "text": "Adapt and offer ideas",
+    "result": "The manager cited your suggestion as an example in a meeting."
+   },
+   {
+    "text": "Defend the old way",
+    "result": "Things started a bit tense with the new manager."
+   }
+  ]
+ },
+ "is_arkadasi_yardim": {
+  "title": "A coworker's request",
+  "text": "A coworker asks for your help to finish a report they're behind on.",
+  "options": [
+   {
+    "text": "Help",
+    "result": "One day they'll help you too."
+   },
+   {
+    "text": "Politely say you're busy with your own work",
+    "result": "Setting boundaries is a skill too."
+   }
+  ]
+ },
+ "hata_yaptin": {
+  "title": "You made a mistake at work",
+  "text": "You made a mistake on an important task; no one has noticed yet.",
+  "options": [
+   {
+    "text": "Own it and fix it",
+    "result": "Your manager appreciated your honesty: \"Everyone makes mistakes; few don't hide them.\""
+   },
+   {
+    "text": "Stay quiet",
+    "result": "When the mistake came out, things got even harder."
+   }
+  ]
+ },
+ "ise_gec": {
+  "title": "The alarm didn't go off",
+  "text": "When you woke up you were already late for work.",
+  "options": [
+   {
+    "text": "Call your manager and explain",
+    "result": "They were understanding; it happens once."
+   },
+   {
+    "text": "Say you're sick",
+    "result": "The next day your lie came out."
+   }
+  ]
+ },
+ "zam_istegi": {
+  "title": "Time for a raise",
+  "text": "You worked hard all year, but your pay has fallen behind inflation.",
+  "options": [
+   {
+    "text": "Negotiate a raise with your manager",
+    "success": "You got a raise close to what you asked for!",
+    "fail": "\"There's no budget right now,\" they said. Try again next year."
+   },
+   {
+    "text": "Wait; maybe they'll offer",
+    "result": "They didn't."
+   }
+  ]
+ },
+ "cocuk_okul_secimi": {
+  "title": "Your child's school",
+  "text": "Your child is starting school. Public or private?",
+  "options": [
+   {
+    "text": "Public school, with support at home",
+    "result": "Doing homework together in the evenings was good for both of you."
+   },
+   {
+    "text": "Private school",
+    "result": "Expensive, but you chose it while you could."
+   }
+  ]
+ },
+ "cocuk_zorbalik": {
+  "title": "Your child is being bullied",
+  "text": "You realized your child is being bullied at school; they came home crying.",
+  "options": [
+   {
+    "text": "Listen and solve it together with the school",
+    "result": "The school acted at once; your child learned they can tell you anything."
+   },
+   {
+    "text": "Say \"Hit back\"",
+    "result": "It escalated and your child was punished. Violence isn't the answer."
+   }
+  ]
+ },
+ "cocuk_ergenlik": {
+  "title": "The teen behind the closed door",
+  "text": "Your teenager won't leave their room and answers questions in one word.",
+  "options": [
+   {
+    "text": "Patiently enter their world",
+    "result": "A game you played together became a bridge between you."
+   },
+   {
+    "text": "Clamp down with rules",
+    "result": "The door closed even tighter."
+   }
+  ]
+ },
+ "cocuk_basari": {
+  "title": "Proud of your child",
+  "text": "Your child won an award at school; they read their name on stage.",
+  "options": [
+   {
+    "text": "Let the tears flow",
+    "result": "Life's sweetest applause was the one for your child."
+   }
+  ]
+ },
+ "cocuk_universite": {
+  "title": "Your child is at university",
+  "text": "Your child got into a university in another city. Dorm and allowance costs begin.",
+  "options": [
+   {
+    "text": "Send an allowance every month",
+    "result": "On the phone they said, \"I'm so glad I have you.\""
+   },
+   {
+    "text": "Let them stand on their own with a scholarship and part-time job",
+    "result": "A hard but educational path."
+   }
+  ]
+ },
+ "komsu_gurultu": {
+  "title": "Noisy neighbor",
+  "text": "The upstairs neighbor seems to be moving furniture at midnight. You can't sleep.",
+  "options": [
+   {
+    "text": "Knock and talk kindly",
+    "result": "Turns out they'd just moved in; the next day they came to apologize with dessert."
+   },
+   {
+    "text": "Bang on the ceiling with a broom",
+    "result": "A cold war began in the building."
+   }
+  ]
+ },
+ "eski_sevgili": {
+  "title": "Someone from the past",
+  "text": "An old acquaintance messaged you on social media: \"How are you? Want to grab a coffee?\"",
+  "options": [
+   {
+    "text": "Tell your spouse and set a clear boundary",
+    "result": "Trust is the foundation of a relationship."
+   },
+   {
+    "text": "Meet in secret",
+    "result": "Secrets make the air at home heavy."
+   }
+  ]
+ },
+ "spor_bayram": {
+  "title": "Charity run",
+  "text": "The city is holding a charity run; every kilometer funds a student's scholarship.",
+  "options": [
+   {
+    "text": "Run",
+    "result": "At the finish line you got your medal and a photo of a scholarship."
+   },
+   {
+    "text": "Donate",
+    "result": "Even without running, you contributed."
+   }
+  ]
+ },
+ "kursa_yazil": {
+  "title": "Evening course",
+  "text": "The community education center opened its new term.",
+  "options": [
+   {
+    "text": "Foreign language",
+    "result": "Being a student again after years felt good."
+   },
+   {
+    "text": "Woodworking / ceramics",
+    "result": "Creating something with your hands is like therapy."
+   },
+   {
+    "text": "I don't have time",
+    "result": "Maybe next year."
+   }
+  ]
+ },
+ "doktor_kontrol_40": {
+  "title": "Check-up at 40",
+  "text": "Your doctor recommends regular check-ups after forty: blood pressure, sugar, cholesterol.",
+  "options": [
+   {
+    "text": "Get checked and follow the advice",
+    "result": "High cholesterol caught early came down with walking."
+   },
+   {
+    "text": "I feel fine",
+    "result": "Silent problems grow silently."
+   }
+  ]
+ },
+ "is_kaybi": {
+  "title": "The company is downsizing",
+  "text": "Your company is going through hard times; a list is being prepared and your name is being discussed.",
+  "options": [
+   {
+    "text": "Show your performance and give a presentation",
+    "success": "You weren't on the list — and they gave you new responsibilities.",
+    "fail": "You were laid off and got your severance. You'll need to look for a new job."
+   },
+   {
+    "text": "Resign and look for a new path with severance",
+    "result": "Uncertainty is scary, but when one door closes another opens."
+   }
+  ]
+ },
+ "emeklilik_hobisi": {
+  "title": "A new pastime in retirement",
+  "text": "Retirement means plenty of time. What will you do?",
+  "options": [
+   {
+    "text": "Take up fishing",
+    "result": "Peace at the end of a line in the morning mist."
+   },
+   {
+    "text": "Organize a chess tournament at the local café",
+    "result": "You became the neighborhood's chess master."
+   },
+   {
+    "text": "Volunteer as a reading tutor",
+    "result": "A child read their first book by your side."
+   }
+  ]
+ },
+ "torun_bakimi": {
+  "title": "Grandchild care",
+  "text": "Your child works and asks you to look after your grandchild on weekdays.",
+  "options": [
+   {
+    "text": "Gladly",
+    "result": "Days in the park with your grandchild are the best of your life."
+   },
+   {
+    "text": "Two days a week",
+    "result": "Balance is good."
+   }
+  ]
+ },
+ "yasli_yalnizlik": {
+  "title": "A quiet house",
+  "text": "The children grew up and left. The house has gone quiet.",
+  "options": [
+   {
+    "text": "Gather old friends for a dinner",
+    "result": "Laughter around the table; old age doesn't mean loneliness."
+   },
+   {
+    "text": "Call your children",
+    "result": "\"Mom/Dad, we're coming this weekend!\""
+   }
+  ]
+ },
+ "saglik_yaslilik": {
+  "title": "Knee pain",
+  "text": "Your knees struggle on the stairs now.",
+  "options": [
+   {
+    "text": "Start physical therapy and walk regularly",
+    "result": "In a few months the stairs became your friend again."
+   },
+   {
+    "text": "Stop going out",
+    "result": "Inactivity made the pain even worse."
+   }
+  ]
+ },
+ "vasiyet_aile": {
+  "title": "Family heirloom",
+  "text": "You're deciding which child should get the old watch your grandfather left you.",
+  "options": [
+   {
+    "text": "Give it to the youngest along with its story",
+    "result": "The watch, with its story, will live on for another generation."
+   },
+   {
+    "text": "Donate it to a museum",
+    "result": "It's displayed in the local museum with your name."
+   }
+  ]
+ },
+ "teknoloji_yasli": {
+  "title": "Smartphone lesson",
+  "text": "Your grandchild wants to teach you how to make video calls.",
+  "options": [
+   {
+    "text": "Learn patiently",
+    "result": "Now you video-call every evening!"
+   },
+   {
+    "text": "\"I don't need it\"",
+    "result": "The world is changing; keeping up is hard but not impossible."
+   }
+  ]
+ },
+ "biz_viral": {
+  "title": "Your product took off!",
+  "text": "One of your products spread on social media; orders are up tenfold. You can't keep up.",
+  "options": [
+   {
+    "text": "Take a loan and scale up production",
+    "result": "You took a big gamble…",
+    "success": "The growth paid off! Your profits will multiply for the next two years.",
+    "fail": "The trend faded overnight; you were left with loan debt and excess stock."
+   },
+   {
+    "text": "Take pre-orders and keep the quality",
+    "result": "Customers waited but were happy. Solid growth."
+   },
+   {
+    "text": "Double the price",
+    "result": "Good money short-term, but some customers were put off."
+   }
+  ]
+ },
+ "biz_ortak_teklif": {
+  "title": "Partnership offer",
+  "text": "An old acquaintance says \"I bring the capital, you bring the work\" and wants to partner. Smooth-talking, but with a murky past.",
+  "options": [
+   {
+    "text": "Partner up and grow",
+    "result": "You shook hands…",
+    "success": "They turned out to be an honest partner; the business grew.",
+    "fail": "One morning the till was empty and your partner was gone. A harsh lesson."
+   },
+   {
+    "text": "Sign a notarized contract first, then partner",
+    "result": "The contract protected you; the partnership started on solid ground."
+   },
+   {
+    "text": "Politely decline",
+    "result": "Caution is sometimes the best investment."
+   }
+  ]
+ },
+ "biz_ihale": {
+  "title": "Big tender",
+  "text": "The city has a big supply tender. Win it and the year's profit multiplies, but you must put down a deposit.",
+  "options": [
+   {
+    "text": "Pay the deposit and bid",
+    "result": "The envelopes were opened…",
+    "success": "You won the tender! The biggest job of the year.",
+    "fail": "The tender went to another firm; part of your deposit went on costs."
+   },
+   {
+    "text": "Listen to the middleman offering a bribe",
+    "result": "You took a dark path…",
+    "success": "You won, but an unease stayed with you.",
+    "fail": "An investigation was opened; your business took a heavy blow."
+   },
+   {
+    "text": "Stay out of it",
+    "result": "You focused on your own customers."
+   }
+  ]
+ },
+ "biz_kur_soku": {
+  "title": "Currency shock",
+  "text": "The exchange rate jumped in a week. Suppliers won't quote prices; the goods on your shelves gained value, but restocking is hard.",
+  "options": [
+   {
+    "text": "Sell the stock now and go to cash",
+    "result": "Cash in hand, but the shelves are empty."
+   },
+   {
+    "text": "Hold the stock; prices will rise further",
+    "result": "You started waiting…",
+    "success": "Your bet paid off; the stock was worth its weight in gold.",
+    "fail": "The rate came back and demand collapsed; you were stuck with the goods."
+   },
+   {
+    "text": "Switch to a local supplier",
+    "result": "Costs rose a bit, but business didn't stop."
+   }
+  ]
+ },
+ "biz_depo_yangin": {
+  "title": "Warehouse fire",
+  "text": "The phone rang at midnight: there's a fire at your warehouse.",
+  "options": [
+   {
+    "text": "Call the insurance company",
+    "result": "Insurance covered most of the loss. Good thing you had it."
+   },
+   {
+    "text": "Borrow and restock",
+    "result": "A hard year, but your business survived."
+   },
+   {
+    "text": "Scale down and save what's left",
+    "result": "You dropped a level but didn't sink into debt."
+   }
+  ]
+ },
+ "biz_alacak": {
+  "title": "Big order on credit",
+  "text": "A large company wants to order three times your usual volume on six-month payment terms.",
+  "options": [
+   {
+    "text": "Accept",
+    "result": "You delivered the goods…",
+    "success": "The payment came on time. A great year!",
+    "fail": "The company filed for bankruptcy protection; you never got paid."
+   },
+   {
+    "text": "Offer a discount for payment up front",
+    "result": "You earned less, but the money is in your pocket."
+   },
+   {
+    "text": "Decline",
+    "result": "You stayed away from the risk."
+   }
+  ]
+ },
+ "biz_sigorta": {
+  "title": "Business insurance",
+  "text": "An insurance agent suggests insuring your business against fire, theft and earthquakes.",
+  "options": [
+   {
+    "text": "Get insured",
+    "result": "Now most losses from fire and theft will be covered."
+   },
+   {
+    "text": "No need",
+    "result": "You carry the risk yourself."
+   }
+  ]
+ },
+ "biz_rakip": {
+  "title": "A rival opened next door",
+  "text": "A well-funded rival opened right next to you, with opening-special prices.",
+  "options": [
+   {
+    "text": "Start a price war",
+    "result": "You slashed prices…",
+    "success": "The rival couldn't hold on and closed.",
+    "fail": "They had deep pockets; you were worn down."
+   },
+   {
+    "text": "Stand out with service and quality",
+    "result": "Your loyal customers stuck with you."
+   }
+  ]
+ },
+ "biz_yeni_urun": {
+  "title": "Testing a new product",
+  "text": "You have an idea for a new product. Trying it takes some capital.",
+  "options": [
+   {
+    "text": "Test it with a small batch",
+    "result": "You put the product on the shelf…",
+    "success": "It took off! It's flying off the shelves.",
+    "fail": "People didn't like it; a small loss, a good lesson."
+   },
+   {
+    "text": "Wait for now",
+    "result": "You wrote the idea in your notebook."
+   }
+  ]
+ },
+ "biz_kira": {
+  "title": "Rent increase",
+  "text": "The landlord wants to double the rent, or you're out.",
+  "options": [
+   {
+    "text": "Accept",
+    "result": "You kept your spot, but your margin shrank."
+   },
+   {
+    "text": "Move to a cheaper neighborhood",
+    "result": "Some of your customers couldn't find you at the new place."
+   },
+   {
+    "text": "Negotiate",
+    "result": "You sat down at the table…",
+    "success": "You agreed on a reasonable increase.",
+    "fail": "The landlord wouldn't budge."
+   }
+  ]
+ }
+}

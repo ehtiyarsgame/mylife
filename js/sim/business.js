@@ -1,3 +1,4 @@
+import { fmtTL } from '../core/util.js';
 // Ticaret yolu ekonomik modeli (Tasarım Dokümanı §9).
 export const BIZ_STEPS = [
   { name: 'Okulda satış',       icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, risk: 0.05, mgs: ['paraustu', 'pazarlik', 'para_say'] },
@@ -19,7 +20,7 @@ export function nextStepReqs(state) {
   const need = next.capital * 1.2 * pi;
   const miss = [];
   if (state.age < next.age) miss.push(`En erken ${next.age} yaş`);
-  if (state.money + (state.age >= 18 ? state.savings : 0) < need) miss.push(`Nakit: ${Math.round(need).toLocaleString('tr-TR')} TL (sermaye ×1,2)`);
+  if (state.money + (state.age >= 18 ? state.savings : 0) < need) miss.push(`Nakit: ${fmtTL(need)} (sermaye ×1,2)`);
   if (state.stats.itibar < next.rep) miss.push(`İtibar ${next.rep}+`);
   if (b && b.years < next.prevYears) miss.push(`Önceki basamakta ${next.prevYears} yıl (şu an ${b.years})`);
   return { step: cur + 1, info: next, need, miss };

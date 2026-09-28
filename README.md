@@ -1,6 +1,6 @@
 # 🌱 Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.2-test.apk`](apk/HayatYolu-0.3.2-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.4.0-test.apk`](apk/HayatYolu-0.4.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -40,18 +40,30 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **İş = emek** | Maaş, yıl içinde **mesaiye gittiğin oranda** yatar (tam zamanlı iş 2 EP). Hiç gitmezsen maaşın kesilir, üst üste olursa kovulursun. |
 | **Eş seçimi** | Her başarılı tanışmada 3 aday: *çok çekici*, *çok uyumlu*, *varlıklı çevreden*. Görünüş, uyum, karakter (destekleyici, tutumlu, savurgan, hırslı, kıskanç, sakin, aile odaklı, maceracı), iş, ailesi ve çocuk isteği farklıdır. Eşin geliri, gider alışkanlığı, mutluluğun ve tartışmalar buna göre şekillenir; sevgi bakımsız kalırsa boşanma ve mal paylaşımı olur. |
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
-| **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (112 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
+| **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (117 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
 | **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
 | **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
 | **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
 | **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). Ticarette piyasa havası dalgalanır; ürünün tutarsa rekor yıl (kâr kat kat), ortak dolandırıcılığı / yangın / kur şoku / batan müşteri gibi çöküşlerle iflas. Riskli kararlar (🎲) beceri, itibar ve piyasaya göre tutar ya da batar; sigorta yangın ve hırsızlıkta korur. |
 | **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
 
-### Mini oyun kataloğu (112)
+### Global sürüm (dil, para, içerik)
+
+- **Diller:** Türkçe ve İngilizce. İlk açılışta cihaz diline göre seçilir; Ayarlar → 🌐 Dil'den değiştirilebilir.
+  Çeviri katmanı (`js/core/i18n.js`) Türkçe kaynak metni anahtar olarak kullanır: arayüz (`h()`), `textContent` ve canvas yazıları otomatik çevrilir.
+  Sözlük `js/i18n/en*.js`, olay kartları `data/events.en.json`, elle yazılmış sorular `data/questions.en.json`. Yeni dil eklemek için bu dosyaların bir kopyası yeterli.
+  `node scripts/i18n-extract.mjs --missing en` eksik çevirileri listeler; `node scripts/i18n-events.mjs` kart çevirilerini birleştirir.
+- **Ortak para birimi:** Tüm dillerde oyun parası 🪙; sayı biçimi dile göre (12.500 🪙 / 12,500 🪙).
+- **Evrensel içerik:** Sınav adları genel (lise sınavı, üniversite sınavı, kamu sınavı, uzmanlık sınavı), tarih ve edebiyat soruları dünya genelinden,
+  ülkeye özgü coğrafya/meclis/bayram soruları yok. Dil dersleri dile göre: Türk oyuncuya Türkçe dilbilgisi + İngilizce, İngiliz oyuncuya İngilizce dilbilgisi + İspanyolca.
+  İsimler ve memleket şehirleri dile göre (İngilizcede uluslararası isimler ve kurgusal şehirler).
+
+### Mini oyun kataloğu (117)
 
 Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
 Ticaret: **Para Üstü, Pazarlık, Fiyat Belirle, Stok Planı, Ürün Sayfası, Teslimat Rotası** ·
+Fizik ağırlıklı: **Kafa Vuruşu, Frikik (görünür kaleci ve top uçuşu), Basket Atışı, Masa Tenisi, Paralel Park, Boru Tesisatı, Kamyon Yükleme** ·
 Hayat: **Konuşma (11 senaryo), Çelişkiyi Bul, Enkazdan Kurtarma, Ritim, Hasat, Ekim Planı**
 
 Temalı oyunlar (`js/minigames/engines.js` motorları + `themes.js` temaları, 76 oyun):

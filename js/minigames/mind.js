@@ -2,6 +2,7 @@ import { register } from './engine.js';
 import { h, btn } from '../ui/dom.js';
 import { clamp, sleep } from '../core/util.js';
 import { pickQuestions, levelFor } from '../sim/questions.js';
+import { lang } from '../core/i18n.js';
 
 // ————————————————— SINAV —————————————————
 // extra: { questions, perQ, prep, jokers: {ogretmen, ezber, grup, sure}, adJoker: async () => bool, examName }
@@ -162,7 +163,8 @@ register({
 });
 
 // ————————————————— KELİME —————————————————
-const WORDS = [
+// i18n-skip-start (yalnızca Türkçe oyunda kullanılır)
+const TR_WORDS = [
   ['KALEM', 'Yazı yazmaya yarar'], ['DEFTER', 'Notlarını içine yazarsın'], ['OKUL', 'Her sabah gittiğin yer'], ['KİTAP', 'Sayfalardan oluşur, okunur'],
   ['BULUT', 'Gökyüzünde süzülür, yağmur getirir'], ['DENİZ', 'Tuzlu, büyük su'], ['ORMAN', 'Ağaçlarla dolu geniş alan'], ['GÜNEŞ', 'Dünyayı ısıtan yıldız'],
   ['ELMA', 'Kırmızı ya da yeşil bir meyve'], ['ARKADAŞ', 'Dostun, can yoldaşın'], ['SABIR', 'Beklemeyi bilmek'], ['EMEK', 'Bir iş için harcanan çaba'],
@@ -177,6 +179,25 @@ const WORDS = [
   ['YARDIM', 'Birine destek olmak'], ['AİLE', 'Anne, baba ve kardeşler'], ['İTİBAR', 'Saygınlık, güvenilirlik'], ['KARNE', 'Dönem sonunda notlarını gösterir'],
   ['DEPREM', 'Yer kabuğunun sarsılması'], ['TİYATRO', 'Sahnede oynanan eser'], ['RESSAM', 'Tuval üzerine resim yapar'], ['MELODİ', 'Notaların ahenkli dizisi'],
 ];
+// i18n-skip-end
+// i18n-skip-start
+const EN_WORDS = [
+  ['PENCIL', 'You write with it'], ['SCHOOL', 'Where you go every morning'], ['BOOK', 'Made of pages, you read it'], ['CLOUD', 'Floats in the sky, brings rain'],
+  ['OCEAN', 'Huge body of salt water'], ['FOREST', 'A wide area full of trees'], ['SUN', 'The star that warms the Earth'], ['APPLE', 'A red or green fruit'],
+  ['FRIEND', 'Someone you like and trust'], ['PATIENCE', 'Knowing how to wait'], ['EFFORT', 'Energy you put into a task'], ['HONEST', 'Someone who does not lie'],
+  ['DREAM', 'A wish you hope comes true'], ['SUCCESS', 'Reaching your goal'], ['BRAVE', 'Fearless, courageous'], ['TEACHER', 'Gives lessons in class'],
+  ['DOCTOR', 'Treats patients'], ['ENGINEER', 'Designs bridges and machines'], ['FARMER', 'Plants and harvests the land'], ['MERCHANT', 'Buys and sells goods'],
+  ['MARKET', 'Place with stalls for shopping'], ['HARVEST', 'Time to gather crops'], ['SEED', 'Planted in soil, it sprouts'], ['PLANET', 'Orbits a star'],
+  ['ENERGY', 'The ability to do work'], ['MAGNET', 'Pulls iron toward it'], ['ATOM', 'Building block of matter'], ['DICTIONARY', 'Gives the meanings of words'],
+  ['POEM', 'Written in verses'], ['NOVEL', 'A long story in book form'], ['MAP', 'A drawing of the world'], ['COMPASS', 'Points north'],
+  ['BRIDGE', 'Connects two shores'], ['HEALTH', 'The greatest wealth'], ['COMPUTER', 'A machine that runs code'], ['FOOTBALL', 'Eleven players a side'],
+  ['KEEPER', 'Guards the goal'], ['OLIVE', 'Its tree gives oil'], ['CURIOUS', 'Eager to learn'], ['FRIENDSHIP', 'The bond between friends'],
+  ['SAVINGS', 'Money put aside'], ['HELPER', 'Someone who supports others'], ['FAMILY', 'Parents, brothers and sisters'], ['RESPECT', 'Esteem and trust'],
+  ['EARTHQUAKE', 'Shaking of the ground'], ['THEATER', 'Plays are staged here'], ['PAINTER', 'Paints on canvas'], ['MELODY', 'A tuneful series of notes'],
+  ['GARDEN', 'Where flowers and vegetables grow'], ['RIVER', 'Fresh water flowing to the sea'], ['WINTER', 'The coldest season'], ['LIBRARY', 'A building full of books'],
+];
+// i18n-skip-end
+const WORDS = lang === 'tr' ? TR_WORDS : EN_WORDS;
 register({
   id: 'kelime', name: 'Kelime Avı', icon: '🔤',
   how: ['İpucunu oku, karışık harflerden kelimeyi kur.', 'Harflere sırayla dokun; yanlış harfi geri almak için kelimeye dokun.', '50 saniyede olabildiğince çok kelime bul.', '"Pas" hakkın var ama puan kaybettirir.'],

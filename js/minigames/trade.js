@@ -1,8 +1,9 @@
 import { register } from './engine.js';
+import { locale } from '../core/i18n.js';
 import { h, btn } from '../ui/dom.js';
 import { clamp, sleep, fmtNum } from '../core/util.js';
 
-const kr = v => (v / 100).toLocaleString('tr-TR', { minimumFractionDigits: v % 100 ? 2 : 0, maximumFractionDigits: 2 }) + ' TL';
+const kr = v => (v / 100).toLocaleString(locale(), { minimumFractionDigits: v % 100 ? 2 : 0, maximumFractionDigits: 2 }) + ' 🪙';
 
 // ————————————————— PARA ÜSTÜ —————————————————
 const ITEMS = [['🍞', 'Ekmek', 1000], ['🥛', 'Süt', 3250], ['🧀', 'Peynir', 12500], ['🍫', 'Çikolata', 2750], ['🥚', 'Yumurta (10)', 6500], ['🍎', 'Elma (1 kg)', 4500], ['📓', 'Defter', 3500], ['🖊️', 'Kalem', 1250], ['🧃', 'Meyve suyu', 2200], ['🍪', 'Bisküvi', 1850], ['🫒', 'Zeytin', 9800], ['🧴', 'Şampuan', 8900]];
@@ -69,20 +70,20 @@ register({
       const patBar = h('i', { style: { width: '100%', background: '#3ddc97' } });
       const offerLbl = h('div.center', { style: { fontSize: '26px', fontWeight: 900 } });
       const slider = h('input.slider', { type: 'range', min: Math.round(P0 * 0.4), max: P0, step: Math.max(100, Math.round(P0 / 200)), value: Math.round(P0 * 0.7) });
-      const upd = () => { offerLbl.textContent = fmtNum(+slider.value) + ' TL'; };
+      const upd = () => { offerLbl.textContent = fmtNum(+slider.value) + ' 🪙'; };
       slider.addEventListener('input', upd);
       const counterLbl = h('b');
       const mood = () => {
         face.textContent = patience > 70 ? '🙂' : patience > 45 ? '😐' : patience > 20 ? '😠' : '🤬';
         patBar.style.width = patience + '%'; patBar.style.background = patience > 45 ? '#3ddc97' : patience > 20 ? '#ffb547' : '#ff5b7a';
-        counterLbl.textContent = fmtNum(C) + ' TL';
+        counterLbl.textContent = fmtNum(C) + ' 🪙';
       };
       const finish = price => {
         if (done) return; done = true;
         if (price === null) { api.bad('Satıcı masadan kalktı'); setTimeout(() => resolve(15), 900); return; }
         const ratio = clamp((P0 - price) / Math.max(1, P0 - R), 0, 1.1);
-        api.good(`Anlaştınız: ${fmtNum(price)} TL`);
-        say.textContent = `🤝 Anlaşma ${fmtNum(price)} TL. (Satıcının gizli tabanı ${fmtNum(R)} TL idi.)`;
+        api.good(`Anlaştınız: ${fmtNum(price)} 🪙`);
+        say.textContent = `🤝 Anlaşma ${fmtNum(price)} 🪙. (Satıcının gizli tabanı ${fmtNum(R)} 🪙 idi.)`;
         setTimeout(() => resolve(clamp(30 + 70 * ratio, 0, 100)), 1500);
       };
       const offer = () => {
@@ -101,20 +102,20 @@ register({
         const bluff = api.rng.chance(api.diff * 0.35);
         const lines = near && !bluff ? ['"Bu fiyata zararına satıyorum, daha inemem."', '"Son sözüm bu, emin ol."'] :
           insult > 0.1 ? ['"Şaka mı yapıyorsun?"', '"Bu teklif ayıp oldu ama…"'] : ['"Olmaz, ama biraz inebilirim."', '"Malın kalitesine bak!"', '"Hadi ortada buluşalım."'];
-        say.textContent = api.rng.pick(lines) + ` Karşı teklif: ${fmtNum(C)} TL`;
+        say.textContent = api.rng.pick(lines) + ` Karşı teklif: ${fmtNum(C)} 🪙`;
         mood();
         if (round >= 7) { say.textContent += ' — "Son teklifim!"'; }
         if (round >= 8) finish(C);
       };
       stage.replaceChildren(h('div.col', { style: { gap: '10px' } },
-        h('div.tile.center', {}, h('div.small.muted', {}, 'Pazarlık konusu'), h('b', {}, item), h('div.small', {}, 'İstenen: ', h('b', {}, fmtNum(P0) + ' TL'))),
+        h('div.tile.center', {}, h('div.small.muted', {}, 'Pazarlık konusu'), h('b', {}, item), h('div.small', {}, 'İstenen: ', h('b', {}, fmtNum(P0) + ' 🪙'))),
         face,
         h('div.meter', {}, 'Sabır', h('div.bar', {}, patBar)),
         say,
         h('div.row', {}, h('span.small.muted', {}, 'Satıcının son teklifi:'), counterLbl),
         offerLbl, slider,
         h('div.row', {}, btn('Teklif ver', offer, 'primary grow'), btn('Son teklifi kabul et', () => finish(C), 'grow'))));
-      say.textContent = `"${item} için ${fmtNum(P0)} TL istiyorum. Çok iyi bir fiyat!"`;
+      say.textContent = `"${item} için ${fmtNum(P0)} 🪙 istiyorum. Çok iyi bir fiyat!"`;
       mood(); upd();
       api.timerLoop(55 - api.diff * 15, () => { if (!done) { say.textContent = '"Başka müşteri bekliyor!"'; finish(C); } });
     });
@@ -143,16 +144,16 @@ register({
         const price = await new Promise(res => {
           const slider = h('input.slider', { type: 'range', min: Math.round(cost * 0.8), max: Math.round(cost * bMax), step: 1, value: history.length ? history[history.length - 1].p : Math.round(cost * 1.5) });
           const lbl = h('div.center', { style: { fontSize: '28px', fontWeight: 900 } });
-          const upd = () => { lbl.textContent = slider.value + ' TL'; };
+          const upd = () => { lbl.textContent = slider.value + ' 🪙'; };
           slider.addEventListener('input', upd);
           const maxProfit = Math.max(1, ...history.map(x => Math.abs(x.pr)));
           stage.replaceChildren(h('div.col', { style: { gap: '10px' } },
-            h('div.row', {}, h('span', { style: { fontSize: '30px' } }, e), h('div.grow', {}, h('b', {}, name), h('div.small.muted', {}, `Birim maliyet: ${cost} TL`)), h('span.chip.accent', {}, `Gün ${day}/6`)),
+            h('div.row', {}, h('span', { style: { fontSize: '30px' } }, e), h('div.grow', {}, h('b', {}, name), h('div.small.muted', {}, `Birim maliyet: ${cost} 🪙`)), h('span.chip.accent', {}, `Gün ${day}/6`)),
             news ? h('div.chip.warn', {}, news) : null,
             h('div.tile', {}, h('div.small.muted', {}, 'Geçmiş günler (satış · kâr)'),
               history.length ? h('div.row', { style: { alignItems: 'flex-end', height: '90px', gap: '6px', marginTop: '6px' } }, history.map(x => h('div.col', { style: { flex: 1, alignItems: 'center', gap: '2px' } },
                 h('div', { style: { width: '100%', height: Math.max(3, Math.abs(x.pr) / maxProfit * 60) + 'px', background: x.pr >= 0 ? '#3ddc97' : '#ff5b7a', borderRadius: '5px' } }),
-                h('span.tiny', {}, x.p + '₺'), h('span.tiny.muted', {}, x.q + ' ad.')))) : h('div.small', { style: { padding: '10px 0' } }, 'Henüz satış yok. İlk fiyatını belirle!')),
+                h('span.tiny', {}, x.p + ' 🪙'), h('span.tiny.muted', {}, x.q + ' ad.')))) : h('div.small', { style: { padding: '10px 0' } }, 'Henüz satış yok. İlk fiyatını belirle!')),
             lbl, slider,
             btn('Günü başlat ▶', () => res(+slider.value), 'primary block')));
           upd();
@@ -163,8 +164,8 @@ register({
         const bestPr = (pOpt - cost) * Math.max(0, aDay - b * pOpt);
         total += pr; best += bestPr;
         history.push({ p: price, q, pr });
-        api.setScore(fmtNum(total) + '₺');
-        pr > bestPr * 0.85 ? api.good(`+${fmtNum(pr)} TL`) : pr > 0 ? api.feedback(`+${fmtNum(pr)} TL`, '#ffb547') : api.bad(`${fmtNum(pr)} TL`);
+        api.setScore(fmtNum(total) + ' 🪙');
+        pr > bestPr * 0.85 ? api.good(`+${fmtNum(pr)} 🪙`) : pr > 0 ? api.feedback(`+${fmtNum(pr)} 🪙`, '#ffb547') : api.bad(`${fmtNum(pr)} 🪙`);
         await sleep(650);
       }
       resolve(clamp(total / Math.max(1, best) * 100 * 1.05, 0, 100));
@@ -197,13 +198,13 @@ register({
           const q = prods.map(() => 0);
           const lbls = prods.map(() => h('b', { style: { width: '48px', textAlign: 'center', fontSize: '20px' } }, '0'));
           const rows = prods.map((p, i) => h('div.tile', {},
-            h('div.row', {}, h('span', { style: { fontSize: '28px' } }, p.e), h('div.grow', {}, h('b', {}, p.n), h('div.tiny.muted', {}, `Maliyet ${p.c} ₺ · Satış ${p.p} ₺`))),
+            h('div.row', {}, h('span', { style: { fontSize: '28px' } }, p.e), h('div.grow', {}, h('b', {}, p.n), h('div.tiny.muted', {}, `Maliyet ${p.c} 🪙 · Satış ${p.p} 🪙`))),
             h('div.small', { style: { margin: '6px 0' } }, `Tahmini talep: ~${fc[i]} adet (±%${Math.round(unc * 100)})`),
             h('div.row', { style: { justifyContent: 'center' } },
               btn('−10', () => { q[i] = Math.max(0, q[i] - 10); lbls[i].textContent = q[i]; }, 'sm'), btn('−1', () => { q[i] = Math.max(0, q[i] - 1); lbls[i].textContent = q[i]; }, 'sm'),
               lbls[i], btn('+1', () => { q[i]++; lbls[i].textContent = q[i]; }, 'sm'), btn('+10', () => { q[i] += 10; lbls[i].textContent = q[i]; }, 'sm'))));
           stage.replaceChildren(h('div.col', { style: { gap: '10px' } },
-            h('div.row', {}, h('h3', {}, SEASONS[s]), h('span.grow'), h('span.chip', {}, `Kâr: ${fmtNum(profit)} ₺`)),
+            h('div.row', {}, h('h3', {}, SEASONS[s]), h('span.grow'), h('span.chip', {}, `Kâr: ${fmtNum(profit)} 🪙`)),
             ...rows, btn('Siparişi ver ▶', () => res(q.slice()), 'primary block')));
         });
         let seasonPr = 0, seasonBest = 0;
@@ -215,8 +216,8 @@ register({
           return `${p.e} Talep ${actual[i]}, sattın ${sold}${left ? `, ${left} arttı` : ''}${orders[i] < actual[i] ? `, ${actual[i] - orders[i]} kaçtı` : ''}`;
         });
         profit += seasonPr; best += seasonBest;
-        api.setScore(fmtNum(profit) + '₺');
-        stage.replaceChildren(h('div.qcard', { style: { flexDirection: 'column', fontSize: '15px', gap: '6px' } }, ...lines.map(l => h('div', {}, l)), h('b', { style: { color: seasonPr >= seasonBest * 0.85 ? '#3ddc97' : '#ffb547' } }, `Mevsim kârı: ${fmtNum(seasonPr)} ₺`)));
+        api.setScore(fmtNum(profit) + ' 🪙');
+        stage.replaceChildren(h('div.qcard', { style: { flexDirection: 'column', fontSize: '15px', gap: '6px' } }, ...lines.map(l => h('div', {}, l)), h('b', { style: { color: seasonPr >= seasonBest * 0.85 ? '#3ddc97' : '#ffb547' } }, `Mevsim kârı: ${fmtNum(seasonPr)} 🪙`)));
         await sleep(1700);
       }
       resolve(clamp(profit / Math.max(1, best) * 100, 0, 100));
@@ -248,14 +249,14 @@ register({
           { k: 'Fotoğraf', opts: api.rng.shuffle(PHOTO.map((p, j) => ({ v: j === 0 ? 8 : 0, node: h('div.col', { style: { alignItems: 'center' } }, h('span', { style: { fontSize: '38px', filter: p[1], display: 'block', padding: '6px', background: j === 2 ? 'repeating-linear-gradient(45deg,#553,#335 6px)' : '#eef', borderRadius: '10px' } }, P.e), h('span.tiny', {}, p[0])) }))) },
           { k: 'Başlık', opts: api.rng.shuffle(P.t.map((t, j) => ({ v: j === 0 ? 10 : j === 1 ? 2 : -6, node: t }))) },
           { k: 'Açıklama', opts: api.rng.shuffle(P.d.map((t, j) => ({ v: j === 0 ? 8 : j === 1 ? 2 : -6, node: t }))) },
-          { k: 'Fiyat', opts: api.rng.shuffle([{ v: 7, node: `${Math.round(comp * 0.95)} TL (rakibin biraz altında)` }, { v: 1, node: `${Math.round(comp * 0.6)} TL (zararına)` }, { v: 1, node: `${Math.round(comp * 1.5)} TL (rakibin çok üstünde)` }]) },
+          { k: 'Fiyat', opts: api.rng.shuffle([{ v: 7, node: `${Math.round(comp * 0.95)} 🪙 (rakibin biraz altında)` }, { v: 1, node: `${Math.round(comp * 0.6)} 🪙 (zararına)` }, { v: 1, node: `${Math.round(comp * 1.5)} 🪙 (rakibin çok üstünde)` }]) },
         ];
         for (const st of steps) {
           if (timeUp) break;
           const v = await new Promise(res => {
             stage.replaceChildren(h('div.col', { style: { gap: '10px' } },
               h('div.row', {}, h('span', { style: { fontSize: '30px' } }, P.e), h('b.grow', {}, P.n), h('span.chip', {}, `${i + 1}/3`)),
-              h('div.small.muted', {}, `${st.k} seç` + (st.k === 'Fiyat' ? ` — rakip fiyatı: ${comp} TL` : '')),
+              h('div.small.muted', {}, `${st.k} seç` + (st.k === 'Fiyat' ? ` — rakip fiyatı: ${comp} 🪙` : '')),
               st.k === 'Fotoğraf'
                 ? h('div.picks', {}, st.opts.map(o => h('button.pick', { onclick: () => res(o.v) }, o.node)))
                 : h('div.qopts', {}, st.opts.map(o => h('button.qopt', { style: { fontSize: '13.5px' }, onclick: () => res(o.v) }, o.node)))));

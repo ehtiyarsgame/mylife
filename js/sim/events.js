@@ -2,6 +2,7 @@
 // kod yazmadan eklenebilir. Koşul ve etki dili bu dosyada yorumlanır.
 import { CONFIG } from '../config.js';
 import { tpl } from '../core/util.js';
+import { T, locale } from '../core/i18n.js';
 import { stageId } from './actions.js';
 import { looks, charisma } from './traits.js';
 import { livingHome } from './household.js';
@@ -145,10 +146,14 @@ export function textVars(s) {
   return {
     ad: s.name, soyad: s.surname, yas: s.age, sehir: s.family.city,
     anne: alive[0].name, baba: alive[1].name,
-    partner: s.rel.partner?.name ?? 'partnerin',
-    kardes: s.family.siblings > 0 ? 'kardeşin' : 'kuzenin',
-    arkadas: s.rel.bestFriend ?? 'en yakın arkadaşın',
+    partner: s.rel.partner?.name ?? T('partnerin'),
+    kardes: T(s.family.siblings > 0 ? 'kardeşin' : 'kuzenin'),
+    arkadas: s.rel.bestFriend ?? T('en yakın arkadaşın'),
     yil: s.calendarYear,
   };
 }
-export const render = (s, str) => tpl(str, textVars(s));
+export const render = (s, str) => {
+  const out = tpl(str, textVars(s));
+  // "{kardes} …" gibi şablonla başlayan cümlenin ilk harfi büyük olsun
+  return out ? out[0].toLocaleUpperCase(locale()) + out.slice(1) : out;
+};

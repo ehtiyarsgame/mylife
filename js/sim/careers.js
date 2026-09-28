@@ -124,11 +124,11 @@ export const DOORS = {
     open: { promote: true, legend: 'milli_takim', log: 'Milli formayı giydin!' },
   },
   tus: {
-    name: 'TUS — Uzmanlık', icon: '📚', path: 'doktor', age: [24, 45],
+    name: 'Uzmanlık sınavı', icon: '📚', path: 'doktor', age: [24, 45],
     need: { job: 'doktor' },
     exam: 'tus',
     text: 'Tıpta Uzmanlık Sınavı. Uzman olmak için yeterli puanı almalısın.',
-    open: { promote: true, log: 'TUS\'u kazandın, uzmanlık eğitimine başladın.' },
+    open: { promote: true, log: 'Uzmanlık sınavını kazandın, uzmanlık eğitimine başladın.' },
   },
   proje_lideri: {
     name: 'Proje liderliği', icon: '📐', path: 'muhendis', age: [25, 60],
@@ -164,11 +164,11 @@ export const DOORS = {
 
 export const EXAMS = {
   karne:  { name: 'Karne yazılısı', q: 6,  t: 28, level: 'auto' },
-  lgs:    { name: 'LGS',            q: 12, t: 38, level: 'ortaokul' },
-  yks:    { name: 'YKS',            q: 15, t: 42, level: 'lise' },
+  lgs:    { name: 'Lise sınavı',     q: 12, t: 38, level: 'ortaokul' },
+  yks:    { name: 'Üniversite sınavı', q: 15, t: 42, level: 'lise' },
   ehliyet:{ name: 'Ehliyet sınavı', q: 8,  t: 30, level: 'ehliyet' },
-  kpss:   { name: 'KPSS',           q: 12, t: 38, level: 'genel' },
-  tus:    { name: 'TUS',            q: 10, t: 42, level: 'tip' },
+  kpss:   { name: 'Kamu sınavı',     q: 12, t: 38, level: 'genel' },
+  tus:    { name: 'Uzmanlık sınavı', q: 10, t: 42, level: 'tip' },
   is:     { name: 'İş mülakatı',    q: 5,  t: 40, level: 'genel' },
   usta:   { name: 'Ustalık belgesi',q: 8,  t: 38, level: 'usta' },
   uni:    { name: 'Final sınavı',   q: 6,  t: 38, level: 'lise' },
