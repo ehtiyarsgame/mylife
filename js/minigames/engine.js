@@ -100,9 +100,13 @@ export async function playMinigame(id, ctx = {}) {
     const timerI = h('i', { style: { width: '100%' } });
     const timer = h('div.bar.mg-timer', {}, timerI);
     const stage = h('div.mg-stage');
+    // Geri bildirim yazıları oyun alanının üstünde ayrılmış tek satırda çıkar:
+    // oyunun kendi çizdiği yazılarla (GOL, ISKA…) asla üst üste binmez, yenisi eskisinin yerini alır.
+    const msg = h('div.mg-msg');
     inner.replaceChildren(
       h('div.mg-head', {}, h('span', { style: { fontSize: '24px' } }, game.icon), h('span.t', {}, game.name), scoreEl),
-      timer, stage);
+      timer, msg, stage);
+    let msgT = 0;
     // Geri sayım
     const cd = h('div.countdown');
     stage.append(cd);
@@ -117,8 +121,9 @@ export async function playMinigame(id, ctx = {}) {
       hideTimer() { timer.style.visibility = 'hidden'; },
       onCleanup(fn) { localClean.push(fn); },
       feedback(text, color = '#fff') {
-        const el = h('div.mg-fb', { style: { color } }, text);
-        stage.append(el); setTimeout(() => el.remove(), 800);
+        const el = h('span.mg-fb', { style: { color } }, text);
+        msg.replaceChildren(el);
+        clearTimeout(msgT); msgT = setTimeout(() => el.remove(), 900);
       },
       good(text = 'Harika!') { sfx.good(); vibrate(15); api.feedback(text, '#3ddc97'); },
       bad(text = 'Olmadı') { sfx.bad(); vibrate([30, 30, 30]); api.feedback(text, '#ff5b7a'); },

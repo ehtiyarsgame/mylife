@@ -240,7 +240,9 @@ h3 { font-size: 16px; font-weight: 800; }
 .mg-result { margin: auto 0; text-align: center; }
 .mg-result .grade { font-size: 110px; font-weight: 900; line-height: 1; animation: pop .5s; }
 .mg-result .score { font-size: 22px; font-weight: 900; }
-.mg-fb { position: absolute; left: 0; right: 0; top: 40%; text-align: center; font-size: 30px; font-weight: 900; pointer-events: none; animation: floatUp .8s ease forwards; z-index: 6; }
+.mg-msg { height: 30px; margin: -2px 0 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; }
+.mg-fb { max-width: 100%; padding: 3px 14px; border-radius: 999px; background: rgba(0,0,0,.35); font-size: 17px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: fbPop .9s ease forwards; }
+@keyframes fbPop { 0% { opacity: 0; transform: scale(.7); } 15% { opacity: 1; transform: scale(1.08); } 25% { transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
 
 .qcard { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; font-size: 17px; font-weight: 800; min-height: 110px; display: flex; align-items: center; justify-content: center; text-align: center; }
 .qopts { display: grid; gap: 9px; margin-top: 12px; }

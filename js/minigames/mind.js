@@ -58,7 +58,7 @@ register({
           const jokerBox = h('div.jokers');
           const renderJokers = () => {
             const list = Object.keys(JOKERS).filter(k => x.jokers?.[k]);
-            jokerBox.replaceChildren(
+            jokerBox.replaceChildren(...[
               ...list.map(k => h('button.joker' + (usedSet.has(k) || used >= 2 ? '.used' : ''), { onclick: () => useJoker(k) }, JOKERS[k].e, ' ', JOKERS[k].n)),
               x.adJoker && !adUsed && used < 2 ? h('button.joker', { style: { borderColor: '#ffc53d' }, onclick: async () => {
                 const avail = Object.keys(JOKERS).filter(k => !usedSet.has(k));
@@ -75,7 +75,7 @@ register({
                 tm.pause = false;
                 if (okAd) { adUsed = true; used--; usedSet.delete(pick); useJoker(pick); }
               } }, '📺 Reklam jokeri') : null,
-            );
+            ].filter(Boolean));
           };
           renderJokers();
           stage.replaceChildren(h('div.col', { style: { gap: '0' } },

@@ -77,10 +77,10 @@ register({
             const inGoal = ball.tx > g.x0 + 6 && ball.tx < g.x1 - 6 && ball.ty > g.y0 + 6 && ball.ty < g.y1;
             const reach = (g.x1 - g.x0) * (ball.weak ? 0.26 : 0.17);
             const saved = Math.hypot(ball.tx - keeper.tx, ball.ty - keeper.ty) < reach;
-            if (!inGoal) { msg = { t: 'AUT!', c: '#ffb547' }; api.bad('Aut!'); }
-            else if (saved) { msg = { t: 'KURTARDI!', c: '#ff5b7a' }; api.bad('Kurtardı!'); }
+            if (!inGoal) { msg = { t: 'AUT!', c: '#ffb547' }; api.sfx.bad(); api.vibrate([30, 30, 30]); }
+            else if (saved) { msg = { t: 'KURTARDI!', c: '#ff5b7a' }; api.sfx.bad(); api.vibrate([30, 30, 30]); }
             else {
-              goals++; msg = { t: 'GOL!', c: '#3ddc97' }; api.good('GOL!'); shake = crowd ? 12 : 6;
+              goals++; msg = { t: 'GOL!', c: '#3ddc97' }; api.sfx.good(); api.vibrate(15); shake = crowd ? 12 : 6;
               const cornerX = Math.abs(ball.tx - (g.x0 + g.x1) / 2) / ((g.x1 - g.x0) / 2);
               const cornerY = 1 - (ball.ty - g.y0) / (g.y1 - g.y0);
               bonus += clamp((cornerX * 0.6 + cornerY * 0.4) * 4, 0, 4);
