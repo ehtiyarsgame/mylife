@@ -26,7 +26,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
     const f = Math.round(s * 108 / 48);
     await shot(`<img src="${b64(square)}" width="${f}" height="${f}">`, f, f, path.join(dir, 'ic_launcher_foreground.png'));
   }
-  // Açılış görselleri: varsayılan İngilizce (Life Path), values-tr için Türkçe (Hayat Yolu)
+  // Açılış görselleri: varsayılan İngilizce (Lifetide), values-tr için Türkçe (Hayat Yolu)
   const splash = (w, h, name) => {
     const m = Math.min(w, h);
     return `<div style="width:${w}px;height:${h}px;background:radial-gradient(circle at 50% 42%,#2a2470,#0d1020 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Nunito,sans-serif;position:relative">
@@ -39,7 +39,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
     if (!fs.existsSync(f)) continue;
     const buf = fs.readFileSync(f);
     const w = buf.readUInt32BE(16), h = buf.readUInt32BE(20);
-    await shot(splash(w, h, 'Life Path'), w, h, f);
+    await shot(splash(w, h, 'Lifetide'), w, h, f);
     const trDir = path.join(res, dir.replace(/^drawable/, 'drawable-tr'));
     fs.mkdirSync(trDir, { recursive: true });
     await shot(splash(w, h, 'Hayat Yolu'), w, h, path.join(trDir, 'splash.png'));
@@ -52,7 +52,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
       <div><div style="font-weight:900;font-size:84px;color:#fff;line-height:1">${name}</div>
       <div style="margin-top:14px;font-weight:800;font-size:30px;color:#c9c2ff">${name === 'Hayat Yolu' ? 'Bir ömür, binlerce karar' : 'One life, a thousand choices'}</div>
       <img src="${b64(studio)}" style="height:44px;margin-top:34px"></div></div>`;
-  await shot(feature('Life Path'), 1024, 500, path.join(root, 'store/feature-1024x500-en.png'));
+  await shot(feature('Lifetide'), 1024, 500, path.join(root, 'store/feature-1024x500-en.png'));
   await shot(feature('Hayat Yolu'), 1024, 500, path.join(root, 'store/feature-1024x500-tr.png'));
   await b.close();
   console.log('Android görselleri üretildi');

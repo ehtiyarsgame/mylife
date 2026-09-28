@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Ehtiyars Game: kulaklıklı, gözlüklü, bıyıklı neşeli bir "ihtiyar" oyuncu -->
+  <defs>
+    <linearGradient id="eg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffcf4d"/>
+      <stop offset="0.5" stop-color="#ff7b54"/>
+      <stop offset="1" stop-color="#9b5cff"/>
+    </linearGradient>
+    <linearGradient id="eg-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe2c2"/>
+      <stop offset="1" stop-color="#f7c49b"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="248" fill="url(#eg-bg)"/>
+  <circle cx="256" cy="256" r="248" fill="none" stroke="#1a1440" stroke-opacity=".12" stroke-width="8"/>
+  <!-- kafa -->
+  <ellipse cx="256" cy="272" rx="138" ry="150" fill="url(#eg-skin)"/>
+  <!-- yan saçlar -->
+  <path d="M122 250 C 96 232, 100 196, 126 186 C 120 214, 134 232, 150 240 Z" fill="#ffffff"/>
+  <path d="M390 250 C 416 232, 412 196, 386 186 C 392 214, 378 232, 362 240 Z" fill="#ffffff"/>
+  <!-- kulaklık bandı -->
+  <path d="M108 262 C 100 120, 412 120, 404 262" fill="none" stroke="#1a1440" stroke-width="26" stroke-linecap="round"/>
+  <!-- kulaklıklar -->
+  <rect x="84" y="228" width="58" height="92" rx="26" fill="#1a1440"/>
+  <rect x="96" y="240" width="34" height="68" rx="16" fill="#7b5cff"/>
+  <rect x="370" y="228" width="58" height="92" rx="26" fill="#1a1440"/>
+  <rect x="382" y="240" width="34" height="68" rx="16" fill="#7b5cff"/>
+  <!-- mikrofon -->
+  <path d="M398 312 C 396 368, 360 392, 318 394" fill="none" stroke="#1a1440" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="312" cy="394" r="14" fill="#1a1440"/>
+  <!-- kaşlar -->
+  <path d="M168 206 C 186 186, 222 186, 236 200" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <path d="M276 200 C 290 186, 326 186, 344 206" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <!-- gözlük -->
+  <circle cx="204" cy="252" r="42" fill="#ffffff" fill-opacity=".35" stroke="#1a1440" stroke-width="12"/>
+  <circle cx="308" cy="252" r="42" fill="#ffffff" fill-opacity=".35" stroke="#1a1440" stroke-width="12"/>
+  <path d="M246 250 Q 256 240 266 250" fill="none" stroke="#1a1440" stroke-width="10" stroke-linecap="round"/>
+  <!-- gözler (göz kırpan) -->
+  <circle cx="204" cy="256" r="12" fill="#1a1440"/>
+  <circle cx="208" cy="251" r="4" fill="#ffffff"/>
+  <path d="M292 258 Q 308 246 324 258" fill="none" stroke="#1a1440" stroke-width="9" stroke-linecap="round"/>
+  <!-- burun -->
+  <ellipse cx="256" cy="300" rx="22" ry="18" fill="#eba77c"/>
+  <!-- bıyık -->
+  <path d="M256 318 C 236 306, 200 308, 176 330 C 164 342, 150 340, 142 330 C 150 364, 196 368, 226 350 C 240 342, 250 336, 256 334 C 262 336, 272 342, 286 350 C 316 368, 362 364, 370 330 C 362 340, 348 342, 336 330 C 312 308, 276 306, 256 318 Z" fill="#ffffff"/>
+  <!-- gülümseme -->
+  <path d="M222 370 Q 256 392 290 370" fill="none" stroke="#b5603a" stroke-width="9" stroke-linecap="round"/>
+  <!-- oyun kolu rozeti -->
+  <g transform="translate(256 454)">
+    <rect x="-58" y="-26" width="116" height="52" rx="26" fill="#1a1440"/>
+    <path d="M-34 0 h20 M-24 -10 v20" stroke="#ffcf4d" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="20" cy="-6" r="6" fill="#29d3a6"/>
+    <circle cx="34" cy="6" r="6" fill="#ff5b7a"/>
+  </g>
+</svg>

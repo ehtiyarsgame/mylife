@@ -1,4 +1,4 @@
-# 🚀 Yayın rehberi — Life Path / Hayat Yolu 1.0.0
+# 🚀 Yayın rehberi — Lifetide / Hayat Yolu 1.0.0
 
 Bu depo Google Play'e yüklenmeye hazır. Aşağıdaki adımları sırayla izle.
 
@@ -16,24 +16,23 @@ Yeni bir bilgisayarda derlemek için iki dosyayı `android/` klasörüne koyman 
 
 Şu an Google'ın **test** kimlikleri kullanılıyor (reklamlar "Test Ad" yazar, para kazandırmaz).
 
-1. [admob.google.com](https://admob.google.com) → Uygulamalar → **Uygulama ekle** → Android → "Life Path".
+1. [admob.google.com](https://admob.google.com) → Uygulamalar → **Uygulama ekle** → Android → "Lifetide".
 2. Uygulama kimliğini (`ca-app-pub-XXXXXXXX~YYYYYYYY`) kopyala →
    `android/app/src/main/res/values/strings.xml` içindeki `admob_app_id` değerine yapıştır.
 3. **Reklam birimi ekle → Ödüllü** ("Rewarded") → kimliği (`ca-app-pub-XXXXXXXX/ZZZZZZZZ`) kopyala →
    `js/ads.config.js` içindeki `rewardedAndroid` değerine yapıştır ve `testing: false` yap.
 4. AdMob → **Gizlilik ve mesajlaşma** → GDPR mesajı oluştur ve yayınla (AB'deki oyuncular için onay formu; oyun bunu otomatik gösterir).
-5. `app-ads.txt`: AdMob'un verdiği satırı geliştirici web sitenin köküne koy (Play'deki "Web sitesi" alanına yazdığın adres).
+5. `app-ads.txt`: AdMob'un verdiği satırı `website/app-ads.txt` dosyasına yaz ve herkese açık siteye yükle (bkz. 3. adım).
 
 > Kendi telefonunda gerçek reklamlara art arda tıklama; hesabın askıya alınabilir. Test için `testing: true` bırak.
 
-## 3. Gizlilik politikasını yayınla
+## 3. Gizlilik politikasını yayınla (herkese açık site)
 
-`privacy.html` hazır (Türkçe + İngilizce). Herkese açık bir adrese koy, örneğin:
-- GitHub Pages: depo Ayarlar → Pages → "Deploy from a branch" → `main` / root → adres: `https://<kullanıcı>.github.io/<depo>/privacy.html`
-  (özel depolarda Pages ücretli plan ister; o zaman ayrı bir herkese açık depo aç ve yalnızca `privacy.html` ile `icons/studio.svg`'yi koy)
-- ya da kendi web siten.
+Oyun deposu özel olduğu için gizlilik sayfası ayrı, herkese açık bir sitede durur: `website/` klasörü.
+Kurulum adımları `website/README.md` içinde (GitHub'da `ehtiyarsgame.github.io` adlı herkese açık depo + Pages). Sonuç:
 
-Bu adresi Play Console'da **Uygulama içeriği → Gizlilik politikası** alanına yaz.
+- Gizlilik politikası: **https://ehtiyarsgame.github.io/lifetide/privacy.html** → Play Console → Uygulama içeriği → Gizlilik politikası
+- Web sitesi: **https://ehtiyarsgame.github.io** → Play Console → Mağaza ayarları → Web sitesi (AdMob `app-ads.txt`'yi burada arar)
 
 ## 4. Derle
 
@@ -52,7 +51,7 @@ Her yeni sürümde: `js/config.js` → `APP_VERSION`, `package.json` → `versio
 ## 5. Play Console
 
 1. [play.google.com/console](https://play.google.com/console) → **Uygulama oluştur**
-   - Ad: **Life Path: Life Simulator** · Varsayılan dil: İngilizce (ABD) · Oyun · Ücretsiz
+   - Ad: **Lifetide: Play Your Life** · Varsayılan dil: İngilizce (ABD) · Oyun · Ücretsiz
 2. **Mağaza girişi**: metinler `store/listing.md`'de (İngilizce + Türkçe çeviri ekle).
    - Simge: `store/icon-512.png`
    - Öne çıkan görsel: `store/feature-1024x500-en.png` (Türkçe giriş için `-tr.png`)

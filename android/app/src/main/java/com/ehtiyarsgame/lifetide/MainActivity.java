@@ -1,4 +1,4 @@
-package com.ehtiyarsgame.hayatyolu;
+package com.ehtiyarsgame.lifetide;
 
 import com.getcapacitor.BridgeActivity;
 

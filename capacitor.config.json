@@ -1,6 +1,6 @@
 {
-  "appId": "com.ehtiyarsgame.hayatyolu",
-  "appName": "Life Path",
+  "appId": "com.ehtiyarsgame.lifetide",
+  "appName": "Lifetide",
   "webDir": "www",
   "android": {
     "backgroundColor": "#0d1020"

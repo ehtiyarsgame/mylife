@@ -1,14 +1,14 @@
 # Google Play mağaza metinleri
 
-Uygulama kimliği: `com.ehtiyarsgame.hayatyolu` · Kategori: **Oyun → Simülasyon** · Hedef kitle: **13+**
+Uygulama kimliği: `com.ehtiyarsgame.lifetide` · Kategori: **Oyun → Simülasyon** · Hedef kitle: **13+**
 Görseller: `store/icon-512.png`, `store/feature-1024x500-en.png` / `-tr.png`, `store/screenshots/en/*`, `store/screenshots/tr/*`
-Gizlilik politikası: `privacy.html` (yayında bir adrese koy, bkz. RELEASE.md)
+Gizlilik politikası: https://ehtiyarsgame.github.io/lifetide/privacy.html (kaynak: `website/`, bkz. RELEASE.md) · Web sitesi: https://ehtiyarsgame.github.io
 
 ---
 
 ## English (en-US) — varsayılan
 
-**App name (≤30):** Life Path: Life Simulator
+**App name (≤30):** Lifetide: Play Your Life
 
 **Short description (≤80):**
 Live a whole life from birth to old age — through 100+ mini-games.
@@ -16,7 +16,7 @@ Live a whole life from birth to old age — through 100+ mini-games.
 **Full description:**
 One life, a thousand choices.
 
-Life Path is a life simulator where you don't just tap buttons — you actually play your life. Study for exams by solving real questions, score a header in the big match, diagnose a patient, haggle at the market, fix a pipe or trade on the stock market. Every path has its own mini-games.
+Lifetide is a life simulator where you don't just tap buttons — you actually play your life. Study for exams by solving real questions, score a header in the big match, diagnose a patient, haggle at the market, fix a pipe or trade on the stock market. Every path has its own mini-games.
 
 🌱 FROM CRADLE TO OLD AGE
 Grow up in a poor, middle-class or wealthy family, in a village or a big city. Your talents, temperament and family shape your start, but your effort decides where you end up.

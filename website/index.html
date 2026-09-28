@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ehtiyars Game</title>
+<meta name="description" content="Ehtiyars Game — small studio, big lives. Makers of Lifetide (Hayat Yolu).">
+<link rel="icon" href="assets/ehtiyars-mark.svg" type="image/svg+xml">
+<style>
+  :root { --bg: #0d1020; --card: #171b33; --line: #262c52; --text: #e8e6ff; --muted: #9aa3c8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: radial-gradient(900px 500px at 50% 0%, #2a2470, var(--bg) 70%); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+  .logo { display: block; width: min(460px, 100%); margin: 0 auto 12px; }
+  .tag { text-align: center; color: var(--muted); margin: 0 0 40px; }
+  .game { display: flex; gap: 18px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 18px; }
+  .game img { width: 96px; height: 96px; border-radius: 22px; flex: none; }
+  .game h2 { margin: 0 0 4px; font-size: 22px; }
+  .game p { margin: 0 0 8px; color: var(--muted); }
+  a { color: #b9b0ff; } .links a { margin-right: 14px; font-weight: 600; }
+  footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 14px; }
+  @media (max-width: 480px) { .game { flex-direction: column; text-align: center; } }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="assets/ehtiyars-logo-horizontal-dark.svg" alt="Ehtiyars Game">
+  <p class="tag">Small studio, big lives. · Küçük stüdyo, kocaman hayatlar.</p>
+  <div class="game">
+    <img src="assets/lifetide-icon.svg" alt="Lifetide">
+    <div>
+      <h2>Lifetide <span style="color:var(--muted);font-weight:400">· Hayat Yolu</span></h2>
+      <p>Live a whole life from birth to old age — through 100+ mini-games.<br>Doğumdan yaşlılığa bir ömür yaşa — 100'den fazla mini oyunla.</p>
+      <div class="links"><a href="lifetide/privacy.html">Privacy Policy / Gizlilik</a><a href="mailto:ehtiyarsgame@gmail.com">Contact / İletişim</a></div>
+    </div>
+  </div>
+  <footer>© Ehtiyars Game · <a href="mailto:ehtiyarsgame@gmail.com">ehtiyarsgame@gmail.com</a></footer>
+</main>
+</body>
+</html>

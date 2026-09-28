@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Life Path</string>
-    <string name="title_activity_main">Life Path</string>
-    <string name="package_name">com.ehtiyarsgame.hayatyolu</string>
-    <string name="custom_url_scheme">com.ehtiyarsgame.hayatyolu</string>
+    <string name="app_name">Lifetide</string>
+    <string name="title_activity_main">Lifetide</string>
+    <string name="package_name">com.ehtiyarsgame.lifetide</string>
+    <string name="custom_url_scheme">com.ehtiyarsgame.lifetide</string>
     <!-- TEST kimliği. Yayından önce AdMob hesabındaki gerçek uygulama kimliğiyle değiştir. -->
     <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
 </resources>

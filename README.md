@@ -1,10 +1,10 @@
-# 🌱 Life Path / Hayat Yolu — Ehtiyars Game
+# 🌱 Lifetide / Hayat Yolu — Ehtiyars Game
 
-> 📱 **Sürüm 1.0.0 (mağaza sürümü).** Telefona doğrudan kurmak için: [`apk/LifePath-1.0.0.apk`](apk/LifePath-1.0.0.apk) · Google Play paketi: [`apk/LifePath-1.0.0.aab`](apk/LifePath-1.0.0.aab)
+> 📱 **Sürüm 1.0.0 (mağaza sürümü).** Telefona doğrudan kurmak için: [`apk/Lifetide-1.0.0.apk`](apk/Lifetide-1.0.0.apk) · Google Play paketi: [`apk/Lifetide-1.0.0.aab`](apk/Lifetide-1.0.0.aab)
 >
 > 🚀 Yayın adımları: [`RELEASE.md`](RELEASE.md) · Mağaza metinleri ve görselleri: [`store/`](store/) · Stüdyo logosu: [`brand/`](brand/)
 >
-> Oyunun adı dile göre değişir: Türkçede **Hayat Yolu**, diğer dillerde **Life Path**.
+> Oyunun adı dile göre değişir: Türkçede **Hayat Yolu**, diğer dillerde **Lifetide**.
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -136,7 +136,7 @@ Metinlerde `{ad} {anne} {baba} {partner} {arkadas} {sehir} {yas}` kullanılabili
 
 ## Android APK derleme
 
-Proje Capacitor 8 ile paketlenir (`com.ehtiyarsgame.hayatyolu`). Gerekenler: Node 22, JDK 21, Android SDK (platform 36).
+Proje Capacitor 8 ile paketlenir (`com.ehtiyarsgame.lifetide`). Gerekenler: Node 22, JDK 21, Android SDK (platform 36).
 
 ```bash
 npm ci
@@ -151,7 +151,7 @@ Play Store için imzalı sürüm: Android Studio → Build → Generate Signed B
 
 ```bash
 npm i -D @capacitor/cli && npm i @capacitor/core @capacitor/android @capacitor/ios
-npx cap init "Hayat Yolu" com.hayatyolu.app --web-dir .
+npx cap init "Lifetide" com.ehtiyarsgame.lifetide --web-dir www
 npx cap add android && npx cap add ios
 npx cap copy && npx cap open android   # Android Studio'da çalıştır / imzala
 ```

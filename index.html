@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0d1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Life Path (Hayat Yolu) — a life simulation from birth to old age, played through mini-games. Ehtiyars Game.">
+  <meta name="description" content="Lifetide (Hayat Yolu) — a life simulation from birth to old age, played through mini-games. Ehtiyars Game.">
   <meta name="author" content="Ehtiyars Game">
   <title>Hayat Yolu</title>
   <link rel="manifest" href="manifest.webmanifest">
@@ -22,15 +22,15 @@
     <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Hayat Yolu</div><div class="game-sub">Bir ömür, binlerce karar</div></div>
   </div>
   <script>
-    // Oyun adı dile göre: Türkçede "Hayat Yolu", diğer dillerde "Life Path"
+    // Oyun adı dile göre: Türkçede "Hayat Yolu", diğer dillerde "Lifetide"
     (function () {
       var l = null; try { l = localStorage.getItem('hayatyolu.lang'); } catch (e) {}
       l = l || (navigator.language || 'en').slice(0, 2).toLowerCase();
       if (l === 'tr') return;
       document.documentElement.lang = 'en';
-      document.title = 'Life Path';
+      document.title = 'Lifetide';
       var q = function (c) { return document.querySelector(c); };
-      q('.game-name').textContent = 'Life Path';
+      q('.game-name').textContent = 'Lifetide';
       q('.game-sub').textContent = 'One life, a thousand choices';
       q('.studio-sub').textContent = 'presents';
     })();

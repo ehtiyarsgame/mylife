@@ -285,6 +285,7 @@ route('settings', (root, back = 'title') => {
     h('div.card', { style: { marginBottom: '10px' } },
       h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Hayat Yolu · sürüm ' + APP_VERSION))),
       h('p.small', { style: { margin: '10px 0 4px' } }, '📧 İletişim ve geri bildirim: ', h('a', { href: 'mailto:ehtiyarsgame@gmail.com', style: { color: '#b9b0ff' } }, 'ehtiyarsgame@gmail.com')),
+      h('p.small', { style: { margin: '0 0 4px' } }, '🔒 ', h('a', { href: 'https://ehtiyarsgame.github.io/lifetide/privacy.html', target: '_blank', rel: 'noopener', style: { color: '#b9b0ff' } }, 'Gizlilik politikası')),
       h('p.tiny.muted', { style: { margin: 0 } }, 'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; hesap açılmaz, kişisel veri toplanmaz. Ödüllü reklamlar Google AdMob ile gösterilir; kişiselleştirilmiş reklam için onayın istenir.')),
     privacyOptionsNeeded() ? btn('🛡️ Reklam gizlilik seçenekleri', () => showPrivacyOptions(), 'ghost block') : null,
     h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
