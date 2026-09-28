@@ -889,7 +889,7 @@
  },
  "deprem": {
   "title": "Earthquake",
-  "text": "4:17 am. The ground shook. The street is full of dust. Voices come from the rubble.",
+  "text": "{saat}. The ground shook. The street is full of dust. Voices come from the rubble.",
   "options": [
    {
     "text": "Join the search and rescue",

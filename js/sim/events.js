@@ -2,7 +2,8 @@
 // kod yazmadan eklenebilir. Koşul ve etki dili bu dosyada yorumlanır.
 import { CONFIG } from '../config.js';
 import { tpl } from '../core/util.js';
-import { T, locale } from '../core/i18n.js';
+import { T, locale, lang } from '../core/i18n.js';
+import { hashString } from '../core/rng.js';
 import { stageId } from './actions.js';
 import { looks, charisma } from './traits.js';
 import { livingHome } from './household.js';
@@ -150,7 +151,18 @@ export function textVars(s) {
     kardes: T(s.family.siblings > 0 ? 'kardeşin' : 'kuzenin'),
     arkadas: s.rel.bestFriend ?? T('en yakın arkadaşın'),
     yil: s.calendarYear,
+    saat: eventTime(s),
   };
+}
+// Olay saati: hayat ve yaşa göre sabit ama rastgele (ör. deprem kartı). Gerçek bir afetin saati kullanılmaz.
+function eventTime(s) {
+  const h0 = hashString(`${s.seed}-saat-${s.age}`);
+  let hh = h0 % 24, mm = Math.floor(h0 / 24) % 60;
+  if (hh === 4 && mm === 17) mm = 38;
+  const pad = n => String(n).padStart(2, '0');
+  if (lang !== 'tr') return `${(hh % 12) || 12}:${pad(mm)} ${hh < 12 ? 'am' : 'pm'}`;
+  const part = hh < 6 ? 'Gece' : hh < 12 ? 'Sabah' : hh < 18 ? 'Öğleden sonra' : hh < 22 ? 'Akşam' : 'Gece';
+  return `${part} ${pad(hh)}.${pad(mm)}`;
 }
 export const render = (s, str) => {
   const out = tpl(str, textVars(s));

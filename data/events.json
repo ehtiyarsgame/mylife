@@ -2734,7 +2734,7 @@
    ]
   },
   "once": true,
-  "text": "Gece 04.17. Yer sallandı. Sokak toz duman. Enkazdan sesler geliyor.",
+  "text": "{saat}. Yer sallandı. Sokak toz duman. Enkazdan sesler geliyor.",
   "options": [
    {
     "text": "Arama kurtarmaya katıl",
