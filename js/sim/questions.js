@@ -1,6 +1,6 @@
 // Soru bankası + veri tablolarından üretilen sorular. Son sorulanlar tekrar gelmez.
 import { fx } from '../core/rng.js';
-import { genQuestion } from './qgen.js';
+import { genQuestion, genLevels } from './qgen.js';
 
 // Oturum boyunca son sorulan soruları hatırla (mini oyun + sınav)
 const SEEN = [];
@@ -37,14 +37,14 @@ export function pickQuestions(levelKey, n, recent = [], prep = 50) {
   let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
   if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l) && !SEEN.slice(-40).includes(q.id));
   pool = fx.shuffle(pool);
-  // Okul/genel sınavlarında soruların çoğu üretilir (binlerce farklı soru); meslek sınavları elle yazılmış bankadan gelir.
-  const genShare = ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : 0;
+  // Soruların çoğu veri tablolarından üretilir (binlerce farklı soru); kalanı elle yazılmış bankadan gelir.
+  const genShare = ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : genLevels.includes(levelKey) ? 0.6 : 0;
   const out = [];
   for (let i = 0; i < n; i++) {
     const useGen = genShare > 0 && (fx.chance(genShare) || !pool.length);
-    const gl = genLevel || fx.pick(levels.filter(l => ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(l))) || 'ortaokul';
+    const gl = genLevel || fx.pick(levels.filter(l => genLevels.includes(l))) || 'ortaokul';
     let raw = useGen ? genQuestion(fx, gl, recentSet) : pool.pop();
-    if (!raw) raw = genQuestion(fx, 'ortaokul', recentSet);
+    if (!raw) raw = genQuestion(fx, genLevels.includes(levelKey) ? levelKey : 'ortaokul', recentSet);
     recentSet.add(raw.id);
     const order = fx.shuffle([0, 1, 2, 3]);
     out.push({ id: raw.id, s: raw.s, q: raw.q, h: raw.h, opts: order.map(i => raw.a[i]), correct: order.indexOf(raw.c) });

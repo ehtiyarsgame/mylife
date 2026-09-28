@@ -1,6 +1,6 @@
 # 🌱 Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.0-test.apk`](apk/HayatYolu-0.3.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Test APK'sı:** [`apk/HayatYolu-0.3.1-test.apk`](apk/HayatYolu-0.3.1-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -78,7 +78,7 @@ index.html, manifest.webmanifest, sw.js   PWA kabuğu (çevrimdışı çalışı
 css/style.css                              tasarım sistemi (mobil öncelikli)
 data/events.json                           olay destesi (206 kart) — kod bilmeden genişletilir
 data/questions.json                        elle yazılmış soru bankası (tıp, ehliyet, ustalık, KPSS…)
-js/sim/qgen.js, qdata.js                   veri tablolarından soru üretici (seviye başına 1.300+ farklı soru)
+js/sim/qgen.js, qdata.js                   veri tablolarından soru üretici (okul seviyelerinde 1.300+, tıp ~420, ustalık ~200, ehliyet ~130 farklı soru)
 js/config.js                               tüm denge sayıları (enerji, EP, olasılıklar, ekonomi)
 js/core/        rng (tohumlu), energy, store, audio, ads
 js/sim/         saf simülasyon: character, traits, household, partner, balance, stats, actions, careers, business, events, year, questions

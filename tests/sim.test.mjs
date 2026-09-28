@@ -6,6 +6,7 @@ import { RNG } from '../js/core/rng.js';
 import { newLife, rollStart } from '../js/sim/character.js';
 import { setDeck, setJobsRef, checkCond, deckSize } from '../js/sim/events.js';
 import { setBank } from '../js/sim/questions.js';
+setBank(JSON.parse(readFileSync(new URL('../data/questions.json', import.meta.url))));
 import { JOBS, DOORS } from '../js/sim/careers.js';
 import { availableActions, actionById, resolve } from '../js/sim/actions.js';
 import * as Y from '../js/sim/year.js';
@@ -203,13 +204,16 @@ test('üretilen sorular geçerli ve çok çeşitli; sınavda tekrar gelmez', asy
       assert.equal(new Set(q.a).size, 4, `${q.q} → ${q.a}`);
       assert.ok(!q.a.some(x => /undefined|NaN/.test(x)), q.q);
     }
-    assert.ok(ids.size > 600, `${l}: yalnız ${ids.size} farklı soru`);
+    const min = ['tip', 'ehliyet', 'usta'].includes(l) ? 110 : 600;
+    assert.ok(ids.size > min, `${l}: yalnız ${ids.size} farklı soru`);
   }
-  let recent = [];
-  for (let k = 0; k < 8; k++) {
-    const qs = pickQuestions('lise', 10, recent, 50);
-    for (const q of qs) assert.ok(!recent.includes(q.id), `tekrar: ${q.q}`);
-    recent = recent.concat(qs.map(q => q.id));
+  for (const [lvl, n] of [['lise', 10], ['tip', 8], ['ehliyet', 5], ['usta', 5]]) {
+    let recent = [];
+    for (let k = 0; k < 8; k++) {
+      const qs = pickQuestions(lvl, n, recent, 50);
+      for (const q of qs) assert.ok(!recent.includes(q.id), `${lvl} tekrar: ${q.q}`);
+      recent = recent.concat(qs.map(q => q.id));
+    }
   }
 });
 

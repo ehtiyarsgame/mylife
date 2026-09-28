@@ -1,5 +1,6 @@
 // Veri tablolarından ve formüllerden soru üretir. Her soru kalıcı bir kimlik taşır (tekrar kontrolü için).
-import { COUNTRIES, PROVINCES, ENGLISH, SYNONYMS, ANTONYMS, ELEMENTS, WORKS, HISTORY, PROVERBS, BIO, UNITS, PLANETS } from './qdata.js';
+import { COUNTRIES, PROVINCES, ENGLISH, SYNONYMS, ANTONYMS, ELEMENTS, WORKS, HISTORY, PROVERBS, BIO, UNITS, PLANETS,
+  DISEASES, DRUGS, LABS, VITAMINS, SYMPTOMS, SIGNS, CAR_PARTS, FIRST_AID, TOOLS, TRADE_TERMS } from './qdata.js';
 
 const uniq = (arr, bad) => [...new Set(arr.map(String))].filter(x => x !== String(bad));
 // Havuzdan doğru cevaptan farklı 3 yanlış şık seç
@@ -89,6 +90,46 @@ const T = {
   gezegen: r => { const i = r.int(0, 7); const sira = ['birinci', 'ikinci', 'üçüncü', 'dördüncü', 'beşinci', 'altıncı', 'yedinci', 'sekizinci'][i]; return Q(`gez:${i}`, 'Fen', `Güneş'e uzaklık sırasına göre ${sira} gezegen hangisidir?`, PLANETS[i], wrongFrom(r, PLANETS, PLANETS[i])); },
 };
 
+
+// ——— Meslek sınavları ———
+const dec = v => String(Math.round(v * 100) / 100).replace('.', ',');
+const P = {
+  // Tıp
+  etkenGrup: r => { const d = r.pick(DISEASES); return Q(`etkenG:${d[0]}`, 'Tıp', `${d[0]} hastalığının etkeni hangi gruptandır?`, d[1], ['Bakteri', 'Virüs', 'Mantar', 'Parazit'].filter(x => x !== d[1])); },
+  etken: r => { const d = r.pick(DISEASES); return Q(`etken:${d[0]}`, 'Tıp', `${d[0]} hastalığının etkeni hangisidir?`, d[2], wrongFrom(r, DISEASES.map(x => x[2]), d[2])); },
+  ilacSinif: r => { const d = r.pick(DRUGS); return Q(`ilac:${d[0]}`, 'Farmakoloji', `${d[0]} hangi ilaç grubundandır?`, d[1], wrongFrom(r, DRUGS.map(x => x[1]), d[1])); },
+  ilacTers: r => { const d = r.pick(DRUGS); return Q(`ilacT:${d[0]}`, 'Farmakoloji', `Hangisi bir "${d[1]}" ilacıdır?`, d[0], wrongFrom(r, DRUGS.filter(x => x[1] !== d[1]).map(x => x[0]), d[0])); },
+  lab: r => { const l = r.pick(LABS); return Q(`lab:${l[0]}`, 'Tıp', `${l[0]} için normal aralık hangisidir?`, l[1], l[2]); },
+  vitamin: r => { const v = r.pick(VITAMINS); return r.chance(0.5)
+    ? Q(`vit:${v[0]}`, 'Tıp', `${v[0]} eksikliği hangi tabloya yol açar?`, v[1], wrongFrom(r, VITAMINS.map(x => x[1]), v[1]))
+    : Q(`vitT:${v[1]}`, 'Tıp', `${v[1]} hangi eksiklikte görülür?`, v[0], wrongFrom(r, VITAMINS.map(x => x[0]), v[0])); },
+  bulgu: r => { const b = r.pick(SYMPTOMS); return Q(`bulgu:${b[0]}`, 'Tıp', `"${b[0]}" öncelikle hangi organ/sistemi düşündürür?`, b[1], wrongFrom(r, SYMPTOMS.map(x => x[1]), b[1])); },
+  dozKilo: r => { const mg = r.pick([5, 10, 15, 20]), kg = r.int(8, 40) * 2; const v = mg * kg; return Q(`doz:${mg}:${kg}`, 'Farmakoloji', `Çocuk hastaya ${mg} mg/kg ilaç verilecek. Hasta ${kg} kg. Toplam doz?`, `${v} mg`, [`${v * 2} mg`, `${mg + kg} mg`, `${Math.round(v / 2)} mg`]); },
+  surup: r => { const c = r.pick([125, 250]), want = c * r.pick([0.4, 0.6, 0.8, 1.2, 1.6, 2]); const ml = want / c * 5; return Q(`surup:${c}:${want}`, 'Farmakoloji', `Şurubun 5 mL'sinde ${c} mg etken madde var. ${want} mg için kaç mL verilir?`, `${dec(ml)} mL`, [`${dec(ml * 2)} mL`, `${dec(ml / 2)} mL`, `${dec(ml + 2.5)} mL`], 'Orantı kur: 5 mL → ' + c + ' mg'); },
+  infuzyon: r => { const vol = r.pick([500, 1000, 1500, 2000]), h = r.pick([4, 5, 8, 10, 12, 20]); const v = vol / h; if (v % 1) return P.dozKilo(r); return Q(`inf:${vol}:${h}`, 'Hemşirelik', `${vol} mL serum ${h} saatte verilecek. Saatte kaç mL gitmeli?`, `${v} mL/sa`, [`${v * 2} mL/sa`, `${Math.round(v / 2)} mL/sa`, `${v + 25} mL/sa`]); },
+  vki: r => { const boy = r.pick([1.5, 1.6, 1.7, 1.8, 2.0]), vki = r.int(17, 34); const kg = Math.round(vki * boy * boy); const v = kg / (boy * boy); const cat = v < 18.5 ? 'Zayıf' : v < 25 ? 'Normal' : v < 30 ? 'Fazla kilolu' : 'Obez'; return Q(`vki:${boy}:${kg}`, 'Tıp', `Boyu ${dec(boy)} m, kilosu ${kg} kg olan erişkinin VKİ sınıfı?`, cat, ['Zayıf', 'Normal', 'Fazla kilolu', 'Obez'].filter(x => x !== cat), 'VKİ = kg / boy²'); },
+  // Ehliyet
+  levha: r => { const l = r.pick(SIGNS); return Q(`levha:${l[0]}`, 'Trafik İşaretleri', `${l[0]} ne anlama gelir?`, l[1], wrongFrom(r, SIGNS.map(x => x[1]), l[1])); },
+  levhaTers: r => { const l = r.pick(SIGNS); return Q(`levhaT:${l[1]}`, 'Trafik İşaretleri', `"${l[1]}" hangi levhayla gösterilir?`, l[0], wrongFrom(r, SIGNS.map(x => x[0]), l[0])); },
+  parca: r => { const p = r.pick(CAR_PARTS); return Q(`parca:${p[0]}`, 'Motor', `${p[0]} ne işe yarar?`, p[1], wrongFrom(r, CAR_PARTS.map(x => x[1]), p[1])); },
+  parcaTers: r => { const p = r.pick(CAR_PARTS); return Q(`parcaT:${p[0]}`, 'Motor', `"${p[1]}" — bu görev hangi parçaya aittir?`, p[0], wrongFrom(r, CAR_PARTS.map(x => x[0]), p[0])); },
+  ilkYardim: r => { const f = r.pick(FIRST_AID); return Q(`iy:${f[0]}`, 'İlk Yardım', `${f[0]} durumunda doğru ilk yardım hangisidir?`, f[1], wrongFrom(r, FIRST_AID.map(x => x[1]), f[1])); },
+  takip: r => { const v = r.pick([40, 50, 60, 70, 80, 90, 100, 110, 120]); return Q(`takip:${v}`, 'Trafik', `"Hızın yarısı kadar metre" kuralına göre ${v} km/s hızda en az takip mesafesi?`, `${v / 2} m`, [`${v} m`, `${v / 4} m`, `${v / 2 + 20} m`]); },
+  yakit: r => { const l = r.pick([5, 6, 7, 8, 9]), km = r.pick([150, 200, 250, 300, 350, 400, 450]); const v = l * km / 100; return Q(`yakit:${l}:${km}`, 'Trafik', `100 km'de ${l} L yakan araç ${km} km yolda kaç L yakar?`, `${dec(v)} L`, [`${dec(v * 2)} L`, `${dec(v + l)} L`, `${dec(km / l)} L`].filter(x => x !== `${dec(v)} L`)); },
+  // Ustalık
+  alet: r => { const t = r.pick(TOOLS); return Q(`alet:${t[0]}`, 'Alet Bilgisi', `${t[0]} ne işe yarar?`, t[1], wrongFrom(r, TOOLS.map(x => x[1]), t[1])); },
+  aletTers: r => { const t = r.pick(TOOLS); return Q(`aletT:${t[0]}`, 'Alet Bilgisi', `"${t[1]}" — hangi aletin işidir?`, t[0], wrongFrom(r, TOOLS.map(x => x[0]), t[0])); },
+  terim: r => { const t = r.pick(TRADE_TERMS); return Q(`terim:${t[0]}`, 'Meslek Bilgisi', `"${t[0]}" ne demektir?`, t[1], wrongFrom(r, TRADE_TERMS.map(x => x[1]), t[1])); },
+  ohm: r => { const R = r.pick([2, 4, 5, 10, 11, 20, 22, 44]), I = r.pick([1, 2, 5, 10]); const V = R * I; const t = r.int(0, 2);
+    if (t === 0) return Q(`ohmV:${R}:${I}`, 'Elektrik', `${R} Ω dirençten ${I} A akım geçiyor. Gerilim?`, `${V} V`, [`${R + I} V`, `${dec(R / I)} V`, `${V * 2} V`].filter(x => x !== `${V} V`), 'V = I × R');
+    if (t === 1) return Q(`ohmI:${R}:${V}`, 'Elektrik', `${V} V gerilimde ${R} Ω direnç. Akım?`, `${I} A`, [`${V * R} A`, `${I * 2} A`, `${I + 3} A`], 'I = V / R');
+    return Q(`ohmR:${V}:${I}`, 'Elektrik', `${V} V gerilimde ${I} A akım çeken yükün direnci?`, `${R} Ω`, [`${V * I} Ω`, `${R * 2} Ω`, `${R + 5} Ω`], 'R = V / I'); },
+  guc: r => { const W = r.pick([1100, 2200, 3300, 4400, 660, 1320]); const I = W / 220; return Q(`guc:${W}`, 'Elektrik', `220 V şebekede ${W} W cihaz yaklaşık kaç amper çeker?`, `${dec(I)} A`, [`${dec(I * 2)} A`, `${dec(I / 2)} A`, `${dec(I + 4)} A`], 'P = V × I'); },
+  boya: r => { const a = r.pick([3, 4, 5, 6]), b = r.pick([2.5, 3]), kat = r.pick([1, 2]), verim = 10; const v = a * b * kat / verim; return Q(`boya:${a}:${b}:${kat}`, 'Boya', `${a} m × ${dec(b)} m duvar ${kat} kat boyanacak. 1 L boya 10 m² boyuyorsa kaç L gerekir?`, `${dec(v)} L`, [`${dec(v * 2)} L`, `${dec(v + 1)} L`, `${dec(v + 0.5)} L`]); },
+  fayans: r => { const a = r.pick([2, 3, 4, 5]), b = r.pick([2, 3, 4]), f = r.pick([0.5, 0.25]); const n = a * b / (f * f); return Q(`fayans:${a}:${b}:${f}`, 'İnşaat', `${a} m × ${b} m zemine ${f * 100}×${f * 100} cm fayans döşenecek. Kaç adet gerekir (fire hariç)?`, n, [String(n / 2), String(a * b * 4), String(n + a * b)].filter(x => x !== String(n))); },
+  beton: r => { const a = r.pick([3, 4, 5, 6]), b = r.pick([3, 4, 5]), h = r.pick([0.1, 0.12, 0.15, 0.2]); const v = a * b * h; return Q(`beton:${a}:${b}:${h}`, 'İnşaat', `${a} m × ${b} m, ${dec(h * 100)} cm kalınlıkta döşeme için kaç m³ beton gerekir?`, `${dec(v)} m³`, [`${dec(v * 10)} m³`, `${dec(a * b)} m³`, `${dec(v * 2)} m³`]); },
+};
+
 // Seviye → üreticiler (ağırlıklar tekrar yazılarak verilir)
 const BY_LEVEL = {
   ilkokul: [M.topla, M.cikar, M.carpim, M.problem, M.basamak, M.bolme, T.esAnlam, T.zitAnlam, T.atasozu, T.gezegen, T.bolge],
@@ -98,6 +139,9 @@ const BY_LEVEL = {
     T.baskent, T.baskentTers, T.ingTr, T.trIng, T.element, T.elementNo, T.eser, T.tarih, T.tarihSira, T.organ, T.birim],
   genel: [M.yuzde, M.zam, M.faiz, M.denklem, M.olasilik, M.ortalama,
     T.baskent, T.baskentTers, T.para, T.plaka, T.eser, T.tarih, T.tarihSira, T.atasozu, T.ingTr, T.birim, T.organ],
+  tip: [P.etkenGrup, P.etken, P.ilacSinif, P.ilacTers, P.lab, P.lab, P.vitamin, P.bulgu, P.dozKilo, P.surup, P.infuzyon, P.vki, T.organ],
+  ehliyet: [P.levha, P.levha, P.levhaTers, P.parca, P.parcaTers, P.ilkYardim, P.ilkYardim, P.takip, P.yakit],
+  usta: [P.alet, P.aletTers, P.terim, P.terim, P.ohm, P.guc, P.boya, P.fayans, P.beton],
 };
 export const genLevels = Object.keys(BY_LEVEL);
 

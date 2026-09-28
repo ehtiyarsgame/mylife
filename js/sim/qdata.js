@@ -144,3 +144,104 @@ export const UNITS = [
 
 // Gezegenler (Güneş'e uzaklık sırasıyla)
 export const PLANETS = ['Merkür', 'Venüs', 'Dünya', 'Mars', 'Jüpiter', 'Satürn', 'Uranüs', 'Neptün'];
+
+// ——————————— MESLEK SINAVLARI ———————————
+// TIP — [hastalık, etken grubu, etken]
+export const DISEASES = [
+  ['Tüberküloz', 'Bakteri', 'Mycobacterium tuberculosis'], ['Grip', 'Virüs', 'İnfluenza virüsü'], ['Sıtma', 'Parazit', 'Plasmodium'],
+  ['Pamukçuk', 'Mantar', 'Candida albicans'], ['Kızamık', 'Virüs', 'Kızamık virüsü'], ['Tetanoz', 'Bakteri', 'Clostridium tetani'],
+  ['Kolera', 'Bakteri', 'Vibrio cholerae'], ['Hepatit B', 'Virüs', 'Hepatit B virüsü'], ['AIDS', 'Virüs', 'HIV'], ['Kuduz', 'Virüs', 'Kuduz virüsü'],
+  ['Şarbon', 'Bakteri', 'Bacillus anthracis'], ['Toksoplazmoz', 'Parazit', 'Toxoplasma gondii'], ['Uyuz', 'Parazit', 'Sarcoptes scabiei'],
+  ['Suçiçeği', 'Virüs', 'Varisella-zoster virüsü'], ['Boğmaca', 'Bakteri', 'Bordetella pertussis'], ['Difteri', 'Bakteri', 'Corynebacterium diphtheriae'],
+  ['Kabakulak', 'Virüs', 'Kabakulak virüsü'], ['Şark çıbanı', 'Parazit', 'Leishmania'], ['Mantar (tinea) enfeksiyonu', 'Mantar', 'Dermatofitler'],
+  ['Bruselloz', 'Bakteri', 'Brucella'], ['Kırım-Kongo kanamalı ateşi', 'Virüs', 'KKKA virüsü'], ['Giardiyaz', 'Parazit', 'Giardia lamblia'],
+  ['Aspergilloz', 'Mantar', 'Aspergillus'], ['Çocuk felci', 'Virüs', 'Poliovirüs'], ['Frengi (sifiliz)', 'Bakteri', 'Treponema pallidum'],
+];
+// [ilaç, sınıf]
+export const DRUGS = [
+  ['Amoksisilin', 'Antibiyotik'], ['Sefazolin', 'Antibiyotik'], ['Siprofloksasin', 'Antibiyotik'], ['Azitromisin', 'Antibiyotik'],
+  ['İbuprofen', 'Ağrı kesici (NSAİİ)'], ['Naproksen', 'Ağrı kesici (NSAİİ)'], ['Diklofenak', 'Ağrı kesici (NSAİİ)'],
+  ['Metformin', 'Antidiyabetik'], ['Gliklazid', 'Antidiyabetik'], ['Amlodipin', 'Tansiyon düşürücü'], ['Ramipril', 'Tansiyon düşürücü'],
+  ['Losartan', 'Tansiyon düşürücü'], ['Metoprolol', 'Tansiyon düşürücü'], ['Varfarin', 'Kan sulandırıcı (antikoagülan)'], ['Heparin', 'Kan sulandırıcı (antikoagülan)'],
+  ['Rivaroksaban', 'Kan sulandırıcı (antikoagülan)'], ['Setirizin', 'Antihistaminik'], ['Loratadin', 'Antihistaminik'], ['Omeprazol', 'Mide asidi baskılayıcı (PPI)'],
+  ['Pantoprazol', 'Mide asidi baskılayıcı (PPI)'], ['Salbutamol', 'Bronş genişletici'], ['Formoterol', 'Bronş genişletici'], ['Sertralin', 'Antidepresan'],
+  ['Fluoksetin', 'Antidepresan'], ['Essitalopram', 'Antidepresan'], ['Atorvastatin', 'Kolesterol düşürücü (statin)'], ['Rosuvastatin', 'Kolesterol düşürücü (statin)'],
+  ['Levotiroksin', 'Tiroit hormonu'], ['Furosemid', 'İdrar söktürücü (diüretik)'], ['Hidroklorotiyazid', 'İdrar söktürücü (diüretik)'],
+];
+// [test, normal değer, yanlışlar]
+export const LABS = [
+  ['Açlık kan şekeri', '70–100 mg/dL', ['140–200 mg/dL', '30–50 mg/dL', '200–300 mg/dL']],
+  ['Hemoglobin (yetişkin erkek)', '13,5–17,5 g/dL', ['5–8 g/dL', '20–25 g/dL', '9–11 g/dL']],
+  ['Potasyum (K)', '3,5–5,0 mEq/L', ['135–145 mEq/L', '7–9 mEq/L', '1–2 mEq/L']],
+  ['Sodyum (Na)', '135–145 mEq/L', ['3,5–5,0 mEq/L', '100–110 mEq/L', '160–175 mEq/L']],
+  ['Kalsiyum (Ca)', '8,5–10,5 mg/dL', ['2–4 mg/dL', '14–18 mg/dL', '70–100 mg/dL']],
+  ['Trombosit', '150.000–400.000 /µL', ['10.000–50.000 /µL', '4.000–10.000 /µL', '600.000–900.000 /µL']],
+  ['Lökosit (beyaz küre)', '4.000–10.000 /µL', ['150.000–400.000 /µL', '500–1.000 /µL', '25.000–40.000 /µL']],
+  ['Kreatinin', '0,6–1,2 mg/dL', ['3–5 mg/dL', '10–15 mg/dL', '0,01–0,1 mg/dL']],
+  ['Solunum sayısı (yetişkin)', '12–20 /dk', ['30–40 /dk', '4–8 /dk', '60–100 /dk']],
+  ['Oksijen satürasyonu (SpO₂)', '%95–100', ['%70–80', '%85–88', '%50–60']],
+  ['Arteriyel kan pH', '7,35–7,45', ['6,8–7,0', '7,6–7,8', '7,0–7,2']],
+  ['Nabız (dinlenmede, yetişkin)', '60–100 /dk', ['30–45 /dk', '120–150 /dk', '160–200 /dk']],
+  ['Kan basıncı (ideal, yetişkin)', '120/80 mmHg', ['180/110 mmHg', '80/40 mmHg', '160/100 mmHg']],
+  ['Vücut kitle indeksi (normal)', '18,5–24,9 kg/m²', ['30–35 kg/m²', '10–15 kg/m²', '25–29,9 kg/m²']],
+];
+// [vitamin/mineral, eksiklik tablosu]
+export const VITAMINS = [
+  ['C vitamini', 'Skorbüt'], ['D vitamini', 'Raşitizm'], ['B1 vitamini', 'Beriberi'], ['B3 vitamini (niasin)', 'Pellagra'], ['A vitamini', 'Gece körlüğü'],
+  ['K vitamini', 'Pıhtılaşma bozukluğu (kanama)'], ['B12 vitamini', 'Pernisiyöz anemi'], ['Folik asit (gebelikte)', 'Nöral tüp defekti'], ['İyot', 'Guatr'], ['Demir', 'Demir eksikliği anemisi'],
+];
+// [bulgu/tablo, organ ya da sistem]
+export const SYMPTOMS = [
+  ['Sarılık (gözlerde sararma)', 'Karaciğer'], ['Hırıltılı solunum, nefes darlığı', 'Solunum sistemi (akciğer)'], ['Göğüs ağrısı, sol kola yayılım', 'Kalp'],
+  ['İdrarda yanma, sık idrara çıkma', 'İdrar yolları'], ['Yüzün bir yarısında kayma, konuşma bozukluğu', 'Beyin (inme)'], ['Boyunda şişlik (guatr)', 'Tiroit bezi'],
+  ['Sağ üst karın ağrısı, yağlı yemek sonrası', 'Safra kesesi'], ['Kanlı öksürük, gece terlemesi', 'Akciğer'], ['Böğür ağrısı, idrarda kan', 'Böbrek (taş)'], ['Diz ve kalçada sabah tutukluğu', 'Eklemler'],
+];
+
+// EHLİYET — [levha, anlamı]
+export const SIGNS = [
+  ['Kırmızı sekizgen "DUR" levhası', 'Tam dur, yol ver, sonra geç'], ['Ters üçgen, kırmızı kenarlı levha', 'Ana yoldaki araçlara yol ver'],
+  ['Kırmızı daire içinde beyaz yatay bant', 'Taşıt trafiğine kapalı (giriş yok)'], ['Mavi daire içinde beyaz ok', 'Mecburi yön'],
+  ['Mavi kare içinde beyaz "P"', 'Park yeri'], ['Kırmızı çerçeveli daire içinde "50"', 'Azami hız 50 km/s'], ['Mavi daire içinde "30"', 'Asgari hız 30 km/s'],
+  ['Kırmızı kenarlı üçgen içinde yürüyen çocuklar', 'Okul geçidi'], ['Kırmızı kenarlı üçgen içinde ünlem işareti', 'Dikkat (diğer tehlikeler)'],
+  ['Mavi zemin, kırmızı çerçeve ve kırmızı çarpı (X)', 'Duraklamak ve park etmek yasak'], ['Mavi zemin, kırmızı çerçeve ve tek çapraz çizgi', 'Park etmek yasak'],
+  ['Kırmızı çerçeveli dairede yan yana iki otomobil (biri kırmızı)', 'Öndeki taşıtı geçmek yasak'], ['Kırmızı kenarlı üçgen içinde tren', 'Kontrollü demiryolu geçidi'],
+  ['Kırmızı kenarlı üçgen içinde kayan araç', 'Kaygan yol'], ['Kırmızı kenarlı üçgen içinde daralan yol çizgileri', 'Yol daralması'],
+  ['Mavi kare içinde yaya geçidi çizgileri', 'Yaya geçidi'], ['Kırmızı daire içinde üstü çizili sağa ok', 'Sağa dönülmez'],
+  ['Kırmızı daire içinde üstü çizili U dönüş oku', 'U dönüşü yapılmaz'], ['Kırmızı kenarlı üçgen içinde yol çalışan işçi', 'Yolda çalışma var'],
+  ['Kırmızı kenarlı üçgen içinde geyik', 'Vahşi hayvan çıkabilir'], ['Kırmızı çerçeveli dairede üstü çizili korna', 'Sesli işaret (korna) yasak'],
+];
+// [araç parçası, görevi]
+export const CAR_PARTS = [
+  ['Debriyaj', 'Motor gücünü vites kutusuna iletir ya da keser'], ['Akü', 'Elektrik enerjisini depolar'], ['Radyatör', 'Motor soğutma suyunu soğutur'],
+  ['Alternatör (şarj dinamosu)', 'Motor çalışırken aküyü şarj eder'], ['Buji', 'Benzinli motorda yakıt-hava karışımını ateşler'], ['Hava filtresi', 'Motora temiz hava sağlar'],
+  ['Termostat', 'Motorun çalışma sıcaklığını ayarlar'], ['Diferansiyel', 'Virajda tekerleklerin farklı hızda dönmesini sağlar'], ['Amortisör', 'Yay salınımlarını sönümler'],
+  ['ABS', 'Ani frende tekerleklerin kilitlenmesini önler'], ['Marş motoru', 'Motoru ilk hareket ettirir'], ['Katalitik konvertör', 'Zararlı egzoz gazlarını azaltır'],
+  ['Su pompası', 'Soğutma suyunu motor ve radyatör arasında dolaştırır'], ['Enjektör', 'Yakıtı silindire püskürtür'], ['Kızdırma bujisi', 'Dizel motorun soğukta ilk çalışmasını kolaylaştırır'],
+];
+// [durum, doğru ilk yardım]
+export const FIRST_AID = [
+  ['Burun kanaması', 'Baş hafif öne eğilir, burun kanatları 5–10 dk sıkılır'], ['Birinci derece yanık', 'Yanık bölge 10–20 dk tazyiksiz serin suyla soğutulur'],
+  ['Kırık şüphesi', 'Bölge hareket ettirilmeden sabitlenir (tespit)'], ['Dış kanama', 'Kanayan yere temiz bezle doğrudan baskı uygulanır'],
+  ['Bilinci kapalı, solunumu var', 'Koma (derlenme) pozisyonu verilir'], ['Solunum yok, bilinç kapalı', 'Temel yaşam desteği (kalp masajı) başlatılır'],
+  ['Bilinçli yetişkinde tam hava yolu tıkanıklığı', 'Heimlich manevrası uygulanır'], ['Şok belirtileri (soluk, soğuk terli, hızlı nabız)', 'Sırtüstü yatırılıp bacaklar hafif yükseltilir'],
+  ['Göze yabancı cisim kaçması', 'Göz ovuşturulmaz, bol temiz suyla yıkanır'], ['Kimyasal madde yutma', 'Kusturulmaz, 112 aranıp bilgi verilir'],
+  ['Omurga yaralanması şüphesi', 'Baş-boyun-gövde ekseni korunur, gereksiz hareket ettirilmez'], ['Sıcak çarpması', 'Serin yere alınır, vücut ıslak bezlerle soğutulur'],
+  ['Arı sokması (alerji yoksa)', 'İğne varsa kazınarak çıkarılır, soğuk uygulanır'], ['Donma', 'Yavaşça ısıtılır, ovuşturulmaz'],
+];
+
+// USTALIK — [alet, işlevi]
+export const TOOLS = [
+  ['Su terazisi', 'Yüzeyin yatay/düşey olduğunu kontrol eder'], ['Kumpas', 'Çap ve uzunluğu hassas ölçer'], ['Mikrometre', 'Çok hassas (0,01 mm) ölçüm yapar'],
+  ['Tork anahtarı', 'Cıvatayı belirli bir kuvvetle sıkar'], ['Pafta', 'Mile dış vida dişi açar'], ['Kılavuz', 'Deliğe iç vida dişi açar'], ['Eğe', 'Metal yüzeyden talaş kaldırıp düzeltir'],
+  ['Mengene', 'İş parçasını sabit tutar'], ['Gönye', 'Dik açıyı kontrol eder'], ['Şakül', 'Duvarın düşeyliğini kontrol eder'], ['İzolasyon test cihazı (megger)', 'Kablo yalıtım direncini ölçer'],
+  ['Pens ampermetre', 'Kabloyu kesmeden akım ölçer'], ['Havya', 'Lehim yapar'], ['Spiral taşlama', 'Metal keser ve taşlar'], ['Perçin tabancası', 'Perçinle birleştirme yapar'],
+  ['Mala', 'Harç alır ve sürer'], ['Mastar', 'Sıvayı düz çeker'], ['Boru anahtarı', 'Boru ve rakorları sıkar'], ['Kerpeten', 'Çivi söker, tel keser'], ['Keski', 'Metal ya da taşı yontar'],
+];
+// [malzeme/terim, açıklama]
+export const TRADE_TERMS = [
+  ['Kür', 'Betonun dayanım kazanması için nemli tutulması'], ['Priz', 'Çimento harcının katılaşmaya başlaması'], ['Derz', 'Fayans ya da tuğla arası boşluk dolgusu'],
+  ['Ankraj', 'Yapı elemanını betona sabitleme'], ['Kalıp', 'Betona şekil veren geçici yapı'], ['Etriye', 'Kolon/kiriş donatısını saran çember demir'],
+  ['Sıva', 'Duvar yüzeyini düzgünleştiren harç tabakası'], ['Tesviye', 'Yüzeyi düzleme (terazisine getirme)'], ['Lehim', 'Metal parçaları düşük erime noktalı alaşımla birleştirme'],
+  ['Kaçak akım', 'Devreden toprağa ya da insana kaçan akım'], ['Kısa devre', 'Faz ile nötrün dirençsiz temas etmesi'], ['Topraklama', 'Cihaz gövdesini toprağa bağlama'],
+  ['Rakor', 'Boruları söküp takılabilir biçimde birleştiren parça'], ['Conta', 'İki yüzey arasında sızdırmazlık sağlayan parça'], ['Pah', 'Keskin kenarın eğimli kırılması'],
+];
