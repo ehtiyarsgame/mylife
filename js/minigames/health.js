@@ -142,7 +142,7 @@ register({
             ctx.fillStyle = '#3ddc97'; ctx.beginPath(); ctx.arc(path[0].x, path[0].y, 12, 0, 7); ctx.fill();
             ctx.fillStyle = '#ff5b7a'; ctx.beginPath(); ctx.arc(path[path.length - 1].x, path[path.length - 1].y, 10, 0, 7); ctx.fill();
             if (touching) { ctx.font = '28px sans-serif'; ctx.fillText('🔪', tx - 4, ty - 4); }
-            else { ctx.fillStyle = '#333'; ctx.font = '800 14px Nunito'; ctx.textAlign = 'center'; ctx.fillText(started ? 'Parmağını kaldırma!' : 'Yeşil noktadan başla', W / 2, H - 16); ctx.textAlign = 'left'; }
+            else { ctx.fillStyle = '#333'; ctx.font = '800 14px Nunito, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(started ? 'Parmağını kaldırma!' : 'Yeşil noktadan başla', W / 2, H - 16); ctx.textAlign = 'left'; }
             api.setScore(Math.round(prog / (path.length - 1) * 100) + '%');
           });
         });

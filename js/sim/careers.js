@@ -13,11 +13,11 @@ export const PATHS = {
 
 // levels: [unvan, maaş çarpanı, bu seviyede en az yıl (terfi için), terfi kapısı?]
 export const JOBS = {
-  garson:     { name: 'Garson', icon: '🍽️', path: 'genel', salary: 21000, mg: ['ekim', 'hasat', 'koyun_say', 'yumurta', 'kostebek', 'hasere'], skill: 'empati', stat: 'sosyal', minAge: 16,
+  garson:     { name: 'Garson', icon: '🍽️', path: 'genel', salary: 21000, mg: ['ekim', 'hasat', 'koyun_say', 'yumurta', 'kostebek', 'hasere', 'boru'], skill: 'empati', stat: 'sosyal', minAge: 16,
                 levels: [['Garson', 1, 2], ['Şef garson', 1.3, 3], ['Restoran müdürü', 1.9, 99]] },
-  isci:       { name: 'Fabrika işçisi', icon: '🏭', path: 'genel', salary: 24000, mg: ['parca', 'tepki', 'ariza', 'kalite_kontrol', 'kargo_istif', 'vinc'], skill: 'el', stat: 'fizik', minAge: 17,
+  isci:       { name: 'Fabrika işçisi', icon: '🏭', path: 'genel', salary: 24000, mg: ['parca', 'tepki', 'ariza', 'kalite_kontrol', 'kargo_istif', 'vinc', 'yukleme'], skill: 'el', stat: 'fizik', minAge: 17,
                 levels: [['İşçi', 1, 3], ['Ustabaşı', 1.35, 4], ['Vardiya amiri', 1.8, 99]] },
-  kurye:      { name: 'Kargo şoförü', icon: '🚚', path: 'genel', salary: 30000, mg: ['rota', 'tepki', 'kurye_motor', 'surus', 'kargo_istif', 'kargo_yakala'], skill: 'el', stat: 'disiplin', minAge: 18, needFlag: 'ehliyet',
+  kurye:      { name: 'Kargo şoförü', icon: '🚚', path: 'genel', salary: 30000, mg: ['rota', 'tepki', 'kurye_motor', 'surus', 'kargo_istif', 'kargo_yakala', 'park', 'yukleme'], skill: 'el', stat: 'disiplin', minAge: 18, needFlag: 'ehliyet',
                 levels: [['Şoför', 1, 3], ['Bölge sorumlusu', 1.4, 4], ['Lojistik müdürü', 2.1, 99]] },
   memur:      { name: 'Memur', icon: '🏛️', path: 'genel', salary: 38000, mg: ['hizlimat', 'siralama', 'dogruyanlis', 'posta', 'fatura_hesap', 'saat_hesap'], skill: 'matematik', stat: 'disiplin', minAge: 20, needFlag: 'kpss',
                 levels: [['Memur', 1, 4], ['Şef', 1.3, 5], ['Müdür', 1.7, 99]] },
@@ -43,7 +43,7 @@ export const JOBS = {
                 levels: [['Muhasebeci', 1, 4], ['Mali müşavir', 1.7, 5], ['Finans müdürü', 2.5, 99]] },
   ziraatmuh:  { name: 'Ziraat mühendisi', icon: '🌿', path: 'ciftci', salary: 50000, mg: ['ekim', 'hasat', 'hastalikli_yaprak', 'hasere'], skill: 'doga', stat: 'zeka', minAge: 22, needDept: 'ziraat',
                 levels: [['Ziraat mühendisi', 1, 4], ['Bölge müdürü', 1.6, 99]] },
-  cirak:      { name: 'Çırak', icon: '🔩', path: 'usta', salary: 12000, mg: ['ariza', 'parca', 'tugla_duvar', 'kalite_kontrol', 'su_basinci'], skill: 'el', stat: 'disiplin', minAge: 14,
+  cirak:      { name: 'Çırak', icon: '🔩', path: 'usta', salary: 12000, mg: ['ariza', 'parca', 'tugla_duvar', 'kalite_kontrol', 'su_basinci', 'boru'], skill: 'el', stat: 'disiplin', minAge: 14,
                 levels: [['Çırak', 1, 2], ['Kalfa', 2, 2, 'ustalik'], ['Usta', 3.6, 99]] },
   ciftci:     { name: 'Çiftçi', icon: '🌾', path: 'ciftci', salary: 20000, mg: ['ekim', 'hasat'], skill: 'doga', stat: 'fizik', minAge: 16, farm: true,
                 levels: [['Çiftçi', 1, 3, 'modern_tarim'], ['Modern çiftçi', 2.4, 5], ['Kooperatif başkanı', 3.5, 99]] },
@@ -163,15 +163,15 @@ export const DOORS = {
 };
 
 export const EXAMS = {
-  karne:  { name: 'Karne yazılısı', q: 3,  t: 30, level: 'auto' },
-  lgs:    { name: 'LGS',            q: 8,  t: 40, level: 'ortaokul' },
-  yks:    { name: 'YKS',            q: 10, t: 45, level: 'lise' },
-  ehliyet:{ name: 'Ehliyet sınavı', q: 5,  t: 30, level: 'ehliyet' },
-  kpss:   { name: 'KPSS',           q: 8,  t: 40, level: 'genel' },
-  tus:    { name: 'TUS',            q: 8,  t: 45, level: 'tip' },
-  is:     { name: 'İş mülakatı',    q: 4,  t: 40, level: 'genel' },
-  usta:   { name: 'Ustalık belgesi',q: 5,  t: 40, level: 'usta' },
-  uni:    { name: 'Final sınavı',   q: 4,  t: 40, level: 'lise' },
+  karne:  { name: 'Karne yazılısı', q: 6,  t: 28, level: 'auto' },
+  lgs:    { name: 'LGS',            q: 12, t: 38, level: 'ortaokul' },
+  yks:    { name: 'YKS',            q: 15, t: 42, level: 'lise' },
+  ehliyet:{ name: 'Ehliyet sınavı', q: 8,  t: 30, level: 'ehliyet' },
+  kpss:   { name: 'KPSS',           q: 12, t: 38, level: 'genel' },
+  tus:    { name: 'TUS',            q: 10, t: 42, level: 'tip' },
+  is:     { name: 'İş mülakatı',    q: 5,  t: 40, level: 'genel' },
+  usta:   { name: 'Ustalık belgesi',q: 8,  t: 38, level: 'usta' },
+  uni:    { name: 'Final sınavı',   q: 6,  t: 38, level: 'lise' },
 };
 
 // Anne-baba meslekleri (aile durumuna göre ağırlıklı)

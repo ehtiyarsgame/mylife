@@ -290,8 +290,8 @@ register({
           ctx.beginPath(); ctx.roundRect(n.lane * lw + 8, y - 11, lw - 16, 22, 10); ctx.fill();
         }
         ctx.textAlign = 'center';
-        if (label && tn - label.at < 0.5) { ctx.fillStyle = label.c; ctx.font = '900 26px Nunito'; ctx.fillText(label.t, W / 2, H * 0.45); }
-        if (combo > 2) { ctx.fillStyle = '#fff'; ctx.font = '800 16px Nunito'; ctx.fillText(`Kombo ×${combo}`, W / 2, H * 0.52); }
+        if (label && tn - label.at < 0.5) { ctx.fillStyle = label.c; ctx.font = '900 26px Nunito, system-ui, sans-serif'; ctx.fillText(label.t, W / 2, H * 0.45); }
+        if (combo > 2) { ctx.fillStyle = '#fff'; ctx.font = '800 16px Nunito, system-ui, sans-serif'; ctx.fillText(`Kombo ×${combo}`, W / 2, H * 0.52); }
         ctx.textAlign = 'left';
         api.setScore(`${perfect + good}/${notes.length}`);
       });

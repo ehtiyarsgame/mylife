@@ -73,7 +73,7 @@ export const ACTIONS = [
     desc: 'Gerçek bir iş yerinde deneyim. İş mülakatlarında avantaj.', mg: s => deptMg(s), mgSkill: s => deptSkill(s),
     skills: {}, deptSkills: 4, stats: { disiplin: 1, sosyal: 1 }, flag: 'staj' },
   { id: 'ehliyet', name: 'Ehliyet sınavı', icon: '🚗', cat: 'egitim', ep: 1, when: s => s.age >= 18 && !s.flags.ehliyet, exam: 'ehliyet',
-    desc: 'Trafik kuralları sınavı. Şoförlük ve kargo işlerini açar.', cost: 12000, mg: 'sinav', mgSkill: 'zeka' },
+    desc: 'Trafik kuralları sınavı. Şoförlük ve kargo işlerini açar.', cost: 12000, mg: ['sinav', 'park'], mgSkill: 'zeka' },
   { id: 'kpss', name: 'KPSS\'ye gir', icon: '🏛️', cat: 'egitim', ep: 2, when: s => s.age >= 20 && s.age <= 40 && !s.flags.kpss && s.edu.gpa !== null,
     desc: 'Kamu Personeli Seçme Sınavı. Memurluk ve polisliği açar.', exam: 'kpss', mg: 'sinav', mgSkill: 'zeka' },
   { id: 'sertifika', name: 'Sertifika programı', icon: '📜', cat: 'egitim', ep: 1, when: s => adult(s) && !!s.career.job,
@@ -138,7 +138,7 @@ export const ACTIONS = [
     desc: 'Temponu hedef bölgede tut, reflekslerini geliştir.', mg: ['kondisyon', 'tepki', 'engelli_kosu', 'bisiklet', 'uzun_atlama', 'yuzme'], mgSkill: 'fizik',
     skills: { futbol: 1 }, stats: { fizik: 2.5, saglik: 2, disiplin: 0.8 } },
   { id: 'spor_salonu', name: 'Spor salonu', icon: '🏋️', cat: 'spor', ep: 1, when: s => adult(s), cost: 6000,
-    desc: 'Düzenli spor: sağlık ve fizik.', mg: ['kondisyon', 'tepki', 'halter', 'serbest_atis', 'voleybol_servis', 'okculuk', 'yuzme', 'slalom', 'golf'], mgSkill: 'fizik',
+    desc: 'Düzenli spor: sağlık ve fizik.', mg: ['kondisyon', 'tepki', 'halter', 'serbest_atis', 'voleybol_servis', 'okculuk', 'yuzme', 'slalom', 'golf', 'basket', 'masa_tenisi'], mgSkill: 'fizik',
     stats: { fizik: 2.5, saglik: 3, disiplin: 1 } },
 
   // ——— SANAT ———
@@ -149,12 +149,12 @@ export const ACTIONS = [
     desc: 'Deseni bir bakışta aklında tut ve yeniden çiz.', mg: ['desen', 'hafiza', 'kamuflaj', 'pasta_kat'], mgSkill: 'resim',
     skills: { resim: 4 }, stats: { mutluluk: 2 }, train: 'resim' },
   { id: 'tamir', name: 'Tamir & maket', icon: '🔧', cat: 'sanat', ep: 1, when: s => s.age >= 7,
-    desc: 'Parçaları sök-tak, arızayı bul, devreyi kur.', mg: ['parca', 'ariza', 'devre', 'kalite_kontrol', 'su_basinci', 'tugla_duvar'], mgSkill: 'el',
+    desc: 'Parçaları sök-tak, arızayı bul, devreyi kur.', mg: ['parca', 'ariza', 'devre', 'kalite_kontrol', 'su_basinci', 'tugla_duvar', 'boru'], mgSkill: 'el',
     skills: { el: 4, fen: 1 }, stats: { disiplin: 0.5 }, train: 'el' },
 
   // ——— SOSYAL ———
   { id: 'arkadas', name: 'Arkadaşlarla vakit', icon: '🧑‍🤝‍🧑', cat: 'sosyal', ep: 1, when: s => s.age >= 6,
-    desc: 'Oyunlar, sohbet, eğlence. Arkadaşlık ve mutluluk.', mg: ['hafiza', 'tepki', 'dogruyanlis', 'dart', 'bowling', 'balon', 'kule_bloklari'], mgSkill: 'sosyal',
+    desc: 'Oyunlar, sohbet, eğlence. Arkadaşlık ve mutluluk.', mg: ['hafiza', 'tepki', 'dogruyanlis', 'dart', 'bowling', 'balon', 'kule_bloklari', 'masa_tenisi', 'basket'], mgSkill: 'sosyal',
     skills: { empati: 2 }, stats: { sosyal: 2.5, mutluluk: 3 }, friend: true },
   { id: 'kulup', name: 'Okul kulübü / başkanlık', icon: '🗳️', cat: 'sosyal', ep: 1, when: s => s.age >= 10 && s.age <= 22 && s.edu.stage !== 'done',
     desc: 'Sınıfa konuşma yap, oyları topla.', mg: 'konusma', mgSkill: 'liderlik',

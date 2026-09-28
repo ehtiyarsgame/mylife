@@ -222,7 +222,7 @@ register({
         for (const o of defs) {
           ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.beginPath(); ctx.ellipse(o.x, o.y + 18, 16, 6, 0, 0, 7); ctx.fill();
           ctx.fillStyle = o.done && o.y < py ? '#888' : '#e84a5f'; ctx.beginPath(); ctx.arc(o.x, o.y, 17, 0, 7); ctx.fill();
-          ctx.fillStyle = '#fff'; ctx.font = '900 13px Nunito'; ctx.textAlign = 'center'; ctx.fillText(o.sw && !o.switched ? '!' : '', o.x, o.y + 5);
+          ctx.fillStyle = '#fff'; ctx.font = '900 13px Nunito, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(o.sw && !o.switched ? '!' : '', o.x, o.y + 5);
         }
         ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.beginPath(); ctx.ellipse(px, py + 20, 18, 6, 0, 0, 7); ctx.fill();
         ctx.fillStyle = hitFlash > 0 ? '#ff5b7a' : '#4ea1ff'; ctx.beginPath(); ctx.arc(px, py, 18, 0, 7); ctx.fill();
@@ -344,7 +344,7 @@ register({
         ctx.fillRect(bx - 12, by + bh * (1 - m) - 4, 104, 8);
         ctx.font = '40px sans-serif'; ctx.textAlign = 'center';
         ctx.fillText('🏃', bx + 40 + Math.sin(now / 90) * 3, by + bh * (1 - m) - 12);
-        ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.font = '800 13px Nunito';
+        ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.font = '800 13px Nunito, system-ui, sans-serif';
         ctx.fillText(hold ? 'Tempo ↑' : 'Basılı tut', W / 2, H - 14);
         ctx.textAlign = 'left';
       });
