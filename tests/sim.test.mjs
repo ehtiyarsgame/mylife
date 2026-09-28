@@ -289,3 +289,20 @@ test('İngilizce çeviri eksiksiz: kartlar, sorular ve arayüz sözlüğü', asy
   const miss = [...extract().keys()].filter(k => !(k in DICT));
   assert.ok(miss.length < 130, `çevrilmemiş arayüz metni: ${miss.length} (${miss.slice(0, 8).join(' | ')})`);
 });
+
+test('karne yazılısı sınıfla uzar ve okul boyunca soru tekrarlanmaz', async () => {
+  const { examQ, examLevel } = await import('../js/sim/careers.js');
+  const { pickQuestions } = await import('../js/sim/questions.js');
+  assert.equal(examQ('karne', 8), 8);
+  assert.equal(examQ('karne', 12), 10);
+  assert.equal(examQ('karne', 16), 12);
+  let recent = [];
+  const seen = [];
+  for (let age = 7; age <= 17; age++) {
+    const qs = pickQuestions(examLevel('karne', age), examQ('karne', age), recent, 55);
+    recent = [...recent, ...qs.map(q => q.id)].slice(-400);
+    seen.push(...qs.map(q => q.q));
+  }
+  assert.ok(seen.length >= 110);
+  assert.ok(new Set(seen).size >= seen.length - 2, `tekrar: ${seen.length - new Set(seen).size}`);
+});

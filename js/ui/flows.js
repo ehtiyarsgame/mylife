@@ -10,8 +10,8 @@ import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { playMinigame, autoMods } from '../minigames/index.js';
 import { mgSkillLevel } from '../sim/stats.js';
 import { actionById, resolve as res } from '../sim/actions.js';
-import { JOBS, DOORS, EXAMS, ALANLAR, DEPTS, jobTitle } from '../sim/careers.js';
-import { pickQuestions, levelFor } from '../sim/questions.js';
+import { JOBS, DOORS, EXAMS, ALANLAR, DEPTS, jobTitle, examLevel, examQ } from '../sim/careers.js';
+import { pickQuestions } from '../sim/questions.js';
 import { render as renderText, optionVisible } from '../sim/events.js';
 import * as Y from '../sim/year.js';
 import { progress } from './missions.js';
@@ -254,10 +254,11 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     Y.spendActionOnly(s, actionId);
     if (cost) s.money -= cost;
   }
-  const level = E.level === 'auto' ? levelFor(s.age) : E.level;
+  const level = examLevel(examId, s.age);
+  const nQ = examQ(examId, s.age);
   s.qRecent = s.qRecent || [];
   const prep = Y.examPrep(s, examId);
-  const questions = pickQuestions(level, E.q, s.qRecent, prep);
+  const questions = pickQuestions(level, nQ, s.qRecent, prep);
   s.qRecent.push(...questions.map(q => q.id));
   s.qRecent = s.qRecent.slice(-400);
   const jokers = {
@@ -267,7 +268,7 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     sure: s.stats.disiplin >= 60,
   };
   const r = await playMinigame('sinav', {
-    skill: prep, stakes: examId === 'karne' ? 0.2 : 0.6, title: `${E.name} · ${E.q} soru · soru başı ${E.t} sn` + (prep < 40 ? ' · ⚠️ Az çalıştın: sorular zor, süre kısa!' : prep >= 70 ? ' · ✨ İyi hazırlandın' : ''),
+    skill: prep, stakes: examId === 'karne' ? 0.2 : 0.6, title: `${E.name} · ${nQ} soru · soru başı ${E.t} sn` + (prep < 40 ? ' · ⚠️ Az çalıştın: sorular zor, süre kısa!' : prep >= 70 ? ' · ✨ İyi hazırlandın' : ''),
     mods: autoMods(s, examId === 'karne' ? [] : ['kritik']),
     skipScore: clamp(prep - 10, 5, 80),
     extra: { questions, perQ: E.t, prep, jokers, examName: E.name, adJoker: () => watchAd('joker') },

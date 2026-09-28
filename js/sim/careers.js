@@ -163,7 +163,8 @@ export const DOORS = {
 };
 
 export const EXAMS = {
-  karne:  { name: 'Karne yazılısı', q: 6,  t: 28, level: 'auto' },
+  // Karne yazılısı sınıf büyüdükçe uzar: ilkokul 8, ortaokul 10, lise 12 soru
+  karne:  { name: 'Karne yazılısı', q: 8,  t: 28, level: 'auto', qBy: { ilkokul: 8, ortaokul: 10, lise: 12 } },
   lgs:    { name: 'Lise sınavı',     q: 12, t: 38, level: 'ortaokul' },
   yks:    { name: 'Üniversite sınavı', q: 15, t: 42, level: 'lise' },
   ehliyet:{ name: 'Ehliyet sınavı', q: 8,  t: 30, level: 'ehliyet' },
@@ -171,8 +172,10 @@ export const EXAMS = {
   tus:    { name: 'Uzmanlık sınavı', q: 10, t: 42, level: 'tip' },
   is:     { name: 'İş mülakatı',    q: 5,  t: 40, level: 'genel' },
   usta:   { name: 'Ustalık belgesi',q: 8,  t: 38, level: 'usta' },
-  uni:    { name: 'Final sınavı',   q: 6,  t: 38, level: 'lise' },
+  uni:    { name: 'Final sınavı',   q: 10, t: 38, level: 'lise' },
 };
+export const examLevel = (id, age) => EXAMS[id].level === 'auto' ? (age <= 9 ? 'ilkokul' : age <= 13 ? 'ortaokul' : 'lise') : EXAMS[id].level;
+export const examQ = (id, age) => EXAMS[id].qBy?.[examLevel(id, age)] ?? EXAMS[id].q;
 
 // Anne-baba meslekleri (aile durumuna göre ağırlıklı)
 export const PARENT_JOBS = {

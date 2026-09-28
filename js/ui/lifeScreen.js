@@ -6,7 +6,7 @@ import { fmtTL, fmtTime, signed, clamp } from '../core/util.js';
 import { tickEnergy, secondsToNext, secondsToFull } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { availableActions, CATEGORIES, actionCost, stageId, resolve as res } from '../sim/actions.js';
-import { JOBS, DOORS, DEPTS, EXAMS, PATHS, ALANLAR, jobTitle, deptById } from '../sim/careers.js';
+import { JOBS, DOORS, DEPTS, EXAMS, PATHS, ALANLAR, jobTitle, deptById, examQ } from '../sim/careers.js';
 import { BIZ_STEPS, nextStepReqs, advanceBiz, trendText } from '../sim/business.js';
 import { hintFor, stageOf, ceilingOf } from '../sim/stats.js';
 import { WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
@@ -136,7 +136,7 @@ function yearCard(render) {
     const E = EXAMS[t.exam];
     card.append(h('div.task' + (t.done ? '.done' : ''), {},
       h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '📝'),
-      h('div.grow', {}, h('b', {}, E.name), h('div.tiny.muted', {}, t.done ? `Puan: ${t.score}` : `${E.q} soru · zorunlu · hazırlığın ${Y.examPrep(s, t.exam)}`)),
+      h('div.grow', {}, h('b', {}, E.name), h('div.tiny.muted', {}, t.done ? `Puan: ${t.score}` : `${examQ(t.exam, s.age)} soru · zorunlu · hazırlığın ${Y.examPrep(s, t.exam)}`)),
       t.done ? null : btn('Sınava gir', () => guard(() => F.runExam(t.exam, { rerender: render })), 'gold sm')));
   }
   const need = Y.workNeed(s);
