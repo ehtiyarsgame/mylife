@@ -3,10 +3,13 @@ import { h, btn, sheet, toast, bar, statColor, confirmBox, info } from './dom.js
 import { app, save, go } from './app.js';
 import { sfx, vibrate } from '../core/audio.js';
 import { fmtTL, fmtTime, signed, clamp } from '../core/util.js';
+import { T } from '../core/i18n.js';
 import { tickEnergy, secondsToNext, secondsToFull } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
 import { availableActions, CATEGORIES, actionCost, stageId, resolve as res } from '../sim/actions.js';
 import { JOBS, DOORS, DEPTS, EXAMS, PATHS, ALANLAR, jobTitle, deptById, examQ } from '../sim/careers.js';
+import { incomeTax } from '../sim/finance.js';
+import { financeTab } from './financeTab.js';
 import { BIZ_STEPS, nextStepReqs, advanceBiz, trendText } from '../sim/business.js';
 import { hintFor, stageOf, ceilingOf } from '../sim/stats.js';
 import { WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
@@ -101,8 +104,9 @@ function buildScreen(render) {
   if (tab === 'kariyer') wrap.append(...careerTab(render));
   if (tab === 'gunluk') wrap.append(...logTab());
   if (tab === 'ev') wrap.append(...homeTab(render));
-  // Sekme çubuğu
-  const tabs = [['yil', '🗓️', 'Bu yıl'], ['ev', '🏠', 'Ev'], ['ben', '🧬', 'Ben'], ['kariyer', '💼', 'Kariyer'], ['gunluk', '📖', 'Günlük']];
+  if (tab === 'finans') wrap.append(...financeTab(render));
+  // Sekme çubuğu (Finans 18 yaşında açılır)
+  const tabs = [['yil', '🗓️', 'Bu yıl'], ['ev', '🏠', 'Ev'], ['ben', '🧬', 'Ben'], ['kariyer', '💼', 'Kariyer'], ...(s.age >= 18 ? [['finans', '📈', 'Finans']] : []), ['gunluk', '📖', 'Günlük']];
   wrap.append(h('div.tabs', {}, tabs.map(([id, e, n]) => h('button' + (tab === id ? '.on' : ''), { onclick: () => { app.tab = id; sfx.tap(); window.scrollTo(0, 0); render(); } }, h('b', {}, e), n))));
   return wrap;
 }
@@ -154,7 +158,7 @@ function yearCard(render) {
   const risk = !infant ? atRisk(s) : [];
   if (risk.length) card.append(h('div.task', { style: { borderColor: '#ff8a5b', background: 'rgba(255,138,91,.08)' } },
     h('span', { style: { fontSize: '22px' } }, '⚖️'),
-    h('div.grow', {}, h('b', {}, 'İhmal etme: ' + risk.map(r => `${r.icon} ${r.name}`).join(', ')), h('div.tiny.muted', {}, risk.map(r => `${r.name}: ${r.neglect}. yıl olacak`).join(' · ') + '. Yıl sonunda bedeli var!'))));
+    h('div.grow', {}, h('b', {}, T('İhmal etme: {x}', { x: risk.map(r => `${r.icon} ${T(r.name)}`).join(', ') })), h('div.tiny.muted', {}, risk.map(r => `${r.name}: ${r.neglect}. yıl olacak`).join(' · ') + '. Yıl sonunda bedeli var!'))));
   const pend = Y.pendingEventCount(s);
   if (pend > 0 && !infant) card.append(h('div.task', { style: { borderColor: '#b36bff', background: 'rgba(179,107,255,.1)' } }, h('span', { style: { fontSize: '22px' } }, '🃏'), h('b.grow', {}, `${pend} olay kartı seni bekliyor`), btn('Aç', () => guard(() => F.afterAction(render)), 'sm')));
   if (infant) {
@@ -378,7 +382,7 @@ function careerTab(render) {
       return h('div.sum-line', {}, `${DOORS[id].icon} ${DOORS[id].name}`, h('b', {}, d?.open ? '✅ Açık' : d?.tries ? `❌ ${d.tries} deneme` : '⏳'));
     })));
   }
-  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Birikim: ${fmtTL(s.savings)}`), s.age < 18 ? h('span.chip', {}, '18 yaşında') : btn('Tümünü çek', () => { Y.withdrawSavings(s, s.savings); save(); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
+  if (s.savings > 0) out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.row', {}, h('span', {}, '🏦'), h('b.grow', {}, `Mevduat: ${fmtTL(s.savings)}`), s.age < 18 ? h('span.chip', {}, '18 yaşında') : btn('Finans', () => { app.tab = 'finans'; window.scrollTo(0, 0); render(); }, 'sm')), h('div.tiny.muted', {}, 'Her yıl enflasyon + %3 getiri. Basamak atlarken otomatik kullanılır.')));
   // Kendi işin (girişimcilik): yalnızca ilgi gösterene ya da işi kurmuş olana görünür
   const b = s.career.biz;
   const nb = nextStepReqs(s);
@@ -512,13 +516,16 @@ function homeTab(render) {
     const lc = (CONFIG.livingCost.find(l => s.age >= l.age)?.cost ?? 12000) * (s.rel.married ? 1.5 : 1) * (P && s.rel.married ? (P.trait === 'tutumlu' ? 0.88 : P.trait === 'savurgan' ? 1.2 : 1) : 1) * (s.flags.evSahibi ? 0.8 : 1);
     const kids = s.rel.children.filter(c => c.age < 18).length * 7000;
     const inc = (j ? JOBS[j.id].salary * Y.levelMult(j) : 0) + (P && s.rel.married && !P.jobless ? (P.salary || 0) * (P.trait === 'hirsli' ? 1.25 : 1) : 0) + (s.career.retired ? s.career.pension : 0);
+    const tax = j ? incomeTax(JOBS[j.id].salary * Y.levelMult(j) * 12 * pi, pi) / 12 : 0;
+    const left = (inc - lc - kids) * pi - tax;
     out.push(h('div.sec-title', {}, '💳 Senin hanen (aylık, tahmini)'));
     out.push(h('div.card', {},
       h('div.sum-line', {}, 'Maaş(lar)', h('b.pos', {}, fmtTL(inc * pi))),
+      tax > 0 ? h('div.sum-line', {}, 'Gelir vergisi', h('b.neg', {}, '−' + fmtTL(tax))) : null,
       h('div.sum-line', {}, `Kira, fatura, mutfak${s.flags.evSahibi ? ' (ev sahibi)' : ''}`, h('b.neg', {}, '−' + fmtTL(lc * pi))),
       kids ? h('div.sum-line', {}, 'Çocuk masrafları', h('b.neg', {}, '−' + fmtTL(kids * pi))) : null,
-      h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Kalan'), h('b', { class: inc - lc - kids >= 0 ? 'pos' : 'neg' }, fmtTL((inc - lc - kids) * pi))),
-      h('div.tiny.muted', {}, 'İşletme kârı ve prim hariçtir. Maaş, mesaiye gittiğin oranda yatar.')));
+      h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Kalan'), h('b', { class: left >= 0 ? 'pos' : 'neg' }, fmtTL(left))),
+      h('div.tiny.muted', {}, 'İşletme kârı ve prim hariçtir. Maaş, mesaiye gittiğin oranda yatar. Gelirin yükseldikçe yaşam standardın da büyür (Finans sekmesinden ayarla).')));
   }
   return out;
 }

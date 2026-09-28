@@ -45,6 +45,8 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
 | **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
 | **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). Ticarette piyasa havası dalgalanır; ürünün tutarsa rekor yıl (kâr kat kat), ortak dolandırıcılığı / yangın / kur şoku / batan müşteri gibi çöküşlerle iflas. Riskli kararlar (🎲) beceri, itibar ve piyasaya göre tutar ya da batar; sigorta yangın ve hırsızlıkta korur. |
+| **Finans** | 18 yaşında açılan Finans sekmesi: vadeli mevduat, kredi notu ve ihtiyaç/konut kredisi, 22 hisse ve fon (teknoloji, banka, enerji, gıda, sanayi, sağlık, turizm, emtia; endeks, altın, tahvil, kripto). Piyasa boğa/yatay/ayı döngüsünde, sektör ve şirket haberleriyle yıl sonunda hareket eder; hisseler temettü öder. "Piyasa analizi" eylemi (Al-Sat mini oyunu) gelecek yıla dair ipucu verir — iyi oynayan daha isabetli ipucu alır. Ev ve kiralık daire alınabilir (peşin ya da %30 peşinat + konut kredisi). |
+| **Gerçekçi gelir** | Kademeli gelir vergisi (asgari gelir muaf; %20 / %30 / %40), gelir arttıkça büyüyen yaşam standardı (Tutumlu / Normal / Lüks seçimi). Futbolda maaş performansa bağlı, menajer %10 alır, sakatlıklar sezon kaybettirir; Süper Lig ×3,5, milli oyuncu ×7. |
 | **Nesil** | Ölünce hayat albümü; çocuklardan biriyle miras, soyadı itibarı ve aile şirketiyle devam. |
 
 ### Global sürüm (dil, para, içerik)
@@ -58,7 +60,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
   ülkeye özgü coğrafya/meclis/bayram soruları yok. Dil dersleri dile göre: Türk oyuncuya Türkçe dilbilgisi + İngilizce, İngiliz oyuncuya İngilizce dilbilgisi + İspanyolca.
   İsimler ve memleket şehirleri dile göre (İngilizcede uluslararası isimler ve kurgusal şehirler).
 
-### Mini oyun kataloğu (117)
+### Mini oyun kataloğu (118)
 
 Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
@@ -76,6 +78,10 @@ Temalı oyunlar (`js/minigames/engines.js` motorları + `themes.js` temaları, 7
 - Parkur: Bisiklet, Kurye, Slalom, Güvenli Sürüş, Engelli Koşu, Açık Su Yüzme · Vurma: Balon, Sinek, Bağ Zararlıları, Köstebek, Yıldız
 - Hassas ayar: Terazi, İlaç Dozu, Fırın, Tarif Ölçüsü, Ses Mikseri, Basınç · Hızlı soru: Zihinden İşlem, Kesir, Fatura, Birim, Faiz, Vardiya Saati
 - Konuşma sahneleri: Müşteri Şikâyeti, Hasta Bilgilendirme, Veli Görüşmesi, Basın Toplantısı, Kriz Toplantısı · Davul, Dans
+- Borsa: Al-Sat (haberi oku, doğru anda al-sat)
+
+Konuşma oyunları (`js/minigames/talk.js`) 240+ turluk havuzdan her sohbette 1 açılış + 2 orta tur + 1 kapanış seçer; yakın zamanda görülen turlar tekrar gelmez.
+İş mülakatında sorulardan en az biri mesleğe özeldir (doktor, mühendis, yazılımcı, futbolcu, usta, çiftçi, tüccar, bankacı, öğretmen, polis, avukat, hemşire, gazeteci, psikolog, müzisyen).
 
 Her eylem ve meslek birkaç oyundan birini rastgele seçer (ör. Spor salonu: kondisyon, halter, serbest atış, voleybol, okçuluk…); köyde tarla işleri, şehirde ev işleri gibi bağlama uygun oyunlar gelir.
 

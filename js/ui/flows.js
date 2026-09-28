@@ -117,7 +117,6 @@ export async function doAction(id, rerender) {
 
   if (a.special === 'jobsearch') return jobSearch(rerender);
   if (a.special === 'bizstart') { Y.startBiz(s); save(); toast('🍪 Okulda satış başladı! "İşletmeni yönet" ile kâr et.'); rerender(); return afterAction(rerender); }
-  if (a.special === 'save') { const amt = Y.depositSavings(s); save(); toast(`🏦 ${fmtTL(amt)} birikime yatırıldı.`); rerender(); return afterAction(rerender); }
   if (a.special === 'retire') { Y.retire(s); save(); toast('🪑 Emekli oldun. Hayırlı olsun!'); rerender(); return afterAction(rerender); }
   if (a.exam) return runExam(a.exam, { actionId: id, rerender });
 
@@ -166,7 +165,8 @@ function sceneFor(a, s) {
   if (a.id === 'tanis') return 'tanisma';
   if (a.id === 'kulup') return 'sinif';
   if (a.id === 'danisman') return 'sunum';
-  if ((a.work || a.id === 'sertifika') && s.career.job?.id === 'ogretmen') return 'ders';
+  const WORK_SCENE = { ogretmen: 'ders', avukat: 'sunum', gazeteci: 'basin', psikolog: 'barisma', antrenor: 'kriz', danisman: 'sunum' };
+  if ((a.work || a.id === 'sertifika') && WORK_SCENE[s.career.job?.id]) return WORK_SCENE[s.career.job.id];
   return null;
 }
 
@@ -409,7 +409,7 @@ export async function jobSearch(rerender) {
   const J = JOBS[pick];
   let hired = true, score = null;
   if (J.salary >= 30000) {
-    const r = await runMg('konusma', 'sosyal', { stakes: 0.35, title: `${J.name} mülakatı`, extra: { scene: 'mulakat' } });
+    const r = await runMg('konusma', 'sosyal', { stakes: 0.35, title: `${J.name} mülakatı`, extra: { scene: 'mulakat', job: pick, path: J.path } });
     score = r.score;
     // İlk izlenim: karizma ve görünüş mülakatta biraz etkili; ama asıl belirleyici performans
     const firstImp = Math.round((charisma(s) - 50) / 8 + (looks(s) - 50) / 20);

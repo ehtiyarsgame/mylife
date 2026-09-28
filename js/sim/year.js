@@ -13,6 +13,7 @@ import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
 import { homeYear, livingHome, homeBudget, HOME } from './household.js';
 import { makeCandidates } from './partner.js';
 import { balanceYear, studyHabitBonus, sedentaryRisk } from './balance.js';
+import { incomeTax, lifestyleCost, lifestyleOf, initMarket, marketYear, makeHints, loanYear, houseYear, bankOf } from './finance.js';
 
 export function withRng(s, fn) {
   const r = new RNG(s.rng);
@@ -194,6 +195,11 @@ export function performAction(s, id, perf = 60) {
       if (!s.rel.bestFriend && r.chance(0.5)) { s.rel.bestFriend = r.pick(FRIEND_NAMES); out.lines.push(`${s.rel.bestFriend} artık en yakın arkadaşın.`); }
     }
     if (a.family) s.flags.aileBag = (s.flags.aileBag || 0) + 1;
+    if (a.analysis) {
+      initMarket(s, r);
+      const H = makeHints(s, perf, r);
+      out.lines.push('📊 Gelecek yıl için piyasa ipuçların hazır (Finans sekmesi):', ...H.list.map(x => '• ' + x.text));
+    }
     if (a.date) {
       const p = 0.2 + perf / 220 + s.stats.sosyal / 500 + (looks(s) - 50) / 300 + (charisma(s) - 50) / 350;
       if (r.chance(p)) {
@@ -254,9 +260,9 @@ export function startBiz(s) {
   log(s, 'İlk ticaretine başladı: okulda kurabiye satışı.', 'rare');
 }
 
-export function depositSavings(s) {
-  spendActionOnly(s, 'birikim');
-  const amt = Math.floor(s.money / 2);
+export function depositSavings(s, amt = Math.floor(s.money / 2)) {
+  amt = Math.floor(Math.min(amt, s.money));
+  if (amt <= 0) return 0;
   s.money -= amt; s.savings += amt;
   return amt;
 }
@@ -700,6 +706,7 @@ export function endYear(s) {
   s.studyLog.push(y.study); if (s.studyLog.length > 4) s.studyLog.shift();
 
   withRng(s, r => {
+    let earned = 0; // bu yıl eline geçen net gelir (yaşam standardı için)
     // ——— Ekonomi ———
     const infl = r.float(CONFIG.inflation[0], CONFIG.inflation[1]);
     s.priceIndex *= 1 + infl;
@@ -740,7 +747,9 @@ export function endYear(s) {
       const perf = j.perfN ? j.perfSum / j.perfN : 25;
       const need = workNeed(s);
       const wf = need ? Math.min(1, y.workDone / need) : 1;
-      let sal = J.salary * levelMult(j) * 12 * pi * (0.85 + perf / 333) * (0.35 + 0.65 * wf);
+      // Futbolda maaş performansa çok daha bağlı: yedek kalan az, yıldız çok kazanır
+      const perfF = J.path === 'futbol' ? Math.min(1.4, 0.55 + perf / 110) : 0.85 + perf / 333;
+      let sal = J.salary * levelMult(j) * 12 * pi * perfF * (0.35 + 0.65 * wf);
       if (s.traits.mizac === 'hirsli') sal *= 1.05;
       if (wf < 1) sum.notes.push(wf === 0 ? '⚠️ Bu yıl işe hiç gitmedin! Maaşının çoğu kesildi; üst üste olursa kovulursun.' : `⚠️ Mesailerin eksikti (${y.workDone}/${need}); maaşın kesintili yattı.`);
       if (wf === 0) j.absent = (j.absent || 0) + 1; else j.absent = 0;
@@ -750,7 +759,17 @@ export function endYear(s) {
       }
       if (j.id === 'cirak' && s.flags.kendiDukkan) sal *= 1.7;
       if (s.age < 18 && j.id !== 'cirak') sal *= 0.5;
+      // Futbolcu sakatlığı: yaş ilerledikçe sıklaşır, sezonun yarısını kaçırırsın
+      if (j.id === 'futbolcu' && r.chance(0.1 + Math.max(0, s.age - 28) * 0.025)) {
+        sal *= 0.6; addStat(s, 'saglik', -6); addStat(s, 'mutluluk', -4);
+        sum.notes.push('🩼 Sakatlık: sezonun yarısını kaçırdın, maaşın ve primlerin düştü.');
+      }
       s.money += sal; sum.income.push([`Maaş · ${jobTitle(j)}`, sal]);
+      const tax = incomeTax(sal, pi);
+      if (tax > 0) { s.money -= tax; sum.expense.push(['Gelir vergisi', tax]); }
+      let fee = 0;
+      if (J.path === 'futbol' && j.id === 'futbolcu') { fee = sal * 0.1; s.money -= fee; sum.expense.push(['Menajer payı (%10)', fee]); }
+      earned += sal - tax - fee;
       j.years++;
       j.lastPerf = perf;
       j.perfAll = ((j.perfAll || perf) * 2 + perf) / 3;
@@ -792,6 +811,7 @@ export function endYear(s) {
         if (br.bad) sum.expense.push([`${label} · ${br.step.name}`, -br.net]);
         else sum.income.push([`${label} · ${br.step.name} (beceri ${Math.round(br.skill)})`, br.net]);
         s.money += br.net;
+        if (br.net > 0) earned += br.net;
         if (br.kind === 'boom') { sum.notes.push(`🚀 ${br.reason} Kâr normalin kat kat üstünde!`); log(s, `Ticarette rekor yıl: ${br.reason}`, 'epic'); }
         else if (br.kind === 'crash') { sum.notes.push(`💥 ${br.reason} Birikimin açığı kapatamazsa iflas kapıda.`); log(s, `Ticarette büyük darbe: ${br.reason}`, 'rare'); }
         else if (br.kind === 'bad') sum.notes.push(`📉 Kötü yıl: ${br.reason} Beceri yükseldikçe bu risk azalır.`);
@@ -828,6 +848,11 @@ export function endYear(s) {
       const kids = s.rel.children.filter(c => c.age < 18).length;
       cost += kids * 7000 * 12 * pi;
       if (cost > 0) { s.money -= cost; sum.expense.push(['Yaşam gideri (kira, fatura, mutfak)', cost]); }
+      // Yaşam standardı: gelir arttıkça araba, tatil, restoran, lüks harcamalar da artar
+      if (s.age >= 18 && earned > 0) {
+        const ls = lifestyleCost(s, earned, lc * 12 * pi);
+        if (ls > 0) { s.money -= ls; sum.expense.push([`Yaşam standardı · ${lifestyleOf(s).name} (araba, tatil, restoran)`, ls]); addStat(s, 'mutluluk', lifestyleOf(s).happy); }
+      }
     }
 
     // ——— Hane (ailen) ———
@@ -843,7 +868,23 @@ export function endYear(s) {
     // Birikim getirisi (enflasyon + %3)
     if (s.savings > 0) {
       const g = s.savings * (infl + 0.03);
-      s.savings += g; sum.income.push(['Birikim getirisi', g]);
+      s.savings += g; sum.income.push(['Mevduat faizi', g]);
+    }
+    // ——— Borsa, gayrimenkul, kredi ———
+    if (s.market || s.age >= 18) {
+      const mk = marketYear(s, r, infl);
+      if (mk.div > 0) { s.money += mk.div; sum.income.push(['Temettü (hisse kâr payı)', mk.div]); }
+      if (Object.keys(s.portfolio || {}).length) sum.notes.push(`📈 Portföyün bu yıl ${mk.change >= 0 ? '+' : '−'}${fmt(Math.abs(mk.change))} ${mk.change >= 0 ? 'değer kazandı' : 'değer kaybetti'}.`);
+      if (mk.news.length && s.age >= 18) sum.notes.push(`📰 Borsa: ${mk.news[0].t}`);
+    }
+    if (s.houses?.length) {
+      const hy = houseYear(s, r, infl);
+      if (hy.rent > 0) { s.money += hy.rent; sum.income.push(['Kira geliri', hy.rent]); }
+    } else if (s.market) s.market.house = (s.market.house ?? 1) * (1 + r.normal(0.02, 0.06));
+    if (s.bank?.loans.length) {
+      const ly = loanYear(s);
+      if (ly.paid > 0) sum.expense.push(['Kredi taksitleri', ly.paid]);
+      sum.notes.push(...ly.notes);
     }
     // Çocuk borçlanamaz: cepteki açığı ailesi kapatır
     if (s.age < 18 && s.money < 0 && s.home) { s.home.cash += s.money; sum.notes.push(`🏠 Cebindeki açığı (${fmt(-s.money)}) ailen kapattı.`); s.money = 0; }
@@ -853,11 +894,13 @@ export function endYear(s) {
       if (s.money < 0 && s.career.biz && s.career.biz.step > 0) {
         const ns = bankrupt(s);
         s.life.bankrupt++;
+        bankOf(s).score = Math.max(0, bankOf(s).score - 30);
         sum.notes.push(`💥 İflas! İşletmen "${BIZ_STEPS[ns].name}" basamağına geriledi, borç yapılandırıldı. Oyun bitmedi — yeniden tırman.`);
         log(s, 'İflas etti ve yeniden başladı.', 'rare');
         s.money = 0;
       } else if (s.money < 0) {
         s.money *= 1.1; // borç faizi
+        if (s.age >= 18) bankOf(s).score = Math.max(0, bankOf(s).score - 6);
         // Borç yapılandırma: borç en fazla 2 yıllık yaşam giderine kadar birikir
         const cap = -2 * (CONFIG.livingCost.find(l => s.age >= l.age)?.cost ?? 12000) * 12 * pi;
         if (s.money < cap) { s.money = cap; addStat(s, 'itibar', -2); sum.notes.push('🏦 Borcun yapılandırıldı; faiz durduruldu ama itibarın biraz zedelendi.'); }

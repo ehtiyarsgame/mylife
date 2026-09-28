@@ -122,8 +122,9 @@ export const ACTIONS = [
     skills: { ticaret: 3 }, stats: { disiplin: 0.5 }, biz: true, train: 'ticaret' },
   { id: 'isletme_ac', name: 'Kendi küçük işini kur', icon: '🍪', cat: 'ticaret', ep: 1, when: s => s.age >= 12 && !s.career.biz && s.age < 45 && (s.skills.ticaret >= 15 || (s.train.ticaret || 0) >= 1 || s.edu.alan === 'ea' || s.edu.degree === 'isletme'),
     desc: 'Ticarete ilgin var: okulda/mahallede küçük satışlarla başla. Girişimcilik yolunun ilk basamağı.', special: 'bizstart' },
-  { id: 'birikim', name: 'Birikim hesabına yatır', icon: '🏦', cat: 'ticaret', ep: 1, when: s => adult(s) && s.money > 20000 * s.priceIndex,
-    desc: 'Nakdinin yarısını faiz getiren hesaba koy. Enflasyona karşı korur.', special: 'save' },
+  { id: 'piyasa', name: 'Piyasa analizi', icon: '📊', cat: 'ticaret', ep: 1, when: s => adult(s),
+    desc: 'Grafikleri oku, al-sat yap. Gelecek yılın borsa görünümüne dair ipuçları kazanırsın (Finans sekmesi).', mg: ['borsa', 'yuzde_hesap', 'fiyat'], mgSkill: 'ticaret',
+    skills: { ticaret: 2, matematik: 1 }, stats: { zeka: 0.5 }, analysis: true, train: 'ticaret' },
 
   // ——— SPOR ———
   { id: 'mahalle_maci', name: 'Mahalle maçı', icon: '⚽', cat: 'spor', ep: 1, when: s => s.age >= 6 && s.age <= 13,
@@ -200,12 +201,12 @@ export const actionById = Object.fromEntries(ACTIONS.map(a => [a.id, a]));
 function deptMg(s) {
   const d = s.edu.dept;
   return { tip: 'teshis', dis: 'ameliyat', eczacilik: 'teshis', bilgisayar: 'bugavi', hukuk: 'sorgu', muhendislik: 'devre', ogretmenlik: 'konusma',
-    isletme: 'yuzde_hesap', hemsirelik: 'doz_ayari', ziraat: 'ekim', spor: 'taktik', onlisans: 'parca', psikoloji: 'konusma', iletisim: 'sorgu', tercumanlik: 'kelime' }[d] || 'parca';
+    isletme: 'yuzde_hesap', ekonomi: 'borsa', hemsirelik: 'doz_ayari', ziraat: 'ekim', spor: 'taktik', onlisans: 'parca', psikoloji: 'konusma', iletisim: 'sorgu', tercumanlik: 'kelime' }[d] || 'parca';
 }
 function deptSkill(s) {
   const d = s.edu.dept;
   return { tip: 'fen', dis: 'el', eczacilik: 'fen', bilgisayar: 'teknoloji', hukuk: 'dil', muhendislik: 'matematik', ogretmenlik: 'empati',
-    isletme: 'ticaret', hemsirelik: 'empati', ziraat: 'doga', spor: 'futbol', onlisans: 'el', psikoloji: 'empati', iletisim: 'dil', tercumanlik: 'dil' }[d] || 'el';
+    isletme: 'ticaret', ekonomi: 'ticaret', hemsirelik: 'empati', ziraat: 'doga', spor: 'futbol', onlisans: 'el', psikoloji: 'empati', iletisim: 'dil', tercumanlik: 'dil' }[d] || 'el';
 }
 export { deptSkill };
 function bizMg(s) {

@@ -1,76 +1,22 @@
 import { register } from './engine.js';
 import { h, btn } from '../ui/dom.js';
 import { clamp, sleep } from '../core/util.js';
+import { talkRounds } from './talk.js';
 
 // ————————————————— KONUŞMA —————————————————
-// Her turda dinleyicinin ruh hâlini oku ve en uygun cevabı seç. g: iyi, o: idare eder, b: kötü
+// Her turda dinleyicinin ruh hâlini oku ve en uygun cevabı seç. Sorular talk.js havuzlarından gelir.
 export const SCENES = {
-  sinif: { t: 'Sınıf başkanlığı konuşması', who: '🧑‍🎓', rounds: [
-    ['Sınıf seni dinliyor. Nasıl başlarsın?', ['Sınıfa sorarak başla: "Bu yıl neyi değiştirmek istersiniz?"', 'Hazırladığın listeyi okumaya başla', 'Kendini överek başla']],
-    ['Arka sıralar sıkılmaya başladı, fısıldaşıyorlar.', ['Onlara doğrudan soru yönelt, fikirlerini iste', 'Konuyu kısa kes', 'Sesini yükselt ve devam et']],
-    ['Biri "Sen seçilince ne değişecek ki?" diye soruyor.', ['Somut bir söz ver: "İlk ay sınıf kütüphanesi kuracağım."', 'Genel iyi niyetini anlat', 'Diğer adayı eleştir']],
-    ['Kapanış zamanı.', ['Kısa ve akılda kalıcı bir cümleyle bitir', 'Herkese teşekkür edip bitir', '"Oy vermezseniz pişman olursunuz" de']],
-  ] },
-  mulakat: { t: 'İş mülakatı', who: '👩‍💼', rounds: [
-    ['"Bize kendinizden bahseder misiniz?"', ['İşle ilgili deneyimini kısa ve net anlat', 'Çocukluğundan başlayarak hayat hikâyeni anlat', '"Özgeçmişimde yazıyor" de']],
-    ['"Neden bu şirket?"', ['Şirketi araştırdığını gösteren somut bir sebep söyle', '"Kariyerimde ilerlemek istiyorum" de', '"Maaşınız iyi" de']],
-    ['"Zor bir durumu nasıl çözdünüz?"', ['Durumu, yaptığını ve sonucunu örnekle anlat', 'Genel olarak çalışkan olduğunu söyle', '"Hiç zorluk yaşamadım" de']],
-    ['"Bize sormak istediğiniz bir şey var mı?"', ['Ekip ve gelişim fırsatları hakkında soru sor', '"Ne zaman izin kullanabilirim?" diye sor', '"Yok" de']],
-  ] },
-  tanisma: { t: 'Tanışma sohbeti', who: '🙂', rounds: [
-    ['Kafede yanındaki kişiyle göz göze geldiniz.', ['Gülümse, ortamla ilgili hafif bir yorum yap', 'Selam verip telefona dön', 'Hemen kendini anlatmaya başla']],
-    ['Elindeki kitabı fark ettin.', ['Kitap hakkında merakla soru sor', 'Kendi okuduğun kitapları say', '"Kitap okumak sıkıcı" diye takıl']],
-    ['Sohbet koyulaştı; o da sana soru soruyor.', ['Dürüst ve samimi cevap ver', 'Kısa geçiştir', 'Olduğundan farklı görünmeye çalış']],
-    ['Kalkma vakti geldi.', ['Tekrar görüşmeyi nazikçe teklif et', 'Sadece "İyi günler" de', 'Israrla numarasını iste']],
-  ] },
-  barisma: { t: 'Arabuluculuk', who: '😤', rounds: [
-    ['İki taraf da birbirine kırgın.', ['İkisini ayrı ayrı sakince dinle', '"Geçmişi unutun" de', 'Kimin haklı olduğunu hemen söyle']],
-    ['Biri sesini yükseltiyor.', ['Sakin bir tonla ne hissettiğini anladığını söyle', 'Konuyu değiştir', 'Sen de sesini yükselt']],
-    ['Ortak nokta arıyorsun.', ['İkisinin de değer verdiği bir anıyı hatırlat', 'Küçük bir öneri sun', 'Bir tarafı tut']],
-    ['Anlaşmaya çok yakınsınız.', ['Somut bir adım öner: "Pazar günü birlikte yemek yiyelim."', 'Zamana bırakmayı öner', 'Zorla el sıkıştır']],
-  ] },
-  sunum: { t: 'İkna sunumu', who: '🧐', rounds: [
-    ['Dinleyiciler şüpheci görünüyor.', ['Onların yaşadığı sorunla başla', 'Rakamları hızla sırala', '"Bana güvenin" de']],
-    ['Biri "Bu riskli değil mi?" diye soruyor.', ['Riski dürüstçe kabul et, önlemleri anlat', 'Soruyu sonraya bırak', '"Hiç risk yok" de']],
-    ['İlgi artıyor.', ['Gerçek bir başarı hikâyesi anlat', 'Detaylı bir tablo göster', 'Abartılı vaatlerde bulun']],
-    ['Karar zamanı.', ['Net ve kolay bir sonraki adım öner', '"Düşünün, haber verin" de', 'Hemen karar vermeleri için baskı yap']],
-  ] },
-  ders: { t: 'Sınıfta ders', who: '🧒', rounds: [
-    ['Ders başladı; öğrenciler uykulu.', ['Merak uyandıran bir soru ya da deneyle başla', 'Doğrudan tahtaya yazmaya başla', '"Sessiz olun!" diye bağır']],
-    ['Bir öğrenci konuyu anlamadı.', ['Farklı bir örnekle yeniden anlat', 'Aynı anlatımı tekrarla', '"Sonra bakarız" de']],
-    ['İki öğrenci tartışıyor.', ['İkisini de dinle, sınıf kuralını hatırlat', 'Görmezden gel', 'İkisini de dışarı çıkar']],
-    ['Ders bitiyor.', ['Kısa bir özet yap, merak uyandıran bir ödev ver', 'Ödevi hızlıca söyle', 'Zil çalınca hiçbir şey demeden çık']],
-  ] },
-  musteri: { t: 'Öfkeli müşteri', who: '😠', rounds: [
-    ['Müşteri bozuk çıkan ürünle geldi, sesi yüksek.', ['Sakince dinle, yaşadığı sıkıntı için özür dile', 'Fişini sor', '"Bizim suçumuz değil" de']],
-    ['"Üç gündür uğraşıyorum!" diye bağırıyor.', ['Zaman kaybını kabul et, hemen çözüm sunacağını söyle', 'Sıranın arkasında başka müşteri olduğunu hatırlat', 'Sen de sesini yükselt']],
-    ['Değişim mi iade mi istediğini soruyorsun.', ['İki seçeneği net anlat, kararı ona bırak', 'Sadece değişim yapabileceğini söyle', 'Yöneticinin gelmesini beklemesini söyle']],
-    ['Müşteri biraz yumuşadı.', ['Küçük bir jest (indirim kuponu) sunup teşekkür et', 'İşlemi bitirip sıradakine geç', '"Bir dahakine dikkat edin" de']],
-  ] },
-  hasta: { t: 'Hastaya kötü haber', who: '🤒', rounds: [
-    ['Tahlil sonuçları geldi, hasta endişeli.', ['Oturup göz teması kurarak sakin bir girişle başla', 'Ayakta hızla sonuçları oku', 'Tıbbi terimlerle konuya gir']],
-    ['"Ciddi bir şey mi doktor?" diye soruyor.', ['Durumu dürüst ama anlaşılır bir dille açıkla', '"Merak etmeyin, bir şey yok" de', 'Soruyu geçiştir']],
-    ['Hasta ağlamaya başladı.', ['Bekle, duygusuna alan tanı, peçete uzat', 'Tedaviyi anlatmaya devam et', '"Ağlamanın faydası yok" de']],
-    ['Tedavi planını konuşma vakti.', ['Adımları sırala, sorularını sor, yazılı bilgi ver', 'Reçeteyi verip kontrole çağır', '"İnternetten okursunuz" de']],
-  ] },
-  veli: { t: 'Veli görüşmesi', who: '👪', rounds: [
-    ['Veli çocuğunun notlarından şikâyetçi.', ['Önce çocuğun güçlü yanlarından bahset', 'Not çizelgesini gösterip bekle', '"Çocuğunuz tembel" de']],
-    ['"Öğretmen bizim çocuğa haksızlık ediyor" diyor.', ['Endişesini anladığını söyle, somut örnekleri birlikte incele', 'Konuyu değiştir', 'Savunmaya geçip tartış']],
-    ['Evde ne yapabileceklerini soruyor.', ['Günlük 30 dakikalık düzenli çalışma planı öner', '"Daha çok çalışsın" de', '"Özel ders aldırın" de']],
-    ['Görüşme bitiyor.', ['Bir ay sonra tekrar görüşmek için tarih ver', 'Teşekkür edip uğurla', 'Saatine bakıp kalk']],
-  ] },
-  basin: { t: 'Basın toplantısı', who: '🎙️', rounds: [
-    ['Kameralar açık, ilk soru sert geliyor.', ['Soruyu kısa ve net cevapla', 'Hazırladığın metni okumaya başla', '"Bu soruya cevap vermeyeceğim" de']],
-    ['Bir muhabir yanlış bir bilgiyi tekrarlıyor.', ['Kibarca düzelt, doğru veriyi paylaş', 'Görmezden gel', 'Muhabiri azarla']],
-    ['Hata yapıp yapmadığınız soruluyor.', ['Hatayı kabul et ve alınan önlemleri anlat', 'Suçu başka birime at', '"Hata yok" diye ısrar et']],
-    ['Son soru.', ['Ana mesajını tek cümleyle tekrarla', '"Teşekkürler" deyip çık', 'Soruyu duymamış gibi yap']],
-  ] },
-  kriz: { t: 'Kriz toplantısı', who: '🚨', rounds: [
-    ['Büyük bir sipariş iptal oldu, ekip panikte.', ['Sakin kal, önce durumu netleştir', 'Hemen suçluyu sor', 'Toplantıyı erteleyip düşün']],
-    ['Herkes aynı anda konuşuyor.', ['Söz sırası ver, herkesi kısaca dinle', 'En kıdemliyi dinle', 'Masaya vurup sustur']],
-    ['İki çözüm önerisi var, ikisi de riskli.', ['Artı-eksileri yaz, verilerle karar ver', 'Yazı tura at', 'Hiçbirini seçme, bekle']],
-    ['Karar verildi.', ['Görev dağılımı yap, takip tarihi koy', 'Herkese "halledin" de', 'Toplantıyı bitir, e-postayla bildiririm de']],
-  ] },
+  sinif: { t: 'Sınıf başkanlığı konuşması', who: '🧑‍🎓' },
+  mulakat: { t: 'İş mülakatı', who: '👩‍💼' },
+  tanisma: { t: 'Tanışma sohbeti', who: '🙂' },
+  barisma: { t: 'Arabuluculuk', who: '😤' },
+  sunum: { t: 'İkna sunumu', who: '🧐' },
+  ders: { t: 'Sınıfta ders', who: '🧒' },
+  musteri: { t: 'Öfkeli müşteri', who: '😠' },
+  hasta: { t: 'Hastaya kötü haber', who: '🤒' },
+  veli: { t: 'Veli görüşmesi', who: '👪' },
+  basin: { t: 'Basın toplantısı', who: '🎙️' },
+  kriz: { t: 'Kriz toplantısı', who: '🚨' },
 };
 register({
   id: 'konusma', name: 'Konuşma', icon: '🎤',
@@ -80,9 +26,10 @@ register({
       api.hideTimer();
       const key = api.extra.scene && SCENES[api.extra.scene] ? api.extra.scene : api.rng.pick(Object.keys(SCENES));
       const S = SCENES[key];
+      const rounds = talkRounds(key, api.rng, { job: api.extra.job, path: api.extra.path });
       let mood = 45;
-      for (let i = 0; i < S.rounds.length; i++) {
-        const [prompt, opts] = S.rounds[i];
+      for (let i = 0; i < rounds.length; i++) {
+        const [prompt, opts] = rounds[i];
         const moodTxt = mood > 70 ? 'Gözleri parlıyor, seni dikkatle dinliyor.' : mood > 45 ? 'İlgili ama henüz ikna olmadı.' : mood > 25 ? 'Sıkılmaya başladı, saatine bakıyor.' : 'Kollarını kavuşturdu, ikna olmuş görünmüyor.';
         const q = [['g', opts[0]], ['o', opts[1]], ['b', opts[2]]];
         const pick = await new Promise(res => {
@@ -92,7 +39,7 @@ register({
           const t0 = performance.now();
           const loop = () => { if (done) return; const f = 1 - (performance.now() - t0) / 1000 / limit; tBar.style.width = Math.max(0, f * 100) + '%'; if (f <= 0) { done = true; res('b'); } else requestAnimationFrame(loop); };
           stage.replaceChildren(h('div.col', { style: { gap: '10px' } },
-            h('div.row', {}, h('span.chip.accent', {}, S.t), h('span.grow'), h('span.chip', {}, `${i + 1}/4`)),
+            h('div.row', {}, h('span.chip.accent', {}, S.t), h('span.grow'), h('span.chip', {}, `${i + 1}/${rounds.length}`)),
             h('div.face', {}, mood > 70 ? '😃' : mood > 45 ? '🙂' : mood > 25 ? '😐' : '😒'),
             h('div.meter', {}, 'İlgi', h('div.bar', {}, h('i', { style: { width: mood + '%', background: mood > 45 ? '#3ddc97' : '#ffb547' } }))),
             h('div.small.muted.center', {}, moodTxt),

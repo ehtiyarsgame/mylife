@@ -13,4 +13,5 @@ import mg4 from './en_mg4.js';
 import mg5 from './en_mg5.js';
 import mg6 from './en_mg6.js';
 import q from './en_q.js';
-export const DICT = { ...ui, ...ui2, ...ui3, ...sim, ...sim2, ...sim3, ...sim4, ...mg1, ...mg2, ...mg3, ...mg4, ...mg5, ...mg6, ...q };
+import fin from './en_fin.js';
+export const DICT = { ...ui, ...ui2, ...ui3, ...sim, ...sim2, ...sim3, ...sim4, ...mg1, ...mg2, ...mg3, ...mg4, ...mg5, ...mg6, ...q, ...fin };

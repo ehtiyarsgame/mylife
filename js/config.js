@@ -1,6 +1,6 @@
 // Oyunun tüm ayarlanabilir sayıları burada durur.
 // Canlıda bu değerler uzaktan yapılandırmadan (Remote Config) ezilebilir.
-export const APP_VERSION = '0.4.2';
+export const APP_VERSION = '0.5.0';
 
 export const CONFIG = {
   energy: {
@@ -55,6 +55,15 @@ export const CONFIG = {
   // Harçlığın ne kadarı biriktirilir (kalanı kantin, yol, arkadaşlar)
   pocketSave: { harca: 0.1, yarisi: 0.5, biriktir: 0.8 },
   bigPrizeToAccount: 10000, // 18 yaş altı: bu tutarın üstündeki ödüller aile tarafından hesaba yatırılır
+  // Gelir vergisi (aylık brüt, 2026 TL): [eşik, oran]. Asgari gelir vergiden muaf.
+  incomeTax: [[25000, 0], [60000, 0.2], [150000, 0.3], [Infinity, 0.4]],
+  // Gelir arttıkça yaşam standardı da artar: temel giderin 3 katını aşan gelirin bu kadarı
+  // araba, tatil, restorana gider. Oyuncu tarzını seçer (mutluluk etkisiyle).
+  lifestyle: {
+    tutumlu: { rate: 0.1, happy: -2, name: 'Tutumlu', icon: '🐷' },
+    normal:  { rate: 0.22, happy: 0, name: 'Normal', icon: '⚖️' },
+    luks:    { rate: 0.45, happy: 3, name: 'Lüks', icon: '💎' },
+  },
   startGift: { fakir: 0, orta: 5000, varlikli: 40000, zengin: 250000 },   // 18 yaşında aile desteği
 
   skipPenalty: 10,           // Mini oyun atlanırsa puan cezası

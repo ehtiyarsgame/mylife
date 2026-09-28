@@ -106,6 +106,7 @@ export function botLife(seed, skill = 60, opts = {}) {
     for (const k in s.skills) assert.ok(Number.isFinite(s.skills[k]), `skill ${k}`);
     assert.ok(Number.isFinite(s.money), 'money NaN at ' + s.age);
     if (sum.died) break;
+    if (opts.stopAge && s.age >= opts.stopAge) break;
   }
   return s;
 }

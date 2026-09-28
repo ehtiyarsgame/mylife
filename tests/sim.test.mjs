@@ -306,3 +306,47 @@ test('karne yazılısı sınıfla uzar ve okul boyunca soru tekrarlanmaz', async
   assert.ok(seen.length >= 110);
   assert.ok(new Set(seen).size >= seen.length - 2, `tekrar: ${seen.length - new Set(seen).size}`);
 });
+
+test('konuşma havuzları: her sahne 4 tur, mülakat mesleğe özel, sohbetler tekrarlamaz', async () => {
+  const { talkRounds, talkCount } = await import('../js/minigames/talk.js');
+  const { SCENES } = await import('../js/minigames/life.js');
+  assert.ok(talkCount() >= 240, `soru sayısı ${talkCount()}`);
+  const r = new RNG('talk');
+  for (const k of Object.keys(SCENES)) {
+    const rs = talkRounds(k, r);
+    assert.equal(rs.length, 4, k);
+    for (const [p, o] of rs) { assert.ok(p && o.length === 3 && o.every(Boolean), `${k}: ${p}`); }
+  }
+  // Doktor mülakatında en az bir soru tıbba özel olmalı
+  const docPrompts = new Set((await import('../js/minigames/talk.js')).talkRounds('mulakat', r, { job: 'doktor', path: 'doktor' }).map(x => x[0]));
+  assert.ok([...docPrompts].some(p => /hasta|acil|nöbet|uzmanlık|Başhekim|tıbbi|patient|emergency|night shift|specialty|physician|medical/i.test(p)), [...docPrompts].join(' / '));
+  // Art arda 3 tanışma sohbetinde aynı soru gelmez
+  const seen = [];
+  for (let i = 0; i < 3; i++) seen.push(...talkRounds('tanisma', r).map(x => x[0]));
+  assert.equal(new Set(seen).size, seen.length);
+});
+
+test('finans: vergi dilimleri, borsa yılı, al-sat ve kredi geri ödemesi', async () => {
+  const F = await import('../js/sim/finance.js');
+  assert.equal(F.incomeTax(20000 * 12, 1), 0);
+  assert.ok(Math.abs(F.incomeTax(60000 * 12, 1) - 35000 * 0.2 * 12) < 1);
+  assert.ok(F.incomeTax(600000 * 12, 1) / (600000 * 12) > 0.3);
+  const s = newLife({ seed: 'fin', name: 'A', gender: 'e' });
+  s.age = 25; s.money = 1e6;
+  const r = new RNG('fin');
+  F.initMarket(s, r);
+  assert.ok(F.buyStock(s, 'NOVA', 100));
+  for (let y = 0; y < 30; y++) {
+    const m = F.marketYear(s, r, 0.05);
+    for (const id in s.market.prices) assert.ok(Number.isFinite(s.market.prices[id]) && s.market.prices[id] > 0, id);
+    assert.ok(Number.isFinite(m.div));
+  }
+  const got = F.sellStock(s, 'NOVA', 100);
+  assert.ok(got > 0 && !s.portfolio.NOVA);
+  // Kredi: taksitler vade sonunda borcu kapatır
+  s.money = 1e7;
+  F.takeLoan(s, 1e6, 5);
+  for (let y = 0; y < 5; y++) F.loanYear(s);
+  assert.equal(F.bankOf(s).loans.length, 0);
+  assert.ok(F.bankOf(s).score > 50);
+});

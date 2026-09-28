@@ -18,6 +18,12 @@ export function fmtTL(v) {
   return num(n) + ' ' + CUR;
 }
 export const fmtMoney = fmtTL;
+// Yüzde: Türkçede "%12,5", İngilizcede "12.5%". sign: başa +/− ekle
+export function fmtPct(v, d = 0, sign = false) {
+  const n = Math.abs(v * 100).toLocaleString(locale(), { minimumFractionDigits: d, maximumFractionDigits: d });
+  const sg = sign ? (v >= 0 ? '+' : '−') : v < 0 ? '−' : '';
+  return sg + (lang === 'tr' ? '%' + n : n + '%');
+}
 export const fmtNum = v => num(Math.round(v));
 export const signed = v => (v > 0 ? '+' : '') + fmtNum(v);
 
