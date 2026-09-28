@@ -1,3 +1,8 @@
+/* Nunito uygulamayla birlikte gelir (çevrimdışı çalışır, üçüncü tarafa istek yok). Lisans: fonts/OFL.txt */
+@font-face { font-family: 'Nunito'; font-weight: 600; font-style: normal; font-display: swap; src: url('../fonts/Nunito-600.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 700; font-style: normal; font-display: swap; src: url('../fonts/Nunito-700.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 800; font-style: normal; font-display: swap; src: url('../fonts/Nunito-800.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 900; font-style: normal; font-display: swap; src: url('../fonts/Nunito-900.ttf') format('truetype'); }
 :root {
   --bg: #0d1020;
   --bg2: #151a33;
@@ -305,6 +310,7 @@ h3 { font-size: 16px; font-weight: 800; }
 #splash.out { opacity: 0; pointer-events: none; }
 #splash > div { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; }
 #splash img { width: 150px; height: 150px; filter: drop-shadow(0 10px 30px rgba(0,0,0,.5)); }
+#splash img.eg-word { width: 230px; height: auto; margin-top: 6px; filter: none; }
 .intro-studio { animation: introIn 1.7s ease forwards; }
 .intro-game { animation: introIn2 1.6s ease 1.6s forwards; }
 .studio-name { font: 900 26px 'Nunito', system-ui, sans-serif; letter-spacing: 6px; background: linear-gradient(90deg, #ffcf4d, #ff7b54, #b36bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -316,4 +322,5 @@ h3 { font-size: 16px; font-weight: 800; }
 @keyframes introIn2 { 0% { opacity: 0; transform: translateY(12px) scale(.9); } 40% { opacity: 1; transform: none; } 100% { opacity: 1; } }
 .title-logo { width: 96px; height: 96px; border-radius: 26px; box-shadow: 0 12px 40px rgba(106,79,216,.5); animation: pulse 3s ease-in-out infinite; }
 .studio-foot { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; color: #98a1c8; font-size: 12px; font-weight: 800; letter-spacing: 1px; }
-.studio-foot img { width: 22px; height: 22px; }
+.studio-foot img { width: 26px; height: 26px; }
+.studio-foot img.eg-word { width: auto; height: 13px; }

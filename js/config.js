@@ -1,6 +1,8 @@
 // Oyunun tüm ayarlanabilir sayıları burada durur.
 // Canlıda bu değerler uzaktan yapılandırmadan (Remote Config) ezilebilir.
-export const APP_VERSION = '0.5.0';
+export const APP_VERSION = '1.0.0';
+// Geliştirici modu: yalnızca tarayıcıda yerel sunucuda (mağaza sürümünde kapalı)
+export const DEV = typeof location !== 'undefined' && !globalThis.Capacitor?.isNativePlatform?.() && /^(localhost|127\.)/.test(location.hostname);
 
 export const CONFIG = {
   energy: {

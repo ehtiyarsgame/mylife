@@ -1,4 +1,5 @@
 // Oynanış akışları: eylem, olay kartı, sınav, kapı, iş arama, reklam.
+import { hasNativeAds, showNativeRewarded } from '../core/admob.js';
 import { h, btn, sheet, toast, rarityReveal, info, confirmBox } from './dom.js';
 import { app, save } from './app.js';
 import { sfx, vibrate } from '../core/audio.js';
@@ -22,7 +23,22 @@ import { looks, charisma } from '../sim/traits.js';
 const S = () => app.life;
 
 // ——— Reklam (prototipte simülasyon) ———
-export function adOverlay(kind) {
+// Uygulamada gerçek AdMob reklamı; tarayıcıda (geliştirme) kısa bir yer tutucu
+export async function adOverlay(kind) {
+  if (hasNativeAds()) {
+    let wait = null;
+    const r = await showNativeRewarded(on => {
+      if (on) { wait = h('div.overlay.center', { style: { zIndex: 200 } }, h('div.sheet', {}, h('div.ad-box', {}, h('div.spin'), h('h3', {}, 'Reklam yükleniyor…')))); document.body.append(wait); }
+      else if (wait) { wait.remove(); wait = null; }
+    });
+    if (r === null) toast('📶 Şu an reklam yüklenemedi. İnternet bağlantını kontrol edip biraz sonra tekrar dene.', 3200);
+    else if (!r) toast('Reklam yarıda kapandı; ödül verilmedi.');
+    if (r) sfx.coin();
+    return !!r;
+  }
+  return placeholderAd(kind);
+}
+function placeholderAd(kind) {
   return new Promise(resolve => {
     const kid = S() && S().age < 13;
     let n = 3;
@@ -31,7 +47,7 @@ export function adOverlay(kind) {
       h('div.tiny.muted', {}, kid ? 'AİLE DOSTU REKLAM · KİŞİSELLEŞTİRİLMEMİŞ' : 'ÖDÜLLÜ REKLAM'),
       h('div.spin'),
       h('h3', {}, 'Reklam oynatılıyor…'),
-      h('p.muted.small', {}, 'Prototip: gerçek sürümde AdMob ödüllü reklamı burada gösterilir.'),
+      h('p.muted.small', {}, 'Geliştirici sürümü: uygulamada burada gerçek ödüllü reklam gösterilir.'),
       h('div', {}, 'Ödül ', cnt, ' sn sonra'))));
     document.body.append(ov);
     const iv = setInterval(() => { n--; cnt.textContent = n; if (n <= 0) { clearInterval(iv); ov.remove(); sfx.coin(); resolve(true); } }, 1000);

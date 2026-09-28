@@ -1,8 +1,8 @@
 {
-  "name": "Hayat Yolu",
-  "short_name": "Hayat Yolu",
-  "description": "Doğumdan yaşlılığa, mini oyunlarla oynanan hayat simülasyonu.",
-  "lang": "tr",
+  "name": "Life Path — Hayat Yolu",
+  "short_name": "Life Path",
+  "description": "A life simulation from birth to old age, played through mini-games. / Doğumdan yaşlılığa, mini oyunlarla oynanan hayat simülasyonu.",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -10,6 +10,11 @@
   "background_color": "#0d1020",
   "theme_color": "#0d1020",
   "icons": [
-    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }

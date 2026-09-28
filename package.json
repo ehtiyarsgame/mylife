@@ -8,9 +8,10 @@
     "android:sync": "npm run build:web && npx cap sync android",
     "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug"
   },
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Hayat Yolu — Ehtiyars Game",
   "dependencies": {
+    "@capacitor-community/admob": "^8.1.0",
     "@capacitor/android": "^8.5.2",
     "@capacitor/app": "^8.1.1",
     "@capacitor/core": "^8.5.2"

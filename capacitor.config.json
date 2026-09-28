@@ -1,6 +1,8 @@
 {
   "appId": "com.ehtiyarsgame.hayatyolu",
-  "appName": "Hayat Yolu",
+  "appName": "Life Path",
   "webDir": "www",
-  "android": { "backgroundColor": "#0d1020" }
+  "android": {
+    "backgroundColor": "#0d1020"
+  }
 }

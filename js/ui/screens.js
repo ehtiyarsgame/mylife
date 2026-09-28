@@ -6,7 +6,7 @@ import { fmtTL, todayKey, sleep, grade } from '../core/util.js';
 import { hashString } from '../core/rng.js';
 import { migrate, rollStart, newLife, newChildLife, lifeScoreTitle, WEALTH, PLACE, RELATION, RARE } from '../sim/character.js';
 import { MIZAC, traitLabel } from '../sim/traits.js';
-import { CONFIG, APP_VERSION } from '../config.js';
+import { CONFIG, APP_VERSION, DEV } from '../config.js';
 import { NAMES } from '../sim/names.js';
 import { LANGS, lang, setLang } from '../core/i18n.js';
 import { JOBS, PATHS, jobTitle, DOORS } from '../sim/careers.js';
@@ -18,6 +18,7 @@ import { allGames, playMinigame } from '../minigames/index.js';
 import { lifeScreen, avatarOf } from './lifeScreen.js';
 import { watchAdsSeries } from './flows.js';
 import { clearLife } from '../core/store.js';
+import { privacyOptionsNeeded, showPrivacyOptions } from '../core/admob.js';
 
 // ——— BAŞLIK ———
 route('title', root => {
@@ -36,7 +37,7 @@ route('title', root => {
       btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')),
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
       btn([h('b', {}, '⚙️'), 'Ayarlar'], () => go('settings', 'title'))),
-    h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), 'EHTIYARS GAME'),
+    h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), h('img.eg-word', { src: 'icons/ehtiyars-wordmark.svg', alt: 'Ehtiyars Game' })),
     h('p.center.tiny.muted', { style: { marginTop: '6px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
   ));
 });
@@ -134,7 +135,7 @@ async function tutorial() {
     ['🃏', 'Olay kartları', 'Yıl içinde olay kartları açılır: sıradan, nadir, epik ve EFSANEVİ. Efsanevi fırsatlar ancak emek verdiğin alanlarda çıkar.'],
     ['🚪', 'Kapılar', 'Meslekler sırayla açılan kapılardan oluşur. Kapı kapanırsa yol bitmez: tekrar dene ya da yan yola geç.'],
     ['🏠', 'Ailen ve evin', 'Ailenin bir kasası, geliri ve gideri var. Aile zordaysa çalışıp destek ol; yoksa faturalar, kira, icra… sorunlar kademe kademe açılır. İş hayatında maaş, mesaiye gittiğin kadar yatar.'],
-    ['⏳', 'Bir ömür, bir hafta', 'Bir hayat gerçek zamanda yaklaşık bir hafta sürer. Günde birkaç kez uğra: enerjin dolmuş, hayatın seni bekliyor olacak.'],
+    ['⏳', 'Kendi temponda', 'Oyun kapalıyken enerjin dolmaya devam eder, hayatın kaldığı yerden seni bekler. Acele yok: istediğin zaman gel, bir yıl daha yaşa.'],
   ];
   for (let i = 0; i < pages.length; i++) {
     const [e, t, d] = pages[i];
@@ -275,16 +276,18 @@ route('settings', (root, back = 'title') => {
         onclick: () => { if (L.id === lang) return; setLang(L.id); save(); location.reload(); } }, `${L.flag} ${L.name}`)))),
     toggle('sound', '🔊 Ses efektleri', 'Dokunma, başarı ve kart açılış sesleri'),
     toggle('haptics', '📳 Titreşim', 'Destekleyen cihazlarda'),
-    toggle('testEnergy', '🧪 Test modu: hızlı enerji', 'Prototip testleri için: enerji her 2 saniyede dolar'),
-    toggle('noAds', '🚫 Reklamsız paket (simülasyon)', 'Ödüllü reklam ödülleri doğrudan verilir, sınır yok'),
+    // Geliştirici ayarları yalnızca yerel testte görünür (mağaza sürümünde yok)
+    DEV ? toggle('testEnergy', '🧪 Test modu: hızlı enerji', 'Prototip testleri için: enerji her 2 saniyede dolar') : null,
+    DEV ? toggle('noAds', '🚫 Reklamsız paket (simülasyon)', 'Ödüllü reklam ödülleri doğrudan verilir, sınır yok') : null,
     h('div.sec-title', {}, 'Tempo'),
-    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Günde 3–4 kez uğrayan bir oyuncu günde ~9–10 oyun yılı yaşar: bir ömür ≈ 1 hafta. Bebeklik yılları enerji harcamaz.`)),
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Oyun kapalıyken de dolar. Bebeklik yılları enerji harcamaz.`)),
     h('div.sec-title', {}, 'Hakkında'),
     h('div.card', { style: { marginBottom: '10px' } },
       h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Hayat Yolu · sürüm ' + APP_VERSION))),
       h('p.small', { style: { margin: '10px 0 4px' } }, '📧 İletişim ve geri bildirim: ', h('a', { href: 'mailto:ehtiyarsgame@gmail.com', style: { color: '#b9b0ff' } }, 'ehtiyarsgame@gmail.com')),
-      h('p.tiny.muted', { style: { margin: 0 } }, 'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; kişisel veri toplanmaz ve sunucuya gönderilmez. Reklamlar 13 yaş altı için kişiselleştirilmez.')),
-    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — test sürümü. ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
+      h('p.tiny.muted', { style: { margin: 0 } }, 'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; hesap açılmaz, kişisel veri toplanmaz. Ödüllü reklamlar Google AdMob ile gösterilir; kişiselleştirilmiş reklam için onayın istenir.')),
+    privacyOptionsNeeded() ? btn('🛡️ Reklam gizlilik seçenekleri', () => showPrivacyOptions(), 'ghost block') : null,
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
     h('div.sp'),
     btn('🗑️ Tüm ilerlemeyi sıfırla', async () => {
       if (await confirmBox('Her şeyi sıfırla', 'Tüm hayatlar, albüm ve koleksiyon silinecek.', 'Sıfırla', 'Vazgeç', 'danger')) {

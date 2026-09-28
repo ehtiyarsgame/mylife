@@ -117,6 +117,17 @@ export default {
   'Her işlemde küçük bir komisyon ödersin; boşuna al-sat yapma.': "You pay a small commission on every trade, so don't overtrade.",
   'Süre bitince portföyünün kârı puanını belirler.': "When time's up, your portfolio's profit sets your score.",
   '📦 Hissedesin · değer {0}': '📦 Invested · value {0}', '💵 Nakittesin · {0}': '💵 In cash · {0}', 'İşlem: {0}': 'Trades: {0}',
-  'AL': 'BUY', 'SAT': 'SELL',
+  'AL': 'BUY', 'SAT': 'SELL', 'Soru {0}/{1}': 'Question {0}/{1}',
   'İhmal etme: {x}': "Don't neglect: {x}",
+  // 1.0 sürümü: reklam, ayarlar, eğitim
+  'Reklam yükleniyor…': 'Loading ad…',
+  '📶 Şu an reklam yüklenemedi. İnternet bağlantını kontrol edip biraz sonra tekrar dene.': "📶 Couldn't load an ad right now. Check your internet connection and try again in a moment.",
+  'Reklam yarıda kapandı; ödül verilmedi.': 'The ad was closed early, so no reward was given.',
+  'Geliştirici sürümü: uygulamada burada gerçek ödüllü reklam gösterilir.': 'Developer build: the app shows a real rewarded ad here.',
+  'Kendi temponda': 'At your own pace',
+  'Oyun kapalıyken enerjin dolmaya devam eder, hayatın kaldığı yerden seni bekler. Acele yok: istediğin zaman gel, bir yıl daha yaşa.': "Your energy keeps refilling while the game is closed, and your life waits for you right where you left it. No rush: come back whenever you like and live another year.",
+  '⏳ Enerji {0} saniyede 1 dolar, bar {1}. Oyun kapalıyken de dolar. Bebeklik yılları enerji harcamaz.': '⏳ Energy refills 1 point every {0} seconds, up to {1}. It refills while the game is closed too. Baby years cost no energy.',
+  'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; hesap açılmaz, kişisel veri toplanmaz. Ödüllü reklamlar Google AdMob ile gösterilir; kişiselleştirilmiş reklam için onayın istenir.': 'Privacy: your progress is stored only on your device; no account, no personal data collected. Rewarded ads are served by Google AdMob; you are asked for consent before personalised ads.',
+  '🛡️ Reklam gizlilik seçenekleri': '🛡️ Ad privacy options',
+  'Hayat Yolu — {0} olay kartı, {1} mini oyun, {2} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.': 'Life Path — {0} event cards, {1} mini-games, {2} careers. Content principles: no gambling, loot boxes, alcohol/tobacco or easy-money shortcuts. Effort, wisdom and honesty pay off.',
 };

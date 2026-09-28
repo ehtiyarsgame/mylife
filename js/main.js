@@ -7,6 +7,8 @@ import { app, go, save } from './ui/app.js';
 import { adOverlay } from './ui/flows.js';
 import './ui/screens.js';
 import { lang, loadDict, installHooks } from './core/i18n.js';
+import { DEV } from './config.js';
+import { initAds } from './core/admob.js';
 
 const t0 = performance.now();
 // Çeviri katmanı: kart metinlerini (koşullar Türkçe metinden hesaplandıktan sonra) değiştirir
@@ -41,8 +43,12 @@ async function boot() {
   if (tr) overlayEvents(events, evL);
   setBank(tr ? overlayQuestions(questions, qL) : questions);
   window.__deck = events;
+  // Mağaza sürümünde geliştirici ayarları kapalı
+  if (!DEV) { app.meta.settings.testEnergy = false; app.meta.settings.noAds = false; }
   setAdProvider(kind => app.meta.settings.noAds ? Promise.resolve(true) : adOverlay(kind));
   go(app.life && app.life.alive ? 'life' : app.life ? 'death' : 'title');
+  // Reklam SDK'sı ve (AB'de) onay formu: açılış animasyonundan sonra
+  setTimeout(() => initAds(), 3500);
   // Açılış animasyonu: stüdyo logosu → oyun logosu (dokununca geçer)
   const sp = document.getElementById('splash');
   if (sp) {

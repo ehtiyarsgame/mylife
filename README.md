@@ -1,6 +1,10 @@
-# 🌱 Hayat Yolu — Ehtiyars Game
+# 🌱 Life Path / Hayat Yolu — Ehtiyars Game
 
-> 📱 **Test APK'sı:** [`apk/HayatYolu-0.4.0-test.apk`](apk/HayatYolu-0.4.0-test.apk) — telefona indir, "bilinmeyen kaynaklardan yükleme" iznini ver ve kur. Her push'ta GitHub Actions da yeni bir APK üretir (Actions → Android APK → Artifacts).
+> 📱 **Sürüm 1.0.0 (mağaza sürümü).** Telefona doğrudan kurmak için: [`apk/LifePath-1.0.0.apk`](apk/LifePath-1.0.0.apk) · Google Play paketi: [`apk/LifePath-1.0.0.aab`](apk/LifePath-1.0.0.aab)
+>
+> 🚀 Yayın adımları: [`RELEASE.md`](RELEASE.md) · Mağaza metinleri ve görselleri: [`store/`](store/) · Stüdyo logosu: [`brand/`](brand/)
+>
+> Oyunun adı dile göre değişir: Türkçede **Hayat Yolu**, diğer dillerde **Life Path**.
 >
 > İletişim: ehtiyarsgame@gmail.com
 
@@ -30,7 +34,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 
 | Katman | Nasıl çalışır |
 |---|---|
-| **Tempo** | **Bir ömür ≈ 1 hafta.** Enerji 90 sn'de 1 dolar, bar 150 (≈ 3,75 saat). Günde 3–4 girişle ~9–10 oyun yılı. Yıl bitince +15, reklamla +40 (günde 3), günlük görevler. |
+| **Tempo** | Enerji 90 sn'de 1 dolar, bar 150 (≈ 3,75 saat). Günde 3–4 girişle ~9–10 oyun yılı. Yıl bitince +15, reklamla +40 (günde 3), günlük görevler. |
 | **Doğuştan şans** | Anne-baba gibi seçilemez: **görünüş**, **karizma** ve **mizaç** (sakin, neşeli, hırslı, kaygılı, maceracı, duygusal). Görünüş flörtü, eş adaylarını ve ilk izlenimi; karizma liderliği, konuşmayı ve mülakatları etkiler. Görünüş yaşla azalır; karizma emekle +20'ye kadar gelişir. |
 | **Hane ekonomisi** | Ailenin kasası, geliri, gideri, krizleri (işten çıkarılma, hastalık, kira zammı, kardeş masrafı, dede bakımı) ve **stresi** var. Harçlık ve kurs parası bu kasadan çıkar. Aile zordaysa çocuk pazar/ayak işi, yarı zamanlı iş ya da çıraklıkla kazanıp **Ev** sekmesinden destek olur. Olmazsa sorunlar kademe kademe açılır: faturalar → kira ihtarı → icra (okulu bırakma kararı) → aile dağılma noktası. Aile kemer sıkar, sosyal yardım alır; sınıf atlayabilir ya da düşebilir. Yetişkinlikte emekli anne-babaya destek gerekir. Çalışan çocuğun okul hazırlığı düşer; okulu bırakan açık liseyle geri dönebilir. |
 | **Yaşam dengesi** | 6 alan takip edilir: ders, spor, sosyal, aile, dinlenme, hobi. 3 yıl üst üste emek → alışkanlık ödülü (sağlık, mutluluk, sınav hazırlığı +4, aile bağı). İhmal → kademeli bedel: ders çalışmayan unutur, veli çağrılır, iki yıl üst üste çok zayıf karne **sınıfta bırakır**; spor yapmayanın fiziği ve sağlığı düşer; sosyal hayatı olmayan yalnızlaşır, arkadaş kaybeder; aileyi ihmal eden kopar; dinlenmeyen tükenir. Kullanılmayan beceri 3 yıl sonra körelir. Dengeli yaşayan ~75, özensiz ~65 yıl yaşar. |

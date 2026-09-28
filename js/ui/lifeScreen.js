@@ -88,7 +88,7 @@ function buildScreen(render) {
       h('div.bar', {}, h('i', { id: 'en-bar', style: { width: clamp(s.energy.value / s.energy.max * 100, 0, 100) + '%' } })),
       h('div.hud-sub', { id: 'en-next' }, full ? 'Dolu' : '…')),
     h('div.card.money', { onclick: () => { app.tab = 'ev'; render(); } },
-      h('div.hud-top', {}, h('span.hud-ic', {}, s.age < 18 ? '👛' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '' } }, fmtTL(s.money))),
+      h('div.hud-top', {}, h('span.hud-ic', {}, s.age < 18 ? '👛' : '💰'), h('span.val', { style: { color: s.money < 0 ? '#ff5b7a' : '', fontSize: fmtTL(s.money).length > 12 ? '14px' : fmtTL(s.money).length > 10 ? '15.5px' : '' } }, fmtTL(s.money))),
       h('div.hud-sub', {}, s.age < 18
         ? (s.age >= 6 ? `Harçlık ${fmtTL(Y.allowanceWeekly(s))}/hafta` : 'Harçlık yok')
         : s.savings > 0 ? `🏦 ${fmtTL(s.savings)}` : 'Cebindeki'),

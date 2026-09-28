@@ -72,7 +72,8 @@ function tr1(str) {
   const e = EXACT.get(str);
   if (e !== undefined) return e;
   // Sayısal değerler (tahlil aralıkları vb.): Türkçe ondalık/binlik biçimini çevir
-  if (/^[%\d.,–\-\s/µ²₂a-zA-Z]+$/.test(str) && /\d/.test(str) && !/[a-z]{4,}/.test(str)) return numFmt(str);
+  // ("Orta 1/6", "Soru 1/5" gibi büyük harfle başlayan sözcük içerenler sayı sayılmaz)
+  if (/^[%\d.,–\-\s/µ²₂a-zA-Z]+$/.test(str) && /\d/.test(str) && !/[a-z]{4,}/.test(str) && !/[A-Z][a-z]{2,}/.test(str)) return numFmt(str);
   const t = str.trim();
   if (t !== str) { const lead = str.match(/^\s*/)[0], trail = str.match(/\s*$/)[0]; return lead + translate(t) + trail; }
   // Baştaki emoji/simgeyi ayırıp dene

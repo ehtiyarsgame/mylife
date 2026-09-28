@@ -3,3 +3,8 @@ node_modules/
 *.log
 www/
 ios/
+
+# İmza anahtarı (asla depoya eklenmez)
+*.jks
+*.keystore
+android/keystore.properties
