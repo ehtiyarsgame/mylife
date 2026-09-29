@@ -119,4 +119,7 @@ export default {
   'Röntgen Çek': 'Take an X-ray', 'Net görüntü!': 'Clear image!', 'Hasta kıpırdadı 😅': 'The patient moved 😅',
   'Sahne Işığı': 'Stage Spotlight', 'Spot tam üstünde! ✨': 'Spotlight right on them! ✨', 'Işık bateriste gitti 🥁': 'The light went to the drummer 🥁',
   'Balık Tut': 'Go Fishing', 'Koca balık! 🐟': 'Huge fish! 🐟', 'Olta boş döndü 🥾': 'Reeled in an old boot 🥾',
+  'Ailen, evin, bütçen ve ilişkilerin': 'Your family, home, budget and relationships', 'Yeteneklerin, becerilerin ve karakterin': 'Your talents, skills and character',
+  'Okul, meslek, terfi ve girişimcilik': 'School, career, promotions and business', 'Borsa, banka, kredi ve evler': 'Stocks, bank, loans and houses',
+  'Hayatında olan her şey, yıl yıl': 'Everything that happened in your life, year by year', '🗓️ {n} EP kaldı': '🗓️ {n} AP left', '🗓️ Bu yıl': '🗓️ This year',
 };

@@ -86,9 +86,11 @@ export async function playMinigame(id, ctx = {}) {
       h('div.col', {},
         btn('▶  Oyna', () => res('play'), 'primary block'),
         ctx.allowSkip !== false ? btn(`⏭  Hızlı geç (tahmini ${ctx.skipScore ?? 40} puan)`, () => res('skip'), 'ghost block') : null,
+        ctx.allowCancel !== false ? h('button.btn.ghost.block', { 'data-back': '1', onclick: () => res('cancel') }, '← Geri') : null,
       ),
     ));
   });
+  if (choice === 'cancel') { close(); return { score: null, cancelled: true }; }
   if (choice === 'skip') { close(); return { score: ctx.skipScore ?? 40, skipped: true }; }
 
   let result;
@@ -190,7 +192,7 @@ export async function playMinigame(id, ctx = {}) {
         h('div.score', {}, `${score} / 100`),
         h('p.muted', {}, score >= 92 ? 'Kusursuz! Efsane bir performans.' : score >= 80 ? 'Çok iyi iş çıkardın!' : score >= 65 ? 'Güzel, sağlam bir performans.' : score >= 45 ? 'Fena değil. Biraz daha pratik!' : 'Bu sefer olmadı. Pes etmek yok!'),
         h('div.col', { style: { marginTop: '18px' } },
-          btn('Devam', () => res(false), 'primary block'),
+          h('button.btn.primary.block', { 'data-back': '1', onclick: () => res(false) }, 'Devam'),
           canRetry ? btn('📺 Reklam izle, bir kez daha dene', async () => { if (await ctx.onRetryAd()) res(true); }, 'gold block') : null,
         ),
       ));

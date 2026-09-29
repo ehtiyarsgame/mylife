@@ -98,9 +98,10 @@ function buildScreen(render) {
   wrap.append(h('div.stat-strip', {},
     [['⭐', 'İtibar', s.stats.itibar], ['😊', 'Mutluluk', s.stats.mutluluk], ['❤️', 'Sağlık', s.stats.saglik], ['🧠', 'Zekâ', s.stats.zeka]].map(([e, n, v]) =>
       h('div', { title: n }, h('span', {}, e), h('b', {}, Math.round(v)), h('span.tiny.muted', {}, n)))));
-  wrap.append(yearCard(render));
-  // Sekme içeriği
+  // Sekme içeriği: "Bu yıl" yıl kartını, diğer sekmeler kendi başlığını gösterir (sekme değişimi hemen fark edilsin)
   const tab = app.tab;
+  if (tab === 'yil') wrap.append(yearCard(render));
+  else wrap.append(tabHeader(tab, render));
   if (tab === 'yil') wrap.append(...actionsTab(render));
   if (tab === 'ben') wrap.append(...meTab(render));
   if (tab === 'kariyer') wrap.append(...careerTab(render));
@@ -111,6 +112,25 @@ function buildScreen(render) {
   const tabs = [['yil', '🗓️', 'Bu yıl'], ['ev', '🏠', 'Ev'], ['ben', '🧬', 'Ben'], ['kariyer', '💼', 'Kariyer'], ...(s.age >= 18 ? [['finans', '📈', 'Finans']] : []), ['gunluk', '📖', 'Günlük']];
   wrap.append(h('div.tabs', {}, tabs.map(([id, e, n]) => h('button' + (tab === id ? '.on' : ''), { onclick: () => { app.tab = id; sfx.tap(); window.scrollTo(0, 0); render(); } }, h('b', {}, e), n))));
   return wrap;
+}
+
+const TAB_INFO = {
+  ev: ['🏠', 'Ev', 'Ailen, evin, bütçen ve ilişkilerin'],
+  ben: ['🧬', 'Ben', 'Yeteneklerin, becerilerin ve karakterin'],
+  kariyer: ['💼', 'Kariyer', 'Okul, meslek, terfi ve girişimcilik'],
+  finans: ['📈', 'Finans', 'Borsa, banka, kredi ve evler'],
+  gunluk: ['📖', 'Günlük', 'Hayatında olan her şey, yıl yıl'],
+};
+function tabHeader(tab, render) {
+  const s = S();
+  const [e, n, d] = TAB_INFO[tab] || ['', '', ''];
+  const y = s.year;
+  const left = Y.isInfant(s) ? null : Math.max(0, y.ep - y.used);
+  return h('div.card.tab-head', {},
+    h('div.row', {},
+      h('span', { style: { fontSize: '30px' } }, e),
+      h('div.grow', {}, h('h3', { style: { margin: 0 } }, n), h('div.tiny.muted', {}, d)),
+      h('button.btn.sm.ghost', { onclick: () => { app.tab = 'yil'; sfx.tap(); window.scrollTo(0, 0); render(); } }, left ? T('🗓️ {n} EP kaldı', { n: left }) : '🗓️ Bu yıl')));
 }
 
 function yearCard(render) {

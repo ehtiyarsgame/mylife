@@ -64,7 +64,11 @@ async function boot() {
       save();
       const ov = [...document.querySelectorAll('.overlay')].pop();
       if (ov && !document.querySelector('.mg')) { ov.click(); return; }
-      if (document.querySelector('.mg')) return; // mini oyun sırasında geri tuşu yok sayılır
+      // Mini oyunda: tanıtım ekranında geri = vazgeç, sonuç ekranında geri = devam; oyun sırasında yok sayılır
+      const mgBack = document.querySelector('.mg [data-back]');
+      if (mgBack) { mgBack.click(); return; }
+      if (document.querySelector('.mg')) return;
+      if (app.screen === 'life' && app.tab && app.tab !== 'yil') { app.tab = 'yil'; window.scrollTo(0, 0); go('life'); return; }
       if (app.screen !== 'title') { go('title'); return; }
       Cap.Plugins.App.minimizeApp();
     });

@@ -50,6 +50,7 @@ export function sheet(content, { center = false, dismissable = true } = {}) {
     const sh = h('div.sheet');
     const close = v => { ov.remove(); resolve(v); };
     if (!center) sh.append(h('div.handle'));
+    if (dismissable) sh.append(h('button.sheet-x', { 'aria-label': 'Kapat', onclick: () => close(undefined) }, '✕'));
     sh.append(typeof content === 'function' ? content(close) : content);
     ov.append(sh);
     if (dismissable) ov.addEventListener('click', e => { if (e.target === ov) close(undefined); });

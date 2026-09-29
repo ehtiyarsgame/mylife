@@ -141,6 +141,7 @@ export async function doAction(id, rerender) {
   const mg = Array.isArray(mgv) ? fx.pick(mgv) : mgv; // her seferinde farklı bir mini oyun
   if (mg) {
     const r = await runMg(mg, res(a.mgSkill, s), { stakes: 0.22 + (s.age > 17 ? 0.1 : 0), title: a.name, outdoor: a.cat === 'spor', extra: { scene: sceneFor(a, s) } });
+    if (r.cancelled) { rerender(); return; } // geri döndü: EP ve enerji harcanmaz
     perf = r.score; skipped = r.skipped;
   }
   const out = Y.performAction(s, id, perf);
@@ -218,7 +219,9 @@ export async function showEvent(card) {
   const s = S();
   await rarityReveal(card.rarity);
   if (card.rarity === 'rare') { sfx.rare(); vibrate(20); }
-  const idx = await sheet(close => h('div', {},
+  let idx, opt, mgScore = null;
+  while (true) {
+  idx = await sheet(close => h('div', {},
     h('div.ev-card.' + card.rarity, {},
       h('span.chip.rar', { style: { color: CONFIG.rarity[card.rarity].color, borderColor: CONFIG.rarity[card.rarity].color } }, RAR[card.rarity]),
       h('div.big', {}, card.icon || '📜'),
@@ -233,14 +236,16 @@ export async function showEvent(card) {
         o.mg ? h('span.chip.accent.tag', {}, '🎮 Mini oyun') : o.gamble && ok ? h('span.chip.gold.tag', {}, '🎲 Riskli') : o.honest ? h('span.chip.green.tag', {}, '⭐ Dürüst') : !ok ? h('span.chip.tag', {}, '🔒') : null);
     }),
   ), { dismissable: false });
-  const opt = card.options[idx];
-  progress('event');
-  if (opt.honest) progress('honest');
-  let mgScore = null;
+  opt = card.options[idx];
   if (opt.mg) {
     const r = await runMg(opt.mg, opt.mgSkill, { stakes: opt.stakes ?? 0.4, title: renderText(s, card.title), mods: card.rarity === 'legendary' ? ['efsanevi'] : card.rarity === 'epic' ? ['kritik'] : [], outdoor: ['penalti', 'calim'].includes(opt.mg) });
+    if (r.cancelled) continue; // karara geri dön
     mgScore = r.score;
   }
+  break;
+  }
+  progress('event');
+  if (opt.honest) progress('honest');
   const out = Y.resolveOption(s, card, idx, mgScore);
   if (out.legend) {
     const L = app.meta.legends[card.id] || { title: card.title, icon: card.icon, count: 0 };
@@ -266,9 +271,6 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     const a = actionById[actionId];
     const lock = Y.canDo(s, a);
     if (lock) { toast('🔒 ' + lock); return null; }
-    const cost = (a.cost || 0) * s.priceIndex;
-    Y.spendActionOnly(s, actionId);
-    if (cost) s.money -= cost;
   }
   const level = examLevel(examId, s.age);
   const nQ = examQ(examId, s.age);
@@ -289,6 +291,13 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     skipScore: clamp(prep - 10, 5, 80),
     extra: { questions, perQ: E.t * (level === 'ilkokul1' ? 1.4 : 1), easy: level === 'ilkokul1', prep, jokers, examName: E.name, adJoker: () => watchAd('joker') },
   });
+  if (r.cancelled) { s.qRecent = s.qRecent.slice(0, -questions.length); rerender?.(); return null; } // geri döndü
+  if (actionId) {
+    const a = actionById[actionId];
+    const cost = (a.cost || 0) * s.priceIndex;
+    Y.spendActionOnly(s, actionId);
+    if (cost) s.money -= cost;
+  }
   const sc = Y.examScore(s, examId, r.score);
   progress('exam');
   if (doorScoreOnly) { save(); return sc; }
@@ -363,11 +372,11 @@ export async function doorSheet(id, rerender) {
       btn(`🚪 Kapıyı dene (1 EP · ⚡${CONFIG.actionEnergy[1]})`, () => close(true), 'gold block' + (can ? '' : ' disabled')),
       btn('Kapat', () => close(false), 'ghost block'))));
   if (!go) return;
+  let mg;
+  if (D.exam) { const sc = await runExam(D.exam, { doorScoreOnly: true }); if (!sc) return; mg = sc.score; }
+  else { const r = await runMg(D.mg, D.mgSkill, { stakes: D.stakes, mods: D.modifiers || [], title: D.name, outdoor: D.mg === 'penalti' || D.mg === 'calim' }); if (r.cancelled) return; mg = r.score; }
   Y.tryDoorSpend(s, id);
   save();
-  let mg;
-  if (D.exam) { const sc = await runExam(D.exam, { doorScoreOnly: true }); mg = sc.score; }
-  else { const r = await runMg(D.mg, D.mgSkill, { stakes: D.stakes, mods: D.modifiers || [], title: D.name, outdoor: D.mg === 'penalti' || D.mg === 'calim' }); mg = r.score; }
   const ds = Y.doorScore(s, id, mg);
   let open = ds.open;
   if (!open && ds.score >= 90 && (await adOffer('door', `Kapı puanın ${ds.score}. Reklam izleyip +10 puan alırsan kapı açılır!`))) { ds.score += 10; ds.parts.reklam = 10; open = ds.score >= 100; }
@@ -421,17 +430,18 @@ export async function jobSearch(rerender) {
   if (s.career.job) {
     if (!(await confirmBox('İş değiştir', `Şu anki işin (${jobTitle(s.career.job)}) bırakılacak. Emin misin?`, 'Evet, başvur'))) return;
   }
-  Y.spendActionOnly(s, 'is_ara');
   const J = JOBS[pick];
   let hired = true, score = null;
   if (J.salary >= 30000) {
     const r = await runMg('konusma', 'sosyal', { stakes: 0.35, title: `${J.name} mülakatı`, extra: { scene: 'mulakat', job: pick, path: J.path } });
+    if (r.cancelled) { rerender(); return; }
     score = r.score;
     // İlk izlenim: karizma ve görünüş mülakatta biraz etkili; ama asıl belirleyici performans
     const firstImp = Math.round((charisma(s) - 50) / 8 + (looks(s) - 50) / 20);
     const need = Y.interviewNeed(pick) - (s.flags.staj ? 8 : 0) - (s.edu.uniGpa >= 80 ? 5 : 0) - firstImp;
     hired = score >= need;
   }
+  Y.spendActionOnly(s, 'is_ara');
   if (hired) { Y.hireJob(s, pick); collectJob(pick); sfx.level(); }
   save(); rerender();
   await info(hired ? '🎉 İşe alındın!' : '😔 Olumsuz dönüş', h('p', {}, hired ? `Artık ${J.name} olarak çalışıyorsun. "Mesaiye odaklan" ile performansını artır, terfi al.` : `Mülakat skorun ${score}. Bu iş için yeterli olmadı. Becerilerini geliştirip tekrar dene ya da başka ilanlara bak.`));
