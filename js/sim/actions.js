@@ -131,7 +131,7 @@ export const ACTIONS = [
     desc: 'Okulu bıraktın ama yol bitmedi. 2 yıl çalışırsan lise diploması ve üniversite sınavı hakkı.', mg: 'sinav', mgSkill: 'zeka',
     stats: { zeka: 1.5, disiplin: 1.5 }, skills: { matematik: 2, dil: 2 }, study: 1, acikLise: true },
   { id: 'bakim', name: 'Kendine bak', icon: '🪞', cat: 'saglik', ep: 1, when: s => s.age >= 14, cost: 3000,
-    desc: 'Berber/kuaför, düzenli uyku, cilt bakımı. Görünüşünü ve özgüvenini artırır.', stats: { mutluluk: 2, saglik: 1 }, flagYear: 'bakim' },
+    desc: 'Berber/kuaför, düzenli uyku, cilt bakımı. Görünüşünü ve özgüvenini artırır.', mg: ['sabah_rutini', 'ayna_temizle', 'saglikli_secim'], mgSkill: 'sosyal', stats: { mutluluk: 2, saglik: 1 }, flagYear: 'bakim' },
 
   // ——— TİCARET ———
   { id: 'bakkal', name: 'Bakkala yardım et', icon: '🏪', cat: 'ticaret', ep: 1, when: s => s.age >= 6 && s.age <= 13,
@@ -188,17 +188,17 @@ export const ACTIONS = [
     desc: 'Çamaşır, yemek, temizlik. Aileye yük olmazsın; disiplin ve aile bağı kazanırsın.', mg: ['camasir', 'firin_isi', 'tarif_olcusu', 'sinek', 'geri_donusum', 'tarif_sira', 'cay_doldur'], mgSkill: 'disiplin',
     skills: { empati: 1 }, stats: { disiplin: 1, mutluluk: 0.5 }, family: true },
   { id: 'aile', name: 'Aileyle vakit', icon: '🏡', cat: 'sosyal', ep: 1, when: s => s.age >= 6,
-    desc: 'Birlikte yemek, sohbet. Aile bağı güçlenir.', skills: { empati: 1 }, stats: { mutluluk: 4, saglik: 1 }, family: true },
+    desc: 'Birlikte yemek, sohbet. Aile bağı güçlenir.', mg: ['aile_albumu', 'tarif_sirasi', 'bayram_ziyareti'], mgSkill: 'empati', skills: { empati: 1 }, stats: { mutluluk: 4, saglik: 1 }, family: true },
   { id: 'tanis', name: 'Yeni insanlarla tanış', icon: '💞', cat: 'sosyal', ep: 1, when: s => s.age >= 17 && !s.rel.partner && !s.rel.married,
     desc: 'Sohbeti doğru yönlendir. Belki hayatının insanı karşındadır.', mg: 'konusma', mgSkill: 'sosyal',
     skills: { empati: 1 }, stats: { sosyal: 2, mutluluk: 1 }, date: true },
   { id: 'partner', name: 'Partnerinle vakit', icon: '❤️', cat: 'sosyal', ep: 1, when: s => !!s.rel.partner,
-    desc: 'İlişkiye emek ver.', stats: { mutluluk: 5 }, love: true },
+    desc: 'İlişkiye emek ver.', mg: ['ani_kartlari', 'dans_gecesi', 'romantik_yemek'], mgSkill: 'empati', stats: { mutluluk: 5 }, love: true },
   { id: 'cocuk', name: 'Çocuklarınla ilgilen', icon: '👨‍👧', cat: 'sosyal', ep: 1, when: s => s.rel.children.some(c => c.age <= 20),
     desc: 'Mama hazırla, ce-ee oyna, ödevlerine yardım et, maçlarına git.', mg: s => s.rel.children.some(c => c.age <= 3) ? ['biberon', 'ce_ee', 'tarif_sira'] : ['tarif_sira', 'mazeret', 'dans_figur', 'top_yakala'], mgSkill: 'empati',
     stats: { mutluluk: 4, itibar: 0.5 }, skills: { empati: 1 }, kids: true },
   { id: 'hayir', name: 'Burs fonu / hayır işi', icon: '🎗️', cat: 'sosyal', ep: 1, when: s => s.age >= 30 && s.money > 60000 * s.priceIndex, cost: 50000,
-    desc: 'Öğrencilere burs ver. İtibar ve iç huzuru.', stats: { itibar: 5, mutluluk: 4 }, skills: { empati: 2 }, honest: true },
+    desc: 'Öğrencilere burs ver. İtibar ve iç huzuru.', mg: ['koli_hazirla', 'yardim_dagit'], mgSkill: 'empati', stats: { itibar: 5, mutluluk: 4 }, skills: { empati: 2 }, honest: true },
 
   // ——— DOĞA / SAĞLIK ———
   { id: 'tarla', name: 'Tarlada yardım et', icon: '🌾', cat: 'saglik', ep: 1, when: s => s.age >= 6 && s.age <= 17 && s.family.place !== 'sehir',
@@ -210,9 +210,9 @@ export const ACTIONS = [
   { id: 'dinlen', name: 'Dinlen', icon: '😴', cat: 'saglik', ep: 1, rest: true, when: s => s.age >= 6,
     desc: 'Az enerjiyle yılı ilerletir. Mutluluk ve sağlık toparlanır.', stats: { mutluluk: 3, saglik: 1.5 } },
   { id: 'kontrol', name: 'Sağlık kontrolü', icon: '🏥', cat: 'saglik', ep: 1, when: s => s.age >= 30, cost: 4000,
-    desc: 'Erken teşhis hayat kurtarır. Bu yıl hastalık riski yarıya iner.', stats: { saglik: 4 }, flagYear: 'kontrol' },
+    desc: 'Erken teşhis hayat kurtarır. Bu yıl hastalık riski yarıya iner.', mg: ['refleks_testi', 'goz_testi', 'hafiza_testi'], mgSkill: 'zeka', stats: { saglik: 4 }, flagYear: 'kontrol' },
   { id: 'tatil', name: 'Tatile çık', icon: '🏖️', cat: 'saglik', ep: 1, when: s => adult(s), cost: 35000,
-    desc: 'Deniz, güneş, dinlenme.', stats: { mutluluk: 10, saglik: 2 } },
+    desc: 'Deniz, güneş, dinlenme.', mg: ['tatil_fotolari', 'yamac_parasutu', 'bavul_hazirla'], mgSkill: 'sosyal', stats: { mutluluk: 10, saglik: 2 } },
   { id: 'emekli', name: 'Emekli ol', icon: '🪑', cat: 'is', ep: 1, when: s => s.age >= 58 && !!s.career.job, special: 'retire',
     desc: 'İşi bırak, maaşının %40\'ı emekli aylığı olarak gelir.' },
 ];

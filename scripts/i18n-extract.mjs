@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const DIRS = ['js/ui', 'js/sim', 'js/minigames', 'js/core', 'js'];
-const SKIP = new Set(['js/sim/qdata.js', 'js/sim/qgen.js', 'js/i18n', 'js/sim/names.js', 'js/core/i18n.js']);
+const SKIP = new Set(['js/minigames/engines3.js', 'js/minigames/engines4.js', 'js/minigames/pack_baby.js', 'js/minigames/pack_kid.js', 'js/minigames/pack_teen.js', 'js/minigames/pack_jobs.js', 'js/minigames/pack_adult.js', 'js/sim/qdata.js', 'js/sim/qgen.js', 'js/i18n', 'js/sim/names.js', 'js/core/i18n.js']);
 
 // Basit JS tarayıcı: '...', "...", `...${}...` (iç içe) ve yorumları ayırt eder.
 export function scan(src) {

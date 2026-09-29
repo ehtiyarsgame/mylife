@@ -35,11 +35,12 @@ export function pickQuestions(levelKey, n, recent = [], prep = 50) {
   const levels = (prep < 40 ? HARDER[levelKey] : prep >= 70 ? EASIER[levelKey] : null) || LEVEL_MIX[levelKey] || [levelKey];
   const genLevel = prep < 40 ? ({ ilkokul1: 'ilkokul1', ilkokul: 'ortaokul', ortaokul: 'lise', lise: 'lise', genel: 'lise' }[levelKey]) : null;
   const recentSet = new Set([...recent, ...SEEN]);
-  let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
-  if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l) && !SEEN.slice(-40).includes(q.id));
-  pool = fx.shuffle(pool);
   // Soruların çoğu veri tablolarından üretilir (binlerce farklı soru); kalanı elle yazılmış bankadan gelir.
   const genShare = levelKey === 'ilkokul1' ? 1 : ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : genLevels.includes(levelKey) ? 0.6 : 0;
+  let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
+  // Elle yazılmış banka tükenirse: üretici varsa yeni soru üretilir, yoksa en eski görülenler tekrar gelir
+  if (pool.length < n && !genShare) pool = BANK.filter(q => levels.includes(q.l) && !SEEN.slice(-40).includes(q.id));
+  pool = fx.shuffle(pool);
   const out = [];
   for (let i = 0; i < n; i++) {
     const useGen = genShare > 0 && (fx.chance(genShare) || !pool.length);

@@ -8,7 +8,7 @@ import { showRewarded, adsLeft } from '../core/ads.js';
 import { fx } from '../core/rng.js';
 import { addEnergy } from '../core/energy.js';
 import { CONFIG, STATS, SKILLS, statById, skillById } from '../config.js';
-import { playMinigame, autoMods } from '../minigames/index.js';
+import { playMinigame, autoMods, gamesFor, pickFresh, getGame } from '../minigames/index.js';
 import { mgSkillLevel } from '../sim/stats.js';
 import { actionById, resolve as res } from '../sim/actions.js';
 import { JOBS, DOORS, EXAMS, ALANLAR, DEPTS, jobTitle, examLevel, examQ } from '../sim/careers.js';
@@ -138,7 +138,11 @@ export async function doAction(id, rerender) {
 
   let perf = 60, skipped = false;
   const mgv = res(a.mg, s);
-  const mg = Array.isArray(mgv) ? fx.pick(mgv) : mgv; // her seferinde farklı bir mini oyun
+  // Havuz: eylemin kendi oyunları + bu eyleme/mesleğe bağlanan ek oyunlar; yakın zamanda oynanmamış olan seçilir
+  const pool = mgv ? [...(Array.isArray(mgv) ? mgv : [mgv]), ...gamesFor(a.id), ...(a.work && s.career.job ? gamesFor('job:' + s.career.job.id) : [])] : [];
+  // Yaşa uygun olanlar (ör. √144 7 yaşındakine gelmez); hiçbiri uymazsa tüm havuz
+  const fits = pool.filter(g => { const a = getGame(g)?.ages; return !a || (s.age >= a[0] && s.age <= a[1]); });
+  const mg = pool.length ? pickFresh(fits.length ? fits : pool) : null;
   if (mg) {
     const r = await runMg(mg, res(a.mgSkill, s), { stakes: 0.22 + (s.age > 17 ? 0.1 : 0), title: a.name, outdoor: a.cat === 'spor', extra: { scene: sceneFor(a, s) } });
     if (r.cancelled) { rerender(); return; } // geri döndü: EP ve enerji harcanmaz

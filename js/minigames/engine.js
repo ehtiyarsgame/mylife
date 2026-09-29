@@ -7,7 +7,33 @@ import { clamp, grade, sleep } from '../core/util.js';
 import { fx } from '../core/rng.js';
 
 const REGISTRY = {};
-export function register(game) { REGISTRY[game.id] = game; }
+// at: ['kosu', 'job:doktor', ...] → oyun bu eylemin / mesleğin oyun havuzuna da girer
+const AT = {};
+export function register(game) {
+  REGISTRY[game.id] = game;
+  for (const k of game.at || []) (AT[k] ||= []).includes(game.id) || AT[k].push(game.id);
+}
+export const gamesFor = key => AT[key] || [];
+
+// Aynı oyunları üst üste oynatmamak için: son oynananları hatırla, havuzdan en uzun süredir oynanmayanı seç.
+const RECENT_KEY = 'hayatyolu.mgRecent';
+let recent = null;
+const loadRecent = () => { if (!recent) { try { recent = JSON.parse(localStorage.getItem(RECENT_KEY)) || []; } catch { recent = []; } } return recent; };
+export function markPlayed(id) {
+  const r = loadRecent().filter(x => x !== id);
+  r.push(id); recent = r.slice(-150);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent)); } catch {}
+}
+export function pickFresh(list) {
+  const ids = [...new Set(list)].filter(id => REGISTRY[id]);
+  if (!ids.length) return list[0];
+  const r = loadRecent();
+  const unseen = ids.filter(id => !r.includes(id));
+  if (unseen.length) return fx.pick(unseen);
+  // Hepsi yakın zamanda oynandıysa en eskilerden (ilk üçte biri) birini seç
+  const byAge = ids.slice().sort((a, b) => r.lastIndexOf(a) - r.lastIndexOf(b));
+  return fx.pick(byAge.slice(0, Math.max(1, Math.ceil(byAge.length / 3))));
+}
 export const getGame = id => REGISTRY[id];
 export const allGames = () => Object.values(REGISTRY);
 
@@ -59,6 +85,7 @@ export async function playMinigame(id, ctx = {}) {
   const diff = difficulty(skill, stakes, mods);
   const timeMul = mods.reduce((a, k) => a * (MODIFIERS[k]?.time || 1), 1);
 
+  markPlayed(id); // tanıtımı görüp geri dönse de bir dahaki sefere başka oyun gelsin
   const root = h('div.mg');
   const inner = h('div.mg-inner');
   root.append(inner);

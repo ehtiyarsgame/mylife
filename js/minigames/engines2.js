@@ -12,7 +12,7 @@ const big = (txt, size = 56) => h('div', { style: { fontSize: size + 'px', textA
 // t.sides: [solEtiket, sağEtiket]; t.items: [[metin, 0|1], ...]
 export function swipeGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`Kart gelince karar ver: ${t.sides[0]} mi, ${t.sides[1]} mi?`, 'Kartı sağa/sola kaydır ya da alttaki düğmelere dokun.', 'Yanlış karar 2 saniye götürür. 30 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -51,7 +51,7 @@ export function swipeGame(t) {
 // t.pads: [[emoji, renk], x4]
 export function seqGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Tuşlar sırayla yanar: iyi izle.', 'Sonra aynı sırayla dokun.', 'Her turda sıra bir adım uzar. Bir hata oyunu bitirir.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -94,7 +94,7 @@ export function seqGame(t) {
 // t.cup: emoji, t.color: sıvı rengi, t.unit, t.rounds
 export function fillGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Ekrana basılı tut: doldurmaya başlarsın.', 'Kesikli çizgiye gelince parmağını kaldır.', 'Taşırırsan puan yok! 5 deneme.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -147,7 +147,7 @@ export function fillGame(t) {
 // t.item: taşınan emoji(ler), t.base: altlık
 export function balanceGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Yük sağa sola yatar.', 'Sağa yatınca ekranın SOL yarısına, sola yatınca SAĞ yarısına dokunarak dengele.', 'Devirmeden sona kadar dayan!'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -195,7 +195,7 @@ export function balanceGame(t) {
 // t.words (Türkçe) / t.wordsEn (diğer diller)
 export function typeGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Üstteki kelimenin harflerine sırayla dokun.', 'Yanlış harf kelimeyi baştan başlatır.', '30 saniyede olabildiğince çok kelime.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -235,7 +235,7 @@ export function typeGame(t) {
 // t.target: emoji, t.frame: çerçeve etiketi, t.bg
 export function aimGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags,
+    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Hedef ekranda dolaşıyor.', 'Tam çerçevenin içindeyken dokun!', `${t.shots || 6} deneme.`],
     play(stage, api) {
       return new Promise(async resolve => {

@@ -10,9 +10,9 @@ const TR = () => lang === 'tr';
 const pct = v => Math.round(clamp(v, 0, 100));
 
 // Seçmeli bebek oyunu motoru. t.round(rng, i) → { prompt: Node|string, opts: [{ label, style? }], correct }
-function babyPick(t) {
+export function babyPick(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: ['bebek', ...(t.tags || [])],
+    id: t.id, name: t.name, icon: t.icon, tags: ['bebek', ...(t.tags || [])], at: t.at,
     how: t.how,
     play(stage, api) {
       return new Promise(async resolve => {
@@ -46,8 +46,8 @@ function babyPick(t) {
     },
   });
 }
-const bigE = (e, size = 64, extra = {}) => h('div', { style: { fontSize: size + 'px', lineHeight: 1, ...extra } }, e);
-const opts = (rng, correct, pool, n = 3) => {
+export const bigE = (e, size = 64, extra = {}) => h('div', { style: { fontSize: size + 'px', lineHeight: 1, ...extra } }, e);
+export const opts = (rng, correct, pool, n = 3) => {
   const wrong = rng.shuffle(pool.filter(x => x !== correct)).slice(0, n - 1);
   const list = rng.shuffle([correct, ...wrong]);
   return { opts: list.map(e => ({ label: e })), correct: list.indexOf(correct) };

@@ -302,7 +302,8 @@ test('karne yazılısı sınıfla uzar ve okul boyunca soru tekrarlanmaz', async
   for (let age = 7; age <= 17; age++) {
     const qs = pickQuestions(examLevel('karne', age), examQ('karne', age), recent, 55);
     recent = [...recent, ...qs.map(q => q.id)].slice(-400);
-    seen.push(...qs.map(q => q.q));
+    // Aynı kalıpta ama farklı şıklı üretilmiş sorular ("Hangisi en büyük?") ayrı soru sayılır
+    seen.push(...qs.map(q => q.q + ' | ' + q.opts.slice().sort().join(',')));
   }
   assert.ok(seen.length >= 100);
   assert.ok(new Set(seen).size >= seen.length - 2, `tekrar: ${seen.length - new Set(seen).size}`);

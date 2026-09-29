@@ -11,7 +11,7 @@ Gizlilik politikası: https://ehtiyarsgame.github.io/lifetide/privacy.html (kayn
 **App name (≤30):** Lifetide: Play Your Life
 
 **Short description (≤80):**
-Live a whole life from birth to old age — through 200 mini-games.
+Live a whole life from birth to old age — through 500+ mini-games.
 
 **Full description:**
 One life, a thousand choices.
@@ -21,8 +21,8 @@ Lifetide is a life simulator where you don't just tap buttons — you actually p
 🌱 FROM CRADLE TO OLD AGE
 Even as a baby you play: shape sorters, animal sounds, peekaboo and xylophones grow your mind and hands. Grow up in a poor, middle-class or wealthy family, in a village or a big city. Your talents, temperament and family shape your start, but your effort decides where you end up.
 
-🎮 200 MINI-GAMES
-Football, basketball, table tennis, parallel parking, surgery, triage, coding, circuits, farming, cooking, trading and many more. Your character's skill makes them easier, but your own skill matters too.
+🎮 500+ MINI-GAMES
+Football, surgery, coding, farming, cooking and trading, plus memory cards, mazes, code-breaking, sudoku, rhythm, slicing, drawing and much more. Every stage of life and every career has its own games, and they rarely repeat. Your character's skill makes them easier, but your own skill matters too.
 
 📚 REAL EXAMS
 Report cards every year, high school and university entrance exams, driving test, civil service exam, medical specialty exam — thousands of generated questions on maths, science, history, geography, literature and languages.
@@ -50,7 +50,7 @@ Made by Ehtiyars Game · ehtiyarsgame@gmail.com
 **Uygulama adı (≤30):** Hayat Yolu: Hayat Simülasyonu
 
 **Kısa açıklama (≤80):**
-Doğumdan yaşlılığa bir ömür yaşa — 200 mini oyunla.
+Doğumdan yaşlılığa bir ömür yaşa — 500'den fazla mini oyunla.
 
 **Tam açıklama:**
 Bir ömür, binlerce karar.
@@ -60,8 +60,8 @@ Hayat Yolu, düğmelere basmakla yetinmediğin, hayatını gerçekten oynadığ�
 🌱 BEŞİKTEN YAŞLILIĞA
 Bebekken bile oynarsın: şekil kutusu, hayvan sesleri, ce-ee ve ksilofonla zekân ve ellerin gelişir. Fakir, orta hâlli ya da varlıklı bir ailede, köyde ya da büyük şehirde doğ. Yeteneklerin, mizacın ve ailen başlangıcını belirler; nereye varacağını ise emeğin.
 
-🎮 200 MİNİ OYUN
-Futbol, basketbol, masa tenisi, paralel park, ameliyat, triyaj, kodlama, devre, tarım, yemek, ticaret ve daha fazlası. Karakterinin becerisi oyunu kolaylaştırır, ama senin becerin de önemli.
+🎮 500+ MİNİ OYUN
+Futbol, ameliyat, kodlama, tarım, yemek ve ticaretin yanında hafıza kartları, labirent, şifre kırma, sudoku, ritim, kesme, çizim ve daha fazlası. Hayatın her dönemi ve her meslek kendi oyunlarıyla gelir; oyunlar kolay kolay tekrar etmez. Karakterinin becerisi oyunu kolaylaştırır, ama senin becerin de önemli.
 
 📚 GERÇEK SINAVLAR
 Her yıl karne, lise ve üniversite sınavı, ehliyet, kamu sınavı, uzmanlık sınavı — matematik, fen, tarih, coğrafya, edebiyat ve yabancı dilde binlerce üretilmiş soru.

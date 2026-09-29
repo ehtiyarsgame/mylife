@@ -27,8 +27,16 @@ let PATTERNS = [];            // { re, out, keys }
 const cache = new Map();
 
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// Modüllerin kendi içinde taşıdığı iki dilli metinler (ör. mini oyun paketleri): B('Türkçe', 'English')
+const EXTRA = {};
+let BASE = null, dirty = false;
+export function addDict(obj) { Object.assign(EXTRA, obj); if (BASE) dirty = true; }
+export const EN = tr => EXTRA[tr] ?? tr; // B ile kaydedilmiş bir metnin İngilizcesi
+export const B = (tr, en) => { if (en !== undefined && tr !== en) EXTRA[tr] = en; if (BASE) dirty = true; return tr; };
 export function loadDict(dict) {
-  DICT = dict || {};
+  BASE = dict || {};
+  dirty = false;
+  DICT = { ...EXTRA, ...BASE };
   EXACT = new Map();
   PATTERNS = [];
   cache.clear();
@@ -55,6 +63,7 @@ export function T(s, vars) {
   if (lang === 'tr' || s === null || s === undefined) return vars ? fill(String(s), vars) : s;
   const str = String(s);
   if (!HAS_LETTER.test(str)) return str;
+  if (dirty) loadDict(BASE);
   let out = translate(str);
   return vars ? fill(out, vars) : out;
 }
