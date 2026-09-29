@@ -17,6 +17,7 @@ export function levelFor(age) {
 }
 
 const LEVEL_MIX = {
+  ilkokul1: ['ilkokul1'],
   ilkokul: ['ilkokul'],
   ortaokul: ['ortaokul', 'ilkokul'],
   lise: ['lise', 'ortaokul'],
@@ -28,17 +29,17 @@ const LEVEL_MIX = {
 
 // Sınav soruları: şıklar karıştırılmış olarak döner ({q, opts, correct, s, h})
 // Hazırlık düşükse sorular bir üst seviyeden ve daha zor gelir; yüksekse bildik konulardan.
-const HARDER = { ilkokul: ['ilkokul', 'ortaokul'], ortaokul: ['ortaokul', 'lise'], lise: ['lise'], genel: ['genel', 'lise'] };
-const EASIER = { ilkokul: ['ilkokul'], ortaokul: ['ortaokul', 'ilkokul'], lise: ['lise', 'ortaokul'], genel: ['genel', 'ortaokul'] };
+const HARDER = { ilkokul1: ['ilkokul1'], ilkokul: ['ilkokul', 'ortaokul'], ortaokul: ['ortaokul', 'lise'], lise: ['lise'], genel: ['genel', 'lise'] };
+const EASIER = { ilkokul1: ['ilkokul1'], ilkokul: ['ilkokul'], ortaokul: ['ortaokul', 'ilkokul'], lise: ['lise', 'ortaokul'], genel: ['genel', 'ortaokul'] };
 export function pickQuestions(levelKey, n, recent = [], prep = 50) {
   const levels = (prep < 40 ? HARDER[levelKey] : prep >= 70 ? EASIER[levelKey] : null) || LEVEL_MIX[levelKey] || [levelKey];
-  const genLevel = prep < 40 ? ({ ilkokul: 'ortaokul', ortaokul: 'lise', lise: 'lise', genel: 'lise' }[levelKey]) : null;
+  const genLevel = prep < 40 ? ({ ilkokul1: 'ilkokul1', ilkokul: 'ortaokul', ortaokul: 'lise', lise: 'lise', genel: 'lise' }[levelKey]) : null;
   const recentSet = new Set([...recent, ...SEEN]);
   let pool = BANK.filter(q => levels.includes(q.l) && !recentSet.has(q.id));
   if (pool.length < n) pool = BANK.filter(q => levels.includes(q.l) && !SEEN.slice(-40).includes(q.id));
   pool = fx.shuffle(pool);
   // Soruların çoğu veri tablolarından üretilir (binlerce farklı soru); kalanı elle yazılmış bankadan gelir.
-  const genShare = ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : genLevels.includes(levelKey) ? 0.6 : 0;
+  const genShare = levelKey === 'ilkokul1' ? 1 : ['ilkokul', 'ortaokul', 'lise', 'genel'].includes(levelKey) ? 0.65 : genLevels.includes(levelKey) ? 0.6 : 0;
   const out = [];
   for (let i = 0; i < n; i++) {
     const useGen = genShare > 0 && (fx.chance(genShare) || !pool.length);

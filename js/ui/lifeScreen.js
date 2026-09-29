@@ -122,8 +122,8 @@ function yearCard(render) {
   const card = h('div.card.year-card');
   card.append(h('div.row', {},
     h('span', { style: { fontSize: '26px' } }, STAGE_E[st.id]),
-    h('div.grow', {}, h('b', {}, `${s.age}. yaşın`), h('div.tiny.muted', {}, infant ? 'Bebeklikte kararları ailen verir' : 'Eylemlerini seç; tüm eylem puanını harcayınca yıl tamamlanır')),
-    !infant && !y.adEP ? h('button.btn.sm', { onclick: () => F.extraEPByAd(render), title: 'Reklam izle, +1 EP' }, '📺 +1 EP') : null));
+    h('div.grow', {}, h('b', {}, `${s.age}. yaşın`), h('div.tiny.muted', {}, infant ? 'Bebeklikte kararları ailen verir' : Y.isBaby(s) ? 'Oyna, keşfet, büyü! Bebek oyunları enerji harcamaz.' : 'Eylemlerini seç; tüm eylem puanını harcayınca yıl tamamlanır')),
+    !Y.isBaby(s) && !y.adEP ? h('button.btn.sm', { onclick: () => F.extraEPByAd(render), title: 'Reklam izle, +1 EP' }, '📺 +1 EP') : null));
   if (!infant) {
     card.append(h('div.row', { style: { marginTop: '10px' } },
       h('div.ep-dots', {}, Array.from({ length: y.ep }, (_, i) => h('i' + (i < y.used ? '.on' : '')))),
@@ -157,7 +157,7 @@ function yearCard(render) {
     const st = stressLabel(s.home.stress);
     card.append(h('div.task', { style: { borderColor: st.c, background: 'rgba(255,91,122,.08)' } }, h('span', { style: { fontSize: '22px' } }, st.e), h('div.grow', {}, h('b', {}, `Evde durum: ${st.t}`), h('div.tiny.muted', {}, 'Ailenin paraya ihtiyacı var. Çalışıp destek olabilirsin (Ev sekmesi).')), btn('Ev', () => { app.tab = 'ev'; render(); }, 'sm')));
   }
-  const risk = !infant ? atRisk(s) : [];
+  const risk = !Y.isBaby(s) ? atRisk(s) : [];
   if (risk.length) card.append(h('div.task', { style: { borderColor: '#ff8a5b', background: 'rgba(255,138,91,.08)' } },
     h('span', { style: { fontSize: '22px' } }, '⚖️'),
     h('div.grow', {}, h('b', {}, T('İhmal etme: {x}', { x: risk.map(r => `${r.icon} ${T(r.name)}`).join(', ') })), h('div.tiny.muted', {}, risk.map(r => `${r.name}: ${r.neglect}. yıl olacak`).join(' · ') + '. Yıl sonunda bedeli var!'))));
@@ -224,7 +224,7 @@ function actionCard(a, render) {
       h('div.nm', {}, a.name, mg ? h('span', { style: { marginLeft: '6px', fontSize: '12px' } }, '🎮') : null),
       h('div.ds', {}, lock ? '🔒 ' + lock : a.desc)),
     h('div.cost', {},
-      h('span.chip' + (s.energy.value < en ? '.bad' : ''), {}, `⚡${en}`),
+      en > 0 ? h('span.chip' + (s.energy.value < en ? '.bad' : ''), {}, `⚡${en}`) : h('span.chip.green', {}, 'Ücretsiz'),
       h('span.chip.accent', {}, `${a.ep} EP`),
       money ? h('span.chip.warn', {}, fmtTL(money)) : null));
 }

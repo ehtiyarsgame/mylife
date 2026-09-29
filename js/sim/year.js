@@ -33,7 +33,9 @@ export function log(s, text, r = 'common') {
 export function startYear(s) {
   const st = stageOf(s.age);
   let ep = st.ep;
-  if (ep > 0) {
+  // Bebeklik: yenidoğan yılı yalnızca olay kartı; 1–5 yaşta oyunla gelişim için 2 eylem
+  if (st.id === 'bebek' && s.age >= 1) ep = 2;
+  else if (ep > 0) {
     if (s.stats.mutluluk < 30) ep -= 1;
     if (s.stats.saglik < 25) ep -= 2;
     ep = Math.max(1, ep);
@@ -124,6 +126,7 @@ export function nextEvent(s) {
 
 // ——————————————————— EYLEMLER ———————————————————
 export function energyCost(a) {
+  if (a.baby) return 0; // bebek oyunları enerji harcamaz
   if (a.rest) return CONFIG.restEnergy;
   return CONFIG.actionEnergy[a.ep] ?? 14;
 }
@@ -306,7 +309,12 @@ export function examPrep(s, examId) {
 export function examScore(s, examId, playerPct) {
   const prep = examPrep(s, examId);
   const luck = withRng(s, r => r.float(0, 5));
-  const score = clamp(Math.round(0.65 * playerPct + 0.30 * prep + luck), 0, 100);
+  // İlk sınıflarda (ilk kez öğrenirken) öğretmen teşvik eder; 4. sınıftan sonra çalışma (hazırlık) daha belirleyici
+  const ea = eduAge(s);
+  const karne = examId === 'karne';
+  const early = karne && ea <= 8 ? 8 : karne && ea === 9 ? 4 : 0;
+  const wPrep = karne && ea >= 10 ? 0.38 : 0.30, wPlay = karne && ea >= 10 ? 0.58 : 0.65;
+  const score = clamp(Math.round(wPlay * playerPct + wPrep * prep + luck + early), 0, 100);
   // Sanal adaylar içinde sıralama: 90 puan ≈ ilk %2
   const top = round(100 * (1 - normCdf((score - 55) / 17)), 1);
   return { score, prep, top: Math.max(0.1, top) };
@@ -1067,4 +1075,6 @@ export function lifeScore(s) {
 }
 
 // Bebeklik yılı: eylem yok, yalnızca olaylar
-export const isInfant = s => stageId(s) === 'bebek';
+// Yenidoğan: eylem yok, yalnızca olay kartları (1–5 yaş bebek oyunları oynar)
+export const isInfant = s => stageId(s) === 'bebek' && s.age < 1;
+export const isBaby = s => stageId(s) === 'bebek';

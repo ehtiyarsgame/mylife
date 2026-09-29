@@ -20,7 +20,7 @@ register({
       const x = api.extra;
       const qs = x.questions || pickQuestions(levelFor(x.age ?? 12), 5);
       const prep = x.prep ?? 50;
-      let perQ = (x.perQ ?? 30) * (prep < 40 ? 0.75 : 1);
+      let perQ = (x.perQ ?? 30) * (prep < 40 && !x.easy ? 0.75 : 1);
       let correct = 0, used = 0;
       const usedSet = new Set();
       let adUsed = false;
@@ -38,7 +38,7 @@ register({
             const wrong = [0, 1, 2, 3].filter(k => k !== Q.correct && !faded.has(k));
             for (const k of api.rng.shuffle(wrong).slice(0, n)) { faded.add(k); optEls[k].classList.add('fade'); }
           };
-          if (prep >= 70) fade(1);
+          if (prep >= 70 || x.easy) fade(1); // ilk sınıflarda bir yanlış şık baştan elenir
           const answer = k => {
             if (done) return; done = true; tm.stop();
             optEls.forEach(e => e.onclick = null);

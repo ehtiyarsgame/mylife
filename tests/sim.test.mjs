@@ -204,7 +204,7 @@ test('üretilen sorular geçerli ve çok çeşitli; sınavda tekrar gelmez', asy
       assert.equal(new Set(q.a).size, 4, `${q.q} → ${q.a}`);
       assert.ok(!q.a.some(x => /undefined|NaN/.test(x)), q.q);
     }
-    const min = ['tip', 'ehliyet', 'usta'].includes(l) ? 110 : 600;
+    const min = ['tip', 'ehliyet', 'usta'].includes(l) ? 110 : l === 'ilkokul1' ? 300 : 600;
     assert.ok(ids.size > min, `${l}: yalnız ${ids.size} farklı soru`);
   }
   for (const [lvl, n] of [['lise', 10], ['tip', 8], ['ehliyet', 5], ['usta', 5]]) {
@@ -293,7 +293,8 @@ test('İngilizce çeviri eksiksiz: kartlar, sorular ve arayüz sözlüğü', asy
 test('karne yazılısı sınıfla uzar ve okul boyunca soru tekrarlanmaz', async () => {
   const { examQ, examLevel } = await import('../js/sim/careers.js');
   const { pickQuestions } = await import('../js/sim/questions.js');
-  assert.equal(examQ('karne', 8), 8);
+  assert.equal(examQ('karne', 8), 6);
+  assert.equal(examQ('karne', 9), 8);
   assert.equal(examQ('karne', 12), 10);
   assert.equal(examQ('karne', 16), 12);
   let recent = [];
@@ -303,7 +304,7 @@ test('karne yazılısı sınıfla uzar ve okul boyunca soru tekrarlanmaz', async
     recent = [...recent, ...qs.map(q => q.id)].slice(-400);
     seen.push(...qs.map(q => q.q));
   }
-  assert.ok(seen.length >= 110);
+  assert.ok(seen.length >= 100);
   assert.ok(new Set(seen).size >= seen.length - 2, `tekrar: ${seen.length - new Set(seen).size}`);
 });
 

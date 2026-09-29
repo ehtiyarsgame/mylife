@@ -3,9 +3,9 @@ import { fmtTL } from '../core/util.js';
 // skill: basamak için gereken ticaret becerisi. Dükkândan itibaren tam zamanlı bir meslektir.
 export const BIZ_STEPS = [
   { name: 'Küçük satışlar',     icon: '🍪', age: 12, capital: 0,          monthly: 250,     rep: 0,  prevYears: 0, skill: 0,  risk: 0.05, mgs: ['paraustu', 'pazarlik', 'para_say'] },
-  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 6000,    rep: 0,  prevYears: 2, skill: 20, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu', 'terazi', 'musteri_sikayeti'] },
-  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 45000,   rep: 30, prevYears: 2, skill: 45, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik', 'stok_sayimi', 'sahte_para', 'gelir_gider'] },
-  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 85000,   rep: 40, prevYears: 2, skill: 55, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat', 'kargo_istif', 'musteri_sikayeti', 'gelir_gider'] },
+  { name: 'Pazar tezgâhı',      icon: '🧺', age: 15, capital: 15000,      monthly: 6000,    rep: 0,  prevYears: 2, skill: 20, risk: 0.10, mgs: ['pazarlik', 'fiyat', 'paraustu', 'terazi', 'musteri_sikayeti', 'taze_mi', 'karpuz_tasi'] },
+  { name: 'Dükkân',             icon: '🏪', age: 20, capital: 250000,     monthly: 45000,   rep: 30, prevYears: 2, skill: 45, risk: 0.12, mgs: ['fiyat', 'stok', 'pazarlik', 'stok_sayimi', 'sahte_para', 'gelir_gider', 'iade_masasi', 'taze_mi'] },
+  { name: 'E-ticaret mağazası', icon: '📦', age: 23, capital: 400000,     monthly: 85000,   rep: 40, prevYears: 2, skill: 55, risk: 0.15, mgs: ['urunsayfa', 'stok', 'fiyat', 'kargo_istif', 'musteri_sikayeti', 'gelir_gider', 'iade_masasi', 'spam_filtre'] },
   { name: 'Toptancılık',        icon: '🚛', age: 27, capital: 2500000,    monthly: 150000,  rep: 60, prevYears: 3, skill: 65, risk: 0.15, mgs: ['pazarlik', 'stok', 'rota', 'kargo_istif', 'yuzde_hesap', 'yukleme'] },
   { name: 'Kendi markası',      icon: '🏷️', age: 31, capital: 12000000,   monthly: 320000,  rep: 75, prevYears: 4, skill: 72, risk: 0.18, mgs: ['urunsayfa', 'fiyat', 'konusma', 'basin_toplantisi', 'kriz_yonetimi'] },
   { name: 'İhracat',            icon: '🌍', age: 36, capital: 60000000,   monthly: 900000,  rep: 90, prevYears: 5, skill: 80, risk: 0.20, mgs: ['pazarlik', 'stok', 'konusma', 'yuzde_hesap', 'kriz_yonetimi'] },

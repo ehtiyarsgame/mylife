@@ -287,7 +287,7 @@ export async function runExam(examId, { actionId = null, rerender, doorScoreOnly
     skill: prep, stakes: examId === 'karne' ? 0.2 : 0.6, title: `${E.name} · ${nQ} soru · soru başı ${E.t} sn` + (prep < 40 ? ' · ⚠️ Az çalıştın: sorular zor, süre kısa!' : prep >= 70 ? ' · ✨ İyi hazırlandın' : ''),
     mods: autoMods(s, examId === 'karne' ? [] : ['kritik']),
     skipScore: clamp(prep - 10, 5, 80),
-    extra: { questions, perQ: E.t, prep, jokers, examName: E.name, adJoker: () => watchAd('joker') },
+    extra: { questions, perQ: E.t * (level === 'ilkokul1' ? 1.4 : 1), easy: level === 'ilkokul1', prep, jokers, examName: E.name, adJoker: () => watchAd('joker') },
   });
   const sc = Y.examScore(s, examId, r.score);
   progress('exam');

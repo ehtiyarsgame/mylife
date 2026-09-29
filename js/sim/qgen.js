@@ -155,8 +155,24 @@ const P = {
   beton: r => { const a = r.pick([3, 4, 5, 6]), b = r.pick([3, 4, 5]), h = r.pick([0.1, 0.12, 0.15, 0.2]); const v = a * b * h; return Q(`beton:${a}:${b}:${h}`, L('İnşaat', 'Construction'), L(`${a} m × ${b} m, ${dec(h * 100)} cm kalınlıkta döşeme için kaç m³ beton gerekir?`, `How many m³ of concrete for a ${a} m × ${b} m slab, ${dec(h * 100)} cm thick?`), `${dec(v)} m³`, [`${dec(v * 10)} m³`, `${dec(a * b)} m³`, `${dec(v * 2)} m³`]); },
 };
 
+// ——— İlk sınıflar (1–2. sınıf): ilk kez öğrenen çocuk için kolay sorular ———
+const DAYS_TR = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+const DAYS_EN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const SEASONS = [['❄️', 'Kış', 'Winter'], ['🌸', 'İlkbahar', 'Spring'], ['☀️', 'Yaz', 'Summer'], ['🍂', 'Sonbahar', 'Autumn']];
+const E1 = {
+  topla: r => { const a = r.int(1, 10), b = r.int(1, 10); return Q(`t1:${a}:${b}`, MAT(), `${a} + ${b} = ?`, a + b, wrongNum(r, a + b, [-2, -1, 1, 2, 3])); },
+  cikar: r => { const a = r.int(5, 20), b = r.int(1, Math.min(9, a - 1)); return Q(`c1:${a}:${b}`, MAT(), `${a} − ${b} = ?`, a - b, wrongNum(r, a - b, [-2, -1, 1, 2, 3])); },
+  say: r => { const e = r.pick(['🍎', '⭐', '🐟', '🎈', '🌸', '🐞']), n = r.int(3, 9); return Q(`s1:${e}:${n}`, MAT(), L(`Kaç tane var?  ${e.repeat(n)}`, `How many?  ${e.repeat(n)}`), n, wrongNum(r, n, [-2, -1, 1, 2])); },
+  sira: r => { const a = r.int(1, 15), st = r.pick([1, 2, 5, 10]); const seq = [a, a + st, a + 2 * st]; return Q(`sq1:${a}:${st}`, MAT(), L(`Sırada hangi sayı gelir? ${seq.join(', ')}, ?`, `What comes next? ${seq.join(', ')}, ?`), a + 3 * st, wrongNum(r, a + 3 * st, [-st, st, -1, 1, 2])); },
+  buyuk: r => { const ns = r.shuffle([...new Set([r.int(1, 50), r.int(1, 50), r.int(1, 50), r.int(1, 50), r.int(51, 99)])]).slice(0, 4); const mx = Math.max(...ns); return Q(`b1:${ns.join('-')}`, MAT(), L('Hangisi en büyük sayıdır?', 'Which is the biggest number?'), mx, ns.filter(x => x !== mx).map(String)); },
+  kose: r => { const S = [['Üçgenin', 'triangle', 3], ['Karenin', 'square', 4], ['Beşgenin', 'pentagon', 5], ['Altıgenin', 'hexagon', 6]]; const [tr, en, n] = r.pick(S); return Q(`k1:${n}`, MAT(), L(`${tr} kaç köşesi vardır?`, `How many corners does a ${en} have?`), n, uniq([n - 1, n + 1, n + 2, 0], n)); },
+  gun: r => { const i = r.int(0, 6); const Dy = TR() ? DAYS_TR : DAYS_EN; return Q(`g1:${i}`, L('Hayat Bilgisi', 'Life Skills'), L(`${Dy[i]} gününden sonra hangi gün gelir?`, `Which day comes after ${Dy[i]}?`), Dy[(i + 1) % 7], wrongFrom(r, Dy, Dy[(i + 1) % 7])); },
+  mevsim: r => { const i = r.int(0, 3); const [e, tr, en] = SEASONS[i]; return Q(`m1:${i}`, L('Hayat Bilgisi', 'Life Skills'), L(`${e} Bu resim hangi mevsimi anlatır?`, `${e} Which season is this?`), TR() ? tr : en, SEASONS.filter((_, k) => k !== i).map(x => TR() ? x[1] : x[2])); },
+};
+
 // Seviye → üreticiler (tekrar yazmak ağırlık verir). Belirli bir ülkeye özgü sorular yok; tarih ve edebiyat dünya geneli.
 const BY_LEVEL = {
+  ilkokul1: [E1.topla, E1.topla, E1.cikar, E1.cikar, E1.say, E1.sira, E1.buyuk, E1.kose, E1.gun, E1.mevsim],
   ilkokul: [M.topla, M.cikar, M.carpim, M.problem, M.problem, M.basamak, M.bolme, TT.esAnlam, TT.zitAnlam, TT.atasozu, TT.gezegen],
   ortaokul: [M.bolme, M.yuzde, M.ebob, M.ekok, M.kesir, M.tamsayi, M.alan, M.us, M.karekok, M.ortalama, M.oran,
     TT.baskent, TT.yabanci, TT.yabanci, TT.esAnlam, TT.zitAnlam, TT.atasozu, TT.element, TT.organ, TT.tarih, TT.gezegen],

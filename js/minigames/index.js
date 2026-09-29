@@ -10,5 +10,7 @@ import './football.js';
 import './arcade.js';
 import './market.js';
 import './jobs.js';
+import './fun.js';
+import './baby.js';
 import './themes.js';
 export { playMinigame, allGames, getGame, autoMods, MODIFIERS } from './engine.js';

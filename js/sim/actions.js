@@ -24,6 +24,7 @@ const adult = s => s.age >= 18;
 const wealthRank = s => ['fakir', 'orta', 'varlikli', 'zengin'].indexOf(s.family.wealth);
 
 export const CATEGORIES = {
+  bebek:   { name: 'Oyun & gelişim', icon: '🧸' },
   egitim:  { name: 'Eğitim',        icon: '📚' },
   is:      { name: 'İş & Kariyer',  icon: '💼' },
   ticaret: { name: 'Ticaret',       icon: '💰' },
@@ -34,12 +35,31 @@ export const CATEGORIES = {
 };
 
 export const ACTIONS = [
+  // ——— BEBEKLİK (1–5 yaş): oyun oynayarak gelişim. Enerji harcamaz. ———
+  { id: 'oyuncak', name: 'Oyuncaklarla oyna', icon: '🧸', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 1 && s.age <= 5,
+    desc: 'Şekil kutusu, küp kule, baloncuk… Elini ve aklını geliştirir.', mg: ['sekil_kutusu', 'kup_kule', 'baloncuk', 'renk_esle'], mgSkill: 'el',
+    skills: { el: 3, resim: 1 }, stats: { zeka: 1.2, fizik: 0.8, mutluluk: 2 } },
+  { id: 'ce_ee_oyun', name: 'Ailenle oyun', icon: '🙈', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 1 && s.age <= 4,
+    desc: 'Ce-ee, hayvan sesleri, gıdıklama. Bağ kurar, konuşmayı hızlandırır.', mg: ['ce_ee', 'hayvan_sesi'], mgSkill: 'sosyal',
+    skills: { empati: 2, dil: 2 }, stats: { sosyal: 1.5, mutluluk: 3 }, family: true },
+  { id: 'zeka_oyun', name: 'Zekâ oyuncakları', icon: '🧩', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 2 && s.age <= 5,
+    desc: 'Gölge eşle, say bakalım, büyük-küçük. Matematik ve mantığın ilk adımı.', mg: ['golge_esle', 'say_bakalim', 'buyuk_kucuk', 'renk_esle'], mgSkill: 'zeka',
+    skills: { matematik: 3, fen: 1 }, stats: { zeka: 2 } },
+  { id: 'muzik_bebek', name: 'Şarkılar ve ksilofon', icon: '🎶', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 1 && s.age <= 5,
+    desc: 'Renkli tuşlarla melodiyi tekrar et. Ritim ve hafıza gelişir.', mg: ['ksilofon'], mgSkill: 'muzik',
+    skills: { muzik: 3 }, stats: { mutluluk: 2, zeka: 0.5 } },
+  { id: 'top_bebek', name: 'Top oyna', icon: '⚽', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 2 && s.age <= 5,
+    desc: 'Koş, yakala, at. Beden gelişir, enerji atılır.', mg: ['top_yakala', 'baloncuk'], mgSkill: 'fizik',
+    skills: { futbol: 2 }, stats: { fizik: 2, saglik: 1, mutluluk: 2 } },
+  { id: 'masal', name: 'Resimli kitap & masal', icon: '📖', cat: 'bebek', ep: 1, baby: true, when: s => s.age >= 3 && s.age <= 5,
+    desc: 'Resimlere bak, kelimeleri tanı. Dil gelişimi ve hayal gücü.', mg: ['kelime_resim', 'hayvan_sesi'], mgSkill: 'dil',
+    skills: { dil: 3 }, stats: { zeka: 1, mutluluk: 1.5 } },
   // ——— EĞİTİM ———
   { id: 'mat', name: 'Matematik çalış', icon: '🔢', cat: 'egitim', ep: 1, when: s => inSchool(s),
     desc: 'Zihinden işlem sprinti. Hız ve doğruluk.', mg: ['hizlimat', 'dogruyanlis', 'siralama', 'hedef_sayi', 'kesir_karsilastir', 'birim_cevirme', 'asal_sayi', 'sekil_alan'], mgSkill: 'matematik',
     skills: { matematik: 4 }, stats: { zeka: 1.2, disiplin: 0.8 }, study: 1, train: 'matematik' },
   { id: 'kitap', name: 'Kitap oku', icon: '📚', cat: 'egitim', ep: 1, when: s => s.age >= 6,
-    desc: 'Karışık harflerden kelimeyi bul. Dil ve genel kültür.', mg: ['kelime', 'dogruyanlis', 'es_anlam', 'kelime_turu', 'yazar_eser', 'kutuphane', 'dikkat_testi'], mgSkill: 'dil',
+    desc: 'Karışık harflerden kelimeyi bul. Dil ve genel kültür.', mg: ['kelime', 'dogruyanlis', 'es_anlam', 'kelime_turu', 'yazar_eser', 'kutuphane', 'dikkat_testi', 'ceviri_yaz'], mgSkill: 'dil',
     skills: { dil: 4 }, stats: { zeka: 1, mutluluk: 1 }, study: 1, train: 'dil' },
   { id: 'fen', name: 'Fen deneyi', icon: '🔬', cat: 'egitim', ep: 1, when: s => s.age >= 9 && s.age <= 22,
     desc: 'Devreyi tamamla, ampulü yak. Mantık ve fen.', mg: ['devre', 'dogruyanlis', 'siralama', 'element_sembol', 'hayvan_sinif', 'besin_grubu', 'birim_cevirme', 'yildiz'], mgSkill: 'fen',
@@ -53,10 +73,10 @@ export const ACTIONS = [
     desc: 'Sayısal alan dersleri. Üniversite sınavında tıp ve mühendislik için şart.', mg: ['devre', 'teshis', 'hizlimat', 'dogruyanlis', 'element_sembol', 'sekil_alan', 'kesir_karsilastir'], mgSkill: 'fen',
     skills: { fen: 4, matematik: 2 }, stats: { zeka: 1.2 }, study: 1, train: 'fen' },
   { id: 'alan_ea', name: 'Ekonomi & hukuk okumaları', icon: '📈', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'lise' && s.edu.alan === 'ea',
-    desc: 'Eşit ağırlık: matematik, ekonomi, hukuk. İşletme, hukuk, psikoloji yolu.', mg: ['fiyat', 'sorgu', 'hizlimat', 'yuzde_hesap', 'fatura_hesap', 'kita_ulke'], mgSkill: 'ticaret',
+    desc: 'Eşit ağırlık: matematik, ekonomi, hukuk. İşletme, hukuk, psikoloji yolu.', mg: ['fiyat', 'sorgu', 'hizlimat', 'yuzde_hesap', 'fatura_hesap', 'kita_ulke', 'yatirim_teklif'], mgSkill: 'ticaret',
     skills: { matematik: 2, dil: 2, ticaret: 2 }, stats: { zeka: 1 }, study: 1, train: 'ticaret' },
   { id: 'alan_sozel', name: 'Edebiyat & tarih', icon: '📜', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'lise' && s.edu.alan === 'sozel',
-    desc: 'Sözel alan: edebiyat, tarih, coğrafya. Öğretmenlik, gazetecilik yolu.', mg: ['kelime', 'siralama', 'sorgu', 'yazar_eser', 'baskent', 'kita_ulke', 'es_anlam'], mgSkill: 'dil',
+    desc: 'Sözel alan: edebiyat, tarih, coğrafya. Öğretmenlik, gazetecilik yolu.', mg: ['kelime', 'siralama', 'sorgu', 'yazar_eser', 'baskent', 'kita_ulke', 'es_anlam', 'sahte_haber', 'manset'], mgSkill: 'dil',
     skills: { dil: 4, empati: 1 }, stats: { zeka: 1 }, study: 1, train: 'dil' },
   { id: 'alan_dil', name: 'İngilizce pratik', icon: '🗣️', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'lise' && s.edu.alan === 'dil',
     desc: 'Dil alanı: konuşma, okuma, çeviri. Tercümanlık yolu.', mg: ['kelime', 'dogruyanlis', 'konusma', 'ingilizce', 'es_anlam'], mgSkill: 'dil',
@@ -65,7 +85,7 @@ export const ACTIONS = [
     desc: 'Ücretsiz etüt ve deneme sınavı. Dershane kadar güçlü değil ama bedava.', mg: ['sinav', 'dogruyanlis', 'siralama', 'baskent', 'hedef_sayi', 'kelime_turu', 'alet_meslek'], mgSkill: 'zeka',
     skills: { matematik: 2, fen: 2, dil: 2 }, stats: { zeka: 1, disiplin: 1.5 }, study: 1 },
   { id: 'kodlama', name: 'Kodlama kursu', icon: '💻', cat: 'egitim', ep: 1, when: s => s.age >= 10,
-    desc: 'Koddaki hatalı satırı bul.', mg: ['bugavi', 'devre', 'siralama', 'dikkat_testi', 'kule_bloklari'], mgSkill: 'teknoloji', cost: 6000,
+    desc: 'Koddaki hatalı satırı bul.', mg: ['bugavi', 'devre', 'siralama', 'dikkat_testi', 'kule_bloklari', 'kod_yaz', 'spam_filtre'], mgSkill: 'teknoloji', cost: 6000,
     skills: { teknoloji: 5, matematik: 1 }, stats: { zeka: 1 }, train: 'teknoloji' },
   { id: 'uni_ders', name: 'Derslere çalış', icon: '🎓', cat: 'egitim', ep: 1, when: s => s.edu.stage === 'uni',
     desc: 'Final sınavına hazırlan. Mezuniyet ortalamanı belirler.', mg: 'sinav', mgSkill: 'zeka', exam: 'uni',
@@ -94,7 +114,7 @@ export const ACTIONS = [
     desc: 'Daha çok kazan ama yorul.', mg: s => JOBS[s.career.job.id].mg, mgSkill: s => JOBS[s.career.job.id].skill,
     skills: {}, jobSkill: 2, stats: { mutluluk: -3, saglik: -1.5 }, work: true, bonusSalary: 0.12 },
   { id: 'yari_zaman', name: 'Yarı zamanlı iş', icon: '🧾', cat: 'is', ep: 1, when: s => s.age >= 15 && !s.career.job && s.age <= 26,
-    desc: 'Kafede kasaya geç. Para üstünü doğru ver.', mg: ['paraustu', 'fatura_hesap', 'pasta_kat', 'musteri_sikayeti'], mgSkill: 'ticaret',
+    desc: 'Kafede kasaya geç. Para üstünü doğru ver.', mg: ['paraustu', 'fatura_hesap', 'pasta_kat', 'musteri_sikayeti', 'kahve_kopugu', 'cay_doldur', 'tepsi_tasi', 'musteri_hakli'], mgSkill: 'ticaret',
     skills: { ticaret: 2, empati: 1 }, stats: { disiplin: 1 }, earn: 30000 },
   { id: 'danisman', name: 'Danışmanlık yap', icon: '🧓', cat: 'is', ep: 1, when: s => s.age >= 50 && s.life.jobs.length > 0,
     desc: 'Tecrübeni gençlere aktar. Konuşman ikna edici olmalı.', mg: 'konusma', mgSkill: 'liderlik',
@@ -102,10 +122,10 @@ export const ACTIONS = [
 
   // ——— ÇOCUK / GENÇ İŞLERİ ———
   { id: 'ayak_isi', name: 'Mahallede ayak işi', icon: '🛍️', cat: 'is', ep: 1, when: s => s.age >= 9 && s.age <= 14,
-    desc: 'Komşuların alışverişini taşı, çöplerini at. Küçük ama dürüst bir kazanç.', mg: ['rota', 'kargo_yakala', 'topla_cop', 'bisiklet'], mgSkill: 'disiplin',
+    desc: 'Komşuların alışverişini taşı, çöplerini at. Küçük ama dürüst bir kazanç.', mg: ['rota', 'kargo_yakala', 'topla_cop', 'bisiklet', 'kasa_yuk'], mgSkill: 'disiplin',
     stats: { disiplin: 1.2, fizik: 0.5 }, skills: { empati: 1 }, earn: 4000, childWork: true },
   { id: 'pazar_isi', name: 'Pazarda çalış', icon: '🧺', cat: 'is', ep: 1, when: s => s.age >= 12 && s.age <= 17 && !s.career.job,
-    desc: 'Hafta sonu pazarda tezgâh yardımcılığı. Para üstü, pazarlık, yorgunluk.', mg: ['paraustu', 'terazi', 'kiraz', 'stok_sayimi'], mgSkill: 'ticaret',
+    desc: 'Hafta sonu pazarda tezgâh yardımcılığı. Para üstü, pazarlık, yorgunluk.', mg: ['paraustu', 'terazi', 'kiraz', 'stok_sayimi', 'taze_mi', 'karpuz_tasi'], mgSkill: 'ticaret',
     skills: { ticaret: 3 }, stats: { disiplin: 1, mutluluk: -1 }, earn: 12000, childWork: true, train: 'ticaret' },
   { id: 'acik_lise', name: 'Açık liseye çalış', icon: '📘', cat: 'egitim', ep: 1, when: s => !!s.flags.okulBirakti && !s.flags.liseDiploma && s.age >= 15,
     desc: 'Okulu bıraktın ama yol bitmedi. 2 yıl çalışırsan lise diploması ve üniversite sınavı hakkı.', mg: 'sinav', mgSkill: 'zeka',
@@ -115,7 +135,7 @@ export const ACTIONS = [
 
   // ——— TİCARET ———
   { id: 'bakkal', name: 'Bakkala yardım et', icon: '🏪', cat: 'ticaret', ep: 1, when: s => s.age >= 6 && s.age <= 13,
-    desc: 'Müşterilere para üstü ver. Harçlık kazan.', mg: ['paraustu', 'siralama', 'para_say', 'stok_sayimi'], mgSkill: 'ticaret',
+    desc: 'Müşterilere para üstü ver. Harçlık kazan.', mg: ['paraustu', 'siralama', 'para_say', 'stok_sayimi', 'taze_mi'], mgSkill: 'ticaret',
     skills: { ticaret: 4, matematik: 1 }, stats: { sosyal: 0.5 }, earn: 1500, train: 'ticaret' },
   { id: 'isletme', name: 'İşletmeni yönet', icon: '📈', cat: 'ticaret', ep: 1, when: s => !!s.career.biz,
     desc: 'Pazarlık, fiyat, stok… İşletmenin yıllık kârı bu oyunlardaki becerine bağlı.', mg: s => bizMg(s), mgSkill: 'ticaret',
@@ -123,7 +143,7 @@ export const ACTIONS = [
   { id: 'isletme_ac', name: 'Kendi küçük işini kur', icon: '🍪', cat: 'ticaret', ep: 1, when: s => s.age >= 12 && !s.career.biz && s.age < 45 && (s.skills.ticaret >= 15 || (s.train.ticaret || 0) >= 1 || s.edu.alan === 'ea' || s.edu.degree === 'isletme'),
     desc: 'Ticarete ilgin var: okulda/mahallede küçük satışlarla başla. Girişimcilik yolunun ilk basamağı.', special: 'bizstart' },
   { id: 'piyasa', name: 'Piyasa analizi', icon: '📊', cat: 'ticaret', ep: 1, when: s => adult(s),
-    desc: 'Grafikleri oku, al-sat yap. Gelecek yılın borsa görünümüne dair ipuçları kazanırsın (Finans sekmesi).', mg: ['borsa', 'yuzde_hesap', 'fiyat'], mgSkill: 'ticaret',
+    desc: 'Grafikleri oku, al-sat yap. Gelecek yılın borsa görünümüne dair ipuçları kazanırsın (Finans sekmesi).', mg: ['borsa', 'yuzde_hesap', 'fiyat', 'yatirim_teklif'], mgSkill: 'ticaret',
     skills: { ticaret: 2, matematik: 1 }, stats: { zeka: 0.5 }, analysis: true, train: 'ticaret' },
 
   // ——— SPOR ———
@@ -137,15 +157,15 @@ export const ACTIONS = [
     desc: 'Yoğun kulüp antrenmanı. İyi sezonlar profesyonel sözleşmeyi getirir.', mg: ['calim', 'taktik', 'pas', 'kaleci', 'frikik', 'kafa', 'penalti'], mgSkill: 'futbol',
     skills: { futbol: 8 }, stats: { fizik: 3, disiplin: 1, mutluluk: -1 }, train: 'futbol', altyapi: true },
   { id: 'kosu', name: 'Koşu & kondisyon', icon: '🏃', cat: 'spor', ep: 1, when: s => s.age >= 6,
-    desc: 'Temponu hedef bölgede tut, reflekslerini geliştir.', mg: ['kondisyon', 'tepki', 'engelli_kosu', 'bisiklet', 'uzun_atlama', 'yuzme'], mgSkill: 'fizik',
+    desc: 'Temponu hedef bölgede tut, reflekslerini geliştir.', mg: ['kondisyon', 'tepki', 'engelli_kosu', 'bisiklet', 'uzun_atlama', 'yuzme', 'ip_cambazi'], mgSkill: 'fizik',
     skills: { futbol: 1 }, stats: { fizik: 2.5, saglik: 2, disiplin: 0.8 } },
   { id: 'spor_salonu', name: 'Spor salonu', icon: '🏋️', cat: 'spor', ep: 1, when: s => adult(s), cost: 6000,
-    desc: 'Düzenli spor: sağlık ve fizik.', mg: ['kondisyon', 'tepki', 'halter', 'serbest_atis', 'voleybol_servis', 'okculuk', 'yuzme', 'slalom', 'golf', 'basket', 'masa_tenisi'], mgSkill: 'fizik',
+    desc: 'Düzenli spor: sağlık ve fizik.', mg: ['kondisyon', 'tepki', 'halter', 'serbest_atis', 'voleybol_servis', 'okculuk', 'yuzme', 'slalom', 'golf', 'basket', 'masa_tenisi', 'ip_cambazi'], mgSkill: 'fizik',
     stats: { fizik: 2.5, saglik: 3, disiplin: 1 } },
 
   // ——— SANAT ———
   { id: 'muzik', name: 'Enstrüman çal', icon: '🎹', cat: 'sanat', ep: 1, when: s => s.age >= 6,
-    desc: 'Ritim tut, melodiyi ezberle.', mg: ['ritim', 'melodi', 'davul', 'dans', 'ses_ayari'], mgSkill: 'muzik',
+    desc: 'Ritim tut, melodiyi ezberle.', mg: ['ritim', 'melodi', 'davul', 'dans', 'ses_ayari', 'dans_figur', 'sahne_isik'], mgSkill: 'muzik',
     skills: { muzik: 4 }, stats: { mutluluk: 2 }, train: 'muzik' },
   { id: 'resim', name: 'Resim yap', icon: '🎨', cat: 'sanat', ep: 1, when: s => s.age >= 6,
     desc: 'Deseni bir bakışta aklında tut ve yeniden çiz.', mg: ['desen', 'hafiza', 'kamuflaj', 'pasta_kat'], mgSkill: 'resim',
@@ -156,16 +176,16 @@ export const ACTIONS = [
 
   // ——— SOSYAL ———
   { id: 'arkadas', name: 'Arkadaşlarla vakit', icon: '🧑‍🤝‍🧑', cat: 'sosyal', ep: 1, when: s => s.age >= 6,
-    desc: 'Oyunlar, sohbet, eğlence. Arkadaşlık ve mutluluk.', mg: ['hafiza', 'tepki', 'dogruyanlis', 'dart', 'bowling', 'balon', 'kule_bloklari', 'masa_tenisi', 'basket'], mgSkill: 'sosyal',
+    desc: 'Oyunlar, sohbet, eğlence. Arkadaşlık ve mutluluk.', mg: ['hafiza', 'tepki', 'dogruyanlis', 'dart', 'bowling', 'balon', 'kule_bloklari', 'masa_tenisi', 'basket', 'dans_figur', 'balik_tut'], mgSkill: 'sosyal',
     skills: { empati: 2 }, stats: { sosyal: 2.5, mutluluk: 3 }, friend: true },
   { id: 'kulup', name: 'Okul kulübü / başkanlık', icon: '🗳️', cat: 'sosyal', ep: 1, when: s => s.age >= 10 && s.age <= 22 && s.edu.stage !== 'done',
     desc: 'Sınıfa konuşma yap, oyları topla.', mg: 'konusma', mgSkill: 'liderlik',
     skills: { liderlik: 4, dil: 1 }, stats: { sosyal: 1.5, itibar: 1 }, train: 'liderlik' },
   { id: 'gonullu', name: 'Afet gönüllülüğü', icon: '🦺', cat: 'sosyal', ep: 1, when: s => s.age >= 12,
-    desc: 'Tatbikat ve ilk yardım: enkazdan kurtarma, yaralı önceliklendirme.', mg: ['kurtarma', 'triyaj', 'topla_cop', 'geri_donusum'], mgSkill: 'empati',
+    desc: 'Tatbikat ve ilk yardım: enkazdan kurtarma, yaralı önceliklendirme.', mg: ['kurtarma', 'triyaj', 'topla_cop', 'geri_donusum', 'hasta_acil'], mgSkill: 'empati',
     skills: { empati: 3, liderlik: 1 }, stats: { itibar: 2.5, mutluluk: 1.5 }, flag: 'gonullu' },
   { id: 'ev_isi', name: 'Ev işlerine yardım et', icon: '🧹', cat: 'sosyal', ep: 1, when: s => s.age >= 8 && s.age <= 22,
-    desc: 'Çamaşır, yemek, temizlik. Aileye yük olmazsın; disiplin ve aile bağı kazanırsın.', mg: ['camasir', 'firin_isi', 'tarif_olcusu', 'sinek', 'geri_donusum'], mgSkill: 'disiplin',
+    desc: 'Çamaşır, yemek, temizlik. Aileye yük olmazsın; disiplin ve aile bağı kazanırsın.', mg: ['camasir', 'firin_isi', 'tarif_olcusu', 'sinek', 'geri_donusum', 'tarif_sira', 'cay_doldur'], mgSkill: 'disiplin',
     skills: { empati: 1 }, stats: { disiplin: 1, mutluluk: 0.5 }, family: true },
   { id: 'aile', name: 'Aileyle vakit', icon: '🏡', cat: 'sosyal', ep: 1, when: s => s.age >= 6,
     desc: 'Birlikte yemek, sohbet. Aile bağı güçlenir.', skills: { empati: 1 }, stats: { mutluluk: 4, saglik: 1 }, family: true },
@@ -175,16 +195,17 @@ export const ACTIONS = [
   { id: 'partner', name: 'Partnerinle vakit', icon: '❤️', cat: 'sosyal', ep: 1, when: s => !!s.rel.partner,
     desc: 'İlişkiye emek ver.', stats: { mutluluk: 5 }, love: true },
   { id: 'cocuk', name: 'Çocuklarınla ilgilen', icon: '👨‍👧', cat: 'sosyal', ep: 1, when: s => s.rel.children.some(c => c.age <= 20),
-    desc: 'Ödevlerine yardım et, maçlarına git.', stats: { mutluluk: 4, itibar: 0.5 }, kids: true },
+    desc: 'Mama hazırla, ce-ee oyna, ödevlerine yardım et, maçlarına git.', mg: s => s.rel.children.some(c => c.age <= 3) ? ['biberon', 'ce_ee', 'tarif_sira'] : ['tarif_sira', 'mazeret', 'dans_figur', 'top_yakala'], mgSkill: 'empati',
+    stats: { mutluluk: 4, itibar: 0.5 }, skills: { empati: 1 }, kids: true },
   { id: 'hayir', name: 'Burs fonu / hayır işi', icon: '🎗️', cat: 'sosyal', ep: 1, when: s => s.age >= 30 && s.money > 60000 * s.priceIndex, cost: 50000,
     desc: 'Öğrencilere burs ver. İtibar ve iç huzuru.', stats: { itibar: 5, mutluluk: 4 }, skills: { empati: 2 }, honest: true },
 
   // ——— DOĞA / SAĞLIK ———
   { id: 'tarla', name: 'Tarlada yardım et', icon: '🌾', cat: 'saglik', ep: 1, when: s => s.age >= 6 && s.age <= 17 && s.family.place !== 'sehir',
-    desc: 'Olgun ürünü topla, ekimi planla.', mg: ['hasat', 'ekim', 'kiraz', 'yumurta', 'koyun_say', 'hasere', 'kostebek', 'hayvan_yavru', 'damla'], mgSkill: 'doga',
+    desc: 'Olgun ürünü topla, ekimi planla.', mg: ['hasat', 'ekim', 'kiraz', 'yumurta', 'koyun_say', 'hasere', 'kostebek', 'hayvan_yavru', 'damla', 'sut_sag', 'bitki_dostu', 'karpuz_tasi'], mgSkill: 'doga',
     skills: { doga: 4 }, stats: { fizik: 1, saglik: 1 }, earn: 800, train: 'doga' },
   { id: 'bahce', name: 'Bahçecilik', icon: '🌻', cat: 'saglik', ep: 1, when: s => s.age >= 18 && (s.family.place !== 'sehir' || !!s.flags.arazi || s.flags.evSahibi),
-    desc: 'Mevsime göre ekim planı yap.', mg: ['ekim', 'hastalikli_yaprak', 'hasere', 'damla', 'kostebek'], mgSkill: 'doga',
+    desc: 'Mevsime göre ekim planı yap.', mg: ['ekim', 'hastalikli_yaprak', 'hasere', 'damla', 'kostebek', 'bitki_dostu', 'kus_gozlem'], mgSkill: 'doga',
     skills: { doga: 3 }, stats: { mutluluk: 2.5, saglik: 1 }, train: 'doga' },
   { id: 'dinlen', name: 'Dinlen', icon: '😴', cat: 'saglik', ep: 1, rest: true, when: s => s.age >= 6,
     desc: 'Az enerjiyle yılı ilerletir. Mutluluk ve sağlık toparlanır.', stats: { mutluluk: 3, saglik: 1.5 } },
@@ -242,6 +263,6 @@ export function actionLock(a, s) {
 }
 
 export function availableActions(s) {
-  if (stageId(s) === 'bebek') return [];
-  return ACTIONS.filter(a => a.when(s));
+  if (stageId(s) === 'bebek') return ACTIONS.filter(a => a.baby && a.when(s));
+  return ACTIONS.filter(a => !a.baby && a.when(s));
 }

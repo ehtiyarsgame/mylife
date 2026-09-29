@@ -46,7 +46,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
 | **Eylem puanı (EP)** | Her yıl evreye göre 3–6 EP. Her eylem 1–2 EP ve 6–24 enerji harcar. **Tüm EP harcanınca yıl tamamlanır** — eylemler iyi ya da kötü geçebilir. Mutluluk < 30 → −1 EP, sağlık < 25 → −2 EP. |
 | **Mini oyunlar** | Eylemlerin çoğu bir mini oyunla oynanır (117 mini oyun). Karakter becerisi oyunu kolaylaştırır ama tek başına kazandırmaz. İstenirse "hızlı geç" (−10 puan). |
 | **Olay kartları** | Yılda 1–3 kart: sıradan / nadir / epik / efsanevi. Efsanevi kartların çoğu yalnızca emek verilen alanlarda çıkar; 8 yıl epik görmeyen oyuncuya şans dengesi. Zincir olaylar. |
-| **Sınavlar** | Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
+| **Sınavlar** | Zorluk sınıfla artar: 1–2. sınıfta 6 kolay soru (20'ye kadar işlem, sayma, günler, mevsimler), daha uzun süre ve teşvik puanı; 4. sınıftan sonra çalışma (hazırlık) daha belirleyici. Karne, LGS, YKS, ehliyet, KPSS, TUS, ustalık, iş mülakatı. Oyuncu gerçek soru çözer (matematik, Türkçe, coğrafya, tarih, edebiyat, İngilizce, fen — binlerce üretilmiş soru, son 400 soru tekrar gelmez); puan = %65 oyuncu + %30 hazırlık + şans. Jokerler: öğretmene sor, ezber, çalışma grubu, ekstra süre, reklam jokeri. |
 | **Kapılar** | Meslekler sırayla açılan kapılardan oluşur: `yetenek×0,55 + mini oyun×0,55 + geçmiş emek + bağlantı + şans ≥ 100`. Kapanan kapı yolu bitirmez. |
 | **Ekonomi** | Harçlık, maaş, terfi, yaşam gideri, enflasyon, birikim, borç, iflas ve yeniden tırmanış. Ticaret yolu 7 basamak (okulda satış → ihracat). Ticarette piyasa havası dalgalanır; ürünün tutarsa rekor yıl (kâr kat kat), ortak dolandırıcılığı / yangın / kur şoku / batan müşteri gibi çöküşlerle iflas. Riskli kararlar (🎲) beceri, itibar ve piyasaya göre tutar ya da batar; sigorta yangın ve hırsızlıkta korur. |
 | **Finans** | 18 yaşında açılan Finans sekmesi: vadeli mevduat, kredi notu ve ihtiyaç/konut kredisi, 22 hisse ve fon (teknoloji, banka, enerji, gıda, sanayi, sağlık, turizm, emtia; endeks, altın, tahvil, kripto). Piyasa boğa/yatay/ayı döngüsünde, sektör ve şirket haberleriyle yıl sonunda hareket eder; hisseler temettü öder. "Piyasa analizi" eylemi (Al-Sat mini oyunu) gelecek yıla dair ipucu verir — iyi oynayan daha isabetli ipucu alır. Ev ve kiralık daire alınabilir (peşin ya da %30 peşinat + konut kredisi). |
@@ -64,7 +64,7 @@ node tests/family-diag.mjs  # fakir ailede aileye destek olan / olmayan çocuk k
   ülkeye özgü coğrafya/meclis/bayram soruları yok. Dil dersleri dile göre: Türk oyuncuya Türkçe dilbilgisi + İngilizce, İngiliz oyuncuya İngilizce dilbilgisi + İspanyolca.
   İsimler ve memleket şehirleri dile göre (İngilizcede uluslararası isimler ve kurgusal şehirler).
 
-### Mini oyun kataloğu (146)
+### Mini oyun kataloğu (200)
 
 Spor: **Penaltı, Çalım, Pas, Kaleci, Frikik, Kafa Vuruşu, Taktik Kartı, Kondisyon, Refleks** · Zihin: **Sınav, Zihinden İşlem, Doğru mu Yanlış mı, Sıralama, Kelime Avı, Hafıza Kartları, Desen Hafızası, Melodi** ·
 Teknik: **Devre Kur, Bug Avı, Sök & Tak, Arıza Tespiti** · Sağlık: **Teşhis, Hassas Ameliyat, Acil Triyaj** ·
@@ -83,6 +83,11 @@ Temalı oyunlar (`js/minigames/engines.js` motorları + `themes.js` temaları, 7
 - Hassas ayar: Terazi, İlaç Dozu, Fırın, Tarif Ölçüsü, Ses Mikseri, Basınç · Hızlı soru: Zihinden İşlem, Kesir, Fatura, Birim, Faiz, Vardiya Saati
 - Konuşma sahneleri: Müşteri Şikâyeti, Hasta Bilgilendirme, Veli Görüşmesi, Basın Toplantısı, Kriz Toplantısı · Davul, Dans
 - Borsa: Al-Sat (haberi oku, doğru anda al-sat)
+- Bebeklik (1–5 yaş, enerji harcamaz): Hayvan Sesleri, Gölge Eşle, Renk Eşle, Say Bakalım, Büyük mü Küçük mü, Şekil Kutusu, Resimli Kelime, Ce-ee, Baloncuk, Küp Kule, Top Yakala, Ksilofon
+- Kaydır (karar kartları): Mazeret mi Gerçek mi, Spam Filtresi, Taze mi Bayat mı, Haber mi Uydurma mı, İade Masası, Şikâyet Haklı mı, Acil mi, İtiraz!, Transfer Masası, Bina Denetimi, Yatırım Teklifi…
+- Sırayı hatırla: Pasta Tarifi, Kasa Şifresi, Dans Figürü, Trafik Yönet, Alet Uzat · Doldur: Çay, Depo, Şırınga, Harç, Süt, Köpük, Biberon
+- Denge: Tepsi, Tuğla, Karpuz, İp Cambazı, Koli Kulesi · Hızlı yazım: Dilekçe, Manşet, Kod, Tahta, Reçete, Çeviri · Doğru anda çek: Haber Fotoğrafı, Kuş Gözlemi, Radar, Röntgen, Sahne Işığı, Balık Tut
+- Meslek oyunları: her mesleğin kendine özgü 5–10 oyunu vardır
 
 Konuşma oyunları (`js/minigames/talk.js`) 240+ turluk havuzdan her sohbette 1 açılış + 2 orta tur + 1 kapanış seçer; yakın zamanda görülen turlar tekrar gelmez.
 İş mülakatında sorulardan en az biri mesleğe özeldir (doktor, mühendis, yazılımcı, futbolcu, usta, çiftçi, tüccar, bankacı, öğretmen, polis, avukat, hemşire, gazeteci, psikolog, müzisyen).
