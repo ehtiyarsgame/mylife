@@ -1,4 +1,5 @@
 // Ana oyun ekranı.
+import { askerlikStatus, TECIL_MAX } from '../sim/military.js';
 import { h, btn, sheet, toast, bar, statColor, confirmBox, info } from './dom.js';
 import { app, save, go } from './app.js';
 import { sfx, vibrate } from '../core/audio.js';
@@ -149,9 +150,17 @@ function yearCard(render) {
       h('div.ep-dots', {}, Array.from({ length: y.ep }, (_, i) => h('i' + (i < y.used ? '.on' : '')))),
       h('span.grow'),
       h('span.small', { style: { fontWeight: 800 } }, `Eylem ${y.used}/${y.ep} EP`)));
+    if (askerlikStatus(s) === 'tecil') card.append(h('div.tiny.muted', { style: { marginTop: '6px' } }, `🪖 Askerlik: öğrenimin bitene kadar tecilli (en geç ${TECIL_MAX} yaş)`));
     if (s.stats.mutluluk < 30 || s.stats.saglik < 25) card.append(h('div.tiny', { style: { color: '#ffb547', marginTop: '6px' } }, s.stats.saglik < 25 ? '⚠️ Sağlığın çok düşük: bu yıl −2 EP' : '⚠️ Mutsuzsun: bu yıl −1 EP'));
   }
   for (const t of y.tasks) {
+    if (t.choice === 'asker') {
+      card.append(h('div.task' + (t.done ? '.done' : ''), {},
+        h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '🪖'),
+        h('div.grow', {}, h('b', {}, 'Zorunlu askerlik'), h('div.tiny.muted', {}, t.done ? (s.flags.askerlikTur === 'bedelli' ? 'Bedelli olarak tamamlandı' : s.flags.askerlikTur === 'muaf' ? 'Sağlık nedeniyle muaf' : s.flags.askerRutbe === 'onbasi' ? 'Onbaşı olarak terhis' : 'Terhis oldun') : 'Celp geldi: parkurlar seni bekliyor · zorunlu')),
+        t.done ? null : btn('Askere git', () => guard(() => F.askerlikSheet(render)), 'gold sm')));
+      continue;
+    }
     if (t.choice === 'alan') {
       card.append(h('div.task' + (t.done ? '.done' : ''), {},
         h('span', { style: { fontSize: '22px' } }, t.done ? '✅' : '🧭'),

@@ -19,6 +19,8 @@ import { progress } from './missions.js';
 import { choosePartner, SPOUSE_TRAITS, arcLabel } from '../sim/partner.js';
 import { WEALTH } from '../sim/character.js';
 import { looks, charisma } from '../sim/traits.js';
+import { bedelliCost, canMuaf, finishService } from '../sim/military.js';
+import { PARKUR } from '../minigames/pack_military.js';
 
 const S = () => app.life;
 
@@ -356,6 +358,46 @@ export async function alanSheet() {
   Y.chooseAlan(s, id);
   save();
   toast(`${ALANLAR[id].icon} ${ALANLAR[id].name} alanındasın. Alan derslerin eylemlerde açıldı.`);
+}
+
+// ——— Zorunlu askerlik ———
+export async function askerlikSheet(rerender) {
+  const s = S();
+  const cost = bedelliCost(s);
+  const opt = (icon, title, desc, v, ok = true) => h('button.opt', { style: { flexDirection: 'column', alignItems: 'stretch', gap: '4px', opacity: ok ? 1 : 0.5 }, onclick: ok ? null : undefined },
+    h('div.row', {}, h('span', { style: { fontSize: '26px' } }, icon), h('b.grow', {}, title)), h('div.tiny.muted', {}, desc));
+  const kind = await sheet(close => {
+    const b = (icon, title, desc, v, ok = true) => { const el = opt(icon, title, desc, v, ok); if (ok) el.onclick = () => close(v); return el; };
+    return h('div', {},
+      h('div.row', {}, h('span', { style: { fontSize: '40px' } }, '🪖'), h('div.grow', {}, h('h2', {}, 'Askerlik vakti'), h('div.small.muted', {}, 'Askerlik şubesinden celp geldi'))),
+      h('p.small', {}, s.edu.stage === 'done' || s.edu.dept ? 'Öğrenimin bitti, tecilin sona erdi. Acemi birliğinde parkurlar seni bekliyor!' : '18 yaşını doldurdun. Vatani görev çağırıyor: acemi birliğinde parkurlar seni bekliyor!'),
+      b('🪖', 'Askere git (6 ay)', 'Engel parkuru + 2 görev. Disiplin ve kondisyon kazanırsın, iyi derece alırsan onbaşı olursun. Bu yıl 2 EP sürer; işin varsa maaşın yarıya iner.', 'normal'),
+      b('💰', `Bedelli askerlik · ${fmtTL(cost)}`, s.money >= cost ? 'Ücreti yatır, kısa temel eğitimde yalnızca parkuru koş. 1 EP.' : `Yeterli paran yok (${fmtTL(s.money)}).`, 'bedelli', s.money >= cost),
+      canMuaf(s) ? b('🏥', 'Sağlık kuruluna git', 'Sağlığın çok kötü: rapor alırsan askerlikten muaf olursun.', 'muaf') : null);
+  });
+  if (!kind) return;
+  if (kind === 'muaf') { const out = finishService(s, 'muaf'); save(); await info('🏥 Muafiyet', h('p', {}, out.lines.join(' '))); rerender?.(); return afterAction(rerender); }
+  // Acemi birliği: önce bir parkur, sonra (bedelli değilse) havuzdan iki farklı görev
+  const games = [pickFresh(PARKUR)];
+  if (kind === 'normal') {
+    const rest = gamesFor('asker').filter(g => !PARKUR.includes(g));
+    for (let i = 0; i < 2; i++) { const g = pickFresh(rest.filter(x => !games.includes(x))); games.push(g); }
+  }
+  const scores = [];
+  for (let i = 0; i < games.length; i++) {
+    const r = await runMg(games[i], i === 0 ? 'fizik' : 'disiplin', { stakes: 0.35, title: `Acemi birliği · ${i + 1}/${games.length}`, outdoor: true });
+    if (r.cancelled) { if (i === 0) { rerender?.(); return; } scores.push(30); continue; } // ilk oyundan geri dönülebilir; sonra görevden kaçmak düşük not demek
+    scores.push(r.score);
+  }
+  const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const out = finishService(s, kind, avg);
+  save();
+  sfx.level?.();
+  await info(kind === 'bedelli' ? '💰 Bedelli askerlik tamam' : out.rank ? '🎖️ Terhis: Onbaşı!' : '🪖 Terhis!', h('div', {},
+    h('p', {}, `Ortalama derecen: ${avg}/100`),
+    out.lines.map(l => h('p.small', {}, l))));
+  rerender?.();
+  return afterAction(rerender);
 }
 
 // ——— Kapılar ———

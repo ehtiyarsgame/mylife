@@ -352,3 +352,26 @@ test('finans: vergi dilimleri, borsa yılı, al-sat ve kredi geri ödemesi', asy
   assert.equal(F.bankOf(s).loans.length, 0);
   assert.ok(F.bankOf(s).score > 50);
 });
+
+test('zorunlu askerlik: 18 yaşında erkeğe gelir, okuyana tecil, kadına gelmez', async () => {
+  const { askerlikStatus, finishService, bedelliCost } = await import('../js/sim/military.js');
+  const Y = await import('../js/sim/year.js');
+  const s = newLife({ seed: 'asker1', name: 'Ali', gender: 'e' });
+  s.age = 17; assert.equal(askerlikStatus(s), null);
+  s.age = 18; s.edu.stage = 'lise'; assert.equal(askerlikStatus(s), 'tecil');
+  s.edu.stage = 'uni'; s.age = 22; assert.equal(askerlikStatus(s), 'tecil');
+  s.age = 30; assert.equal(askerlikStatus(s), 'due', 'tecil en geç 29 yaşına kadar');
+  s.edu.stage = 'done'; s.age = 23; assert.equal(askerlikStatus(s), 'due');
+  Y.startYear(s);
+  assert.ok(s.year.tasks.some(t => t.choice === 'asker'));
+  assert.ok(!Y.canEndYear(s).ok);
+  const d0 = s.stats.disiplin, used0 = s.year.used;
+  const out = finishService(s, 'normal', 90);
+  assert.equal(out.rank, 'Onbaşı');
+  assert.ok(s.stats.disiplin > d0 && s.year.used === used0 + 2);
+  assert.equal(askerlikStatus(s), 'done');
+  assert.ok(s.year.tasks.find(t => t.choice === 'asker').done);
+  const k = newLife({ seed: 'asker2', name: 'Ayşe', gender: 'k' }); k.age = 20; k.edu.stage = 'done';
+  assert.equal(askerlikStatus(k), null);
+  assert.ok(bedelliCost(s) > 0);
+});

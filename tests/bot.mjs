@@ -11,6 +11,7 @@ import * as Y from '../js/sim/year.js';
 import { nextStepReqs, advanceBiz } from '../js/sim/business.js';
 import { choosePartner } from '../js/sim/partner.js';
 import { giveToFamily, livingHome } from '../js/sim/household.js';
+import { finishService } from '../js/sim/military.js';
 
 export const events = JSON.parse(readFileSync(new URL('../data/events.json', import.meta.url)));
 setDeck(events); setJobsRef(JOBS);
@@ -28,6 +29,7 @@ export function botLife(seed, skill = 60, opts = {}) {
     // Sınav görevleri
     for (const t of s.year.tasks) {
       if (t.done) continue;
+      if (t.choice === 'asker') { finishService(s, 'normal', mg()); continue; }
       if (t.choice === 'alan') { Y.chooseAlan(s, opts.alan || ['sayisal', 'ea', 'sozel', 'dil'][r.int(0, 3)]); continue; }
       const res = Y.examScore(s, t.exam, mg());
       const out = Y.applyExam(s, t.exam, res);

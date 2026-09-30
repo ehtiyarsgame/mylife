@@ -60,7 +60,7 @@ export default {
   '◀ ▶ kaydırır, ⟳ döndürür, ⬇ hızlı indirir.': '◀ ▶ move, ⟳ rotate, ⬇ drop.', 'Dolan her sıra "sevkiyata hazır" olur ve puan getirir.': 'Every full row is "ready to ship" and scores points.',
   'Kasa tepeye kadar dolarsa iş biter. 60 saniye.': 'If the truck fills to the top, the job ends. 60 seconds.', 'SEVKİYAT!': 'SHIPPED!',
   'Yağmur': 'Rain', 'Gece': 'Night', 'Kalabalık': 'Crowd', 'Sessiz salon': 'Quiet hall', 'Yorgun': 'Tired', 'Sakat': 'Injured', 'Stresli': 'Stressed', 'Motivasyon': 'Motivated',
-  'Kritik an': 'Critical moment', 'Zayıf rakip': 'Weak opponent', 'Güçlü rakip': 'Strong opponent', 'Mini oyun yok:': 'No mini-game:', 'KARAKTER BECERİSİ': 'CHARACTER SKILL',
+  'Kritik an': 'Critical moment', 'Zayıf rakip': 'Weak opponent', 'Güçlü rakip': 'Strong opponent', 'Mini oyun yok:': 'No mini-game:', 'KARAKTER BECERİSİ': 'CHARACTER SKILL', 'ZORLUK': 'DIFFICULTY',
   '✨ Yüksek becerin oyunu kolaylaştırıyor.': '✨ Your high skill makes the game easier.',
   '⚠️ Bu alanda deneyimin yok denecek kadar az: oyun zor olacak. Emek verdikçe kolaylaşır.': "⚠️ You have almost no experience here: the game will be hard. It gets easier with effort.",
   '▶  Oyna': '▶  Play', '⏭  Hızlı geç (tahmini {0} puan)': '⏭  Skip (about {0} points)', 'Harika!': 'Great!', 'Olmadı': 'Missed',

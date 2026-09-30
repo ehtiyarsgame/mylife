@@ -12,6 +12,7 @@ import { FRIEND_NAMES, NAMES } from './names.js';
 import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
 import { homeYear, livingHome, homeBudget, HOME } from './household.js';
 import { makeCandidates } from './partner.js';
+import { askerlikStatus } from './military.js';
 import { balanceYear, studyHabitBonus, sedentaryRisk } from './balance.js';
 import { incomeTax, lifestyleCost, lifestyleOf, initMarket, marketYear, makeHints, loanYear, houseYear, bankOf } from './finance.js';
 
@@ -68,6 +69,7 @@ function yearTasks(s) {
     else t.push({ id: 'alan', choice: 'alan', done: false });
   }
   if ((s.edu.stage === 'lise' && ea === 17 && !s.flags.okulBirakti) || s.flags.yksTekrar) t.push({ id: 'yks', exam: 'yks', done: false });
+  if (askerlikStatus(s) === 'due') t.push({ id: 'asker', choice: 'asker', done: false });
   return t;
 }
 
@@ -92,6 +94,7 @@ export function workNeed(s) {
   const j = s.career.job;
   if (!j) return 0;
   if (j.id === 'cirak' || s.age < 18 || s.edu.stage === 'uni') return 1;
+  if (s.year?.asker === 'normal') return 1; // yılın yarısı askerde geçti
   return 2;
 }
 
@@ -100,7 +103,7 @@ export function canEndYear(s) {
   const reasons = [];
   if (y.used < y.ep) reasons.push(`${y.ep - y.used} eylem puanı kaldı`);
   const t = y.tasks.filter(t => !t.done);
-  if (t.length) reasons.push(`Önemli: ${t.map(x => x.choice ? 'Alan seçimi' : EXAMS[x.exam].name).join(', ')}`);
+  if (t.length) reasons.push(`Önemli: ${t.map(x => x.choice === 'asker' ? 'Askerlik' : x.choice ? 'Alan seçimi' : EXAMS[x.exam].name).join(', ')}`);
   if (pendingEventCount(s) > 0) reasons.push('Açılmamış olay kartı var');
   return { ok: reasons.length === 0, reasons };
 }
@@ -759,6 +762,7 @@ export function endYear(s) {
       const perfF = J.path === 'futbol' ? Math.min(1.4, 0.55 + perf / 110) : 0.85 + perf / 333;
       let sal = J.salary * levelMult(j) * 12 * pi * perfF * (0.35 + 0.65 * wf);
       if (s.traits.mizac === 'hirsli') sal *= 1.05;
+      if (y.asker === 'normal') { sal *= 0.5; sum.notes.push('🪖 Yılın yarısı askerde geçti; maaşın o süre için ödenmedi (işin seni bekledi).'); }
       if (wf < 1) sum.notes.push(wf === 0 ? '⚠️ Bu yıl işe hiç gitmedin! Maaşının çoğu kesildi; üst üste olursa kovulursun.' : `⚠️ Mesailerin eksikti (${y.workDone}/${need}); maaşın kesintili yattı.`);
       if (wf === 0) j.absent = (j.absent || 0) + 1; else j.absent = 0;
       if (J.farm) {
