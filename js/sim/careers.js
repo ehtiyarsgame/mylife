@@ -144,7 +144,7 @@ export const DOORS = {
   },
   ustalik: {
     name: 'Ustalık belgesi', icon: '📜', path: 'usta', age: [18, 60],
-    need: { job: 'cirak' },
+    need: { job: 'cirak', terms: 15 },
     exam: 'usta',
     text: 'Ustalık belgesi sınavı: teori soruları ve uygulama.',
     open: { promote: true, flags: ['ustalik'], log: 'Ustalık belgeni aldın!' },

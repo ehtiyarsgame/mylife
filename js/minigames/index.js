@@ -19,4 +19,5 @@ import './pack_jobs.js';
 import './pack_teen.js';
 import './pack_adult.js';
 import './pack_military.js';
+import './repair.js';
 export { playMinigame, allGames, getGame, autoMods, MODIFIERS, gamesFor, pickFresh } from './engine.js';

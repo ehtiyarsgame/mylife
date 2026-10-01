@@ -13,6 +13,7 @@ import { looks, charisma, growCharisma, mizacHappy } from './traits.js';
 import { homeYear, livingHome, homeBudget, HOME } from './household.js';
 import { makeCandidates } from './partner.js';
 import { askerlikStatus } from './military.js';
+import { learnedCount } from './repairData.js';
 import { balanceYear, studyHabitBonus, sedentaryRisk } from './balance.js';
 import { incomeTax, lifestyleCost, lifestyleOf, initMarket, marketYear, makeHints, loanYear, houseYear, bankOf } from './finance.js';
 
@@ -74,6 +75,20 @@ function yearTasks(s) {
 }
 
 export const epLeft = s => s.year.ep - s.year.used;
+
+// Baba hayattaysa ve çocuk (13–16 yaş, ortaokul/lise) bir yıl boyunca hiç ders çalışmayıp karnesi de zayıfsa
+// önce uyarır ('warn'); ertesi yıl yine aynıysa okuldan alıp sanayiye çırak verir ('pull'). Zengin aile yapmaz.
+export const fatherAlive = s => !!s.family.parents?.some(p => p.role === 'Baba' && p.alive);
+export const fatherAngry = s => (s.counters.tembel || 0) >= 1 && fatherAlive(s) && ['orta', 'lise'].includes(s.edu.stage) && !s.flags.okulBirakti;
+function fatherCheck(s) {
+  if (!fatherAlive(s) || s.flags.okulBirakti || !['orta', 'lise'].includes(s.edu.stage) || s.family.wealth === 'zengin') return null;
+  if (s.age < 12 || s.age > 16) return null;
+  const karne = s.year.tasks.find(t => t.exam === 'karne');
+  const lazy = (s.year.study || 0) === 0 && (!karne || (karne.score ?? 0) < 55);
+  if (!lazy) { s.counters.tembel = 0; return null; }
+  s.counters.tembel = (s.counters.tembel || 0) + 1;
+  return s.counters.tembel >= 2 && s.age >= 13 ? 'pull' : 'warn';
+}
 
 // Cep harçlığı: ailenin durumuna ve yaşa göre haftalık; aile zordaysa azalır ya da kesilir.
 export function allowanceWeekly(s) {
@@ -469,6 +484,7 @@ export function doorStatus(s, id) {
   if (n.job && s.career.job?.id !== n.job) miss.push(`${JOBS[n.job].name} olmak`);
   if (n.jobAny && !n.jobAny.includes(s.career.job?.id)) miss.push('Mühendis ya da yazılımcı olmak');
   if (n.money && s.money < n.money * s.priceIndex) miss.push(`${fmt(n.money * s.priceIndex)} nakit`);
+  if (n.terms && learnedCount(s.terms) < n.terms) miss.push(`En az ${n.terms} usta terimi (şu an ${learnedCount(s.terms)}) · tamir oyunlarında öğrenilir`);
   // Terfi kapısı: iş seviyesi ve yıl uygun mu
   const J = s.career.job && JOBS[s.career.job.id];
   if (J && D.open.promote) {
@@ -922,6 +938,17 @@ export function endYear(s) {
         addStat(s, 'mutluluk', -5);
         sum.notes.push('💳 Borçlusun. Borç her yıl %10 büyür; bir iş bulmak ya da gideri azaltmak toparlanmanın yolu.');
       }
+    }
+
+    // ——— Baba: hiç ders çalışmayan çocuğu okuldan alıp sanayiye çırak verir ———
+    const lz = fatherCheck(s);
+    if (lz === 'warn') sum.notes.push('👨 Baban çok kızgın: "Bu sene de ders çalışmazsan okulu bırakıp sanayiye, ustanın yanına gideceksin!"');
+    if (lz === 'pull') {
+      s.edu.stage = 'done'; s.flags.okulBirakti = true; s.flags.sanayi = s.age + 1;
+      hireJob(s, 'cirak');
+      addStat(s, 'mutluluk', -6); addStat(s, 'disiplin', 3);
+      sum.notes.push('🔧 Baban sözünü tuttu: hiç ders çalışmadığın için seni okuldan aldı ve sanayide bir ustanın yanına çırak verdi. Terimleri öğrendikçe ustalaşırsın. (Açık liseyle diplomanı yine alabilirsin.)');
+      log(s, 'Babası onu okuldan alıp sanayiye çırak verdi.', 'epic');
     }
 
     // ——— Eğitim geçişleri ———

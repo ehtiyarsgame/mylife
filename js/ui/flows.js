@@ -115,7 +115,7 @@ export async function runMg(id, skill, { stakes = 0.3, mods = [], title, extra, 
   const s = S();
   const lvl = mgSkillLevel(s, skill);
   const r = await playMinigame(id, {
-    skill: lvl, stakes, title, extra: { age: s.age, ...extra },
+    skill: lvl, stakes, title, extra: { age: s.age, terms: (s.terms ||= {}), ...extra },
     mods: autoMods(s, mods, outdoor),
     skipScore: Y.skipScore(s, skill),
     onRetryAd: () => watchAd('retry'),

@@ -375,3 +375,26 @@ test('zorunlu askerlik: 18 yaşında erkeğe gelir, okuyana tecil, kadına gelme
   assert.equal(askerlikStatus(k), null);
   assert.ok(bedelliCost(s) > 0);
 });
+
+test('baba: iki yıl üst üste hiç ders çalışmayan çocuğu okuldan alıp sanayiye çırak verir', async () => {
+  const Y = await import('../js/sim/year.js');
+  const s = newLife({ seed: 'tembel1', name: 'Can', gender: 'e' });
+  s.family.wealth = 'orta';
+  s.family.parents.forEach(p => (p.alive = true));
+  s.age = 13; s.edu.stage = 'orta'; s.edu.delay = 0;
+  for (let k = 0; k < 2; k++) {
+    Y.startYear(s);
+    const t = s.year.tasks.find(x => x.exam === 'karne'); if (t) { t.done = true; t.score = 40; }
+    s.year.tasks.forEach(x => (x.done = true)); s.year.used = s.year.ep; s.year.shown = s.year.slots.length;
+    if (k === 0) { Y.endYear(s); assert.ok(Y.fatherAngry(s), 'ilk yıl uyarı'); assert.ok(!s.flags.okulBirakti); }
+    else Y.endYear(s);
+  }
+  assert.ok(s.flags.okulBirakti && s.flags.sanayi);
+  assert.equal(s.career.job?.id, 'cirak');
+  // Ders çalışan çocuk uyarılmaz
+  const c = newLife({ seed: 'caliskan', name: 'Ece', gender: 'k' });
+  c.age = 13; c.edu.stage = 'orta'; c.family.parents.forEach(p => (p.alive = true));
+  Y.startYear(c); c.year.study = 2; c.year.tasks.forEach(x => { x.done = true; x.score = 40; }); c.year.used = c.year.ep; c.year.shown = c.year.slots.length;
+  Y.endYear(c);
+  assert.ok(!Y.fatherAngry(c));
+});

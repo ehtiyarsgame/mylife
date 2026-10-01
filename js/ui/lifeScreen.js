@@ -1,5 +1,6 @@
 // Ana oyun ekranı.
 import { askerlikStatus, TECIL_MAX } from '../sim/military.js';
+import { TERM_TOTAL, learnedCount, learnedIcons } from '../sim/repairData.js';
 import { h, btn, sheet, toast, bar, statColor, confirmBox, info } from './dom.js';
 import { app, save, go } from './app.js';
 import { sfx, vibrate } from '../core/audio.js';
@@ -150,6 +151,8 @@ function yearCard(render) {
       h('div.ep-dots', {}, Array.from({ length: y.ep }, (_, i) => h('i' + (i < y.used ? '.on' : '')))),
       h('span.grow'),
       h('span.small', { style: { fontWeight: 800 } }, `Eylem ${y.used}/${y.ep} EP`)));
+    if (Y.fatherAngry(s)) card.append(h('div.task', { style: { borderColor: '#ff8a3d', background: 'rgba(255,138,61,.1)' } }, h('span', { style: { fontSize: '24px' } }, '👨😠'),
+      h('div.grow', {}, h('b', {}, 'Baban çok kızgın!'), h('div.tiny.muted', {}, 'Bu yıl da hiç ders çalışmazsan okuldan alınıp sanayiye çırak verileceksin. 📚 Ders çalış!'))));
     if (askerlikStatus(s) === 'tecil') card.append(h('div.tiny.muted', { style: { marginTop: '6px' } }, `🪖 Askerlik: öğrenimin bitene kadar tecilli (en geç ${TECIL_MAX} yaş)`));
     if (s.stats.mutluluk < 30 || s.stats.saglik < 25) card.append(h('div.tiny', { style: { color: '#ffb547', marginTop: '6px' } }, s.stats.saglik < 25 ? '⚠️ Sağlığın çok düşük: bu yıl −2 EP' : '⚠️ Mutsuzsun: bu yıl −1 EP'));
   }
@@ -390,6 +393,12 @@ function careerTab(render) {
   const out = [];
   out.push(h('div.sec-title', {}, '💼 İş'));
   const j = s.career.job;
+  // Usta terimleri: öğrenilen parçaların resimleri koleksiyon gibi dolar
+  const nT = learnedCount(s.terms);
+  if (j?.id === 'cirak' || nT > 0) out.push(h('div.card', {},
+    h('div.row', {}, h('span', { style: { fontSize: '28px' } }, '🧰'), h('div.grow', {}, h('b', {}, 'Usta terimleri'), h('div.tiny.muted', {}, 'Tamir oyunlarında parçaları resimden tanıdıkça öğrenirsin')), h('span.chip.gold', {}, `${nT}/${TERM_TOTAL}`)),
+    h('div.bar', { style: { marginTop: '8px' } }, h('i', { style: { width: Math.round(nT / TERM_TOTAL * 100) + '%' } })),
+    nT ? h('div', { style: { fontSize: '22px', letterSpacing: '3px', marginTop: '8px', lineHeight: 1.5 } }, learnedIcons(s.terms).join('')) : null));
   if (j) {
     const J = JOBS[j.id];
     out.push(h('div.card', {},

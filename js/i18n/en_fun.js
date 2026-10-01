@@ -156,4 +156,12 @@ export default {
   "Tezkere arkadaşların hayat boyu dostun oldu.": "Your army buddies became friends for life.",
   "Askerlik": "Military service",
   "🪖 Yılın yarısı askerde geçti; maaşın o süre için ödenmedi (işin seni bekledi).": "🪖 Half the year was spent in the army; you weren't paid for that time (your job was kept for you).",
+  "Baban çok kızgın!": "Your dad is furious!",
+  "Bu yıl da hiç ders çalışmazsan okuldan alınıp sanayiye çırak verileceksin. 📚 Ders çalış!": "If you don't study at all this year either, you'll be pulled out of school and sent to the workshops as an apprentice. 📚 Study!",
+  "Usta terimleri": "Trade terms",
+  "Tamir oyunlarında parçaları resimden tanıdıkça öğrenirsin": "You learn them by recognising parts on the pictures in repair games",
+  "En az {0} usta terimi (şu an {1}) · tamir oyunlarında öğrenilir": "At least {0} trade terms (now {1}) · learned in repair games",
+  "👨 Baban çok kızgın: \"Bu sene de ders çalışmazsan okulu bırakıp sanayiye, ustanın yanına gideceksin!\"": "👨 Your dad is furious: \"If you don't study this year either, you're leaving school and going to work for a master in the workshops!\"",
+  "🔧 Baban sözünü tuttu: hiç ders çalışmadığın için seni okuldan aldı ve sanayide bir ustanın yanına çırak verdi. Terimleri öğrendikçe ustalaşırsın. (Açık liseyle diplomanı yine alabilirsin.)": "🔧 Your dad kept his word: since you never studied, he took you out of school and apprenticed you to a master in the workshops. Learn the terms and you'll become a master yourself. (You can still get your diploma through open high school.)",
+  "Babası onu okuldan alıp sanayiye çırak verdi.": "Their father took them out of school and apprenticed them in the workshops.",
 };
