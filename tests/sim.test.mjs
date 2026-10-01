@@ -397,4 +397,9 @@ test('baba: iki yıl üst üste hiç ders çalışmayan çocuğu okuldan alıp s
   Y.startYear(c); c.year.study = 2; c.year.tasks.forEach(x => { x.done = true; x.score = 40; }); c.year.used = c.year.ep; c.year.shown = c.year.slots.length;
   Y.endYear(c);
   assert.ok(!Y.fatherAngry(c));
+  // Kız çocuğu hiç çalışmasa da bu olay tetiklenmez
+  const k = newLife({ seed: 'tembel2', name: 'Elif', gender: 'k' });
+  k.family.wealth = 'orta'; k.age = 13; k.edu.stage = 'orta'; k.family.parents.forEach(p => (p.alive = true));
+  for (let i = 0; i < 2; i++) { Y.startYear(k); k.year.tasks.forEach(x => { x.done = true; x.score = 40; }); k.year.used = k.year.ep; k.year.shown = k.year.slots.length; Y.endYear(k); }
+  assert.ok(!Y.fatherAngry(k) && !k.flags.sanayi && k.career.job?.id !== 'cirak');
 });

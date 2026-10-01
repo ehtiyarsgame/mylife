@@ -163,5 +163,5 @@ export default {
   "En az {0} usta terimi (şu an {1}) · tamir oyunlarında öğrenilir": "At least {0} trade terms (now {1}) · learned in repair games",
   "👨 Baban çok kızgın: \"Bu sene de ders çalışmazsan okulu bırakıp sanayiye, ustanın yanına gideceksin!\"": "👨 Your dad is furious: \"If you don't study this year either, you're leaving school and going to work for a master in the workshops!\"",
   "🔧 Baban sözünü tuttu: hiç ders çalışmadığın için seni okuldan aldı ve sanayide bir ustanın yanına çırak verdi. Terimleri öğrendikçe ustalaşırsın. (Açık liseyle diplomanı yine alabilirsin.)": "🔧 Your dad kept his word: since you never studied, he took you out of school and apprenticed you to a master in the workshops. Learn the terms and you'll become a master yourself. (You can still get your diploma through open high school.)",
-  "Babası onu okuldan alıp sanayiye çırak verdi.": "Their father took them out of school and apprenticed them in the workshops.",
+  "Babası onu okuldan alıp sanayiye çırak verdi.": "His father took him out of school and apprenticed him in the workshops.",
 };

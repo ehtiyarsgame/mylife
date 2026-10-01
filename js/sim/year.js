@@ -76,12 +76,12 @@ function yearTasks(s) {
 
 export const epLeft = s => s.year.ep - s.year.used;
 
-// Baba hayattaysa ve çocuk (13–16 yaş, ortaokul/lise) bir yıl boyunca hiç ders çalışmayıp karnesi de zayıfsa
+// Baba hayattaysa ve çocuk erkekse (13–16 yaş, ortaokul/lise) bir yıl boyunca hiç ders çalışmayıp karnesi de zayıfsa
 // önce uyarır ('warn'); ertesi yıl yine aynıysa okuldan alıp sanayiye çırak verir ('pull'). Zengin aile yapmaz.
 export const fatherAlive = s => !!s.family.parents?.some(p => p.role === 'Baba' && p.alive);
-export const fatherAngry = s => (s.counters.tembel || 0) >= 1 && fatherAlive(s) && ['orta', 'lise'].includes(s.edu.stage) && !s.flags.okulBirakti;
+export const fatherAngry = s => s.gender === 'e' && (s.counters.tembel || 0) >= 1 && fatherAlive(s) && ['orta', 'lise'].includes(s.edu.stage) && !s.flags.okulBirakti;
 function fatherCheck(s) {
-  if (!fatherAlive(s) || s.flags.okulBirakti || !['orta', 'lise'].includes(s.edu.stage) || s.family.wealth === 'zengin') return null;
+  if (s.gender !== 'e' || !fatherAlive(s) || s.flags.okulBirakti || !['orta', 'lise'].includes(s.edu.stage) || s.family.wealth === 'zengin') return null;
   if (s.age < 12 || s.age > 16) return null;
   const karne = s.year.tasks.find(t => t.exam === 'karne');
   const lazy = (s.year.study || 0) === 0 && (!karne || (karne.score ?? 0) < 55);
