@@ -3,7 +3,7 @@
 import { register } from './engine.js';
 import { h } from '../ui/dom.js';
 import { clamp, sleep } from '../core/util.js';
-import { lang } from '../core/i18n.js';
+import { lang, T } from '../core/i18n.js';
 
 const pct = v => Math.round(clamp(v, 0, 100));
 const big = (txt, size = 56) => h('div', { style: { fontSize: size + 'px', textAlign: 'center', lineHeight: 1.1 } }, txt);
@@ -20,7 +20,7 @@ export function swipeGame(t) {
         const pool = api.fresh(t.items);
         const card = h('div.qcard', { style: { fontSize: '21px', minHeight: '150px', flexDirection: 'column', transition: 'transform .22s, opacity .22s', touchAction: 'none', userSelect: 'none' } });
         const btnL = h('button.btn', { style: { flex: 1, minHeight: '68px', fontSize: '15px', borderColor: '#ff5b7a' }, onclick: () => pick(0) }, '⬅️ ' + t.sides[0]);
-        const btnR = h('button.btn', { style: { flex: 1, minHeight: '68px', fontSize: '15px', borderColor: '#3ddc97' }, onclick: () => pick(1) }, t.sides[1] + ' ➡️');
+        const btnR = h('button.btn', { style: { flex: 1, minHeight: '68px', fontSize: '15px', borderColor: '#3ddc97' }, onclick: () => pick(1) }, T(t.sides[1]) + ' ➡️');
         stage.replaceChildren(h('div.col', { style: { gap: '16px', margin: 'auto 0' } }, big(t.icon, 44), card, h('div.row', { style: { gap: '10px' } }, btnL, btnR)));
         const next = () => { if (k >= pool.length) { k = 0; api.rng.shuffle(pool); } cur = pool[k++]; api.mark(cur); card.style.transform = ''; card.style.opacity = '1'; card.textContent = cur[0]; };
         const pick = side => {

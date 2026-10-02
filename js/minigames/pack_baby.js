@@ -172,6 +172,7 @@ whackGame({ id: 'kostebek_bebek', name: B('Köstebek Ce-ee', 'Peekaboo Mole'), i
 whackGame({ id: 'kelebek_yakala', name: B('Kelebek Yakala', 'Catch the Butterfly'), icon: '🦋', at: TP, tags: ['bebek'], good: '🦋', bad: '🐝', hole: '🌼', holeBg: '#24502c' });
 dodgeGame({ id: 'yagmur_kac', name: B('Yağmurdan Kaç', 'Dodge the Rain'), icon: '🐥', at: TP, tags: ['bebek'], player: '🐥', bad: ['💧'], good: ['🌞', '🌈'], bg: '#27405e' });
 stackGame({ id: 'lego_kule', name: B('Lego Kule', 'Block Tower'), icon: '🧱', at: OY, tags: ['bebek'], colors: ['#ff5b5b', '#ffd23f', '#3ddc97', '#4d8dff', '#b36bff'], bg: '#231d3a' });
-pairGame({ id: 'yavru_esle', name: B('Anne ve Yavru', 'Mum and Baby'), icon: '🐣', at: [...ZK, ...AI], tags: ['bebek'], hint: B('Kim kimin yavrusu?', 'Whose baby is it?'),
+// Eski anne–yavru eşleştirmesi havuzdan çıktı (yerine content_more2.js'teki 'Kimin Yavrusu?' geldi)
+pairGame({ id: 'yavru_esle', name: B('Anne ve Yavru', 'Mum and Baby'), icon: '🐣', at: [], tags: ['bebek'], hint: B('Kim kimin yavrusu?', 'Whose baby is it?'),
   pairs: [['🐔', '🐣'], ['🦋', '🐛'], ['🐕', '🐶'], ['🐈', '🐱'], ['🦆', '🐥'], ['🌳', '🌱'], ['🐸', '🥚']] });
 mazeGame({ id: 'fare_peynir', name: B('Fare ve Peynir', 'Mouse and Cheese'), icon: '🐭', at: ZK, tags: ['bebek'], player: '🐭', goal: '🧀', wall: '#ffd166', bg: '#2a2340' });

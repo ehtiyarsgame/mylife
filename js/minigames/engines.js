@@ -2,6 +2,7 @@
 import { register } from './engine.js';
 import { h, btn } from '../ui/dom.js';
 import { clamp, lerp, sleep } from '../core/util.js';
+import { T } from '../core/i18n.js';
 
 const pct = v => Math.round(clamp(v, 0, 100));
 
@@ -148,10 +149,17 @@ export function pairGame(t) {
       return new Promise(async resolve => {
         api.hideTimer();
         let pts = 0;
-        const all = api.fresh(t.pairs, undefined, 18);
+        const queue = api.fresh(t.pairs, undefined, 18);
+        // Bir turda aynı sol ya da sağ metin iki kez çıkmasın (çeviride aynı görünenler dahil)
+        const take = (src, n, out = [], used = new Set(out.flatMap(p => [T(p[0]), T(p[1])]))) => {
+          for (let k = 0; k < src.length && out.length < n; k++) { const p = src[k], a = T(p[0]), b = T(p[1]); if (used.has(a) || used.has(b)) continue; used.add(a); used.add(b); out.push(p); src.splice(k--, 1); }
+          return out;
+        };
         for (let r = 0; r < 3; r++) {
-          const n = clamp(4 + Math.round(api.diff * 2), 4, 6);
-          const set = all.slice(r * n, r * n + n).length === n ? all.slice(r * n, r * n + n) : api.rng.shuffle(t.pairs).slice(0, n);
+          let n = clamp(4 + Math.round(api.diff * 2), 4, 6);
+          const set = take(queue, n);
+          if (set.length < n) take(api.rng.shuffle(t.pairs.slice()), n, set);
+          n = set.length;
           const got = await new Promise(res => {
             let sel = null, done = 0, wrong = 0, fin = false;
             const L = set.map((p, i) => h('button.qopt', { style: { padding: '10px', fontSize: '13.5px' }, onclick: () => { if (fin || L[i].disabled) return; sel = i; L.forEach((e, j) => e.classList.toggle('glow', j === i)); } }, p[0]));
@@ -161,8 +169,15 @@ export function pairGame(t) {
               if (i === sel) { L[i].classList.add('ok'); e.currentTarget.classList.add('ok'); L[i].disabled = e.currentTarget.disabled = true; done++; api.sfx.good(); sel = null; L.forEach(x => x.classList.remove('glow')); if (done === n) { fin = true; tl.stop(); res(n - wrong * 0.5); } }
               else { wrong++; api.bad('Eşleşmedi'); }
             } }, set[i][1]));
-            stage.replaceChildren(h('div.col', {}, h('div.row', {}, h('span.chip.accent', {}, `Tur ${r + 1}/3`), h('span.grow'), h('span.small.muted', {}, t.hint || '')),
-              h('div.row', { style: { alignItems: 'flex-start', gap: '8px' } }, h('div.col.grow', { style: { gap: '6px' } }, L), h('div.col.grow', { style: { gap: '6px' } }, R))));
+            // Sütun başlıkları: neyin neyle eşleştiği bir bakışta anlaşılsın (t.cols ya da "X → Y" ipucundan)
+            const hd = String(T(t.hint || '')).split('→');
+            const cols = t.cols ? t.cols.map(c => T(c)) : hd.length === 2 ? hd.map(x => x.trim()) : null;
+            const colHead = c => h('div', { style: { textAlign: 'center', fontSize: '12px', fontWeight: 900, letterSpacing: '.5px', textTransform: 'uppercase', color: '#ffd27a', padding: '4px 0', borderBottom: '2px solid rgba(255,210,122,.35)', marginBottom: '2px' } }, c);
+            stage.replaceChildren(h('div.col', {}, h('div.row', {}, h('span.chip.accent', {}, `Tur ${r + 1}/3`), h('span.grow'), cols ? null : h('span.small.muted', {}, t.hint || '')),
+              h('div.row', { style: { alignItems: 'flex-start', gap: '8px' } },
+                h('div.col.grow', { style: { gap: '6px', flex: '1 1 0' } }, cols ? colHead(cols[0]) : null, L),
+                cols ? h('div', { style: { alignSelf: 'center', fontSize: '20px', opacity: .5 } }, '↔') : null,
+                h('div.col.grow', { style: { gap: '6px', flex: '1 1 0' } }, cols ? colHead(cols[1]) : null, R))));
             const tl = api.timerLoop(18 + n * 3 + api.ease * 6 - api.diff * 5, () => { fin = true; res(done - wrong * 0.5); });
           });
           pts += clamp(got / n, 0, 1) * 33.4; api.setScore(Math.round(pts));

@@ -21,4 +21,6 @@ import './pack_adult.js';
 import './pack_military.js';
 import './repair.js';
 import './content_more.js'; // en sonda: diğer oyunların havuzlarını genişletir
+import './content_more2.js';
+import './content_more3.js';
 export { playMinigame, allGames, getGame, autoMods, MODIFIERS, gamesFor, pickFresh } from './engine.js';
