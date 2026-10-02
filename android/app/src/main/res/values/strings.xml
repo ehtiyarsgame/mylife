@@ -5,5 +5,5 @@
     <string name="package_name">com.ehtiyarsgame.lifetide</string>
     <string name="custom_url_scheme">com.ehtiyarsgame.lifetide</string>
     <!-- TEST kimliği. Yayından önce AdMob hesabındaki gerçek uygulama kimliğiyle değiştir. -->
-    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-8279712116721351~6538286864</string>
 </resources>
