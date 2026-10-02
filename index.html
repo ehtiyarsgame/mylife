@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="Lifetide (Hayat Yolu) — a life simulation from birth to old age, played through mini-games. Ehtiyars Game.">
   <meta name="author" content="Ehtiyars Game">
-  <title>Hayat Yolu</title>
+  <title>Lifetide</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon.svg">
@@ -19,10 +19,10 @@
   <div id="app"></div>
   <div id="splash">
     <div class="intro-studio"><img src="icons/studio.svg" alt=""><img class="eg-word" src="icons/ehtiyars-wordmark.svg" alt="Ehtiyars Game"><div class="studio-sub">sunar</div></div>
-    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Hayat Yolu</div><div class="game-sub">Bir ömür, binlerce karar</div></div>
+    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Lifetide</div><div class="game-sub">Hayat Yolu · Bir ömür, binlerce karar</div></div>
   </div>
   <script>
-    // Oyun adı dile göre: Türkçede "Hayat Yolu", diğer dillerde "Lifetide"
+    // Oyunun adı her dilde "Lifetide"; Türkçede alt başlıkta "Hayat Yolu" yazar
     (function () {
       var l = null; try { l = localStorage.getItem('hayatyolu.lang'); } catch (e) {}
       l = l || (navigator.language || 'en').slice(0, 2).toLowerCase();
@@ -30,7 +30,6 @@
       document.documentElement.lang = 'en';
       document.title = 'Lifetide';
       var q = function (c) { return document.querySelector(c); };
-      q('.game-name').textContent = 'Lifetide';
       q('.game-sub').textContent = 'One life, a thousand choices';
       q('.studio-sub').textContent = 'presents';
     })();

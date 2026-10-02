@@ -26,8 +26,9 @@ route('title', root => {
   const has = app.life && app.life.alive;
   const dKey = todayKey();
   root.append(h('div.title-screen', {},
-    h('img.title-logo', { src: 'icons/icon.svg', alt: 'Hayat Yolu' }),
-    h('div.logo', {}, 'Hayat Yolu'),
+    h('img.title-logo', { src: 'icons/icon.svg', alt: 'Lifetide' }),
+    h('div.logo', {}, 'Lifetide'),
+    lang === 'tr' ? h('div.small', { style: { color: '#c9c2ff', fontWeight: 800, marginTop: '-4px', marginBottom: '4px' } }, 'Hayat Yolu') : null,
     h('div.logo-sub', {}, 'Yaşamak istediğin hayatı, küçük de olsa gerçekten oynayarak yaşa.'),
     has ? h('div.card', { style: { marginBottom: '6px' } }, h('div.row', {}, h('div.avatar', {}, avatarOf(app.life)), h('div.grow', {}, h('b', {}, `${app.life.name} ${app.life.surname}`), h('div.small.muted', {}, `${app.life.age} yaş · ${app.life.gen}. nesil`)))) : null,
     has ? btn('▶  Devam et', () => go('life'), 'primary block') : null,
@@ -210,8 +211,8 @@ route('death', root => {
     card,
     h('div.col', { style: { marginTop: '14px' } },
       btn('📤 Paylaş', async () => {
-        const text = `Hayat Yolu'nda ${s.name} ${s.surname} olarak ${s.age} yıl yaşadım: ${s.life.jobs.map(j => JOBS[j].name).join(', ') || 'sade bir hayat'} · ${score} puan (${lifeScoreTitle(score)})${s.titles.length ? ' · ' + s.titles.join(', ') : ''} 🌱`;
-        try { if (navigator.share) await navigator.share({ title: 'Hayat Yolu', text }); else { await navigator.clipboard.writeText(text); toast('Panoya kopyalandı'); } } catch {}
+        const text = `Lifetide'da ${s.name} ${s.surname} olarak ${s.age} yıl yaşadım: ${s.life.jobs.map(j => JOBS[j].name).join(', ') || 'sade bir hayat'} · ${score} puan (${lifeScoreTitle(score)})${s.titles.length ? ' · ' + s.titles.join(', ') : ''} 🌱`;
+        try { if (navigator.share) await navigator.share({ title: 'Lifetide', text }); else { await navigator.clipboard.writeText(text); toast('Panoya kopyalandı'); } } catch {}
       }, 'block'),
       kids.length ? h('div.sec-title', {}, '👨‍👧 Nesil devam etsin') : null,
       ...kids.map((c, i) => btn(`${c.gender === 'k' ? '👧' : '👦'} ${c.name} (${c.age} yaş) olarak devam et`, () => {
@@ -284,12 +285,12 @@ route('settings', (root, back = 'title') => {
     h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Oyun kapalıyken de dolar. Bebeklik yılları enerji harcamaz.`)),
     h('div.sec-title', {}, 'Hakkında'),
     h('div.card', { style: { marginBottom: '10px' } },
-      h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Hayat Yolu · sürüm ' + APP_VERSION))),
+      h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Lifetide · sürüm ' + APP_VERSION))),
       h('p.small', { style: { margin: '10px 0 4px' } }, '📧 İletişim ve geri bildirim: ', h('a', { href: 'mailto:ehtiyarsgame@gmail.com', style: { color: '#b9b0ff' } }, 'ehtiyarsgame@gmail.com')),
       h('p.small', { style: { margin: '0 0 4px' } }, '🔒 ', h('a', { href: 'https://ehtiyarsgame.github.io/lifetide/privacy.html', target: '_blank', rel: 'noopener', style: { color: '#b9b0ff' } }, 'Gizlilik politikası')),
       h('p.tiny.muted', { style: { margin: 0 } }, 'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; hesap açılmaz, kişisel veri toplanmaz. Ödüllü reklamlar Google AdMob ile gösterilir; kişiselleştirilmiş reklam için onayın istenir.')),
     privacyOptionsNeeded() ? btn('🛡️ Reklam gizlilik seçenekleri', () => showPrivacyOptions(), 'ghost block') : null,
-    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Hayat Yolu — ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `Lifetide — ${deckSize()} olay kartı, ${allGames().length} mini oyun, ${Object.keys(JOBS).length} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.`)),
     h('div.sp'),
     btn('🗑️ Tüm ilerlemeyi sıfırla', async () => {
       if (await confirmBox('Her şeyi sıfırla', 'Tüm hayatlar, albüm ve koleksiyon silinecek.', 'Sıfırla', 'Vazgeç', 'danger')) {

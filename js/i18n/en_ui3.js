@@ -46,7 +46,7 @@ export default {
   'Meslek': 'Career', 'Ticaret': 'Business', 'En yüksek servet': 'Peak wealth', 'Aile': 'Family', '{0}{1} çocuk': '{0}{1} children',
   'Dürüst kararlar': 'Honest choices', 'Oynanan mini oyun': 'Mini-games played', 'Unutulmaz anlar': 'Unforgettable moments', '{0} {1} yaş — {2}': '{0} age {1} — {2}',
   '📔 Hayat albümü': '📔 Life album', '📤 Paylaş': '📤 Share', 'sade bir hayat': 'a simple life',
-  "Hayat Yolu'nda {0} {1} olarak {2} yıl yaşadım: {3} · {4} puan ({5}){6} 🌱": 'In Lifetide I lived {2} years as {0} {1}: {3} · {4} points ({5}){6} 🌱',
+  "Lifetide'da {0} {1} olarak {2} yıl yaşadım: {3} · {4} puan ({5}){6} 🌱": 'In Lifetide I lived {2} years as {0} {1}: {3} · {4} points ({5}){6} 🌱',
   'Panoya kopyalandı': 'Copied to clipboard', '👨‍👧 Nesil devam etsin': '👨‍👧 Continue the generation', '{0} {1} ({2} yaş) olarak devam et': 'Continue as {0} {1} (age {2})',
   '✨ Yepyeni bir hayat': '✨ A brand new life', '🌟 Albüm': '🌟 Album', '← Geri': '← Back',
   'Efsane albümü · {0}/{1}': 'Legend album · {0}/{1}', 'Meslek koleksiyonu · {0}/{1}': 'Career collection · {0}/{1}', 'Geçmiş hayatlar · {0}': 'Past lives · {0}',
@@ -63,6 +63,6 @@ export default {
   '⏳ Enerji {0} saniyede 1 dolar, bar {1}. Günde 3–4 kez uğrayan bir oyuncu günde ~9–10 oyun yılı yaşar: bir ömür ≈ 1 hafta. Bebeklik yılları enerji harcamaz.': '⏳ Energy refills 1 per {0} seconds, bar {1}. A player who drops in 3–4 times a day lives ~9–10 game years a day: one life ≈ 1 week. Baby years cost no energy.',
   'Hakkında': 'About', 'Ehtiyars Game': 'Ehtiyars Game', 'sürüm {0}': 'version {0}', '📧 İletişim ve geri bildirim:': '📧 Contact and feedback:',
   'Gizlilik: Oyun ilerlemen yalnızca cihazında saklanır; kişisel veri toplanmaz ve sunucuya gönderilmez. Reklamlar 13 yaş altı için kişiselleştirilmez.': 'Privacy: Your progress is stored only on your device; no personal data is collected or sent to a server. Ads are not personalized for users under 13.',
-  'Hayat Yolu — test sürümü. {0} olay kartı, {1} mini oyun, {2} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.': 'Lifetide — test version. {0} event cards, {1} mini-games, {2} careers. Content principles: no gambling, loot boxes, alcohol/tobacco or easy-money shortcuts. Effort, wisdom and honesty pay off.',
+  'Lifetide — test sürümü. {0} olay kartı, {1} mini oyun, {2} meslek. İçerik ilkeleri: kumar, şans oyunu, ücretli sandık, içki/sigara ve kolay para yolları yoktur. Emek, akıl ve dürüstlük kazandırır.': 'Lifetide — test version. {0} event cards, {1} mini-games, {2} careers. Content principles: no gambling, loot boxes, alcohol/tobacco or easy-money shortcuts. Effort, wisdom and honesty pay off.',
   '🗑️ Tüm ilerlemeyi sıfırla': '🗑️ Reset all progress', 'Her şeyi sıfırla': 'Reset everything', 'Tüm hayatlar, albüm ve koleksiyon silinecek.': 'All lives, the album and collection will be deleted.', 'Sıfırla': 'Reset',
 };

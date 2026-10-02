@@ -1,6 +1,6 @@
 // English — interface (dom, flows)
 export default {
-  'Hayat Yolu': 'Lifetide',
+  'Hayat Yolu': 'Lifetide', 'Lifetide · sürüm {0}': 'Lifetide · version {0}',
   'Türkçe': 'Türkçe',
   'Evet': 'Yes', 'Vazgeç': 'Cancel', 'Tamam': 'OK', 'EFSANEVİ AN': 'LEGENDARY MOMENT', 'EPİK OLAY': 'EPIC EVENT',
   'AİLE DOSTU REKLAM · KİŞİSELLEŞTİRİLMEMİŞ': 'FAMILY-FRIENDLY AD · NON-PERSONALIZED',

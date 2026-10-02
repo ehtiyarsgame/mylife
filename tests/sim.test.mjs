@@ -403,3 +403,29 @@ test('baba: iki yıl üst üste hiç ders çalışmayan çocuğu okuldan alıp s
   for (let i = 0; i < 2; i++) { Y.startYear(k); k.year.tasks.forEach(x => { x.done = true; x.score = 40; }); k.year.used = k.year.ep; k.year.shown = k.year.slots.length; Y.endYear(k); }
   assert.ok(!Y.fatherAngry(k) && !k.flags.sanayi && k.career.job?.id !== 'cirak');
 });
+
+test('ölen anne/babadan sonra onları anan kart, seçenek ya da aile eylemi gelmez', async () => {
+  const { cardFits, optionVisible } = await import('../js/sim/events.js');
+  const leaks = []; // events: bot.mjs'in setDeck ile yüklediği deste (kişi gereksinimleri hesaplanmış)
+  for (const age of [6, 12, 17, 25, 45, 64]) {
+    for (const dead of ['Anne', 'Baba', 'both']) {
+      const s = newLife({ seed: 'yetim' + age + dead, name: 'Deniz', gender: 'e' });
+      s.age = age; s.edu.stage = age < 18 ? (age < 10 ? 'ilkokul' : age < 14 ? 'orta' : 'lise') : 'done';
+      s.family.parents.forEach(p => (p.alive = !(dead === 'both' || p.role === dead)));
+      for (const c of events) {
+        if (c.id === 'yasli_yalnizlik' || !cardFits(c, s)) continue; // (o kartta "anne/baba" diyen oyuncunun kendi çocukları)
+        const parts = [c.title, c.text];
+        for (const o of c.options || []) if (optionVisible(s, o)) parts.push(o.text, o.result, o.success?.result, o.fail?.result);
+        const txt = parts.filter(Boolean).join(' ');
+        if (dead !== 'Baba' && /\{anne\}|\bannen\w*|anne-?bab/i.test(txt)) leaks.push(`${c.id} (anne ölü, ${age})`);
+        if (dead !== 'Anne' && /\{baba\}|\bbaban\w*|anne-?bab/i.test(txt)) leaks.push(`${c.id} (baba ölü, ${age})`);
+      }
+    }
+  }
+  assert.deepEqual([...new Set(leaks)], []);
+  // Kimsesi kalmayan biri "Aileyle vakit" eylemini görmez
+  const s = newLife({ seed: 'yalniz', name: 'Ali', gender: 'e' });
+  s.age = 30; s.edu.stage = 'done'; s.family.siblings = 0; s.family.parents.forEach(p => (p.alive = false));
+  Y.startYear(s);
+  assert.ok(!availableActions(s).some(a => a.id === 'aile'));
+});

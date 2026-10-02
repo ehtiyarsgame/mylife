@@ -298,7 +298,7 @@ async function summarySheet(sum) {
       ...sum.income.map(([k, v]) => h('div.sum-line', {}, k, h('b.pos', {}, '+' + fmtTL(v)))),
       ...sum.expense.map(([k, v]) => h('div.sum-line', {}, k, h('b.neg', {}, '−' + fmtTL(v)))),
       (sum.income.length || sum.expense.length) ? h('div.sum-line', { style: { borderBottom: 0 } }, h('b', {}, 'Net'), h('b', { class: sum.net >= 0 ? 'pos' : 'neg' }, (sum.net >= 0 ? '+' : '−') + fmtTL(Math.abs(sum.net)))) : null),
-    sum.home && s.family.parents.some(p => p.alive) ? h('div.sum-line', {}, `🏠 ${livingHome(s) ? 'Evin' : 'Anne-babanın evi'}: ${stressLabel(sum.home.stress).t}`, h('b', { class: sum.home.delta > 0 ? 'neg' : 'pos' }, `stres ${Math.round(sum.home.stress)} (${sum.home.delta > 0 ? '+' : ''}${Math.round(sum.home.delta)})`)) : null,
+    sum.home && s.family.parents.some(p => p.alive) ? h('div.sum-line', {}, `🏠 ${livingHome(s) ? 'Evin' : parentLabels(s).short}: ${stressLabel(sum.home.stress).t}`, h('b', { class: sum.home.delta > 0 ? 'neg' : 'pos' }, `stres ${Math.round(sum.home.stress)} (${sum.home.delta > 0 ? '+' : ''}${Math.round(sum.home.delta)})`)) : null,
     sum.good?.length ? h('div.sec-title', {}, 'Alışkanlıklar') : null,
     (sum.good || []).map(g => h('p.small', { style: { margin: '4px 0', color: '#8ff0c4' } }, g)),
     sum.notes.length ? h('div.sec-title', {}, 'Önemli') : null,
@@ -473,6 +473,14 @@ async function menuSheet() {
 }
 
 // ——— EV ———
+// Hayattaki ebeveyne göre ev etiketleri (biri vefat ettiyse "anne-baba" denmez)
+function parentLabels(s) {
+  const a = s.family.parents.filter(p => p.alive).map(p => p.role);
+  if (a.length >= 2) return { house: '👵 Anne-babanın evi', short: 'Anne-babanın evi', inc: 'Evin geliri (anne-baba maaşı)', tip: 'Yaşlanan anne-baban emekli olunca gelirleri düşer. Desteğin onların sağlığını ve huzurunu korur.' };
+  if (a[0] === 'Anne') return { house: '👵 Annenin evi', short: 'Annenin evi', inc: 'Evin geliri (annenin maaşı ve aylığı)', tip: 'Yaşlanan annen emekli olunca geliri düşer. Desteğin onun sağlığını ve huzurunu korur.' };
+  return { house: '👴 Babanın evi', short: 'Babanın evi', inc: 'Evin geliri (babanın maaşı ve aylığı)', tip: 'Yaşlanan baban emekli olunca geliri düşer. Desteğin onun sağlığını ve huzurunu korur.' };
+}
+
 function homeTab(render) {
   const s = S();
   const out = [];
@@ -480,7 +488,8 @@ function homeTab(render) {
   const h0 = s.home;
   const parentsAlive = f.parents.some(p => p.alive);
   const inHome = livingHome(s);
-  out.push(h('div.sec-title', {}, inHome ? '🏠 Ailenin evi' : '👵 Anne-babanın evi'));
+  const PL = parentLabels(s);
+  out.push(h('div.sec-title', {}, inHome ? '🏠 Ailenin evi' : PL.house));
   if (parentsAlive) {
     const b = homeBudget(s);
     const st = stressLabel(h0.stress);
@@ -492,7 +501,7 @@ function homeTab(render) {
       h('div.bar', { style: { marginTop: '8px' } }, h('i', { style: { width: h0.stress + '%', background: st.c } })),
       h('div.sp'),
       h('div.sum-line', {}, 'Aile kasası', h('b', { class: h0.cash >= 0 ? 'pos' : 'neg' }, fmtTL(h0.cash))),
-      h('div.sum-line', {}, 'Evin geliri (anne-baba maaşı)', h('b', {}, `${fmtTL(b.inc / 12)}/ay · ${fmtTL(b.inc)}/yıl`)),
+      h('div.sum-line', {}, PL.inc, h('b', {}, `${fmtTL(b.inc / 12)}/ay · ${fmtTL(b.inc)}/yıl`)),
       h('div.sum-line', {}, 'Evin gideri (kira, fatura, mutfak, okul)', h('b', {}, `${fmtTL(b.exp / 12)}/ay · ${fmtTL(b.exp)}/yıl`)),
       h('div.sum-line', {}, 'Tahmini yıl sonu', h('b', { class: b.net >= 0 ? 'pos' : 'neg' }, (b.net >= 0 ? '+' : '−') + fmtTL(Math.abs(b.net)))),
       h0.crises.length ? h('div.sum-line', {}, 'Zor dönem', h('b', { style: { color: '#ffb547' } }, h0.crises.map(c => `${c.name} (${c.years} yıl)`).join(', '))) : null,
@@ -500,7 +509,7 @@ function homeTab(render) {
       nx && h0.stress >= 15 ? h('div.tiny', { style: { color: '#ff9db0', marginTop: '8px' } }, h0.stress >= nx.at ? `⚠️ Yakında: ${nx.label}. Ailene destek olursan önlenebilir.` : `⚠️ Stres ${nx.at}'u geçerse: ${nx.label}.`) : null,
       h('div.tiny.muted', { style: { marginTop: '8px' } }, inHome
         ? 'Ailenle yaşadığın sürece evin derdi senin de derdin. Harçlık, kurs ve dershane parası bu kasadan çıkar. Pazar işi, ayak işi, yarı zamanlı iş ya da çıraklıkla kazanıp destek olabilirsin.'
-        : 'Yaşlanan anne-baban emekli olunca gelirleri düşer. Desteğin onların sağlığını ve huzurunu korur.'),
+        : PL.tip),
       h('div.row', { style: { marginTop: '10px', gap: '6px' } },
         btn('Aileye %25 ver', () => give(0.25), 'sm grow' + (s.money > 0 ? '' : ' disabled')),
         btn('%50', () => give(0.5), 'sm' + (s.money > 0 ? '' : ' disabled')),

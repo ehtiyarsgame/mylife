@@ -187,7 +187,7 @@ export const ACTIONS = [
   { id: 'ev_isi', name: 'Ev işlerine yardım et', icon: '🧹', cat: 'sosyal', ep: 1, when: s => s.age >= 8 && s.age <= 22,
     desc: 'Çamaşır, yemek, temizlik. Aileye yük olmazsın; disiplin ve aile bağı kazanırsın.', mg: ['camasir', 'firin_isi', 'tarif_olcusu', 'sinek', 'geri_donusum', 'tarif_sira', 'cay_doldur'], mgSkill: 'disiplin',
     skills: { empati: 1 }, stats: { disiplin: 1, mutluluk: 0.5 }, family: true },
-  { id: 'aile', name: 'Aileyle vakit', icon: '🏡', cat: 'sosyal', ep: 1, when: s => s.age >= 6,
+  { id: 'aile', name: 'Aileyle vakit', icon: '🏡', cat: 'sosyal', ep: 1, when: s => s.age >= 6 && (s.family.parents.some(p => p.alive) || s.family.siblings > 0 || !!s.rel.partner || s.rel.children.length > 0),
     desc: 'Birlikte yemek, sohbet. Aile bağı güçlenir.', mg: ['aile_albumu', 'tarif_sirasi', 'bayram_ziyareti'], mgSkill: 'empati', skills: { empati: 1 }, stats: { mutluluk: 4, saglik: 1 }, family: true },
   { id: 'tanis', name: 'Yeni insanlarla tanış', icon: '💞', cat: 'sosyal', ep: 1, when: s => s.age >= 17 && !s.rel.partner && !s.rel.married,
     desc: 'Sohbeti doğru yönlendir. Belki hayatının insanı karşındadır.', mg: 'konusma', mgSkill: 'sosyal',
