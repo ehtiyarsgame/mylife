@@ -28,17 +28,14 @@ route('title', root => {
   root.append(h('div.title-screen', {},
     h('img.title-logo', { src: 'icons/icon.svg', alt: 'Lifetide' }),
     h('div.logo', {}, 'Lifetide'),
-    lang === 'tr' ? h('div.small', { style: { color: '#c9c2ff', fontWeight: 800, marginTop: '-4px', marginBottom: '4px' } }, 'Hayat Yolu') : null,
     h('div.logo-sub', {}, 'Yaşamak istediğin hayatı, küçük de olsa gerçekten oynayarak yaşa.'),
     has ? h('div.card', { style: { marginBottom: '6px' } }, h('div.row', {}, h('div.avatar', {}, avatarOf(app.life)), h('div.grow', {}, h('b', {}, `${app.life.name} ${app.life.surname}`), h('div.small.muted', {}, `${app.life.age} yaş · ${app.life.gen}. nesil`)))) : null,
     has ? btn('▶  Devam et', () => go('life'), 'primary block') : null,
     btn(has ? '✨  Yeni hayat (📺 3 reklam)' : '✨  Yeni hayat', async () => { if (has && !(await abandonLife())) return; go('create'); }, (has ? '' : 'primary ') + 'block'),
     h('div.menu-grid', { style: { marginTop: '6px' } },
-      btn([h('b', {}, '📅'), 'Günlük meydan okuma'], async () => { if (has && !(await abandonLife())) return; go('create', { daily: true }); }),
-      // Mini oyunlar sürpriz kalsın: salon yalnızca geliştirici testinde görünür
-      DEV ? btn([h('b', {}, '🎮'), 'Mini oyun salonu'], () => go('arcade')) : null,
+      // İlk sürüm sade: yalnızca oyunun kendisi. Günlük meydan okuma ve mini oyun salonu sonraki aşamada açılacak.
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
-      h('button.btn', { style: DEV ? {} : { gridColumn: '1 / -1' }, onclick: () => { sfx.tap(); go('settings', 'title'); } }, h('b', {}, '⚙️'), 'Ayarlar')),
+      h('button.btn', { onclick: () => { sfx.tap(); go('settings', 'title'); } }, h('b', {}, '⚙️'), 'Ayarlar')),
     h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), h('img.eg-word', { src: 'icons/ehtiyars-wordmark.svg', alt: 'Ehtiyars Game' })),
     h('p.center.tiny.muted', { style: { marginTop: '6px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
   ));

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0d1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Lifetide (Hayat Yolu) — a life simulation from birth to old age, played through mini-games. Ehtiyars Game.">
+  <meta name="description" content="Lifetide — a life simulation from birth to old age, played through mini-games. Ehtiyars Game.">
   <meta name="author" content="Ehtiyars Game">
   <title>Lifetide</title>
   <link rel="manifest" href="manifest.webmanifest">
@@ -19,10 +19,10 @@
   <div id="app"></div>
   <div id="splash">
     <div class="intro-studio"><img src="icons/studio.svg" alt=""><img class="eg-word" src="icons/ehtiyars-wordmark.svg" alt="Ehtiyars Game"><div class="studio-sub">sunar</div></div>
-    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Lifetide</div><div class="game-sub">Hayat Yolu · Bir ömür, binlerce karar</div></div>
+    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Lifetide</div><div class="game-sub">Bir ömür, binlerce karar</div></div>
   </div>
   <script>
-    // Oyunun adı her dilde "Lifetide"; Türkçede alt başlıkta "Hayat Yolu" yazar
+    // Oyunun adı her dilde "Lifetide"; yalnızca alt yazı dile göre değişir
     (function () {
       var l = null; try { l = localStorage.getItem('hayatyolu.lang'); } catch (e) {}
       l = l || (navigator.language || 'en').slice(0, 2).toLowerCase();

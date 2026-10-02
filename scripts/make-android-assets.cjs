@@ -26,7 +26,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
     const f = Math.round(s * 108 / 48);
     await shot(`<img src="${b64(square)}" width="${f}" height="${f}">`, f, f, path.join(dir, 'ic_launcher_foreground.png'));
   }
-  // Açılış görselleri: oyunun adı her dilde Lifetide; Türkçede altında "Hayat Yolu" alt başlığı
+  // Açılış görselleri: oyunun adı her dilde Lifetide
   const splash = (w, h, name, sub = '') => {
     const m = Math.min(w, h);
     return `<div style="width:${w}px;height:${h}px;background:radial-gradient(circle at 50% 42%,#2a2470,#0d1020 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Nunito,sans-serif;position:relative">
@@ -43,7 +43,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
     await shot(splash(w, h, 'Lifetide'), w, h, f);
     const trDir = path.join(res, dir.replace(/^drawable/, 'drawable-tr'));
     fs.mkdirSync(trDir, { recursive: true });
-    await shot(splash(w, h, 'Lifetide', 'Hayat Yolu'), w, h, path.join(trDir, 'splash.png'));
+    await shot(splash(w, h, 'Lifetide'), w, h, path.join(trDir, 'splash.png'));
   }
   // Mağaza görselleri
   fs.mkdirSync(path.join(root, 'store'), { recursive: true });
@@ -54,7 +54,7 @@ const fontCss = `<style>@font-face{font-family:Nunito;font-weight:900;src:url(da
       <div style="margin-top:14px;font-weight:800;font-size:30px;color:#c9c2ff">${tag}</div>
       <img src="${b64(studio)}" style="height:44px;margin-top:34px"></div></div>`;
   await shot(feature('Lifetide', 'One life, a thousand choices'), 1024, 500, path.join(root, 'store/feature-1024x500-en.png'));
-  await shot(feature('Lifetide', 'Hayat Yolu · Bir ömür, binlerce karar'), 1024, 500, path.join(root, 'store/feature-1024x500-tr.png'));
+  await shot(feature('Lifetide', 'Bir ömür, binlerce karar'), 1024, 500, path.join(root, 'store/feature-1024x500-tr.png'));
   await b.close();
   console.log('Android görselleri üretildi');
 })();

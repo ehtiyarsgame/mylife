@@ -47,7 +47,7 @@ Made by Ehtiyars Game · ehtiyarsgame@gmail.com
 
 ## Türkçe (tr-TR)
 
-**Uygulama adı (≤30):** Lifetide: Hayat Yolu
+**Uygulama adı (≤30):** Lifetide: Hayat Simülasyonu
 
 **Kısa açıklama (≤80):**
 Doğumdan yaşlılığa bir ömür yaşa — 500'den fazla mini oyunla.
@@ -55,7 +55,7 @@ Doğumdan yaşlılığa bir ömür yaşa — 500'den fazla mini oyunla.
 **Tam açıklama:**
 Bir ömür, binlerce karar.
 
-Lifetide (Hayat Yolu), düğmelere basmakla yetinmediğin, hayatını gerçekten oynadığın bir hayat simülasyonu. Sınava gerçek sorular çözerek hazırlan, büyük maçta kafa golünü at, hastaya teşhis koy, pazarda pazarlık et, boruyu tamir et ya da borsada al-sat yap. Her yolun kendi mini oyunları var.
+Lifetide, düğmelere basmakla yetinmediğin, hayatını gerçekten oynadığın bir hayat simülasyonu. Sınava gerçek sorular çözerek hazırlan, büyük maçta kafa golünü at, hastaya teşhis koy, pazarda pazarlık et, boruyu tamir et ya da borsada al-sat yap. Her yolun kendi mini oyunları var.
 
 🌱 BEŞİKTEN YAŞLILIĞA
 Bebekken bile oynarsın: şekil kutusu, hayvan sesleri, ce-ee ve ksilofonla zekân ve ellerin gelişir. Fakir, orta hâlli ya da varlıklı bir ailede, köyde ya da büyük şehirde doğ. Yeteneklerin, mizacın ve ailen başlangıcını belirler; nereye varacağını ise emeğin.
