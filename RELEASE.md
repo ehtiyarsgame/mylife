@@ -1,4 +1,6 @@
-# 🚀 Yayın rehberi — Lifetide / Hayat Yolu 1.0.0
+# 🚀 Yayın rehberi — Lifetide 1.0.0
+
+Paket adı: `com.ehtiyarsgame.lifetide` · Play'e yüklenen dosya: `apk/Lifetide-1.0.0.aab`
 
 Bu depo Google Play'e yüklenmeye hazır. Aşağıdaki adımları sırayla izle.
 
@@ -12,21 +14,15 @@ Bu iki dosya **git'e eklenmez** (`.gitignore`). Sana ayrıca gönderildiler; gü
 
 Yeni bir bilgisayarda derlemek için iki dosyayı `android/` klasörüne koyman yeterli.
 
-## 2. AdMob kimliklerini gir
+## 2. AdMob ✅ (yapıldı)
 
-Şu an Google'ın **test** kimlikleri kullanılıyor (reklamlar "Test Ad" yazar, para kazandırmaz).
+- Uygulama kimliği: `ca-app-pub-8279712116721351~6538286864` · Ödüllü birim: `ca-app-pub-8279712116721351/5616173156` · `testing: false`
+- `app-ads.txt` yayında: https://ehtiyarsgame.github.io/app-ads.txt
+- Kalan: AdMob → **Gizlilik ve mesajlaşma** → GDPR mesajını oluştur ve yayınla. Uygulama Play'de yayınlanınca AdMob'da uygulamayı mağaza girişine bağla.
 
-1. [admob.google.com](https://admob.google.com) → Uygulamalar → **Uygulama ekle** → Android → "Lifetide".
-2. Uygulama kimliğini (`ca-app-pub-XXXXXXXX~YYYYYYYY`) kopyala →
-   `android/app/src/main/res/values/strings.xml` içindeki `admob_app_id` değerine yapıştır.
-3. **Reklam birimi ekle → Ödüllü** ("Rewarded") → kimliği (`ca-app-pub-XXXXXXXX/ZZZZZZZZ`) kopyala →
-   `js/ads.config.js` içindeki `rewardedAndroid` değerine yapıştır ve `testing: false` yap.
-4. AdMob → **Gizlilik ve mesajlaşma** → GDPR mesajı oluştur ve yayınla (AB'deki oyuncular için onay formu; oyun bunu otomatik gösterir).
-5. `app-ads.txt`: AdMob'un verdiği satırı `website/app-ads.txt` dosyasına yaz ve herkese açık siteye yükle (bkz. 3. adım).
+> Kendi telefonunda gerçek reklamlara art arda tıklama; hesabın askıya alınabilir.
 
-> Kendi telefonunda gerçek reklamlara art arda tıklama; hesabın askıya alınabilir. Test için `testing: true` bırak.
-
-## 3. Gizlilik politikasını yayınla (herkese açık site)
+## 3. Gizlilik politikası ✅ (yayında)
 
 Oyun deposu özel olduğu için gizlilik sayfası ayrı, herkese açık bir sitede durur: `website/` klasörü.
 Kurulum adımları `website/README.md` içinde (GitHub'da `ehtiyarsgame.github.io` adlı herkese açık depo + Pages). Sonuç:
@@ -62,8 +58,8 @@ Her yeni sürümde: `js/config.js` → `APP_VERSION`, `package.json` → `versio
 4. **Test**: önce **Dahili test** kanalına `app-release.aab` yükle, kendi telefonunda dene.
    Yeni kişisel geliştirici hesaplarında üretime çıkmadan önce **kapalı test** (en az 12 test kullanıcısı, 14 gün) zorunludur.
 5. **Üretim** → yeni sürüm → AAB'yi yükle → sürüm notu:
-   - en: "First release! Live a whole life through 100+ mini-games."
-   - tr: "İlk sürüm! 100'den fazla mini oyunla bir ömür yaşa."
+   - en: "First release! Live a whole life through 500+ mini-games."
+   - tr: "İlk sürüm! 500'den fazla mini oyunla bir ömür yaşa."
 
 ## 6. Yayından sonra
 
