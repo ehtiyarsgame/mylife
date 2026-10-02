@@ -92,5 +92,6 @@ Ehtiyars Game · ehtiyarsgame@gmail.com
 - **İçerik derecelendirmesi (IARC):** Şiddet yok; kumar/şans oyunu yok (sanal para ile bahis yok); kullanıcılar arası etkileşim yok; konum paylaşımı yok. Beklenen: PEGI 3–7 / ESRB Everyone.
 - **Veri güvenliği:**
   - Geliştirici veri toplamıyor. Oyun verisi yalnızca cihazda.
-  - Google Mobile Ads SDK: "Cihaz veya diğer kimlikler" (Reklam Kimliği) ve "Uygulama etkinliği / etkileşimler" — amaç: **Reklam veya pazarlama, Analiz**; aktarım: Google'a; şifreli aktarım: Evet; silme talebi: cihaz ayarlarından reklam kimliği sıfırlanabilir.
+  - Google Mobile Ads SDK: "Cihaz veya diğer kimlikler" (Reklam Kimliği) ve "Uygulama etkinliği / etkileşimler" — amaç: **Reklam veya pazarlama, Analiz, Sahtekarlığı önleme**; aktarım: Google'a; şifreli aktarım: Evet; silme talebi: cihaz ayarlarından reklam kimliği sıfırlanabilir.
+- **Reklam kimliği beyanı:** Evet → Reklam veya pazarlama, Analiz, Sahtekarlığı önleme (AdMob SDK AD_ID iznini ekliyor).
 - **Devlet uygulaması / finans uygulaması / sağlık:** Hayır (borsa ve banka oyun içi simülasyondur, gerçek para yok).
