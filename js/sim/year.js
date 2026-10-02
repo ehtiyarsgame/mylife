@@ -144,7 +144,7 @@ export function nextEvent(s) {
 
 // ——————————————————— EYLEMLER ———————————————————
 export function energyCost(a) {
-  if (a.baby) return 0; // bebek oyunları enerji harcamaz
+  if (a.baby) return CONFIG.babyEnergy; // bebek oyunları da (az) enerji harcar: oynadıkça enerji artmaz
   if (a.rest) return CONFIG.restEnergy;
   return CONFIG.actionEnergy[a.ep] ?? 14;
 }
@@ -1076,7 +1076,7 @@ export function endYear(s) {
   if (s.alive) {
     s.age++;
     s.calendarYear++;
-    addEnergy(s.energy, CONFIG.energy.newYearBonus);
+    if (CONFIG.energy.newYearBonus) addEnergy(s.energy, CONFIG.energy.newYearBonus);
     sum.stageTo = stageOf(s.age);
     sum.stageChanged = sum.stageTo.id !== sum.stageFrom.id;
     if (sum.stageChanged) log(s, `${sum.stageTo.name} dönemi başladı.`);

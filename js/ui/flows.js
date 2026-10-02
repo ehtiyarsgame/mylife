@@ -501,7 +501,7 @@ export async function energySheet(rerender) {
   await sheet(close => h('div', {},
     h('h2', {}, '⚡ Enerji'),
     h('p.small', {}, `Enerji gerçek zamanlı dolar (1 enerji / ${app.meta.settings.testEnergy ? CONFIG.energy.testRegenSeconds : CONFIG.energy.regenSeconds} sn). Oyun kapalıyken de dolmaya devam eder.`),
-    h('p.small.muted', {}, `Her yıl tamamlandığında +${CONFIG.energy.newYearBonus} enerji hediye.`),
+    CONFIG.energy.newYearBonus ? h('p.small.muted', {}, `Her yıl tamamlandığında +${CONFIG.energy.newYearBonus} enerji hediye.`) : null,
     h('div.btns', {},
       btn(`📺 Reklam izle: +${CONFIG.energy.adAmount} enerji (bugün ${left} hak)`, async () => {
         if (await watchAd('energy')) { addEnergy(s.energy, CONFIG.energy.adAmount); save(); rerender(); toast(`⚡ +${CONFIG.energy.adAmount} enerji`); close(); }

@@ -144,7 +144,7 @@ function yearCard(render) {
   const card = h('div.card.year-card');
   card.append(h('div.row', {},
     h('span', { style: { fontSize: '26px' } }, STAGE_E[st.id]),
-    h('div.grow', {}, h('b', {}, `${s.age}. yaşın`), h('div.tiny.muted', {}, infant ? 'Bebeklikte kararları ailen verir' : Y.isBaby(s) ? 'Oyna, keşfet, büyü! Bebek oyunları enerji harcamaz.' : 'Eylemlerini seç; tüm eylem puanını harcayınca yıl tamamlanır')),
+    h('div.grow', {}, h('b', {}, `${s.age}. yaşın`), h('div.tiny.muted', {}, infant ? 'Bebeklikte kararları ailen verir' : Y.isBaby(s) ? 'Oyna, keşfet, büyü! Her oyun bir yaş adımı.' : 'Eylemlerini seç; tüm eylem puanını harcayınca yıl tamamlanır')),
     !Y.isBaby(s) && !y.adEP ? h('button.btn.sm', { onclick: () => F.extraEPByAd(render), title: 'Reklam izle, +1 EP' }, '📺 +1 EP') : null));
   if (!infant) {
     card.append(h('div.row', { style: { marginTop: '10px' } },
@@ -286,7 +286,7 @@ async function summarySheet(sum) {
   };
   await sheet(close => h('div', {},
     h('h2', {}, sum.died ? '🕊️ Son yıl' : `🎉 ${sum.age} yaşını tamamladın!`),
-    h('p.small.muted', {}, `Enflasyon: %${(sum.inflation * 100).toFixed(1)} · ${sum.died ? '' : `+${CONFIG.energy.newYearBonus} enerji hediye`}`),
+    h('p.small.muted', {}, `Enflasyon: %${(sum.inflation * 100).toFixed(1)}` + (sum.died || !CONFIG.energy.newYearBonus ? '' : ` · +${CONFIG.energy.newYearBonus} enerji hediye`)),
     sum.promos.map(p => h('div.task.done', {}, p)),
     h('div.sec-title', {}, 'Statlar'),
     h('div', {}, Object.entries(sum.statDelta).filter(([, v]) => Math.abs(v) >= 0.3).map(([k, v]) => chip(k, v))),

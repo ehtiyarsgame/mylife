@@ -6,7 +6,7 @@ import { clamp, sleep } from '../core/util.js';
 import { B, T, EN, lang, locale } from '../core/i18n.js';
 
 const pct = v => Math.round(clamp(v, 0, 100));
-const base = t => ({ id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages });
+const base = t => ({ spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages });
 const emo = (ctx, e, x, y, size) => { ctx.fillStyle = '#fff'; ctx.font = `${size}px sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(e, x, y); };
 const num = v => v.toLocaleString(locale());
 
@@ -324,13 +324,13 @@ export function wordGame(t) {
     how: t.how || [B('Resme bak, karışık harflerden kelimeyi kur.', 'Look at the picture and build the word from the jumbled letters.'), B('Harflere sırayla dokun; yanlışsa ⌫ ile sil.', 'Tap the letters in order; use ⌫ to undo.'), B('45 saniyede olabildiğince çok kelime.', 'As many words as you can in 45 seconds.')],
     play(stage, api) {
       return new Promise(resolve => {
-        const list = api.rng.shuffle(t.words.slice());
+        const list = api.fresh(t.words, w => w[0] + w[1]);
         let k = 0, ok = 0, over = false, cur, typed, used;
         const pic = h('div', { style: { fontSize: '64px', textAlign: 'center' } });
         const out = h('div.row', { style: { justifyContent: 'center', gap: '4px', minHeight: '52px', flexWrap: 'wrap' } });
         const pad = h('div.row', { style: { justifyContent: 'center', gap: '6px', flexWrap: 'wrap' } });
         const next = () => {
-          const w = list[k++ % list.length];
+          const w = list[k++ % list.length]; api.mark(w, x => x[0] + x[1]);
           const useTr = t.flip ? lang !== 'tr' : t.forceLang ? t.forceLang === 'tr' : lang === 'tr';
           cur = { e: w[0], word: useTr ? w[1] : w[2] };
           typed = []; used = new Set();
@@ -364,7 +364,7 @@ export function packGame(t) {
     play(stage, api) {
       return new Promise(async resolve => {
         let pts = 0;
-        const sets = api.rng.shuffle(t.sets.slice());
+        const sets = api.fresh(t.sets, s => s[0], 4);
         for (let r = 0; r < 4; r++) {
           const [task, need, extra] = sets[r % sets.length];
           const wrongN = clamp(3 + Math.round(api.diff * 3), 3, extra.length);

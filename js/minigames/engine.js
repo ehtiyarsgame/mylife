@@ -9,11 +9,35 @@ import { fx } from '../core/rng.js';
 const REGISTRY = {};
 // at: ['kosu', 'job:doktor', ...] → oyun bu eylemin / mesleğin oyun havuzuna da girer
 const AT = {};
+// Oyunların veri tanımları (t): içerik paketleri bunlara sonradan öğe ekleyebilir (extend)
+export const SPEC = {};
 export function register(game) {
   REGISTRY[game.id] = game;
+  if (game.spec) SPEC[game.id] = game.spec;
   for (const k of game.at || []) (AT[k] ||= []).includes(game.id) || AT[k].push(game.id);
 }
 export const gamesFor = key => AT[key] || [];
+// Var olan bir oyunun havuzuna öğe ekle: extend('esanlam', { pairs: [...] })
+export function extend(id, add) {
+  const sp = SPEC[id];
+  if (!sp) { console.warn('extend: oyun yok', id); return; }
+  for (const k in add) { if (Array.isArray(sp[k])) sp[k].push(...add[k]); else sp[k] = add[k]; }
+}
+
+// Öğe hafızası: her oyun gösterdiği soru/eşleşmeleri hatırlar; havuz bitmeden aynısı tekrar gelmez.
+const ITEM_KEY = 'hayatyolu.itemSeen';
+let itemSeen = null;
+const loadItems = () => { if (!itemSeen) { try { itemSeen = JSON.parse(localStorage.getItem(ITEM_KEY)) || {}; } catch { itemSeen = {}; } } return itemSeen; };
+let itemSaveT = 0;
+const saveItems = () => { clearTimeout(itemSaveT); itemSaveT = setTimeout(() => { try { localStorage.setItem(ITEM_KEY, JSON.stringify(itemSeen)); } catch {} }, 300); };
+const keyOf = x => typeof x === 'string' ? x : Array.isArray(x) ? String(typeof x[0] === 'string' ? x[0] : JSON.stringify(x[0])) : JSON.stringify(x);
+function markItem(gid, k) {
+  const m = loadItems(); const arr = (m[gid] ||= []);
+  const i = arr.indexOf(k); if (i >= 0) arr.splice(i, 1);
+  arr.push(k); if (arr.length > 600) arr.splice(0, arr.length - 600);
+  saveItems();
+}
+const seenIdx = (gid, k) => (loadItems()[gid] || []).indexOf(k);
 
 // Aynı oyunları üst üste oynatmamak için: son oynananları hatırla, havuzdan en uzun süredir oynanmayanı seç.
 const RECENT_KEY = 'hayatyolu.mgRecent';
@@ -145,6 +169,17 @@ export async function playMinigame(id, ctx = {}) {
     const localClean = [];
     const api = {
       skill, ease: skill / 100, stakes, diff, mods: new Set(mods), timeMul, rng: fx, extra: ctx.extra || {},
+      // Görülmeyenler önce (karışık), sonra en eski görülenler; take verilirse ilk take öğe görüldü sayılır
+      fresh(list, keyFn = keyOf, take = 0) {
+        const sh = fx.shuffle(list.slice());
+        const unseen = sh.filter(x => seenIdx(id, keyFn(x)) < 0);
+        const seen = sh.filter(x => seenIdx(id, keyFn(x)) >= 0).sort((a, b) => seenIdx(id, keyFn(a)) - seenIdx(id, keyFn(b)));
+        const out = [...unseen, ...seen];
+        for (const x of out.slice(0, take)) markItem(id, keyFn(x));
+        return out;
+      },
+      mark(x, keyFn = keyOf) { markItem(id, keyFn(x)); },
+      isSeen(x, keyFn = keyOf) { return seenIdx(id, keyFn(x)) >= 0; },
       setTimer(f) { timerI.style.width = clamp(f, 0, 1) * 100 + '%'; timer.classList.toggle('low', f < 0.25); },
       setScore(t) { scoreEl.textContent = t; },
       hideTimer() { timer.style.visibility = 'hidden'; },

@@ -174,4 +174,8 @@ export default {
   "Yaşlanan baban emekli olunca geliri düşer. Desteğin onun sağlığını ve huzurunu korur.": "When your ageing father retires his income drops. Your support protects his health and peace of mind.",
   "Lifetide": "Lifetide",
   "Lifetide · sürüm": "Lifetide · version",
+  "Oyna, keşfet, büyü! Her oyun bir yaş adımı.": "Play, explore, grow! Every game is a step forward.",
+  "Enflasyon: %{0}": "Inflation: {0}%",
+  "· +{0} enerji hediye": "· +{0} bonus energy",
+  "⏳ Enerji {0} saniyede 1 dolar, bar {1}. Oyun kapalıyken de dolar. Her eylem (bebeklik oyunları dahil) enerji harcar; enerji yalnızca zamanla ve ödüllü reklamla dolar.": "⏳ Energy refills 1 point every {0} seconds, up to {1}, even while the game is closed. Every action (baby games included) uses energy; energy only refills over time and with rewarded ads.",
 };

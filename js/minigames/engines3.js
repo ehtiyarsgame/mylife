@@ -8,7 +8,7 @@ import { B, T, EN, locale } from '../core/i18n.js';
 const num = v => v.toLocaleString(locale());
 
 const pct = v => Math.round(clamp(v, 0, 100));
-const base = t => ({ id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages });
+const base = t => ({ spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages });
 const hearts = n => '❤️'.repeat(Math.max(0, n)) + '🖤'.repeat(Math.max(0, 3 - n));
 const emo = (ctx, e, x, y, size) => { ctx.fillStyle = '#fff'; ctx.font = `${size}px sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(e, x, y); };
 
@@ -28,7 +28,7 @@ export function memoryGame(t) {
     play(stage, api) {
       return new Promise(resolve => {
         const pairs = api.diff > 0.55 ? 8 : 6;
-        const pick = api.rng.shuffle(t.items.slice()).slice(0, pairs);
+        const pick = api.fresh(t.items, undefined, pairs).slice(0, pairs);
         const deck = api.rng.shuffle([...pick, ...pick]);
         const state = deck.map(() => 0);
         const back = t.back || '❔';
@@ -337,7 +337,7 @@ export function orderGame(t) {
     play(stage, api) {
       return new Promise(async resolve => {
         let pts = 0;
-        const sets = api.rng.shuffle(t.sets.slice());
+        const sets = api.fresh(t.sets, s => s[0], 4);
         for (let r = 0; r < 4; r++) {
           const [title, steps] = sets[r % sets.length];
           const got = await new Promise(res => {
@@ -371,9 +371,12 @@ export function compareGame(t) {
         const fmt = v => (t.fmt ? t.fmt(v) : num(v)) + (t.unit ? ' ' + T(t.unit) : '');
         const tm = api.timerLoop(clamp(55 + api.ease * 10 - api.diff * 12, 38, 70), () => {});
         let timeUp = false;
+        const cq = api.fresh(t.items); let ci = 0;
         for (let r = 0; r < 10 && !timeUp; r++) {
           let a, b;
-          do { [a, b] = api.rng.shuffle(t.items.slice()).slice(0, 2); } while (a[1] === b[1]);
+          a = cq[ci++ % cq.length]; b = cq[ci++ % cq.length];
+          for (let g = 0; a[1] === b[1] && g < cq.length; g++) b = cq[ci++ % cq.length];
+          api.mark(a); api.mark(b);
           const want = t.less ? Math.min(a[1], b[1]) : Math.max(a[1], b[1]);
           const good = await new Promise(res => {
             const make = x => h('button.qopt', { style: { minHeight: '84px', fontSize: '18px' }, onclick: () => res(x[1] === want) }, x[0]);

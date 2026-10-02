@@ -12,17 +12,17 @@ const big = (txt, size = 56) => h('div', { style: { fontSize: size + 'px', textA
 // t.sides: [solEtiket, sağEtiket]; t.items: [[metin, 0|1], ...]
 export function swipeGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`Kart gelince karar ver: ${t.sides[0]} mi, ${t.sides[1]} mi?`, 'Kartı sağa/sola kaydır ya da alttaki düğmelere dokun.', 'Yanlış karar 2 saniye götürür. 30 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
         let ok = 0, bad = 0, over = false, penalty = 0, cur, k = 0, sx = null;
-        const pool = api.rng.shuffle(t.items.slice());
+        const pool = api.fresh(t.items);
         const card = h('div.qcard', { style: { fontSize: '21px', minHeight: '150px', flexDirection: 'column', transition: 'transform .22s, opacity .22s', touchAction: 'none', userSelect: 'none' } });
         const btnL = h('button.btn', { style: { flex: 1, minHeight: '68px', fontSize: '15px', borderColor: '#ff5b7a' }, onclick: () => pick(0) }, '⬅️ ' + t.sides[0]);
         const btnR = h('button.btn', { style: { flex: 1, minHeight: '68px', fontSize: '15px', borderColor: '#3ddc97' }, onclick: () => pick(1) }, t.sides[1] + ' ➡️');
         stage.replaceChildren(h('div.col', { style: { gap: '16px', margin: 'auto 0' } }, big(t.icon, 44), card, h('div.row', { style: { gap: '10px' } }, btnL, btnR)));
-        const next = () => { if (k >= pool.length) { k = 0; api.rng.shuffle(pool); } cur = pool[k++]; card.style.transform = ''; card.style.opacity = '1'; card.textContent = cur[0]; };
+        const next = () => { if (k >= pool.length) { k = 0; api.rng.shuffle(pool); } cur = pool[k++]; api.mark(cur); card.style.transform = ''; card.style.opacity = '1'; card.textContent = cur[0]; };
         const pick = side => {
           if (over || !cur) return;
           card.style.transform = `translateX(${side ? 140 : -140}px) rotate(${side ? 14 : -14}deg)`; card.style.opacity = '0';
@@ -51,7 +51,7 @@ export function swipeGame(t) {
 // t.pads: [[emoji, renk], x4]
 export function seqGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Tuşlar sırayla yanar: iyi izle.', 'Sonra aynı sırayla dokun.', 'Her turda sıra bir adım uzar. Bir hata oyunu bitirir.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -94,7 +94,7 @@ export function seqGame(t) {
 // t.cup: emoji, t.color: sıvı rengi, t.unit, t.rounds
 export function fillGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Ekrana basılı tut: doldurmaya başlarsın.', 'Kesikli çizgiye gelince parmağını kaldır.', 'Taşırırsan puan yok! 5 deneme.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -147,7 +147,7 @@ export function fillGame(t) {
 // t.item: taşınan emoji(ler), t.base: altlık
 export function balanceGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Yük sağa sola yatar.', 'Sağa yatınca ekranın SOL yarısına, sola yatınca SAĞ yarısına dokunarak dengele.', 'Devirmeden sona kadar dayan!'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -195,11 +195,11 @@ export function balanceGame(t) {
 // t.words (Türkçe) / t.wordsEn (diğer diller)
 export function typeGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Üstteki kelimenin harflerine sırayla dokun.', 'Yanlış harf kelimeyi baştan başlatır.', '30 saniyede olabildiğince çok kelime.'],
     play(stage, api) {
       return new Promise(resolve => {
-        const words = api.rng.shuffle((lang === 'tr' ? t.words : (t.wordsEn || t.words)).slice());
+        const words = api.fresh(lang === 'tr' ? t.words : (t.wordsEn || t.words));
         const trAlpha = lang === 'tr' && !(t.latin === true || (t.latin === 'tr' && lang === 'tr'));
         const up = s => s.toLocaleUpperCase(trAlpha ? 'tr-TR' : 'en-US');
         let wi = 0, pos = 0, done = 0, over = false, word = '';
@@ -211,7 +211,7 @@ export function typeGame(t) {
         };
         const nextWord = () => {
           if (wi >= words.length) { wi = 0; api.rng.shuffle(words); }
-          word = up(words[wi++]); pos = 0; render();
+          api.mark(words[wi]); word = up(words[wi++]); pos = 0; render();
           const letters = [...new Set([...word.replace(/\s/g, '')])];
           const pool = trAlpha ? 'ABCÇDEFGHIİKLMNOÖPRSŞTUÜVYZ' : 'ABCDEFGHIJKLMNOPRSTUVWY';
           while (letters.length < Math.min(12, letters.length + 3 + Math.round(api.diff * 3))) { const c = pool[api.rng.int(0, pool.length - 1)]; if (!letters.includes(c)) letters.push(c); }
@@ -235,7 +235,7 @@ export function typeGame(t) {
 // t.target: emoji, t.frame: çerçeve etiketi, t.bg
 export function aimGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Hedef ekranda dolaşıyor.', 'Tam çerçevenin içindeyken dokun!', `${t.shots || 6} deneme.`],
     play(stage, api) {
       return new Promise(async resolve => {

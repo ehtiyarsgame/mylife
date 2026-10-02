@@ -8,7 +8,7 @@ const pct = v => Math.round(clamp(v, 0, 100));
 // 1) ZAMANLAMA ÇUBUĞU — ibre gidip gelir, hedef bölgede durdur.
 export function timingGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`İbre çubukta gidip gelir. Yeşil bölgeye gelince dokun.`, `Tam ortası MÜKEMMEL sayılır.`, t.wind ? 'Rüzgâr bölgeyi kaydırır — dikkat!' : 'Her denemede bölge daralır.', `${t.tries || 6} deneme.`],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -63,7 +63,7 @@ export function timingGame(t) {
 // 2) YAKALAMA — sepeti kaydır, iyileri topla, kötülerden kaç.
 export function catchGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`Parmağını sağa sola kaydırarak ${t.basket} yakala.`, `Topla: ${t.good.join(' ')}`, `Kaçın: ${t.bad.join(' ')}`, '25 saniye; düşürdüklerin puan kaybettirir.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -110,7 +110,7 @@ export function catchGame(t) {
 // 3) AYIKLAMA — gelen öğeyi doğru kutuya gönder.
 export function sortGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Ekrana gelen öğeyi doğru gruba gönder.', 'Hızlı ve doğru ol: yanlış 2 saniye götürür.', '30 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -118,9 +118,9 @@ export function sortGame(t) {
         const card = h('div.qcard', { style: { fontSize: '22px', minHeight: '110px', flexDirection: 'column' } });
         const bins = t.bins.map((b, i) => h('button.btn', { style: { flex: '1 1 40%', minHeight: '64px', fontSize: '14px' }, onclick: () => pick(i) }, b));
         stage.replaceChildren(h('div.col', { style: { gap: '14px' } }, card, h('div.row', { style: { flexWrap: 'wrap', gap: '8px' } }, bins)));
-        const pool = api.rng.shuffle(t.items.slice());
+        const pool = api.fresh(t.items);
         let k = 0;
-        const next = () => { if (k >= pool.length) k = 0; cur = pool[k++]; card.textContent = cur[0]; };
+        const next = () => { if (k >= pool.length) k = 0; cur = pool[k++]; api.mark(cur); card.textContent = cur[0]; };
         const pick = i => {
           if (over) return;
           if (i === cur[1]) { ok++; api.sfx.good(); } else { bad++; penalty += 2; api.bad(`→ ${t.bins[cur[1]]}`); }
@@ -142,13 +142,13 @@ export function sortGame(t) {
 // 4) EŞLEŞTİRME — sol ile sağı eşle.
 export function pairGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Soldan bir öğe, sağdan eşini seç.', 'Yanlış eşleştirme süre kaybettirir.', '3 tur.'],
     play(stage, api) {
       return new Promise(async resolve => {
         api.hideTimer();
         let pts = 0;
-        const all = api.rng.shuffle(t.pairs.slice());
+        const all = api.fresh(t.pairs, undefined, 18);
         for (let r = 0; r < 3; r++) {
           const n = clamp(4 + Math.round(api.diff * 2), 4, 6);
           const set = all.slice(r * n, r * n + n).length === n ? all.slice(r * n, r * n + n) : api.rng.shuffle(t.pairs).slice(0, n);
@@ -177,14 +177,15 @@ export function pairGame(t) {
 // 5) FARKLIYI BUL — benzerlerin arasındaki tek farklıya dokun.
 export function oddGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Izgarada biri diğerlerinden farklı.', 'Farklı olana hızlıca dokun.', 'Her turda ızgara büyür. 8 tur.'],
     play(stage, api) {
       return new Promise(async resolve => {
         api.hideTimer();
         let pts = 0;
+        const oddOrder = api.fresh(t.pairs, p => p.join('|'), 8);
         for (let r = 0; r < 8; r++) {
-          const [a, b] = api.rng.pick(t.pairs);
+          const [a, b] = oddOrder[r % oddOrder.length];
           const n = clamp(3 + Math.floor(r / 2) + Math.round(api.diff), 3, 7);
           const odd = api.rng.int(0, n * n - 1);
           const r2 = await new Promise(res => {
@@ -205,7 +206,7 @@ export function oddGame(t) {
 // 6) SAYMA — kısa süre görünen öğeleri say.
 export function countGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`Ekranda kısa süre ${t.target} ve başka şeyler belirir.`, `Kaç tane ${t.target} vardı? Doğru sayıyı seç.`, '6 tur.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -235,7 +236,7 @@ export function countGame(t) {
 // 7) İSTİFLEME — kayan bloğu tam üstüne bırak.
 export function stackGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Blok sağa sola kayar; alttakinin üstüne gelince dokun.', 'Taşan kısım kesilir, blok küçülür.', '10 kat çık.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -274,7 +275,7 @@ export function stackGame(t) {
 // 8) PARKUR — şerit değiştir, engelden kaç, ödülleri topla.
 export function runGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Ekranın sol/sağ yarısına dokunarak şerit değiştir.', `Engellerden kaç: ${t.obstacles.join(' ')}`, `Topla: ${t.bonus}`, '3 can, 30 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -317,7 +318,7 @@ export function runGame(t) {
 // 9) HEDEF VURMA — deliklerden çıkanlara dokun.
 export function whackGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`${t.good} çıkınca hemen dokun.`, `${t.bad} çıkarsa dokunma!`, '25 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -348,7 +349,7 @@ export function whackGame(t) {
 // 10) HASSAS AYAR — göstergeyi hedef değere getir.
 export function dialGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || [`Hedef ${t.unit} değerini kaydırıcıyla tam olarak ayarla.`, 'Zor seviyede ölçek çizgileri azalır, ibre titrer.', '"Onayla"ya bas. 6 tur, hız ve doğruluk.'],
     play(stage, api) {
       return new Promise(async resolve => {
@@ -384,7 +385,7 @@ export function dialGame(t) {
 // 11) HIZLI SORU MOTORU — üretilen sorulara hızla cevap ver.
 export function quickGame(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: t.tags, at: t.at, ages: t.ages,
     how: t.how || ['Soruları olabildiğince hızlı ve doğru çöz.', 'Yanlış cevap 3 saniye götürür.', '40 saniye.'],
     play(stage, api) {
       return new Promise(resolve => {
@@ -393,7 +394,10 @@ export function quickGame(t) {
         const opts = h('div.qopts');
         stage.replaceChildren(h('div.col', {}, q, opts));
         const next = () => {
-          cur = t.gen(api.rng, api.diff + Math.min(0.4, ok * 0.03));
+          // Aynı soru tekrar gelmesin: görülmüşse yeniden üret
+          let tries = 0;
+          do cur = t.gen(api.rng, api.diff + Math.min(0.4, ok * 0.03)); while (api.isSeen(cur.q + '|' + cur.a) && ++tries < 15);
+          api.mark(cur.q + '|' + cur.a);
           q.textContent = cur.q;
           const all = api.rng.shuffle([cur.a, ...cur.w.slice(0, 3)]);
           opts.replaceChildren(...all.map(o => h('button.qopt', { onclick: () => { if (over) return; if (o === cur.a) { ok++; api.sfx.good(); } else { bad++; pen += 3; api.bad('−3 sn'); } api.setScore(ok); next(); } }, String(o))));

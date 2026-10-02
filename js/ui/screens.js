@@ -279,7 +279,7 @@ route('settings', (root, back = 'title') => {
     DEV ? toggle('testEnergy', '🧪 Test modu: hızlı enerji', 'Prototip testleri için: enerji her 2 saniyede dolar') : null,
     DEV ? toggle('noAds', '🚫 Reklamsız paket (simülasyon)', 'Ödüllü reklam ödülleri doğrudan verilir, sınır yok') : null,
     h('div.sec-title', {}, 'Tempo'),
-    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Oyun kapalıyken de dolar. Bebeklik yılları enerji harcamaz.`)),
+    h('div.card', {}, h('p.small', { style: { margin: 0 } }, `⏳ Enerji ${CONFIG.energy.regenSeconds} saniyede 1 dolar, bar ${CONFIG.energy.max}. Oyun kapalıyken de dolar. Her eylem (bebeklik oyunları dahil) enerji harcar; enerji yalnızca zamanla ve ödüllü reklamla dolar.`)),
     h('div.sec-title', {}, 'Hakkında'),
     h('div.card', { style: { marginBottom: '10px' } },
       h('div.row', {}, h('img', { src: 'icons/studio.svg', style: { width: '44px', height: '44px' } }), h('div.grow', {}, h('b', {}, 'Ehtiyars Game'), h('div.tiny.muted', {}, 'Lifetide · sürüm ' + APP_VERSION))),

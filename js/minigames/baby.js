@@ -12,7 +12,7 @@ const pct = v => Math.round(clamp(v, 0, 100));
 // Seçmeli bebek oyunu motoru. t.round(rng, i) → { prompt: Node|string, opts: [{ label, style? }], correct }
 export function babyPick(t) {
   register({
-    id: t.id, name: t.name, icon: t.icon, tags: ['bebek', ...(t.tags || [])], at: t.at,
+    spec: t, id: t.id, name: t.name, icon: t.icon, tags: ['bebek', ...(t.tags || [])], at: t.at, ages: t.ages,
     how: t.how,
     play(stage, api) {
       return new Promise(async resolve => {
@@ -21,7 +21,11 @@ export function babyPick(t) {
         let score = 0;
         const cheers = ['Aferin! 👏', 'Süpersin! ⭐', 'Bravo! 🎉', 'Harika! 🌈', 'Yaşasın! 🥳'];
         for (let i = 0; i < rounds; i++) {
-          const R = t.round(api.rng, i);
+          // Aynı soru tekrar gelmesin: görülmüş turu yeniden üret
+          let R, rk, rt = 0;
+          const txt = p => (Array.isArray(p) ? p : [p]).map(x => typeof x === 'string' ? x : x?.textContent || '').join(' ');
+          do { R = t.round(api.rng, i); rk = `${R.opts[R.correct].label}|${txt(R.prompt)}`; } while (api.isSeen(rk) && ++rt < 12);
+          api.mark(rk);
           let tries = 0;
           const ok = await new Promise(res => {
             const buttons = R.opts.map((o, k) => h('button', {

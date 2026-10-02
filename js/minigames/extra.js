@@ -102,7 +102,7 @@ register({
 // Frikik ve Kafa Vuruşu: football.js
 
 // ————————————————— DOĞRU MU YANLIŞ MI —————————————————
-const FACTS = [
+export const FACTS = [ // içerik paketleri genişletir
   ['Kanada\'nın başkenti Ottawa\'dır.', true], ['Su 50 °C\'de kaynar.', false], ['Bir yılda 12 ay vardır.', true], ['Güneş bir gezegendir.', false],
   ['Ay, Dünya\'nın uydusudur.', true], ['Balinalar balık türüdür.', false], ['Üçgenin iç açıları toplamı 180°\'dir.', true], ['Işık sesten yavaş yayılır.', false],
   ['İstanbul 1453\'te fethedildi.', true], ['Bitkiler karbondioksit alıp oksijen verir.', true], ['Mars\'a \"Kızıl Gezegen\" denir.', true], ['Bir haftada 8 gün vardır.', false],
@@ -117,6 +117,7 @@ register({
       let ok = 0, bad = 0, streak = 0, bonus = 0, cur, over = false;
       const total = 35 * api.timeMul;
       const t0 = performance.now();
+      const fOrder = api.fresh(FACTS); let fi = 0;
       const q = h('div.qcard', { style: { fontSize: '19px', minHeight: '120px' } });
       const st = h('div.center.small', { style: { minHeight: '20px', color: '#ffc53d', fontWeight: 800 } });
       const next = () => {
@@ -124,7 +125,7 @@ register({
           const a = api.rng.int(3, 9 + Math.round(api.diff * 6)), b = api.rng.int(3, 12);
           const right = api.rng.chance(0.5); const v = a * b + (right ? 0 : api.rng.pick([-2, -1, 1, 2, 10]));
           cur = [`${a} × ${b} = ${v}`, right];
-        } else cur = api.rng.pick(FACTS);
+        } else { cur = fOrder[fi++ % fOrder.length]; api.mark(cur); }
         q.textContent = cur[0];
       };
       const ans = v => {

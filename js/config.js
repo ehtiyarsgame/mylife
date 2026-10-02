@@ -10,13 +10,14 @@ export const CONFIG = {
     max: 150,
     regenSeconds: 90,
     testRegenSeconds: 2,     // Ayarlar > Test modu açıkken
-    newYearBonus: 15,        // Yıl tamamlandığında hediye enerji
+    newYearBonus: 0,         // Yıl sonu hediye enerjisi kapalı: enerji yalnızca zamanla ve reklamla dolar
     adAmount: 40,            // Ödüllü reklam başına enerji
     adPerDay: 3,
   },
   // Eylem puanı başına enerji maliyeti
   actionEnergy: { 1: 14, 2: 24 },
   restEnergy: 6,
+  babyEnergy: 8,           // Bebeklik oyunu başına enerji
 
   // Evre tablosu (Tasarım Dokümanı §4)
   stages: [

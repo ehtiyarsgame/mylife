@@ -197,7 +197,7 @@ const EN_WORDS = [
   ['GARDEN', 'Where flowers and vegetables grow'], ['RIVER', 'Fresh water flowing to the sea'], ['WINTER', 'The coldest season'], ['LIBRARY', 'A building full of books'],
 ];
 // i18n-skip-end
-const WORDS = lang === 'tr' ? TR_WORDS : EN_WORDS;
+export const WORDS = lang === 'tr' ? TR_WORDS : EN_WORDS; // içerik paketleri genişletir
 register({
   id: 'kelime', name: 'Kelime Avı', icon: '🔤',
   how: ['İpucunu oku, karışık harflerden kelimeyi kur.', 'Harflere sırayla dokun; yanlış harfi geri almak için kelimeye dokun.', '50 saniyede olabildiğince çok kelime bul.', '"Pas" hakkın var ama puan kaybettirir.'],
@@ -205,12 +205,14 @@ register({
     return new Promise(resolve => {
       const minL = api.diff < 0.35 ? 4 : api.diff < 0.7 ? 5 : 6;
       const maxL = api.diff < 0.35 ? 6 : api.diff < 0.7 ? 7 : 10;
-      let pool = api.rng.shuffle(WORDS.filter(([w]) => [...w].length >= minL && [...w].length <= maxL));
+      // Görülmeyen kelimeler önce gelir (pop sondan alır)
+      let pool = api.fresh(WORDS.filter(([w]) => [...w].length >= minL && [...w].length <= maxL)).reverse();
       let solved = 0, passes = 0, over = false;
       const tm = api.timerLoop(50, () => { over = true; resolve(clamp(solved / 6 * 100 - passes * 4, 0, 100)); });
       const next = () => {
         if (!pool.length) pool = api.rng.shuffle(WORDS);
-        const [word, clue] = pool.pop();
+        const item = pool.pop(); api.mark(item);
+        const [word, clue] = item;
         const letters = [...word];
         let tiles = api.rng.shuffle(letters.map((l, i) => ({ l, i })));
         if (tiles.map(t => t.l).join('') === word) tiles = tiles.reverse();
