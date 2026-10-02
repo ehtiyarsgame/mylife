@@ -178,4 +178,8 @@ export default {
   "Enflasyon: %{0}": "Inflation: {0}%",
   "· +{0} enerji hediye": "· +{0} bonus energy",
   "⏳ Enerji {0} saniyede 1 dolar, bar {1}. Oyun kapalıyken de dolar. Her eylem (bebeklik oyunları dahil) enerji harcar; enerji yalnızca zamanla ve ödüllü reklamla dolar.": "⏳ Energy refills 1 point every {0} seconds, up to {1}, even while the game is closed. Every action (baby games included) uses energy; energy only refills over time and with rewarded ads.",
+  "⚡ Enerjin dolu": "⚡ Your energy is full",
+  "Enerji azalınca buradan reklam izleyip doldurabilirsin.": "When your energy runs low, you can watch an ad here to refill it.",
+  "📺 Reklam izle: +{0} enerji (bugün {1} hak)": "📺 Watch an ad: +{0} energy ({1} left today)",
+  "⚡ +{0} enerji": "⚡ +{0} energy",
 };

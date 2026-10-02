@@ -32,24 +32,33 @@ export async function showPrivacyOptions() {
   try { await A.showPrivacyOptionsForm(); } catch (e) { console.warn(e); }
 }
 
-// Ödüllü reklam göster. Ödül kazanıldıysa true, kapatıldı/yüklenemediyse false.
+// Ödüllü reklam göster. Ödül kazanıldıysa true, kapatıldı false, yüklenemediyse null.
+// Not: Android'de reklam kapanırken uygulama arka plandan döner; "ödül" sinyali "kapandı" sinyalinden
+// sonra gelebilir. Bu yüzden kapandıktan sonra ödül için birkaç saniye beklenir ve ödül iki yoldan
+// (olay dinleyicisi + showRewardVideoAd sonucu) yakalanır.
 export async function showNativeRewarded(onLoading) {
   const A = plugin();
-  if (!A || !(await initAds())) return false;
-  let rewarded = false;
+  if (!A || !(await initAds())) return null;
+  let rewarded = false, dismissed = false;
   const handles = [];
   const cleanup = () => handles.forEach(h => { try { h.remove(); } catch {} });
   return new Promise(async resolve => {
-    let finished = false;
-    const done = v => { if (finished) return; finished = true; cleanup(); resolve(v); };
+    let finished = false, graceT = 0;
+    const done = v => { if (finished) return; finished = true; clearTimeout(graceT); cleanup(); resolve(v); };
+    const gotReward = () => { rewarded = true; if (dismissed) done(true); };
     try {
-      handles.push(await A.addListener('onRewardedVideoAdReward', () => { rewarded = true; }));
-      handles.push(await A.addListener('onRewardedVideoAdDismissed', () => setTimeout(() => done(rewarded), 400)));
+      handles.push(await A.addListener('onRewardedVideoAdReward', gotReward));
+      handles.push(await A.addListener('onRewardedVideoAdDismissed', () => {
+        dismissed = true;
+        if (rewarded) done(true);
+        else graceT = setTimeout(() => done(rewarded), 3000); // geç gelen ödül sinyalini bekle
+      }));
       handles.push(await A.addListener('onRewardedVideoAdFailedToShow', () => done(false)));
       onLoading?.(true);
       await A.prepareRewardVideoAd({ adId: ADMOB.rewardedAndroid, isTesting: ADMOB.testing });
       onLoading?.(false);
-      A.showRewardVideoAd().then(() => { rewarded = true; }).catch(() => done(false));
+      // Bu söz, eklentide yalnızca ödül kazanılınca çözülür
+      A.showRewardVideoAd({ adId: ADMOB.rewardedAndroid }).then(gotReward).catch(() => { if (!rewarded) done(false); });
     } catch (e) {
       onLoading?.(false);
       console.warn('Reklam yüklenemedi', e);

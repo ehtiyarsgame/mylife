@@ -503,9 +503,16 @@ export async function energySheet(rerender) {
     h('p.small', {}, `Enerji gerçek zamanlı dolar (1 enerji / ${app.meta.settings.testEnergy ? CONFIG.energy.testRegenSeconds : CONFIG.energy.regenSeconds} sn). Oyun kapalıyken de dolmaya devam eder.`),
     CONFIG.energy.newYearBonus ? h('p.small.muted', {}, `Her yıl tamamlandığında +${CONFIG.energy.newYearBonus} enerji hediye.`) : null,
     h('div.btns', {},
-      btn(`📺 Reklam izle: +${CONFIG.energy.adAmount} enerji (bugün ${left} hak)`, async () => {
-        if (await watchAd('energy')) { addEnergy(s.energy, CONFIG.energy.adAmount); save(); rerender(); toast(`⚡ +${CONFIG.energy.adAmount} enerji`); close(); }
-      }, 'gold block' + (left > 0 ? '' : ' disabled')),
+      // Enerji reklamı yalnızca enerji eksikken: eksik kadar (en fazla adAmount) verilir, dolu bar taşmaz
+      s.energy.value >= s.energy.max
+        ? h('div.tile.center', {}, h('b', {}, '⚡ Enerjin dolu'), h('div.tiny.muted', {}, 'Enerji azalınca buradan reklam izleyip doldurabilirsin.'))
+        : btn(`📺 Reklam izle: +${Math.min(CONFIG.energy.adAmount, Math.ceil(s.energy.max - s.energy.value))} enerji (bugün ${left} hak)`, async () => {
+          if (await watchAd('energy')) {
+            const cur = S(); // reklam sırasında oyun durumu yenilenmiş olabilir: güncel hayata ekle
+            const gain = Math.min(CONFIG.energy.adAmount, Math.max(0, cur.energy.max - cur.energy.value));
+            addEnergy(cur.energy, gain, false); save(); rerender(); toast(`⚡ +${Math.round(gain)} enerji`); close();
+          }
+        }, 'gold block' + (left > 0 ? '' : ' disabled')),
       btn('Kapat', () => close(), 'ghost block'))), { center: true });
 }
 
