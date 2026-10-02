@@ -21,7 +21,7 @@ import { looks, charisma, MIZAC, traitLabel } from '../sim/traits.js';
 import { homeBudget, homeNeed, giveToFamily, livingHome, stressLabel, nextStep, HOME } from '../sim/household.js';
 import { SPOUSE_TRAITS } from '../sim/partner.js';
 import { DOMAINS, atRisk, domainsDone } from '../sim/balance.js';
-import { missionsCard, progress } from './missions.js';
+import { progress } from './missions.js';
 
 const S = () => app.life;
 let ticker = null;
@@ -213,8 +213,7 @@ async function guard(fn) {
 function actionsTab(render) {
   const s = S();
   const out = [];
-  const mc = missionsCard(render);
-  if (mc) out.push(mc);
+  // Günlük görevler ilk sürümde kapalı (sonraki aşama): missionsCard burada gösterilmez
   if (Y.isInfant(s)) {
     out.push(h('div.card', { style: { marginTop: '12px' } }, h('div.center', { style: { fontSize: '48px' } }, '🍼'), h('p.center', {}, 'Henüz çok küçüksün. Ailen senin için seçimler yapacak; olay kartlarında sen de söz sahibisin!'), h('p.center.small.muted', {}, '6 yaşında ilkokul başlar ve eylemler açılır.')));
     return out;
