@@ -13,13 +13,22 @@
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon.svg">
   <link rel="preload" href="fonts/Nunito-800.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="brand/ehtiyars-brand.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="app"></div>
-  <div id="splash">
-    <div class="intro-studio"><img src="icons/studio.svg" alt=""><img class="eg-word" src="icons/ehtiyars-wordmark.svg" alt="Ehtiyars Game"><div class="studio-sub">sunar</div></div>
-    <div class="intro-game"><img src="icons/icon.svg" alt=""><div class="game-name">Lifetide</div><div class="game-sub">Bir ömür, binlerce karar</div></div>
+  <div id="eg-intro" class="eg-intro">
+    <div class="eg-studio">
+      <img class="eg-mark" src="brand/ehtiyars-mark.svg" alt="">
+      <img class="eg-word" src="brand/ehtiyars-wordmark.svg" alt="Ehtiyars Game">
+      <div class="eg-sub" data-eg-sub>sunar</div>
+    </div>
+    <div class="eg-game">
+      <img class="eg-icon" src="icons/icon.svg" alt="">
+      <div class="eg-name">Lifetide</div>
+      <div class="eg-tag" data-eg-tag>Bir ömür, binlerce karar</div>
+    </div>
   </div>
   <script>
     // Oyunun adı her dilde "Lifetide"; yalnızca alt yazı dile göre değişir
@@ -30,10 +39,12 @@
       document.documentElement.lang = 'en';
       document.title = 'Lifetide';
       var q = function (c) { return document.querySelector(c); };
-      q('.game-sub').textContent = 'One life, a thousand choices';
-      q('.studio-sub').textContent = 'presents';
+      q('[data-eg-tag]').textContent = 'One life, a thousand choices';
+      q('[data-eg-sub]').textContent = 'presents';
     })();
   </script>
+  <script src="brand/ehtiyars-intro.js"></script>
+  <script src="brand/ehtiyars-cross-promo.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

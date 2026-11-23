@@ -49,13 +49,9 @@ async function boot() {
   go(app.life && app.life.alive ? 'life' : app.life ? 'death' : 'title');
   // Reklam SDK'sı ve (AB'de) onay formu: açılış animasyonundan sonra
   setTimeout(() => initAds(), 3500);
-  // Açılış animasyonu: stüdyo logosu → oyun logosu (dokununca geçer)
-  const sp = document.getElementById('splash');
-  if (sp) {
-    const end = () => { sp.classList.add('out'); setTimeout(() => sp.remove(), 500); };
-    sp.addEventListener('click', end);
-    setTimeout(end, Math.max(0, 3300 - (performance.now() - t0)));
-  }
+  // Stüdyo açılışı: üç oyunda da aynı (brand/ehtiyars-intro.js). Oyunun yüklenmesi
+  // ne kadar sürdüyse açılıştan düşülür, dokunmak geçer.
+  window.EhtiyarsIntro?.run({ lang, since: t0 });
   document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
   // Android geri tuşu: açık pencereyi kapat → ana menü → uygulamayı arka plana al
   const Cap = window.Capacitor;

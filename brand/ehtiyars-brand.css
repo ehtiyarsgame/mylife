@@ -1,0 +1,57 @@
+/* Ehtiyars Game — ortak açılış. Her oyunda aynı görünür: stüdyo amblemi ve adı,
+   sonra oyunun kendi logosu. Oyun yalnızca kendi adını, sloganını, simgesini ve
+   (isterse) --eg-name-* değişkenlerini verir; geri kalan her şey burada sabittir.
+   Kaynak: ehtiyarsgame.github.io/brand/intro — oyunlara kopyalanır, elle düzenlenmez. */
+.eg-intro {
+  position: fixed; inset: 0; z-index: 9000;
+  background: radial-gradient(800px 500px at 50% 40%, #2a2470, #0b0e1d 70%);
+  display: grid; place-items: center;
+  transition: opacity .5s;
+  -webkit-user-select: none; user-select: none; touch-action: none;
+}
+.eg-intro.eg-out { opacity: 0; pointer-events: none; }
+.eg-intro > div { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; }
+.eg-intro img { filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .5)); }
+.eg-intro .eg-mark { width: 150px; height: 150px; }
+.eg-intro .eg-word { width: 230px; height: auto; filter: none; margin-top: 6px; }
+.eg-intro .eg-icon { width: 150px; height: 150px; border-radius: 32px; }
+.eg-sub { color: #98a1c8; font-weight: 700; letter-spacing: 4px; font-size: 13px; }
+.eg-name {
+  font: var(--eg-name-font, 900 44px/1.1 system-ui, sans-serif);
+  letter-spacing: var(--eg-name-spacing, -1px);
+  background: var(--eg-name-fill, linear-gradient(135deg, #fff, #b9b0ff 40%, #ffcf4d));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.eg-tag { color: #98a1c8; font-weight: 700; text-align: center; padding: 0 24px; }
+
+/* Stüdyo 1,7 sn görünür ve solar; oyun logosu 1,6. saniyede girer ve kalır. */
+.eg-studio { animation: eg-in 1.7s ease forwards; }
+.eg-game { animation: eg-in2 1.6s ease 1.6s forwards; }
+@keyframes eg-in { 0% { opacity: 0; transform: scale(.85); } 25% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(1.05); } }
+@keyframes eg-in2 { 0% { opacity: 0; transform: translateY(12px) scale(.9); } 40% { opacity: 1; transform: none; } 100% { opacity: 1; } }
+
+/* Hareketi azaltılmış cihazlarda: ölçek yok, sade geçiş, yarı süre. */
+.eg-intro.eg-quick .eg-studio { animation: eg-fade .8s ease forwards; }
+.eg-intro.eg-quick .eg-game { animation: eg-fade-in .4s ease .7s forwards; }
+@keyframes eg-fade { 0% { opacity: 0; } 20% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes eg-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Oyun menüsünün dibindeki ortak künye. */
+.eg-foot { display: flex; align-items: center; justify-content: center; gap: 8px; color: #98a1c8; font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+.eg-foot img { width: 26px; height: 26px; }
+.eg-foot img.eg-word { width: auto; height: 13px; }
+
+/* "Diğer oyunlarımız" — her oyunun menüsünde aynı satır, diğer iki oyuna gider. */
+.eg-more { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 14px; }
+.eg-more-head { color: #98a1c8; font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.eg-more-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.eg-more-row a {
+  display: flex; align-items: center; gap: 10px; min-width: 150px;
+  padding: 9px 13px 9px 9px; border-radius: 16px; text-decoration: none;
+  border: 1px solid rgba(152, 161, 200, .28); background: rgba(152, 161, 200, .08);
+  color: inherit; -webkit-tap-highlight-color: transparent;
+}
+.eg-more-row a:active { transform: scale(.97); }
+.eg-more-row img { width: 42px; height: 42px; border-radius: 11px; flex: none; }
+.eg-more-row b { display: block; font-size: 14px; font-weight: 800; line-height: 1.2; }
+.eg-more-row span { display: block; font-size: 11px; font-weight: 600; opacity: .72; line-height: 1.3; }

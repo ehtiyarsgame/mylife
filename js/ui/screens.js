@@ -36,7 +36,9 @@ route('title', root => {
       // İlk sürüm sade: yalnızca oyunun kendisi. Günlük meydan okuma ve mini oyun salonu sonraki aşamada açılacak.
       btn([h('b', {}, '🌟'), 'Albüm & koleksiyon'], () => go('album')),
       h('button.btn', { onclick: () => { sfx.tap(); go('settings', 'title'); } }, h('b', {}, '⚙️'), 'Ayarlar')),
-    h('div.studio-foot', {}, h('img', { src: 'icons/studio.svg', alt: '' }), h('img.eg-word', { src: 'icons/ehtiyars-wordmark.svg', alt: 'Ehtiyars Game' })),
+    h('div.eg-foot', {}, h('img', { src: 'brand/ehtiyars-mark.svg', alt: '' }), h('img.eg-word', { src: 'brand/ehtiyars-wordmark.svg', alt: 'Ehtiyars Game' })),
+    // Stüdyonun diğer iki oyunu — üç oyunda da aynı satır (brand/ehtiyars-cross-promo.js)
+    window.EhtiyarsGames ? window.EhtiyarsGames.row({ self: 'lifetide' }) : null,
     h('p.center.tiny.muted', { style: { marginTop: '6px' } }, `${m.lives} hayat yaşandı · ${Object.keys(m.careers).length} meslek · ${Object.keys(m.legends).length} efsane${m.daily[dKey] ? ` · Bugünün rekoru: ${m.daily[dKey]}` : ''}`),
   ));
 });
