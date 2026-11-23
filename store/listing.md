@@ -95,3 +95,14 @@ Ehtiyars Game · ehtiyarsgame@gmail.com
   - Google Mobile Ads SDK: "Cihaz veya diğer kimlikler" (Reklam Kimliği) ve "Uygulama etkinliği / etkileşimler" — amaç: **Reklam veya pazarlama, Analiz, Sahtekarlığı önleme**; aktarım: Google'a; şifreli aktarım: Evet; silme talebi: cihaz ayarlarından reklam kimliği sıfırlanabilir.
 - **Reklam kimliği beyanı:** Evet → Reklam veya pazarlama, Analiz, Sahtekarlığı önleme (AdMob SDK AD_ID iznini ekliyor).
 - **Devlet uygulaması / finans uygulaması / sağlık:** Hayır (borsa ve banka oyun içi simülasyondur, gerçek para yok).
+
+## Sürüm
+
+| Sürüm | versionCode | Not |
+|---|---|---|
+| 1.0.0 | 22 | Hiç yayınlanmadı |
+| 1.0.1 | 23 | İlk yüklenen sürüm: Ehtiyars Game ortak açılışı, menüde diğer iki oyun, yeni yükleme anahtarı |
+
+İmzalı paketler: `apk/Lifetide-1.0.1.aab` (Play) ve `apk/Lifetide-1.0.1.apk` (telefonda deneme).
+İmza: `EhtiyarsGame/keystore/ehtiyars-upload.jks`, alias `lifetide`,
+SHA-256 `E3:EF:A6:6F:61:95:A9:E0:3B:24:EB:8D:23:AF:DF:56:5D:65:14:CD:F6:5F:C4:1A:4C:4A:92:29:9E:AC:72:58`.
